@@ -1,0 +1,10 @@
+{
+  "data_alias": "ck-math",
+  "data_uoa": "ck-math",
+  "data_uid": "d94a45b5be3072ba",
+  "data_name": "ck-math",
+  "dict": {
+    "url": "https://github.com/ctuning/ck-math",
+    "shared": "git"
+  }
+}
