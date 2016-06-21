@@ -48,8 +48,8 @@
   "tags": [
     "lib", 
     "clBLAS", 
-    "blas", 
-    "standard-blas", 
+    "blas",
+    "cblas",
     "opencl-blas",
     "v2.4",
     "v2"

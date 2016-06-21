@@ -31,8 +31,9 @@
   "suggested_path": "lib-openblas", 
   "tags": [
     "lib", 
-    "openblas", 
-    "blas", 
+    "openblas",
+    "blas",
+    "cblas",
     "v0", 
     "v0.2", 
     "v0.2.18"

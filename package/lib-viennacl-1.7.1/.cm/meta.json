@@ -37,8 +37,8 @@
   "tags": [
     "lib",
     "viennacl",
-    "standard-blas",
     "blas",
+    "clbas",
     "opencl-blas",
     "v1.7.1", 
     "vrelease-1.7.1", 
