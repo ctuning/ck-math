@@ -43,7 +43,7 @@ mkdir  $VIENNACL_OBJ_DIR
 cd $VIENNACL_OBJ_DIR
 
 #-DBOOSTPATH=xyz
-#cmake ../src -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}
+cmake ../src -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}
 if [ "$?" != "0" ]; then
   echo "Error: failed configuring ViennaCL ..."
   read -p "Press any key to continue!"
@@ -53,7 +53,7 @@ fi
 echo ""
 echo "Building ViennaCL..."
 
-#cmake --build .
+cmake --build .
 #make
 if [ "$?" != "0" ]; then
   echo "Error: failed making ViennaCL ..."
@@ -64,7 +64,7 @@ fi
 echo ""
 echo "Installing ViennaCL..."
 
-#cmake -P cmake_install.cmake
+cmake -P cmake_install.cmake
 #make install
 
 # Somehow the library was not copied via the above command.
