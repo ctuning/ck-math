@@ -1,0 +1,55 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "install_env": {
+      "CLBLAS_TAG": "v2.4", 
+      "CLBLAS_URL": "https://github.com/clMathLibraries/clBLAS"
+    }, 
+    "version": "2.4"
+  }, 
+  "deps": {
+    "cmake": {
+      "local": "yes", 
+      "name": "cmake", 
+      "sort": 5, 
+      "tags": "tool,cmake"
+    }, 
+    "compiler": {
+      "local": "yes", 
+      "name": "C++ compiler", 
+      "sort": 10, 
+      "tags": "compiler,lang-cpp"
+    }, 
+    "opencl": {
+      "local": "yes", 
+      "name": "OpenCL library", 
+      "sort": 20, 
+      "tags": "lib,opencl"
+    }
+  }, 
+  "end_full_path": {
+    "android": "lib$#sep#$libclBLAS.so", 
+    "linux": "lib/libclBLAS.so", 
+    "mingw": "lib\\libclBLAS.so", 
+    "win": "lib\\libclBLAS.so"
+  }, 
+  "need_cpu_info": "yes", 
+  "only_for_host_os_tags": [
+    "windows", 
+    "linux"
+  ], 
+  "only_for_target_os_tags": [
+    "windows", 
+    "linux"
+  ], 
+  "process_script": "install", 
+  "soft_uoa": "c24825c3cad090f1", 
+  "suggested_path": "lib-clblas", 
+  "tags": [
+    "lib", 
+    "clBLAS", 
+    "blas", 
+    "opencl", 
+    "2016"
+  ]
+}

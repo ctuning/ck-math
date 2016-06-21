@@ -1,0 +1,52 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 389a9a2..87facdb 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -225,9 +225,16 @@ if(CMAKE_COMPILER_IS_GNUCXX)
+     # Don't use -rpath.
+     set(CMAKE_SKIP_RPATH ON CACHE BOOL "Skip RPATH" FORCE)
+ 
+-    set(CMAKE_C_FLAGS "-m${TARGET_PLATFORM} ${CMAKE_C_FLAGS}")
+-    set(CMAKE_CXX_FLAGS "-m${TARGET_PLATFORM} ${CMAKE_CXX_FLAGS}")
+-    set(CMAKE_Fortran_FLAGS "-m${TARGET_PLATFORM} ${CMAKE_Fortran_FLAGS}")
++    # Need to determine the target machine of the C compiler, because
++    # the '-m32' and '-m64' flags are supported on x86 but not on e.g. ARM.
++    exec_program( "${CMAKE_C_COMPILER} -dumpmachine" OUTPUT_VARIABLE CMAKE_C_COMPILER_MACHINE )
++    message( STATUS "CMAKE_C_COMPILER_MACHINE: ${CMAKE_C_COMPILER_MACHINE}" )
++    # The "86" regular expression matches x86, x86_64, i686, etc.
++    if(${CMAKE_C_COMPILER_MACHINE} MATCHES "86")
++        set(CMAKE_C_FLAGS "-m${TARGET_PLATFORM} ${CMAKE_C_FLAGS}")
++        set(CMAKE_CXX_FLAGS "-m${TARGET_PLATFORM} ${CMAKE_CXX_FLAGS}")
++        set(CMAKE_Fortran_FLAGS "-m${TARGET_PLATFORM} ${CMAKE_Fortran_FLAGS}")
++    endif()
+ 
+     if(TARGET_PLATFORM EQUAL 32)
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-builtin")
+diff --git a/src/library/blas/gens/blas_kgen.c b/src/library/blas/gens/blas_kgen.c
+index 595fe10..a886884 100644
+--- a/src/library/blas/gens/blas_kgen.c
++++ b/src/library/blas/gens/blas_kgen.c
+@@ -1173,8 +1173,10 @@ updateResultGen(
+         if ( vecLen > 1 ) {
+ 
+             sprintf(tmp,
+-                "uC.%s = %s + (%s * %s + %s)/%d;\n",
++                "uC.%s = (%s %s*)(%s + (%s * %s + %s)/%d);\n",
+                 vfield,
++                (LG == 'L' ? "__local" : "__global"),
++                typeName,
+                 uvars.result,
+                 uvars.startCol,
+                 uvars.ld,
+@@ -1197,8 +1199,10 @@ updateResultGen(
+         if ( vecLen > 1 ) {
+ 
+             sprintf(tmp,
+-                "uC.%s = %s + (%s * %s + %s)/%d;\n",
++                "uC.%s = (%s %s*)(%s + (%s * %s + %s)/%d);\n",
+                 vfield,
++                (LG == 'L' ? "__local" : "__global"),
++                typeName,
+                 uvars.result,
+                 uvars.startRow,
+                 uvars.ld,
