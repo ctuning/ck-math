@@ -46,10 +46,11 @@
   "soft_uoa": "7b81c6ad862f4b38", 
   "suggested_path": "lib-clblast", 
   "tags": [
-    "lib", 
-    "clblast", 
-    "blas", 
-    "opencl", 
-    "2016"
+    "lib",
+    "blas",
+    "standard-blas",
+    "clblast",
+    "opencl-blas"
+    "vtrunk"
   ]
 }
