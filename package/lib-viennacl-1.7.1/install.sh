@@ -14,12 +14,13 @@
 # INSTALL_DIR
 
 export VIENNACL_SRC_DIR=${INSTALL_DIR}/src
-export OBJ_DIR=${INSTALL_DIR}/obj
+export VIENNACL_OBJ_DIR=${INSTALL_DIR}/obj
+export VIENNACL_LIB_DIR=${INSTALL_DIR}/lib
 
 echo ""
 echo "Cloning ViennaCL from '${VIENNACL_URL}' ..."
-#rm -rf ${VIENNACL_SRC_DIR}
-#git clone ${VIENNACL_URL} --no-checkout ${VIENNACL_SRC_DIR}
+rm -rf ${VIENNACL_SRC_DIR}
+git clone ${VIENNACL_URL} --no-checkout ${VIENNACL_SRC_DIR}
 if [ "${?}" != "0" ] ; then
   echo "Error: Cloning ViennaCL from '${VIENNACL_URL}' failed!"
   exit 1
@@ -28,54 +29,50 @@ fi
 echo ""
 echo "Checking out the '${VIENNACL_TAG}' release of ViennaCL ..."
 cd ${VIENNACL_SRC_DIR}
-#git checkout tags/${VIENNACL_TAG} -b ${VIENNACL_TAG}
+git checkout tags/${VIENNACL_TAG} -b ${VIENNACL_TAG}
 if [ "${?}" != "0" ] ; then
   echo "Error: Checking out the '${VIENNACL_TAG}' release of ViennaCL failed!"
   exit 1
 fi
 
 echo ""
-echo "Configuring ..."
+echo "Configuring ViennaCL..."
 
-#rm -rf $OBJ_DIR
-#mkdir $OBJ_DIR
-cd $OBJ_DIR
+rm -rf $VIENNACL_OBJ_DIR
+mkdir  $VIENNACL_OBJ_DIR
+cd $VIENNACL_OBJ_DIR
 
 #-DBOOSTPATH=xyz
 #cmake ../src -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR}
 if [ "$?" != "0" ]; then
- echo "Error: failed configuring ..."
- read -p "Press any key to continue!"
- exit $?
+  echo "Error: failed configuring ViennaCL ..."
+  read -p "Press any key to continue!"
+  exit $?
 fi
 
 echo ""
-echo "Building ..."
+echo "Building ViennaCL..."
 
 #cmake --build .
 #make
 if [ "$?" != "0" ]; then
- echo "Error: failed making ..."
- read -p "Press any key to continue!"
- exit $?
+  echo "Error: failed making ViennaCL ..."
+  read -p "Press any key to continue!"
+  exit $?
 fi
 
 echo ""
-echo "Installing ..."
+echo "Installing ViennaCL..."
 
 #cmake -P cmake_install.cmake
 #make install
-if [ "$?" != "0" ]; then
- echo "Error: failed installing ..."
- read -p "Press any key to continue!"
- exit $?
-fi
 
-# Somehow library was not copied via above command
-# Doing it manually for now
-cp -f $OBJ_DIR/libviennacl/libviennacl.so $INSTALL_DIR/lib
+# Somehow the library was not copied via the above command.
+# Doing it manually for now...
+mkdir -p $VIENNACL_LIB_DIR
+cp -f $VIENNACL_OBJ_DIR/libviennacl/libviennacl.so $VIENNACL_LIB_DIR
 if [ "$?" != "0" ]; then
- echo "Error: copying libviennacl.so failed ..."
- read -p "Press any key to continue!"
- exit $?
+  echo "Error: failed installing ViennaCL ..."
+  read -p "Press any key to continue!"
+  exit $?
 fi
