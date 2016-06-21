@@ -48,9 +48,9 @@
   "tags": [
     "lib",
     "blas",
-    "standard-blas",
+    "opencl-blas",
     "clblast",
-    "opencl-blas"
-    "vtrunk"
+    "development",
+    "trunk"
   ]
 }

@@ -30,12 +30,15 @@
   "soft_uoa": "252d8364ec25497b", 
   "suggested_path": "lib-openblas", 
   "tags": [
-    "lib", 
-    "openblas",
+    "lib",
     "blas",
     "cblas",
-    "v0", 
-    "v0.2", 
-    "v0.2.18"
+    "openblas",
+    "v0.2.18",
+    "v0.2",
+    "v0",
+    "0.2.18",
+    "0.2",
+    "0"
   ]
 }

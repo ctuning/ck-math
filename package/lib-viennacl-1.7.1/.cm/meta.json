@@ -36,15 +36,17 @@
   "suggested_path": "lib-viennacl", 
   "tags": [
     "lib",
-    "viennacl",
     "blas",
-    "clbas",
     "opencl-blas",
-    "v1.7.1", 
-    "vrelease-1.7.1", 
-    "v1.7", 
-    "vrelease-1.7",
-    "v1", 
-    "vrelease-1"
+    "viennacl",
+    "release-1.7.1",
+    "release-1.7",
+    "release-1",
+    "v1.7.1",
+    "v1.7",
+    "v1",
+    "1.7.1",
+    "1.7"
+    "1"
   ]
 }
