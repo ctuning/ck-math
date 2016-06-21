@@ -28,10 +28,10 @@
     }
   }, 
   "end_full_path": {
-    "android": "lib64$#sep#$libclBLAS.so", 
-    "linux": "lib64/libclBLAS.so", 
-    "mingw": "lib64\\libclBLAS.so", 
-    "win": "lib64\\libclBLAS.so"
+    "android": "lib$#sep#$libclBLAS.so", 
+    "linux": "lib/libclBLAS.so", 
+    "mingw": "lib\\libclBLAS.so", 
+    "win": "lib\\libclBLAS.so"
   }, 
   "need_cpu_info": "yes", 
   "only_for_host_os_tags": [
