@@ -1,1 +1,2 @@
-https://github.com/CNugteren/CLBlast
+URL: https://github.com/CNugteren/CLBlast
+Branch: development

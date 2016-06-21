@@ -55,7 +55,7 @@ cmake ${CLBLAS_SRC_DIR}/src -DCMAKE_OBJ_TYPE=Release -DBUILD_TEST=OFF \
   -DCMAKE_C_COMPILER=${CK_CC} -DCMAKE_CXX_COMPILER=${CK_CXX} \
   -DOPENCL_LIBRARIES:FILEPATH=${CK_ENV_LIB_OPENCL_LIB}/${CK_ENV_LIB_OPENCL_DYNAMIC_NAME} \
   -DCMAKE_INSTALL_PREFIX:PATH=${CLBLAS_INSTALL_DIR}
-make -j ${NUM_MAKE_THREADS} install
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} install
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${CLBLAS_TAG}' release of clBLAS failed!"
   exit 1
