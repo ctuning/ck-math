@@ -45,7 +45,7 @@ cmake ${CLBLAST_SRC_DIR} -DCMAKE_OBJ_TYPE=Release \
   -DOPENCL_LIBRARIES:FILEPATH=${CK_ENV_LIB_OPENCL_LIB}/${CK_ENV_LIB_OPENCL_DYNAMIC_NAME} \
   -DOPENCL_INCLUDE_DIRS:PATH=${CK_ENV_LIB_OPENCL_INCLUDE} \
   -DCMAKE_INSTALL_PREFIX:PATH=${INSTALL_DIR}
-make install
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} install
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
   exit 1
