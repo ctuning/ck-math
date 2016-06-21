@@ -39,14 +39,8 @@
     "blas",
     "opencl-blas",
     "viennacl",
-    "release-1.7.1",
-    "release-1.7",
-    "release-1",
     "v1.7.1",
     "v1.7",
-    "v1",
-    "1.7.1",
-    "1.7"
-    "1"
+    "v1"
   ]
 }

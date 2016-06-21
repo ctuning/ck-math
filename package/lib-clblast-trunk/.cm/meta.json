@@ -50,7 +50,7 @@
     "blas",
     "opencl-blas",
     "clblast",
-    "development",
-    "trunk"
+    "vtrunk",
+    "vdev"
   ]
 }

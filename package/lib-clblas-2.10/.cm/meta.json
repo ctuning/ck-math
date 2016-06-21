@@ -49,10 +49,8 @@
     "lib",
     "blas",
     "opencl-blas",
-    "clBLAS",
+    "clblas",
     "v2.10",
-    "v2",
-    "2.10",
-    "2"
+    "v2"
   ]
 }
