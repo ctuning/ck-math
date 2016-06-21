@@ -15,14 +15,14 @@
 # INSTALL_DIR
 
 export CLBLAST_SRC_DIR=${INSTALL_DIR}/src
-export CLBLAST_BUILD_DIR=${INSTALL_DIR}/build/release
+export CLBLAST_OBJ_DIR=${INSTALL_DIR}/obj
 
 echo ""
-echo "Getting CLBlast from GitHub ..."
+echo "Cloning CLBlast from '${CLBLAST_URL}' ..."
 rm -rf ${CLBLAST_SRC_DIR}
 git clone ${CLBLAST_URL} --no-checkout ${CLBLAST_SRC_DIR}
 if [ "${?}" != "0" ] ; then
-  echo "Error: Getting CLBLast failed!"
+  echo "Error: Cloning CLBlast from '${CLBLAST_URL}' failed!"
   exit 1
 fi
 
@@ -31,15 +31,16 @@ echo "Checking out the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 cd ${CLBLAST_SRC_DIR}
 git checkout ${CLBLAST_BRANCH}
 if [ "${?}" != "0" ] ; then
-  echo "Error: Checking out the '${CLBLAST_BRANCH}' branch of CLBLast failed!"
+  echo "Error: Checking out the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
   exit 1
 fi
 
 echo ""
 echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast ..."
-mkdir -p ${CLBLAST_BUILD_DIR}
-cd ${CLBLAST_BUILD_DIR}
-cmake ${CLBLAST_SRC_DIR} -DCMAKE_BUILD_TYPE=Release \
+rm -rf ${CLBLAST_OBJ_DIR}
+mkdir -p ${CLBLAST_OBJ_DIR}
+cd ${CLBLAST_OBJ_DIR}
+cmake ${CLBLAST_SRC_DIR} -DCMAKE_OBJ_TYPE=Release \
   -DCMAKE_C_COMPILER=${CK_CC} -DCMAKE_CXX_COMPILER=${CK_CXX} \
   -DOPENCL_LIBRARIES:FILEPATH=${CK_ENV_LIB_OPENCL_LIB}/${CK_ENV_LIB_OPENCL_DYNAMIC_NAME} \
   -DOPENCL_INCLUDE_DIRS:PATH=${CK_ENV_LIB_OPENCL_INCLUDE} \
@@ -49,5 +50,3 @@ if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
   exit 1
 fi
-
-#export LIB_NAME=libclblast
