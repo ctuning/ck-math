@@ -11,10 +11,12 @@
     "boost": {
       "local": "yes", 
       "name": "boost library", 
+      "sort": 30, 
       "tags": "lib,boost"
     }, 
     "cmake": {
       "local": "yes", 
+      "sort": 5, 
       "name": "cmake tool", 
       "tags": "cmake"
     }, 
@@ -23,6 +25,12 @@
       "name": "C++ compiler", 
       "sort": 10, 
       "tags": "compiler,lang-cpp"
+    },
+    "opencl": {
+      "local": "yes", 
+      "name": "OpenCL library", 
+      "sort": 20, 
+      "tags": "lib,opencl"
     }
   }, 
   "end_full_path": {
