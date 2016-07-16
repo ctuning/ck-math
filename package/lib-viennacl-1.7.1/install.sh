@@ -16,6 +16,7 @@
 export VIENNACL_SRC_DIR=${INSTALL_DIR}/src
 export VIENNACL_OBJ_DIR=${INSTALL_DIR}/obj
 export VIENNACL_LIB_DIR=${INSTALL_DIR}/lib
+export VIENNACL_PATCH=${PACKAGE_DIR}/181.patch
 
 ################################################################################
 echo ""
@@ -40,6 +41,19 @@ git checkout tags/${VIENNACL_TAG} -b ${VIENNACL_TAG}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: Checking out the '${VIENNACL_TAG}' release of ViennaCL failed!"
+  exit 1
+fi
+
+################################################################################
+echo ""
+echo "Patching the '${VIENNACL_TAG}' release of ViennaCL ..."
+
+cd ${VIENNACL_SRC_DIR}
+
+patch -p1 < ${VIENNACL_PATCH}
+
+if [ "${?}" != "0" ] ; then
+  echo "Error: Patching the '${VIENNACL_TAG}' release of ViennaCL failed!"
   exit 1
 fi
 
