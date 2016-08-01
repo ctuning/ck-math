@@ -56,7 +56,6 @@
     "blas",
     "opencl-blas",
     "clblast",
-    "vdev",
     "vmali-overlay"
   ]
 }
