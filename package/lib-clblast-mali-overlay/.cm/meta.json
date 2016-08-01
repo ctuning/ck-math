@@ -34,10 +34,10 @@
     }
   }, 
   "end_full_path": {
-    "android": "lib$#sep#$libclblast.so", 
-    "linux": "lib/libclblast.so", 
-    "mingw": "lib\\libclblast.so", 
-    "win": "lib\\libclblast.so"
+    "android": "lib$#sep#$libclblast_mali.so",
+    "linux": "lib/libclblast_mali.so",
+    "mingw": "lib\\libclblas_mali.so",
+    "win": "lib\\libclblas_mali.so"
   }, 
   "need_cpu_info": "yes", 
   "only_for_host_os_tags": [
@@ -56,6 +56,7 @@
     "blas",
     "opencl-blas",
     "clblast",
+    "vdev",
     "vmali-overlay"
   ]
 }
