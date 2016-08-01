@@ -1,0 +1,30 @@
+From 04f1063c081405186181ff5ebf8a552a6db3c6cf Mon Sep 17 00:00:00 2001
+From: Zhigang Gong <zhigang.gong@intel.com>
+Date: Thu, 3 Mar 2016 09:19:13 +0800
+Subject: [PATCH] Avoid incorrect flag when create ocl memory object.
+
+If there is already a CL_MEM_USE_HOST_PTR, we should not
+add CL_MEM_COPY_HOST_PTR. According to the OpenCL spec:
+"
+CL_MEM_COPY_HOST_PTR and
+CL_MEM_USE_HOST_PTR are mutually exclusive.
+"
+
+Signed-off-by: Zhigang Gong <zhigang.gong@intel.com>
+---
+ viennacl/ocl/context.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/viennacl/ocl/context.hpp b/viennacl/ocl/context.hpp
+index f0c2edf..f2bb530 100644
+--- a/viennacl/ocl/context.hpp
++++ b/viennacl/ocl/context.hpp
+@@ -204,7 +204,7 @@ class context
+ #if defined(VIENNACL_DEBUG_ALL) || defined(VIENNACL_DEBUG_CONTEXT)
+     std::cout << "ViennaCL: Creating memory of size " << size << " for context " << h_ << " (unsafe, returning cl_mem directly)" << std::endl;
+ #endif
+-    if (ptr)
++    if (ptr && !(flags & CL_MEM_USE_HOST_PTR))
+       flags |= CL_MEM_COPY_HOST_PTR;
+     cl_int err;
+     cl_mem mem = clCreateBuffer(h_.get(), flags, size, ptr, &err);
