@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #
-# Installation script for CLBlast.
+# Installation script for CLBlast overlay.
 #
 # See CK LICENSE for licensing details.
 # See CK COPYRIGHT for copyright details.
@@ -16,10 +16,22 @@
 
 export CLBLAST_SRC_DIR=${INSTALL_DIR}/src
 export CLBLAST_OBJ_DIR=${INSTALL_DIR}/obj
+export CLBLAST_LIB_DIR=${INSTALL_DIR}/lib
+export CLBLAST_INC_DIR=${INSTALL_DIR}/include
+
+echo ""
+echo "Cleaning previously installed CLBlast overlay in '${INSTALL_DIR}' ..."
+rm -rf ${CLBLAST_OBJ_DIR}
+rm -rf ${CLBLAST_SRC_DIR}
+rm -rf ${CLBLAST_LIB_DIR}
+rm -rf ${CLBLAST_INC_DIR}
+if [ "${?}" != "0" ] ; then
+  echo "Error: Cleaning previously installed CLBlast overlay in '${INSTALL_DIR}'!"
+  exit 1
+fi
 
 echo ""
 echo "Cloning CLBlast overlay from '${CLBLAST_URL}' ..."
-rm -rf ${CLBLAST_SRC_DIR}
 git clone ${CLBLAST_URL} --no-checkout ${CLBLAST_SRC_DIR}
 if [ "${?}" != "0" ] ; then
   echo "Error: Cloning CLBlast overlay from '${CLBLAST_URL}' failed!"
@@ -28,8 +40,7 @@ fi
 
 echo ""
 echo "Checking out the '${CLBLAST_BRANCH}' branch of CLBlast overlay ..."
-cd ${CLBLAST_SRC_DIR}
-git checkout ${CLBLAST_BRANCH}
+cd ${CLBLAST_SRC_DIR} && git checkout ${CLBLAST_BRANCH}
 if [ "${?}" != "0" ] ; then
   echo "Error: Checking out the '${CLBLAST_BRANCH}' branch of CLBlast overlay failed!"
   exit 1
@@ -37,9 +48,7 @@ fi
 
 echo ""
 echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast overlay ..."
-rm -rf ${CLBLAST_OBJ_DIR}
-mkdir -p ${CLBLAST_OBJ_DIR}
-cd ${CLBLAST_OBJ_DIR}
+mkdir -p ${CLBLAST_OBJ_DIR} && cd ${CLBLAST_OBJ_DIR}
 cmake ${CLBLAST_SRC_DIR} -DCMAKE_OBJ_TYPE=Release \
   -DCMAKE_C_COMPILER=${CK_CC} -DCMAKE_CXX_COMPILER=${CK_CXX} \
   -DOPENCL_LIBRARIES:FILEPATH=${CK_ENV_LIB_OPENCL_LIB}/${CK_ENV_LIB_OPENCL_DYNAMIC_NAME} \
@@ -54,10 +63,10 @@ fi
 
 echo ""
 echo "Creating symbolic links to ${CK_ENV_LIB_CLBLAST} ..."
-ln -s ${CK_ENV_LIB_CLBLAST_LIB}/${CK_ENV_LIB_CLBLAST_DYNAMIC_NAME} \
-      ${INSTALL_DIR}/lib/${CK_ENV_LIB_CLBLAST_DYNAMIC_NAME}
-ln -s ${CK_ENV_LIB_CLBLAST_INCLUDE} \
-      ${INSTALL_DIR}/include
+ln -sf ${CK_ENV_LIB_CLBLAST_LIB}/${CK_ENV_LIB_CLBLAST_DYNAMIC_NAME} \
+       ${CLBLAST_LIB_DIR}/${CK_ENV_LIB_CLBLAST_DYNAMIC_NAME}
+ln -sf ${CK_ENV_LIB_CLBLAST_INCLUDE} \
+       ${CLBLAST_INC_DIR}
 if [ "${?}" != "0" ] ; then
   echo "Error: Creating symbolic links to '${CK_ENV_LIB_CLBLAST}' failed!"
   exit 1
