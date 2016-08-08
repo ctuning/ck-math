@@ -5,7 +5,9 @@
       "CLBLAST_TAG": "0.7.1", 
       "CLBLAST_URL": "https://github.com/CNugteren/CLBlast"
     }, 
-    "version": "0.7.1"
+    "version": "0.7.1",
+    "use_git_revision":"yes",
+    "git_src_dir":"src"
   }, 
   "deps": {
     "cmake": {

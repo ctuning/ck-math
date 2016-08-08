@@ -5,7 +5,9 @@
       "CLBLAST_BRANCH": "mali-overlay",
       "CLBLAST_URL": "https://github.com/intelfx/CLBlast"
     }, 
-    "version": "mali-overlay"
+    "version": "mali-overlay",
+    "use_git_revision":"yes",
+    "git_src_dir":"src"
   }, 
   "deps": {
     "cmake": {

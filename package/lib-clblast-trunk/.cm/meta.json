@@ -5,7 +5,9 @@
       "CLBLAST_BRANCH": "development", 
       "CLBLAST_URL": "https://github.com/CNugteren/CLBlast"
     }, 
-    "version": "development"
+    "version": "development",
+    "use_git_revision":"yes",
+    "git_src_dir":"src"
   }, 
   "deps": {
     "cmake": {

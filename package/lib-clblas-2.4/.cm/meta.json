@@ -5,7 +5,9 @@
       "CLBLAS_TAG": "v2.4", 
       "CLBLAS_URL": "https://github.com/clMathLibraries/clBLAS"
     }, 
-    "version": "2.4"
+    "version": "2.4",
+    "use_git_revision":"yes",
+    "git_src_dir":"src"
   }, 
   "deps": {
     "cmake": {

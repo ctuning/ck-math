@@ -5,7 +5,9 @@
       "OPENBLAS_TAG": "v0.2.18", 
       "OPENBLAS_URL": "https://github.com/xianyi/OpenBLAS"
     }, 
-    "version": "0.2.18"
+    "version": "0.2.18",
+    "use_git_revision":"yes",
+    "git_src_dir":"src"
   }, 
   "deps": {
     "compiler": {
