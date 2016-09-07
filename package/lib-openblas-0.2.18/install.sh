@@ -42,11 +42,18 @@ echo "Building the '${OPENBLAS_TAG}' release of OpenBLAS ..."
 mkdir -p ${OPENBLAS_BLD_DIR}
 cd ${OPENBLAS_BLD_DIR}
 
-# Configure ARM target. FIXME: Use ${HOSTTYPE}?
+# Configure ARM target.
 MACHINE=$(uname -m)
 if [ "${MACHINE}" == "armv7l" ]; then
   TARGET="TARGET=ARMV7"
 elif [ "${MACHINE}" == "aarch64" ]; then
+  TARGET="TARGET=ARMV8"
+fi
+
+# Configure ARM target. An alternative way.
+if [ "${HOSTTYPE}" == "armv7a" ]; then
+  TARGET="TARGET=ARMV7"
+elif [ "${HOSTTYPE}" == "aarch64" ]; then
   TARGET="TARGET=ARMV8"
 fi
 
