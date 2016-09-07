@@ -16,6 +16,7 @@
 export OPENBLAS_SRC_DIR=${INSTALL_DIR}/src
 export OPENBLAS_BLD_DIR=${OPENBLAS_SRC_DIR}
 
+################################################################################
 echo ""
 echo "Cloning OpenBLAS from '${OPENBLAS_URL}' ..."
 rm -rf ${OPENBLAS_SRC_DIR}
@@ -25,6 +26,7 @@ if [ "${?}" != "0" ] ; then
   exit 1
 fi
 
+###############################################################################
 echo ""
 echo "Checking out the '${OPENBLAS_TAG}' release of OpenBLAS ..."
 cd ${OPENBLAS_SRC_DIR}
@@ -34,13 +36,21 @@ if [ "${?}" != "0" ] ; then
   exit 1
 fi
 
+###############################################################################
 echo ""
 echo "Building the '${OPENBLAS_TAG}' release of OpenBLAS ..."
 mkdir -p ${OPENBLAS_BLD_DIR}
 cd ${OPENBLAS_BLD_DIR}
 
-# Configure for Android on ARM.
-TARGET=""
+# Configure ARM target. FIXME: Use ${HOSTTYPE}?
+MACHINE=$(uname -m)
+if [ "${MACHINE}" == "armv7l" ]; then
+  TARGET="TARGET=ARMV7"
+elif [ "${MACHINE}" == "aarch64" ]; then
+  TARGET="TARGET=ARMV8"
+fi
+
+# Configure ARM target on Android.
 if [ "${CK_ANDROID_NDK_ARCH}" == "arm" ] ; then
   export CC=${CK_CC}
   export FC=${CK_FC}
@@ -53,12 +63,13 @@ elif [ "${CK_ANDROID_NDK_ARCH}" == "arm64" ] ; then
   TARGET="OSNAME=Android TARGET=ARMV8"
 fi
 
-make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} $TARGET
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} ${TARGET}
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${OPENBLAS_TAG}' release of OpenBLAS failed!"
   exit 1
 fi
 
+###############################################################################
 echo ""
 echo "Installing the '${OPENBLAS_TAG}' release of OpenBLAS ..."
 cd ${OPENBLAS_BLD_DIR}
@@ -67,3 +78,5 @@ if [ "${?}" != "0" ] ; then
   echo "Error: Installing the '${OPENBLAS_TAG}' release of OpenBLAS failed!"
   exit 1
 fi
+
+###############################################################################
