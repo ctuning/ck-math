@@ -59,16 +59,14 @@ fi
 
 # Configure ARM target on Android.
 if [ "${CK_ANDROID_NDK_ARCH}" == "arm" ] ; then
-  export CC=${CK_CC}
-  export FC=${CK_FC}
-  export AR=${CK_AR}
   TARGET="OSNAME=Android TARGET=ARMV7"
 elif [ "${CK_ANDROID_NDK_ARCH}" == "arm64" ] ; then
-  export CC=${CK_CC}
-  export FC=${CK_FC}
-  export AR=${CK_AR}
   TARGET="OSNAME=Android TARGET=ARMV8"
 fi
+
+export CC=${CK_CC}
+export FC=${CK_FC}
+export AR=${CK_AR}
 
 make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} ${TARGET}
 if [ "${?}" != "0" ] ; then
