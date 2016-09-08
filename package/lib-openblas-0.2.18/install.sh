@@ -15,6 +15,7 @@
 
 export OPENBLAS_SRC_DIR=${INSTALL_DIR}/src
 export OPENBLAS_BLD_DIR=${OPENBLAS_SRC_DIR}
+export OPENBLAS_BLD_LOG=${OPENBLAS_SRC_DIR}/build.log
 
 ################################################################################
 echo ""
@@ -35,6 +36,12 @@ if [ "${?}" != "0" ] ; then
   echo "Error: Checking out the '${OPENBLAS_TAG}' release of OpenBLAS failed!"
   exit 1
 fi
+
+################################################################################
+echo
+echo "Logging into '${OPENBLAS_BLD_LOG}' ..."
+echo "** ENVIRONMENT **" >> ${OPENBLAS_BLD_LOG}
+set >> ${OPENBLAS_BLD_LOG}
 
 ###############################################################################
 echo ""
@@ -68,7 +75,8 @@ export CC=${CK_CC}
 export FC=${CK_FC}
 export AR=${CK_AR}
 
-make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} ${TARGET}
+echo "** BUILD LOG **" >> ${OPENBLAS_BLD_LOG}
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} ${TARGET} >>${OPENBLAS_BLD_LOG} 2>&1
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${OPENBLAS_TAG}' release of OpenBLAS failed!"
   exit 1
