@@ -1,36 +1,42 @@
 {
   "customize": {
-    "extra_dir": "", 
+    "extra_dir": "",
     "install_env": {
-      "OPENBLAS_TAG": "v0.2.18", 
+      "OPENBLAS_TAG": "v0.2.18",
       "OPENBLAS_URL": "https://github.com/xianyi/OpenBLAS"
-    }, 
+    },
     "version": "0.2.18",
     "use_git_revision":"yes",
     "git_src_dir":"src"
-  }, 
+  },
   "deps": {
-    "compiler": {
-      "local": "yes", 
-      "name": "C++ compiler", 
-      "sort": 10, 
-      "tags": "compiler,lang-cpp"
+    "boost": {
+      "local": "yes",
+      "name": "Boost C++ libraries",
+      "sort": 5,
+      "tags": "lib,boost"
+    },
+    "c-compiler": {
+      "local": "yes",
+      "name": "C compiler",
+      "sort": 10,
+      "tags": "compiler,lang-c"
     }
-  }, 
+  },
   "end_full_path": {
     "linux": "lib/libopenblas.so"
-  }, 
-  "need_cpu_info": "yes", 
+  },
+  "need_cpu_info": "yes",
   "only_for_host_os_tags": [
     "linux"
-  ], 
+  ],
   "only_for_target_os_tags": [
-    "linux", 
+    "linux",
     "android"
-  ], 
-  "process_script": "install", 
-  "soft_uoa": "252d8364ec25497b", 
-  "suggested_path": "lib-openblas", 
+  ],
+  "process_script": "install",
+  "soft_uoa": "252d8364ec25497b",
+  "suggested_path": "lib-openblas",
   "tags": [
     "lib",
     "blas",
