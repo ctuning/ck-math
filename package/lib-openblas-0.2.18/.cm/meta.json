@@ -17,10 +17,18 @@
       "tags": "lib,boost"
     },
     "c-compiler": {
+      "add_to_path": "yes",
       "local": "yes",
       "name": "C compiler",
       "sort": 10,
       "tags": "compiler,lang-c"
+    },
+    "gfortran-compiler": {
+      "add_to_path": "yes",
+      "local": "yes",
+      "name": "GNU Fortran compiler",
+      "sort": 15,
+      "tags": "compiler,gfortran"
     }
   },
   "end_full_path": {
