@@ -3,8 +3,8 @@
 #
 # Installation script for CLBlast.
 #
-# See CK LICENSE for licensing details.
-# See CK COPYRIGHT for copyright details.
+# See CK LICENSE.txt for licensing details.
+# See CK COPYRIGHT.txt for copyright details.
 #
 # Developer(s):
 # - Grigori Fursin, 2015;
@@ -15,8 +15,9 @@
 # INSTALL_DIR
 
 export CLBLAST_SRC_DIR=${INSTALL_DIR}/src
-export CLBLAST_OBJ_DIR=${INSTALL_DIR}/obj
+export CLBLAST_BLD_DIR=${INSTALL_DIR}/bld
 
+################################################################################
 echo ""
 echo "Cloning CLBlast from '${CLBLAST_URL}' ..."
 rm -rf ${CLBLAST_SRC_DIR}
@@ -26,6 +27,7 @@ if [ "${?}" != "0" ] ; then
   exit 1
 fi
 
+################################################################################
 echo ""
 echo "Checking out the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 cd ${CLBLAST_SRC_DIR}
@@ -35,11 +37,12 @@ if [ "${?}" != "0" ] ; then
   exit 1
 fi
 
+################################################################################
 echo ""
 echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast ..."
-rm -rf ${CLBLAST_OBJ_DIR}
-mkdir -p ${CLBLAST_OBJ_DIR}
-cd ${CLBLAST_OBJ_DIR}
+rm -rf ${CLBLAST_BLD_DIR}
+mkdir -p ${CLBLAST_BLD_DIR}
+cd ${CLBLAST_BLD_DIR}
 cmake ${CLBLAST_SRC_DIR} \
   -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
   -DCMAKE_C_COMPILER=${CK_CC} -DCMAKE_CXX_COMPILER=${CK_CXX} \
