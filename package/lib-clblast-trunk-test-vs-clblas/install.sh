@@ -85,7 +85,7 @@ cmake ${CLBLAST_SRC_DIR} \
   >>${CLBLAST_BLD_LOG} 2>&1
 
 echo "** MAKE **" >> ${CLBLAST_BLD_LOG}
-make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} >>${CLBLAST_BLD_LOG} 2>&1
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} install >>${CLBLAST_BLD_LOG} 2>&1
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
   exit 1
