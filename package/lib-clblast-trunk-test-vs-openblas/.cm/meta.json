@@ -1,0 +1,64 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "git_src_dir": "src", 
+    "install_env": {
+      "CLBLAST_BRANCH": "development", 
+      "CLBLAST_URL": "https://github.com/CNugteren/CLBlast"
+    }, 
+    "use_git_revision": "yes", 
+    "version": "development"
+  }, 
+  "deps": {
+    "cmake": {
+      "local": "yes", 
+      "name": "cmake", 
+      "sort": 5, 
+      "tags": "tool,cmake"
+    }, 
+    "compiler": {
+      "local": "yes", 
+      "name": "C++ compiler", 
+      "sort": 10, 
+      "tags": "compiler,lang-cpp"
+    }, 
+    "lib-openblas": {
+      "add_to_path": "yes", 
+      "local": "yes", 
+      "name": "OpenBLAS library", 
+      "sort": 30, 
+      "tags": "lib,openblas"
+    }, 
+    "opencl": {
+      "local": "yes", 
+      "name": "OpenCL library", 
+      "sort": 20, 
+      "tags": "lib,opencl"
+    }
+  }, 
+  "end_full_path": {
+    "android": "lib$#sep#$libclblast.so", 
+    "linux": "lib/libclblast.so", 
+    "mingw": "lib\\libclblast.so", 
+    "win": "lib\\libclblast.so"
+  }, 
+  "need_cpu_info": "yes", 
+  "only_for_host_os_tags": [
+    "linux"
+  ], 
+  "only_for_target_os_tags": [
+    "linux"
+  ], 
+  "process_script": "install", 
+  "soft_uoa": "7b81c6ad862f4b38", 
+  "suggested_path": "lib-clblast-test-vs-openblas", 
+  "tags": [
+    "lib", 
+    "blas", 
+    "opencl-blas", 
+    "clblast", 
+    "test-vs-openblas", 
+    "vtrunk", 
+    "vdev"
+  ]
+}
