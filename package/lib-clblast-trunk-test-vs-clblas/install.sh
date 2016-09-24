@@ -20,7 +20,8 @@ export CLBLAST_TST_LOG=${INSTALL_DIR}/tst.log
 export CLBLAST_BLD_LOG=${INSTALL_DIR}/bld.log
 
 # NB: List of pending patches (PRs or otherwise) to this CLBlast branch.
-export CLBLAST_PR101_PATCH=${PACKAGE_DIR}/clblast-pr101.patch
+# When no pending patches, comment out the patch command below.
+#export CLBLAST_PR101_PATCH=${PACKAGE_DIR}/clblast-pr101.patch
 
 # NB: Must be set before running CMake.
 export CLBLAST_PLATFORM=${CK_COMPUTE_PLATFORM_ID}
@@ -50,7 +51,7 @@ fi
 echo ""
 echo "Patching the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 cd ${CLBLAST_SRC_DIR}
-patch -p1 < ${CLBLAST_PR101_PATCH}
+#patch -p1 < ${CLBLAST_PR101_PATCH}
 if [ "${?}" != "0" ] ; then
   echo "Error: Patching the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
   exit 1
