@@ -60,7 +60,7 @@ fi
 echo ""
 echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "Logging into '${CLBLAST_BLD_LOG}' ..."
-touch ${CLBLAST_BLD_LOG}
+touch ${CLBLAST_BLD_LOG}; sleep 0.5
 
 echo "** DATE **" >> ${CLBLAST_BLD_LOG}
 date >> ${CLBLAST_BLD_LOG}
@@ -99,7 +99,7 @@ echo "Installed the '${CLBLAST_BRANCH}' branch of CLBlast into '${INSTALL_DIR}'.
 echo ""
 echo "Testing the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "Logging into '${CLBLAST_TST_LOG}' ..."
-touch ${CLBLAST_TST_LOG}
+touch ${CLBLAST_TST_LOG}; sleep 0.5
 
 make alltests >>${CLBLAST_TST_LOG} 2>&1
 if [ "${?}" != "0" ] ; then

@@ -42,7 +42,7 @@ fi
 ################################################################################
 echo
 echo "Logging into '${OPENBLAS_BLD_LOG}' ..."
-touch ${OPENBLAS_BLD_LOG}
+touch ${OPENBLAS_BLD_LOG}; sleep 0.5
 
 echo "** DATE **" >> ${OPENBLAS_BLD_LOG}
 date >> ${OPENBLAS_BLD_LOG}

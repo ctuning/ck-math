@@ -42,7 +42,7 @@ fi
 ################################################################################
 echo
 echo "Logging into '${CLBLAST_BLD_LOG}' ..."
-touch ${CLBLAST_BLD_LOG}
+touch ${CLBLAST_BLD_LOG}; sleep 0.5
 
 echo "** DATE **" >> ${CLBLAST_BLD_LOG}
 date >> ${CLBLAST_BLD_LOG}
