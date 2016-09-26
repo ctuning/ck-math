@@ -20,11 +20,12 @@ export CLBLAST_TST_LOG=${INSTALL_DIR}/tst.log
 export CLBLAST_BLD_LOG=${INSTALL_DIR}/bld.log
 
 # NB: List of pending patches (PRs or otherwise) to this CLBlast branch.
-export CLBLAST_PR101_PATCH=${PACKAGE_DIR}/clblast-pr101.patch
+# When no pending patches, comment out the patch command below.
+#export CLBLAST_PR101_PATCH=${PACKAGE_DIR}/clblast-pr101.patch
 
-# Must be set before running CMake.
-export CLBLAST_PLATFORM=${CK_COMPUTE_PLATFORM_ID}
-export CLBLAST_DEVICE=${CK_COMPUTE_DEVICE_ID}
+# NB: Must be set before running CMake.
+export CLBLAST_PLATFORM=${CK_COMPUTE_PLATFORM_ID:-0}
+export CLBLAST_DEVICE=${CK_COMPUTE_DEVICE_ID:-0}
 
 ################################################################################
 echo ""
@@ -50,7 +51,7 @@ fi
 echo ""
 echo "Patching the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 cd ${CLBLAST_SRC_DIR}
-patch -p1 < ${CLBLAST_PR101_PATCH}
+#patch -p1 < ${CLBLAST_PR101_PATCH}
 if [ "${?}" != "0" ] ; then
   echo "Error: Patching the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
   exit 1
@@ -58,8 +59,9 @@ fi
 
 ################################################################################
 echo ""
-echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "Logging into '${CLBLAST_BLD_LOG}' ..."
+
+rm -rf ${CLBLAST_BLD_DIR}; mkdir -p ${CLBLAST_BLD_DIR}
 touch ${CLBLAST_BLD_LOG}; sleep 0.5
 
 echo "** DATE **" >> ${CLBLAST_BLD_LOG}
@@ -68,11 +70,12 @@ date >> ${CLBLAST_BLD_LOG}
 echo "** SET **" >> ${CLBLAST_BLD_LOG}
 set >> ${CLBLAST_BLD_LOG}
 
-rm -rf ${CLBLAST_BLD_DIR}
-mkdir -p ${CLBLAST_BLD_DIR}
-cd ${CLBLAST_BLD_DIR}
-
+################################################################################
+echo ""
+echo "Configuring the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "** CMAKE **" >> ${CLBLAST_BLD_LOG}
+
+cd ${CLBLAST_BLD_DIR}
 cmake ${CLBLAST_SRC_DIR} \
   -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
   -DCMAKE_C_COMPILER=${CK_CC} -DCMAKE_CXX_COMPILER=${CK_CXX} \
@@ -83,8 +86,17 @@ cmake ${CLBLAST_SRC_DIR} \
   -DCBLAS_INCLUDE_DIRS:PATH=${CK_ENV_LIB_OPENBLAS_INCLUDE} \
   -DCBLAS_LIBRARIES:FILEPATH=${CK_ENV_LIB_OPENBLAS_LIB}/${CK_ENV_LIB_OPENBLAS_DYNAMIC_NAME} \
   >>${CLBLAST_BLD_LOG} 2>&1
+if [ "${?}" != "0" ] ; then
+  echo "Error: Configuring the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
+  exit 1
+fi
 
+################################################################################
+echo ""
+echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "** MAKE **" >> ${CLBLAST_BLD_LOG}
+
+cd ${CLBLAST_BLD_DIR}
 make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} install >>${CLBLAST_BLD_LOG} 2>&1
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
