@@ -24,8 +24,8 @@ export CLBLAST_BLD_LOG=${INSTALL_DIR}/bld.log
 export CLBLAST_PR103_PATCH=${PACKAGE_DIR}/clblast-pr103.patch
 
 # NB: Must be set before running CMake.
-export CLBLAST_PLATFORM=${CK_COMPUTE_PLATFORM_ID}
-export CLBLAST_DEVICE=${CK_COMPUTE_DEVICE_ID}
+export CLBLAST_PLATFORM=${CK_COMPUTE_PLATFORM_ID:-0}
+export CLBLAST_DEVICE=${CK_COMPUTE_DEVICE_ID:-0}
 
 ################################################################################
 echo ""
