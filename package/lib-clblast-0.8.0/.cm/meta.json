@@ -1,52 +1,55 @@
 {
   "customize": {
-    "extra_dir": "", 
+    "extra_dir": "",
     "install_env": {
-      "CLBLAST_TAG": "0.8.0", 
+      "CLBLAST_TAG": "0.8.0",
       "CLBLAST_URL": "https://github.com/CNugteren/CLBlast"
-    }, 
+    },
     "version": "0.8.0",
     "use_git_revision":"yes",
     "git_src_dir":"src"
-  }, 
+  },
   "deps": {
     "cmake": {
-      "local": "yes", 
-      "name": "cmake", 
-      "sort": 5, 
+      "local": "yes",
+      "name": "cmake",
+      "sort": 5,
       "tags": "tool,cmake"
-    }, 
+    },
     "compiler": {
-      "local": "yes", 
-      "name": "C++ compiler", 
-      "sort": 10, 
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
       "tags": "compiler,lang-cpp"
-    }, 
+    },
     "opencl": {
-      "local": "yes", 
-      "name": "OpenCL library", 
-      "sort": 20, 
+      "local": "yes",
+      "name": "OpenCL library",
+      "sort": 20,
       "tags": "lib,opencl"
     }
-  }, 
+  },
   "end_full_path": {
-    "android": "lib$#sep#$libclblast.so", 
-    "linux": "lib/libclblast.so", 
-    "mingw": "lib\\libclblast.so", 
+    "android": "lib$#sep#$libclblast.so",
+    "linux": "lib/libclblast.so",
+    "mingw": "lib\\libclblast.so",
     "win": "lib\\libclblast.so"
-  }, 
-  "need_cpu_info": "yes", 
+  },
+  "need_cpu_info": "yes",
   "only_for_host_os_tags": [
-    "windows", 
+    "windows",
     "linux"
-  ], 
+  ],
   "only_for_target_os_tags": [
-    "windows", 
+    "windows",
     "linux"
-  ], 
-  "process_script": "process", 
-  "soft_uoa": "7b81c6ad862f4b38", 
-  "suggested_path": "lib-clblast", 
+  ],
+  "process_script": "install",
+  "use_scripts_from_another_entry": {
+    "data_uoa": "9426bb100e41d57c"
+  },
+  "soft_uoa": "7b81c6ad862f4b38",
+  "suggested_path": "lib-clblast",
   "tags": [
     "lib",
     "blas",
