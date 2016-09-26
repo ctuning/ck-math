@@ -42,6 +42,8 @@ fi
 ################################################################################
 echo
 echo "Logging into '${OPENBLAS_BLD_LOG}' ..."
+
+mkdir -p ${OPENBLAS_BLD_DIR}
 touch ${OPENBLAS_BLD_LOG}; sleep 0.5
 
 echo "** DATE **" >> ${OPENBLAS_BLD_LOG}
@@ -54,9 +56,6 @@ set >> ${OPENBLAS_BLD_LOG}
 echo ""
 echo "Building the '${OPENBLAS_TAG}' release of OpenBLAS ..."
 echo "** BUILD **" >> ${OPENBLAS_BLD_LOG}
-
-mkdir -p ${OPENBLAS_BLD_DIR}
-cd ${OPENBLAS_BLD_DIR}
 
 # Configure ARM target.
 MACHINE=$(uname -m)
@@ -85,6 +84,7 @@ export FC=${CK_FC}
 export AR=${CK_AR}
 
 # Building OpenBLAS produces lots of output which gets redirected to file.
+cd ${OPENBLAS_BLD_DIR}
 make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} ${TARGET} >>${OPENBLAS_BLD_LOG} 2>&1
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${OPENBLAS_TAG}' release of OpenBLAS failed!"
