@@ -59,8 +59,9 @@ fi
 
 ################################################################################
 echo ""
-echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "Logging into '${CLBLAST_BLD_LOG}' ..."
+
+rm -rf ${CLBLAST_BLD_DIR}; mkdir -p ${CLBLAST_BLD_DIR}
 touch ${CLBLAST_BLD_LOG}; sleep 0.5
 
 echo "** DATE **" >> ${CLBLAST_BLD_LOG}
@@ -69,11 +70,12 @@ date >> ${CLBLAST_BLD_LOG}
 echo "** SET **" >> ${CLBLAST_BLD_LOG}
 set >> ${CLBLAST_BLD_LOG}
 
-rm -rf ${CLBLAST_BLD_DIR}
-mkdir -p ${CLBLAST_BLD_DIR}
-cd ${CLBLAST_BLD_DIR}
-
+################################################################################
+echo ""
+echo "Configuring the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "** CMAKE **" >> ${CLBLAST_BLD_LOG}
+
+cd ${CLBLAST_BLD_DIR}
 cmake ${CLBLAST_SRC_DIR} \
   -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
   -DCMAKE_C_COMPILER=${CK_CC} -DCMAKE_CXX_COMPILER=${CK_CXX} \
@@ -84,8 +86,17 @@ cmake ${CLBLAST_SRC_DIR} \
   -DCLBLAS_INCLUDE_DIRS:PATH=${CK_ENV_LIB_CLBLAS_INCLUDE} \
   -DCLBLAS_LIBRARIES:FILEPATH=${CK_ENV_LIB_CLBLAS_LIB}/${CK_ENV_LIB_CLBLAS_DYNAMIC_NAME} \
   >>${CLBLAST_BLD_LOG} 2>&1
+if [ "${?}" != "0" ] ; then
+  echo "Error: Configuring the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
+  exit 1
+fi
 
+###############################################################################
+echo ""
+echo "Building the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 echo "** MAKE **" >> ${CLBLAST_BLD_LOG}
+
+cd ${CLBLAST_BLD_DIR}
 make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} install >>${CLBLAST_BLD_LOG} 2>&1
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
