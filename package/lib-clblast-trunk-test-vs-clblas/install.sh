@@ -21,7 +21,7 @@ export CLBLAST_BLD_LOG=${INSTALL_DIR}/bld.log
 
 # NB: List of pending patches (PRs or otherwise) to this CLBlast branch.
 # When no pending patches, comment out the patch command below.
-export CLBLAST_PR103_PATCH=${PACKAGE_DIR}/clblast-pr102.patch
+export CLBLAST_PR102_PATCH=${PACKAGE_DIR}/clblast-pr102.patch
 
 # NB: Must be set before running CMake.
 export CLBLAST_PLATFORM=${CK_COMPUTE_PLATFORM_ID:-0}
