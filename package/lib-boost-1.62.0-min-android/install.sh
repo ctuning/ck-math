@@ -51,25 +51,23 @@ fi
 echo ""
 echo "Cleaning ..."
 
-rm -f ${PACKAGE_FILE1}
-
-############################################################
-echo ""
-echo "Removing obj and lib directories ..."
-
 cd ${INSTALL_DIR}
 
-rm -rf obj
-rm -rf lib
+rm -f ${PACKAGE_FILE1}
 
+rm -rf install
+
+rm -rf obj
 mkdir obj
 cd obj
+
+cp -rf ${PACKAGE_DIR}/misc/* ${INSTALL_DIR}
 
 ############################################################
 echo ""
 echo "Executing cmake ..."
 
-cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/android.toolchain.cmake" \
+cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/android.toolchain.cmake" \
       -DANDROID_NDK="${CK_ANDROID_NDK_ROOT_DIR}" \
       -DCMAKE_BUILD_TYPE=Release \
       -DANDROID_ABI="${CK_ANDROID_ABI}" \
