@@ -1,0 +1,47 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "install_env": {
+      "PACKAGE_FILE":"boost_1_62_0.tar.bz2",
+      "PACKAGE_FILE1":"boost_1_62_0.tar",
+      "PACKAGE_SRC":"boost_1_62_0",
+      "PACKAGE_URL": "https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_1_62_0.tar.bz2"
+    },
+    "version": "1.62.0"
+  },
+  "deps": {
+    "cmake": {
+      "local": "yes",
+      "name": "cmake",
+      "sort": 5,
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    }
+  },
+  "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libboost_system.a"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "windows",
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "android"
+  ],
+  "process_script": "install",
+  "soft_uoa": "23949f2a32490faf",
+  "suggested_path": "lib-boost",
+  "tags": [
+    "lib",
+    "boost",
+    "v1.62.0",
+    "v1.62",
+    "v1"
+  ]
+}
