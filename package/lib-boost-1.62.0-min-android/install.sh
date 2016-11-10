@@ -20,8 +20,8 @@ cd ${INSTALL_DIR}
 echo ""
 echo "Downloading '${PACKAGE_FILE}' ..."
 
-#rm -f ${PACKAGE_FILE}
-#wget ${PACKAGE_URL}
+rm -f ${PACKAGE_FILE}
+wget ${PACKAGE_URL}
 if [ "${?}" != "0" ] ; then
   echo "Error: downloading failed!"
   exit 1
@@ -31,7 +31,7 @@ fi
 echo ""
 echo "Unbzipping ..."
 
-#bzip2 -d ${PACKAGE_FILE}
+bzip2 -d ${PACKAGE_FILE}
 if [ "${?}" != "0" ] ; then
   echo "Error: unbzipping failed!"
   exit 1
@@ -41,7 +41,7 @@ fi
 echo ""
 echo "Untarring ..."
 
-#tar xvf ${PACKAGE_FILE1}
+tar xvf ${PACKAGE_FILE1}
 if [ "${?}" != "0" ] ; then
   echo "Error: untarring failed!"
   exit 1
@@ -51,7 +51,7 @@ fi
 echo ""
 echo "Cleaning ..."
 
-#rm -f ${PACKAGE_FILE1}
+rm -f ${PACKAGE_FILE1}
 
 ############################################################
 echo ""
@@ -64,7 +64,6 @@ rm -rf lib
 
 mkdir obj
 cd obj
-
 
 ############################################################
 echo ""
@@ -87,8 +86,7 @@ fi
 echo ""
 echo "Building package ..."
 
-#make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS}
-
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS}
 if [ "${?}" != "0" ] ; then
   echo "Error: build failed!"
   exit 1
@@ -98,19 +96,10 @@ fi
 echo ""
 echo "Installing package ..."
 
-#make install/strip
-
+make install/strip
 if [ "${?}" != "0" ] ; then
   echo "Error: installation failed!"
   exit 1
 fi
-
-
-#patch -N -r - boost/thread/pthread/thread_data.hpp < ${PACKAGE_DIR}/thread_data.hpp.patch
-#if [ "${?}" != "0" ] ; then
-#  echo "Error: Patching failed!"
-#  exit 1
-#fi
-
 
 exit 0
