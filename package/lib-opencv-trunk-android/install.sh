@@ -34,11 +34,6 @@ echo "Cleaning ..."
 
 cd ${INSTALL_DIR}
 
-rm -f ${PACKAGE_FILE1}
-
-rm -rf install
-
-
 ############################################################
 echo ""
 echo "Executing cmake ..."
@@ -59,6 +54,7 @@ cmake -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
       -D BUILD_DOCS=OFF \
       -D BUILD_PERF_TESTS=OFF \
       -D BUILD_TESTS=OFF \
+      -D WITH_CAROTENE=OFF \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
       ../src
 
@@ -80,6 +76,8 @@ fi
 ############################################################
 echo ""
 echo "Installing package ..."
+
+rm -rf install
 
 make install/strip
 if [ "${?}" != "0" ] ; then
