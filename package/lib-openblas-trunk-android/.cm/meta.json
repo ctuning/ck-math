@@ -15,7 +15,7 @@
       "sort": 15,
       "tags": "lib,boost"
     },
-    "c-compiler": {
+    "compiler": {
       "add_to_path": "yes",
       "local": "yes",
       "name": "C compiler",
