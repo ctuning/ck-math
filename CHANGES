@@ -1,3 +1,5 @@
+* 2016.11.14 - added ViennaCL trunk package (CPU / OpenCL) targeting Android
+
 * 2016.11.11 - added OpenCV package for Android
              - added OpenBLAS package for Android
 

@@ -24,36 +24,10 @@ echo "Cloning ViennaCL from '${VIENNACL_URL}' ..."
 
 rm -rf ${VIENNACL_SRC_DIR}
 
-git clone ${VIENNACL_URL} --no-checkout ${VIENNACL_SRC_DIR}
+git clone ${VIENNACL_URL} ${VIENNACL_SRC_DIR}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: Cloning ViennaCL from '${VIENNACL_URL}' failed!"
-  exit 1
-fi
-
-################################################################################
-echo ""
-echo "Checking out the '${VIENNACL_TAG}' release of ViennaCL ..."
-
-cd ${VIENNACL_SRC_DIR}
-
-git checkout tags/${VIENNACL_TAG} -b ${VIENNACL_TAG}
-
-if [ "${?}" != "0" ] ; then
-  echo "Error: Checking out the '${VIENNACL_TAG}' release of ViennaCL failed!"
-  exit 1
-fi
-
-################################################################################
-echo ""
-echo "Patching the '${VIENNACL_TAG}' release of ViennaCL ..."
-
-cd ${VIENNACL_SRC_DIR}
-
-patch -p1 < ${VIENNACL_PATCH}
-
-if [ "${?}" != "0" ] ; then
-  echo "Error: Patching the '${VIENNACL_TAG}' release of ViennaCL failed!"
   exit 1
 fi
 
@@ -69,8 +43,12 @@ cmake ${VIENNACL_SRC_DIR} \
   -DBUILD_TESTING=OFF \
   -DBUILD_EXAMPLES=OFF \
   -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} \
-  -DCMAKE_C_COMPILER="${CK_CC}" -DCMAKE_CXX_COMPILER="${CK_CXX}" \
+  -DCMAKE_C_COMPILER="${CK_CC_PATH_FOR_CMAKE}" \
+  -DCMAKE_CXX_COMPILER="${CK_CXX_PATH_FOR_CMAKE}" \
+  -DCMAKE_C_FLAGS="${CK_CXX_FLAGS_FOR_CMAKE}" \
+  -DCMAKE_CXX_FLAGS="${CK_CXX_FLAGS_FOR_CMAKE}" \
   -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
+  -DENABLE_OPENCL=${CK_INSTALL_ENABLE_OPENCL} \
   -DBOOSTPATH=${CK_ENV_LIB_BOOST_LIB}
 
 if [ "$?" != "0" ]; then
@@ -83,8 +61,7 @@ fi
 echo ""
 echo "Building ViennaCL..."
 
-cmake --build ${VIENNACL_OBJ_DIR}
-#make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS}
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS}
 
 if [ "$?" != "0" ]; then
   echo "Error: failed making ViennaCL ..."
@@ -96,8 +73,7 @@ fi
 echo ""
 echo "Installing ViennaCL..."
 
-cmake -P cmake_install.cmake
-#make install
+make install
 
 # Weirdly, the above command does not copy the library, so doing this manually...
 mkdir -p ${VIENNACL_LIB_DIR}
