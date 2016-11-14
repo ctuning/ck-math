@@ -55,8 +55,6 @@ cd ${INSTALL_DIR}
 
 rm -f ${PACKAGE_FILE1}
 
-rm -rf install
-
 rm -rf obj
 mkdir obj
 cd obj
@@ -67,7 +65,12 @@ cp -rf ${PACKAGE_DIR}/misc/* ${INSTALL_DIR}
 echo ""
 echo "Executing cmake ..."
 
-cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/android.toolchain.cmake" \
+CK_TOOLCHAIN=android.toolchain.cmake
+if [ "${CK_ENV_LIB_CRYSTAX_LIB}" != "" ] ; then
+  CK_TOOLCHAIN=toolchain.cmake
+fi
+
+cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/${CK_TOOLCHAIN}" \
       -DANDROID_NDK="${CK_ANDROID_NDK_ROOT_DIR}" \
       -DCMAKE_BUILD_TYPE=Release \
       -DANDROID_ABI="${CK_ANDROID_ABI}" \
@@ -93,6 +96,8 @@ fi
 ############################################################
 echo ""
 echo "Installing package ..."
+
+rm -rf install
 
 make install/strip
 if [ "${?}" != "0" ] ; then

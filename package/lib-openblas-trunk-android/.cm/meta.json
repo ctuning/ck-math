@@ -12,7 +12,7 @@
     "boost": {
       "local": "yes",
       "name": "Boost C++ libraries",
-      "sort": 5,
+      "sort": 15,
       "tags": "lib,boost"
     },
     "c-compiler": {

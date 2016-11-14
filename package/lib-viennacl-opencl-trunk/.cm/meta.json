@@ -45,8 +45,7 @@
     "linux"
   ],
   "only_for_target_os_tags": [
-    "linux",
-    "android"
+    "linux"
   ],
   "process_script": "install",
   "soft_uoa": "b8319cc532802fe2",
@@ -57,8 +56,5 @@
     "opencl-blas",
     "viennacl",
     "vtrunk"
-  ],
-  "use_scripts_from_another_entry": {
-    "data_uoa": "5e4b64e5f96415a9"
-  }
+  ]
 }

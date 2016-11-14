@@ -41,7 +41,6 @@
     "linux"
   ],
   "only_for_target_os_tags": [
-    "android",
     "windows",
     "linux"
   ],
@@ -55,8 +54,5 @@
     "clblast",
     "vtrunk",
     "vdev"
-  ],
-  "use_preprocess_scripts_from_another_entry": {
-    "data_uoa": "5e4b64e5f96415a9"
-  }
+  ]
 }

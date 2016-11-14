@@ -3,17 +3,24 @@
     "extra_dir": "",
     "git_src_dir": "src",
     "install_env": {
-      "CLBLAS_URL": "https://github.com/clMathLibraries/clBLAS"
+      "CK_INSTALL_ENABLE_OPENCL": 1,
+      "VIENNACL_URL": "https://github.com/viennacl/viennacl-dev"
     },
     "use_git_revision": "yes",
     "version": "trunk"
   },
   "deps": {
+    "boost": {
+      "local": "yes",
+      "name": "Boost C++ libraries",
+      "sort": 30,
+      "tags": "lib,boost"
+    },
     "cmake": {
       "local": "yes",
-      "name": "cmake",
+      "name": "CMake tool",
       "sort": 5,
-      "tags": "tool,cmake"
+      "tags": "cmake"
     },
     "compiler": {
       "local": "yes",
@@ -29,30 +36,28 @@
     }
   },
   "end_full_path": {
-    "android": "lib$#sep#$libclBLAS.so",
-    "linux": "lib/libclBLAS.so",
-    "mingw": "lib\\libclBLAS.so",
-    "win": "lib\\libclBLAS.so"
+    "android": "lib$#sep#$libviennacl.so",
+    "linux": "lib/libviennacl.so",
+    "mingw": "lib\\libviennacl.so",
+    "win": "lib\\libviennacl.so"
   },
-  "need_cpu_info": "yes",
   "only_for_host_os_tags": [
     "linux"
   ],
   "only_for_target_os_tags": [
-    "android",
-    "linux"
+    "android"
   ],
   "process_script": "install",
-  "soft_uoa": "c24825c3cad090f1",
-  "suggested_path": "lib-clblas",
+  "soft_uoa": "b8319cc532802fe2",
+  "suggested_path": "lib-viennacl-opencl",
   "tags": [
     "lib",
     "blas",
     "opencl-blas",
-    "clblas",
+    "viennacl",
     "vtrunk"
   ],
-  "use_preprocess_scripts_from_another_entry": {
-    "data_uoa": "5e4b64e5f96415a9"
+  "use_scripts_from_another_entry": {
+    "data_uoa": "9c84a8bad0f6efff"
   }
 }

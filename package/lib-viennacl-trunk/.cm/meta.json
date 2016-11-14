@@ -39,8 +39,7 @@
     "linux"
   ],
   "only_for_target_os_tags": [
-    "linux",
-    "android"
+    "linux"
   ],
   "process_script": "install",
   "soft_uoa": "b8319cc532802fe2",
