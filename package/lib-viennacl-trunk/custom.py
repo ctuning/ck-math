@@ -82,7 +82,6 @@ def setup(i):
 
     # Set default parameters
     cd=deps['compiler']
-    ck.save_json_to_file({'json_file':'/tmp/xyz1.json','dict':cd})
 
     cdd=cd['dict']
     ce=cdd['env']
@@ -126,6 +125,13 @@ def setup(i):
        ck_cxx2+=' '+ce['CK_FLAG_PREFIX_INCLUDE']+svarb+svarb1+'CK_ENV_LIB_STDCPP_INCLUDE'+svare1+svare
     if ce.get('CK_ENV_LIB_STDCPP_INCLUDE_EXTRA','')!='':
        ck_cxx2+=' '+ce['CK_FLAG_PREFIX_INCLUDE']+svarb+svarb1+'CK_ENV_LIB_STDCPP_INCLUDE_EXTRA'+svare1+svare
+
+    # Cleaning flags
+    ck_cc2=ck_cc2.strip()
+    ck_cxx2=ck_cxx2.strip()
+
+    if ck_cc2.find(' ')<0: ck_cc2='"'+ck_cc2+'"'
+    if ck_cxx2.find(' ')<0: ck_cxx2='"'+ck_cxx2+'"'
 
     # New env variables (full path to compiler + extra flags)
     ie={}

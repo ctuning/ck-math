@@ -1,4 +1,5 @@
 * 2016.11.14 - added ViennaCL trunk package (CPU / OpenCL) targeting Android and Linux
+             - added clBLAS and clBLAST targetting Android (though problems with native NDK)
 
 * 2016.11.11 - added OpenCV package for Android
              - added OpenBLAS package for Android

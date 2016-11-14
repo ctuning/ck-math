@@ -1,15 +1,20 @@
 {
   "customize": {
     "extra_dir": "",
+    "git_src_dir": "src",
     "install_env": {
-      "CLBLAST_BRANCH": "development",
-      "CLBLAST_URL": "https://github.com/CNugteren/CLBlast"
+      "CLBLAS_URL": "https://github.com/clMathLibraries/clBLAS"
     },
-    "version": "development",
-    "use_git_revision":"yes",
-    "git_src_dir":"src"
+    "use_git_revision": "yes",
+    "version": "trunk"
   },
   "deps": {
+    "boost": {
+      "local": "yes",
+      "name": "Boost C++ libraries",
+      "sort": 30,
+      "tags": "lib,boost"
+    },
     "cmake": {
       "local": "yes",
       "name": "cmake",
@@ -30,31 +35,28 @@
     }
   },
   "end_full_path": {
-    "android": "lib$#sep#$libclblast.so",
-    "linux": "lib/libclblast.so",
-    "mingw": "lib\\libclblast.so",
-    "win": "lib\\libclblast.so"
+    "android": "lib$#sep#$libclBLAS.so",
+    "linux": "lib/libclBLAS.so",
+    "mingw": "lib\\libclBLAS.so",
+    "win": "lib\\libclBLAS.so"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
-    "windows",
     "linux"
   ],
   "only_for_target_os_tags": [
     "android",
-    "windows",
     "linux"
   ],
   "process_script": "install",
-  "soft_uoa": "7b81c6ad862f4b38",
-  "suggested_path": "lib-clblast",
+  "soft_uoa": "c24825c3cad090f1",
+  "suggested_path": "lib-clblas",
   "tags": [
     "lib",
     "blas",
     "opencl-blas",
-    "clblast",
-    "vtrunk",
-    "vdev"
+    "clblas",
+    "vtrunk"
   ],
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "5e4b64e5f96415a9"

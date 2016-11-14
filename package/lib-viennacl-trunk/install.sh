@@ -49,7 +49,7 @@ cmake ${VIENNACL_SRC_DIR} \
   -DCMAKE_CXX_FLAGS="${CK_CXX_FLAGS_FOR_CMAKE}" \
   -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
   -DENABLE_OPENCL=${CK_INSTALL_ENABLE_OPENCL} \
-  -DBOOSTPATH=${CK_ENV_LIB_BOOST_LIB}
+  -DBOOSTPATH=${CK_ENV_LIB_BOOST}
 
 if [ "$?" != "0" ]; then
   echo "Error: failed configuring ViennaCL ..."
