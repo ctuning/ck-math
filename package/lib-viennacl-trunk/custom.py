@@ -82,11 +82,11 @@ def setup(i):
 
     # Set default parameters
     cd=deps['compiler']
+    ck.save_json_to_file({'json_file':'/tmp/xyz1.json','dict':cd})
+
     cdd=cd['dict']
     ce=cdd['env']
     cep=cdd['customize']['env_prefix']
-
-    pb=ce[cep+'_BIN']
 
     ck_cc=ce['CK_CC']
     ck_cxx=ce['CK_CXX']
@@ -107,20 +107,33 @@ def setup(i):
         ck_cxx1=ck_cxx[:j].strip(' "')
         ck_cxx2=ck_cxx[j+1:].strip(' "')
 
+    # Check that path exists
+    pb=ce.get(cep,'')
+    pb_cc=os.path.join(pb,'bin',ck_cc1)
+    pb_cxx=os.path.join(pb,'bin',ck_cxx1)
+
+    if not os.path.isfile(pb_cc):
+        return {'return':1, 'error':'can\'t find full path to compiler ('+pb_cc+') - can\'t be used with this CMake-based package'}
+
+    if not os.path.isfile(pb_cxx):
+        return {'return':1, 'error':'can\'t find full path to compiler ('+pb_cxx+') - can\'t be used with this CMake-based package'}
+
     # Add other obligatory flags
     ck_cc2+=' '+svarb+svarb1+'CK_COMPILER_FLAGS_OBLIGATORY'+svare1+svare
 
-    ck_cxx2+=' '+svarb+svarb1+'CK_COMPILER_FLAGS_OBLIGATORY'+svare1+svare+ \
-             ' '+ce['CK_FLAG_PREFIX_INCLUDE']+svarb+svarb1+'CK_ENV_LIB_STDCPP_INCLUDE'+svare1+svare+ \
-             ' '+ce['CK_FLAG_PREFIX_INCLUDE']+svarb+svarb1+'CK_ENV_LIB_STDCPP_INCLUDE_EXTRA'+svare1+svare
+    ck_cxx2+=' '+svarb+svarb1+'CK_COMPILER_FLAGS_OBLIGATORY'+svare1+svare
+    if ce.get('CK_ENV_LIB_STDCPP_INCLUDE','')!='':
+       ck_cxx2+=' '+ce['CK_FLAG_PREFIX_INCLUDE']+svarb+svarb1+'CK_ENV_LIB_STDCPP_INCLUDE'+svare1+svare
+    if ce.get('CK_ENV_LIB_STDCPP_INCLUDE_EXTRA','')!='':
+       ck_cxx2+=' '+ce['CK_FLAG_PREFIX_INCLUDE']+svarb+svarb1+'CK_ENV_LIB_STDCPP_INCLUDE_EXTRA'+svare1+svare
 
     # New env variables (full path to compiler + extra flags)
     ie={}
 
-    ie['CK_CC_PATH_FOR_CMAKE']=os.path.join(pb,ck_cc1)
+    ie['CK_CC_PATH_FOR_CMAKE']=pb_cc
     ie['CK_CC_FLAGS_FOR_CMAKE']=ck_cc2
 
-    ie['CK_CXX_PATH_FOR_CMAKE']=os.path.join(pb,ck_cxx1)
+    ie['CK_CXX_PATH_FOR_CMAKE']=pb_cxx
     ie['CK_CXX_FLAGS_FOR_CMAKE']=ck_cxx2
 
     return {'return':0, 'install_env':ie}
