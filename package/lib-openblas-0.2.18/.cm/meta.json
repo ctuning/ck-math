@@ -28,7 +28,10 @@
       "local": "yes",
       "name": "GNU Fortran compiler",
       "sort": 15,
-      "tags": "compiler,gfortran"
+      "tags": "compiler,gfortran",
+      "only_for_target_os_tags": [
+        "linux","windows"
+      ] 
     }
   },
   "end_full_path": {
@@ -39,8 +42,7 @@
     "linux"
   ],
   "only_for_target_os_tags": [
-    "linux",
-    "android"
+    "linux"
   ],
   "process_script": "install",
   "soft_uoa": "252d8364ec25497b",
