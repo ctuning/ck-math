@@ -20,7 +20,7 @@
       "local": "yes",
       "name": "C compiler",
       "sort": 10,
-      "tags": "compiler,lang-c"
+      "tags": "compiler,lang-c,gcc"
     }
   },
   "end_full_path": {
