@@ -47,8 +47,9 @@ elif [ "${CK_ANDROID_ABI}" = "armeabi"  ]; then
   NO_LAPACK=1
   TARGET=ARMV5
 elif [ "${CK_ANDROID_ABI}" = "armeabi-v7a"  ]; then
+  # Problem with FP registers if ARMV7 - need to check ...
   NO_LAPACK=1
-  TARGET=ARMV7
+  TARGET=ARMV5
 elif [ "${CK_ANDROID_ABI}" = "x86"  ]; then
   NO_LAPACK=1
   TARGET=ATOM
