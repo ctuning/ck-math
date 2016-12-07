@@ -21,8 +21,8 @@ export CLBLAST_BLD_DIR=${INSTALL_DIR}/bld
 ################################################################################
 echo ""
 echo "Cloning CLBlast from '${CLBLAST_URL}' ..."
-#rm -rf ${CLBLAST_SRC_DIR}
-#git clone ${CLBLAST_URL} --no-checkout ${CLBLAST_SRC_DIR}
+rm -rf ${CLBLAST_SRC_DIR}
+git clone ${CLBLAST_URL} --no-checkout ${CLBLAST_SRC_DIR}
 if [ "${?}" != "0" ] ; then
   echo "Error: Cloning CLBlast from '${CLBLAST_URL}' failed!"
   exit 1
@@ -32,7 +32,7 @@ fi
 echo ""
 echo "Checking out the '${CLBLAST_BRANCH}' branch of CLBlast ..."
 cd ${CLBLAST_SRC_DIR}
-#git checkout ${CLBLAST_BRANCH}
+git checkout ${CLBLAST_BRANCH}
 if [ "${?}" != "0" ] ; then
   echo "Error: Checking out the '${CLBLAST_BRANCH}' branch of CLBlast failed!"
   exit 1
