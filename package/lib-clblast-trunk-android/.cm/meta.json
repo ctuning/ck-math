@@ -23,16 +23,14 @@
     },
     "opencl": {
       "local": "yes",
+      "skip_default": "yes",
       "name": "OpenCL library",
       "sort": 20,
       "tags": "lib,opencl"
     }
   },
   "end_full_path": {
-    "android": "lib$#sep#$libclblast.so",
-    "linux": "lib/libclblast.so",
-    "mingw": "lib\\libclblast.so",
-    "win": "lib\\libclblast.so"
+    "android": "install$#sep#$lib$#sep#$libclblast.so"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
