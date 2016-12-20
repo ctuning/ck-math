@@ -50,5 +50,9 @@
     "opencl-blas",
     "viennacl",
     "vtrunk"
-  ]
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
+  }
 }
