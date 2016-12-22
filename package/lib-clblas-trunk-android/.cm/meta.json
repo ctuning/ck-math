@@ -11,6 +11,7 @@
   "deps": {
     "boost": {
       "local": "yes",
+      "skip_default": "yes",
       "name": "Boost C++ libraries",
       "sort": 30,
       "tags": "lib,boost"
@@ -29,6 +30,7 @@
     },
     "opencl": {
       "local": "yes",
+      "skip_default": "yes",
       "name": "OpenCL library",
       "sort": 20,
       "tags": "lib,opencl"

@@ -13,6 +13,7 @@
     "boost": {
       "local": "yes",
       "name": "Boost C++ libraries",
+      "skip_default": "yes",
       "sort": 30,
       "tags": "lib,boost"
     },
