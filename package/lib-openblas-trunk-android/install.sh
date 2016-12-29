@@ -30,14 +30,22 @@ fi
 
 ############################################################
 echo ""
-echo "Cleaning ..."
+echo "Patching ..."
 
-cd ${INSTALL_DIR}
-cd src
+cd ${INSTALL_DIR}/src
+patch -p1 < ${PACKAGE_DIR}/misc/patch
+
+if [ "${?}" != "0" ] ; then
+  echo "Error: cloning package failed!"
+  exit 1
+fi
 
 ############################################################
 echo ""
 echo "Building ..."
+
+cd ${INSTALL_DIR}
+cd src
 
 if [ "${CK_ANDROID_ABI}" = "arm64-v8a"  ]; then
   NO_LAPACK=${NO_LAPACK:-1}
@@ -46,7 +54,7 @@ elif [ "${CK_ANDROID_ABI}" = "armeabi"  ]; then
   NO_LAPACK=1
   TARGET=ARMV5
 elif [ "${CK_ANDROID_ABI}" = "armeabi-v7a"  ]; then
-  # Problem with FP registers if ARMV7 - need to check ...
+  # ARMV7 can be used only with hardfp and neon - see later
   NO_LAPACK=1
   TARGET=ARMV5
 elif [ "${CK_ANDROID_ABI}" = "x86"  ]; then
@@ -65,15 +73,33 @@ if [ "${CK_HAS_OPENMP}" = "0"  ]; then
   CK_OPENMP=0
 fi
 
+############################################################
+# Check extra stuff
+EXTRA_FLAGS=""
+
+if [ "${CK_CPU_ARM_NEON}" == "ON" ] ; then
+  EXTRA_FLAGS=" $EXTRA_FLAGS -mfpu=neon"
+  TARGET=ARMV7
+fi
+
+if [ "${CK_CPU_ARM_VFPV3}" == "ON" ] ; then
+  EXTRA_FLAGS=" $EXTRA_FLAGS -mfpu=vfpv3"
+  TARGET=ARMV7
+fi
+
 make VERBOSE=1 -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} \
-     CC="${CK_CC} ${CK_COMPILER_FLAGS_OBLIGATORY}" \
+     CC="${CK_CC} ${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_CC_FLAGS_FOR_CMAKE} ${CK_CC_FLAGS_ANDROID_TYPICAL} ${EXTRA_FLAGS}" \
      AR="${CK_AR}" \
      FC="no-fc" \
      CROSS_SUFFIX=${CK_ENV_COMPILER_GCC_BIN}/${CK_COMPILER_PREFIX} \
-     HOSTCC=gcc USE_THREAD=1 NUM_THREADS=8 USE_OPENMP=${CK_OPENMP} \
+     HOSTCC=gcc \
+     USE_THREAD=1 \
+     NUM_THREADS=8 \
+     USE_OPENMP=${CK_OPENMP} \
      NO_LAPACK=$NO_LAPACK \
      TARGET=$TARGET \
-     BINARY=${CK_CPU_BITS}
+     BINARY=${CK_CPU_BITS} \
+     CK_COMPILE=ON \
 
 if [ "${?}" != "0" ] ; then
   echo "Error: cmake failed!"

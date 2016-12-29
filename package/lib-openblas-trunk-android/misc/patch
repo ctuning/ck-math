@@ -1,0 +1,19 @@
+diff -ruN src/Makefile.arm src.new/Makefile.arm
+--- src/Makefile.arm	2016-12-29 18:04:04.651766212 +0100
++++ src.new/Makefile.arm	2016-12-29 17:58:28.000000000 +0100
+@@ -10,6 +10,7 @@
+ endif
+ 
+ ifeq ($(CORE), ARMV7)
++ifneq ($(CK_COMPILE), ON)
+ ifeq ($(OSNAME), Android)
+ CCOMMON_OPT += -marm -mfpu=neon  -mfloat-abi=hard -march=armv7-a -Wl,--no-warn-mismatch xxx
+ FCOMMON_OPT += -marm -mfpu=neon  -mfloat-abi=hard -march=armv7-a -Wl,--no-warn-mismatch xxx
+@@ -18,6 +19,7 @@
+ FCOMMON_OPT += -marm -mfpu=vfpv3  -mfloat-abi=hard -march=armv7-a
+ endif
+ endif
++endif
+ 
+ ifeq ($(CORE), ARMV6)
+ CCOMMON_OPT += -marm -mfpu=vfp -mfloat-abi=hard  -march=armv6
