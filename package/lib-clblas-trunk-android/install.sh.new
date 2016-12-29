@@ -23,8 +23,8 @@ export CLBLAS_INSTALL_DIR=${INSTALL_DIR}
 echo ""
 echo "Cloning clBLAS from '${CLBLAS_URL}' ..."
 
-rm -rf ${CLBLAS_SRC_DIR}
-git clone ${CLBLAS_URL} ${CLBLAS_SRC_DIR}
+#rm -rf ${CLBLAS_SRC_DIR}
+#git clone ${CLBLAS_URL} ${CLBLAS_SRC_DIR}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: Cloning clBLAS from '${CLBLAS_URL}' failed!"
@@ -36,7 +36,7 @@ echo ""
 echo "Patching the '${CLBLAS_TAG}' release of clBLAS ..."
 cd ${CLBLAS_SRC_DIR}
 
-patch -p1 < ${CLBLAS_PATCH_PATH}
+#patch -p1 < ${CLBLAS_PATCH_PATH}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: Patching the '${CLBLAS_TAG}' release of clBLAS failed!"

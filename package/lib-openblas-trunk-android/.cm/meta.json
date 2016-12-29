@@ -21,7 +21,7 @@
       "local": "yes",
       "name": "C compiler",
       "sort": 10,
-      "tags": "compiler,lang-c,gcc"
+      "tags": "compiler,lang-c"
     }
   },
   "end_full_path": {

@@ -55,44 +55,54 @@ cd ${INSTALL_DIR}
 
 rm -f ${PACKAGE_FILE1}
 
-rm -rf install
-mkdir install
+rm -rf obj
+mkdir obj
+cd obj
+
+cp -rf ${PACKAGE_DIR}/misc/* ${INSTALL_DIR}
 
 ############################################################
 echo ""
-echo "Executing boostrap ..."
+echo "Executing cmake ..."
 
-cd ${INSTALL_DIR}/boost_1_62_0
-./bootstrap.sh
+CK_TOOLCHAIN=android.toolchain.cmake
+if [ "${CK_ENV_LIB_CRYSTAX_LIB}" != "" ] ; then
+  CK_TOOLCHAIN=toolchain.cmake
+fi
+
+cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/${CK_TOOLCHAIN}" \
+      -DANDROID_NDK="${CK_ANDROID_NDK_ROOT_DIR}" \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DANDROID_ABI="${CK_ANDROID_ABI}" \
+      -DANDROID_NATIVE_API_LEVEL=${CK_ANDROID_API_LEVEL} \
+      -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
+      ..
+
 if [ "${?}" != "0" ] ; then
   echo "Error: cmake failed!"
   exit 1
 fi
 
 ############################################################
-# Check extra stuff
-EXTRA_FLAGS=""
+echo ""
+echo "Building package ..."
 
-if [ "${CK_CPU_ARM_NEON}" == "ON" ] ; then
-  EXTRA_FLAGS="$EXTRA_FLAGS -mfpu=neon"
-fi
-
-if [ "${CK_CPU_ARM_VFPV3}" == "ON" ] ; then
-  EXTRA_FLAGS="$EXTRA_FLAGS -mfpu=vfpv3"
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS}
+if [ "${?}" != "0" ] ; then
+  echo "Error: build failed!"
+  exit 1
 fi
 
 ############################################################
 echo ""
-echo "Building (can be very long) ..."
+echo "Installing package ..."
 
-export BOOST_BUILD_PATH=$INSTALL_DIR/install
-echo "using gcc : arm : ${CK_CXX} ${CK_CXX_FLAGS_FOR_CMAKE} ${CK_CXX_FLAGS_ANDROID_TYPICAL} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $BOOST_BUILD_PATH/user-config.jam
+rm -rf install
 
-./b2 install toolset=gcc-arm target-os=android -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} link=static --without-mpi --prefix=${BOOST_BUILD_PATH}
-# Ignore exit since some libs are not supported for Android ...
-#if [ "${?}" != "0" ] ; then
-#  echo "Error: cmake failed!"
-#  exit 1
-#fi
+make install/strip
+if [ "${?}" != "0" ] ; then
+  echo "Error: installation failed!"
+  exit 1
+fi
 
 exit 0

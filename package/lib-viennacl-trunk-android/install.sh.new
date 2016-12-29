@@ -22,8 +22,8 @@ export VIENNACL_PATCH=${PACKAGE_DIR}/181.patch
 echo ""
 echo "Cloning ViennaCL from '${VIENNACL_URL}' ..."
 
-rm -rf ${VIENNACL_SRC_DIR}
-git clone ${VIENNACL_URL} ${VIENNACL_SRC_DIR}
+#rm -rf ${VIENNACL_SRC_DIR}
+#git clone ${VIENNACL_URL} ${VIENNACL_SRC_DIR}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: Cloning ViennaCL from '${VIENNACL_URL}' failed!"
@@ -54,10 +54,9 @@ cmake -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
       -DCMAKE_EXE_LINKER_LIBS="${CK_LINKER_LIBS_ANDROID_TYPICAL}" \
       -DBUILD_TESTING=OFF \
       -DBUILD_EXAMPLES=OFF \
+      -DSUFFIX_LIB=/ \
       -DENABLE_OPENCL=${CK_INSTALL_ENABLE_OPENCL} \
       -DENABLE_OPENMP=${CK_OPENMP} \
-      -DBOOSTPATH=${CK_ENV_LIB_BOOST} \
-      -DBOOST_ROOT=${CK_ENV_LIB_BOOST_INCLUDE} \
       -DBoost_ADDITIONAL_VERSIONS="1.62" \
       -DBoost_NO_SYSTEM_PATHS=ON \
       -DBOOSTPATH=${CK_ENV_LIB_BOOST} \
@@ -69,6 +68,7 @@ cmake -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
       -DOPENCL_ROOT="${CK_ENV_LIB_OPENCL}" \
       -DOPENCL_LIBRARIES="${CK_ENV_LIB_OPENCL_LIB}/libOpenCL.so" \
       -DOPENCL_INCLUDE_DIRS="${CK_ENV_LIB_OPENCL_INCLUDE}" \
+      -DBoost_USE_STATIC_LIBS=ON \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
       ../src
 

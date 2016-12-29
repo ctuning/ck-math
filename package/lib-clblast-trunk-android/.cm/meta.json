@@ -16,10 +16,11 @@
       "tags": "tool,cmake"
     },
     "compiler": {
+      "duplicate_at_the_end":"yes",
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
-      "tags": "compiler,lang-cpp,gcc"
+      "tags": "compiler,lang-cpp"
     },
     "opencl": {
       "local": "yes",
@@ -49,5 +50,9 @@
     "clblast",
     "vtrunk",
     "vdev"
-  ]
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
+  }
 }

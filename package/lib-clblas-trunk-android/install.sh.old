@@ -24,6 +24,7 @@ echo ""
 echo "Cloning clBLAS from '${CLBLAS_URL}' ..."
 
 rm -rf ${CLBLAS_SRC_DIR}
+
 git clone ${CLBLAS_URL} ${CLBLAS_SRC_DIR}
 
 if [ "${?}" != "0" ] ; then
@@ -47,20 +48,16 @@ fi
 echo ""
 echo "Configuring ..."
 
-cd ${INSTALL_DIR}
 rm -rf ${CLBLAS_OBJ_DIR}
 mkdir -p ${CLBLAS_OBJ_DIR}
 cd ${CLBLAS_OBJ_DIR}
 
-cmake -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
-      -DCMAKE_C_COMPILER="${CK_CC_PATH_FOR_CMAKE}" \
-      -DCMAKE_C_FLAGS="${CK_CC_FLAGS_FOR_CMAKE} ${CK_CC_FLAGS_ANDROID_TYPICAL}" \
-      -DCMAKE_CXX_COMPILER="${CK_CXX_PATH_FOR_CMAKE}" \
-      -DCMAKE_CXX_FLAGS="${CK_CXX_FLAGS_FOR_CMAKE} ${CK_CXX_FLAGS_ANDROID_TYPICAL}" \
-      -DCMAKE_AR="${CK_AR_PATH_FOR_CMAKE}" \
-      -DCMAKE_LINKER="${CK_LD_PATH_FOR_CMAKE}" \
-      -DCMAKE_EXE_LINKER_FLAGS="${CK_LINKER_FLAGS_ANDROID_TYPICAL}" \
-      -DCMAKE_EXE_LINKER_LIBS="${CK_LINKER_LIBS_ANDROID_TYPICAL}" \
+CK_TOOLCHAIN=android.toolchain.cmake
+if [ "${CK_ENV_LIB_CRYSTAX_LIB}" != "" ] ; then
+  CK_TOOLCHAIN=toolchain.cmake
+fi
+
+cmake -DCMAKE_TOOLCHAIN_FILE="${PACKAGE_DIR}/misc/${CK_TOOLCHAIN}" \
       -DBUILD_TEST=OFF \
       -DSUFFIX_LIB=/ \
       -DBoost_ADDITIONAL_VERSIONS="1.62" \
@@ -70,14 +67,17 @@ cmake -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
       -DBOOST_LIBRARYDIR="${CK_ENV_LIB_BOOST_LIB}" \
       -DBoost_INCLUDE_DIR="${CK_ENV_LIB_BOOST_INCLUDE}" \
       -DBoost_LIBRARY_DIR="${CK_ENV_LIB_BOOST_LIB}" \
+      -DANDROID_NDK="${CK_ANDROID_NDK_ROOT_DIR}" \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DANDROID_ABI="${CK_ANDROID_ABI}" \
+      -DANDROID_NATIVE_API_LEVEL=${CK_ANDROID_API_LEVEL} \
       -DOPENCL_ROOT="${CK_ENV_LIB_OPENCL}" \
       -DOPENCL_LIBRARIES="${CK_ENV_LIB_OPENCL_LIB}/libOpenCL.so" \
       -DOPENCL_INCLUDE_DIRS="${CK_ENV_LIB_OPENCL_INCLUDE}" \
-      -DPYTHON_EXECUTABLE=`which python` \
+      -DPYTHON_EXECUTABLE=python \
+      -DANDROID_STL=gnustl_static \
       -DBoost_USE_STATIC_LIBS=ON \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
-      -DANDROID=ON \
-      -DBUILD_SHARED_LIBS=OFF \
       ../src/src
 
 if [ "${?}" != "0" ] ; then
@@ -89,8 +89,7 @@ fi
 echo ""
 echo "Building ..."
 
-make VERBOSE=1 install
-#make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} install
+make VERBOSE=1 -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} install
 if [ "${?}" != "0" ] ; then
   echo "Error: Building the '${CLBLAS_TAG}' release of clBLAS failed!"
   exit 1

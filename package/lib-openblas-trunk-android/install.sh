@@ -21,7 +21,6 @@ echo ""
 echo "Cloning package from '${PACKAGE_URL}' ..."
 
 rm -rf src
-
 git clone ${PACKAGE_URL} src
 
 if [ "${?}" != "0" ] ; then
@@ -61,11 +60,17 @@ else
   exit 1
 fi
 
-make -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} \
+CK_OPENMP=1
+if [ "${CK_HAS_OPENMP}" = "0"  ]; then
+  CK_OPENMP=0
+fi
+
+make VERBOSE=1 -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} \
      CC="${CK_CC} ${CK_COMPILER_FLAGS_OBLIGATORY}" \
-     FC="xyz" \
+     AR="${CK_AR}" \
+     FC="no-fc" \
      CROSS_SUFFIX=${CK_ENV_COMPILER_GCC_BIN}/${CK_COMPILER_PREFIX} \
-     HOSTCC=gcc USE_THREAD=1 NUM_THREADS=8 USE_OPENMP=1 \
+     HOSTCC=gcc USE_THREAD=1 NUM_THREADS=8 USE_OPENMP=${CK_OPENMP} \
      NO_LAPACK=$NO_LAPACK \
      TARGET=$TARGET \
      BINARY=${CK_CPU_BITS}
