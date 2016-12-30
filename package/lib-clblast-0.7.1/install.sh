@@ -30,13 +30,15 @@ if [ "${?}" != "0" ] ; then
 fi
 
 ################################################################################
-echo ""
-echo "Checking out the '${CLBLAST_TAG}' release of CLBlast ..."
-cd ${CLBLAST_SRC_DIR}
-git checkout tags/${CLBLAST_TAG} -b ${CLBLAST_TAG}
-if [ "${?}" != "0" ] ; then
-  echo "Error: Checking out the '${CLBLAST_TAG}' release of CLBlast failed!"
-  exit 1
+if [ "${CLBLAST_TAG}" != "" ] ; then 
+ echo ""
+ echo "Checking out the '${CLBLAST_TAG}' release of CLBlast ..."
+ cd ${CLBLAST_SRC_DIR}
+ git checkout tags/${CLBLAST_TAG} -b ${CLBLAST_TAG}
+ if [ "${?}" != "0" ] ; then
+   echo "Error: Checking out the '${CLBLAST_TAG}' release of CLBlast failed!"
+   exit 1
+ fi
 fi
 
 ################################################################################

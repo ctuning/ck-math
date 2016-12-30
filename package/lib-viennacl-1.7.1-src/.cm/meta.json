@@ -10,10 +10,10 @@
   "deps": {
   },
   "end_full_path": {
-    "android": "viennacl$#sep#$version.hpp",
-    "linux": "viennacl/version.hpp",
-    "mingw": "viennacl\\version.hpp",
-    "win": "viennacl\\version.hpp"
+    "android": "src$#sep#$viennacl$#sep#$version.hpp",
+    "linux": "src/viennacl/version.hpp",
+    "mingw": "src\\viennacl\\version.hpp",
+    "win": "src\\viennacl\\version.hpp"
   },
   "process_script": "install",
   "soft_uoa": "f41d49bd23afa84b",

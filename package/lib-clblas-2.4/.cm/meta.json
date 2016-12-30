@@ -23,6 +23,7 @@
       "tags": "compiler,lang-cpp"
     }, 
     "opencl": {
+      "add_to_path": "yes",
       "local": "yes", 
       "name": "OpenCL library", 
       "sort": 20, 

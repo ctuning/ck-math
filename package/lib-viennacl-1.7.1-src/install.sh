@@ -13,13 +13,14 @@
 # PACKAGE_DIR
 # INSTALL_DIR
 
-export VIENNACL_SRC_DIR=${INSTALL_DIR}
+export VIENNACL_SRC_DIR=${INSTALL_DIR}/src
 export VIENNACL_PATCH=${PACKAGE_DIR}/181.patch
 
 ###############################################################################
 echo ""
 echo "Cloning ViennaCL from '${VIENNACL_URL}' ..."
 
+rm -rf ${VIENNACL_SRC_DIR}
 git clone ${VIENNACL_URL} --no-checkout ${VIENNACL_SRC_DIR}
 
 if [ "${?}" != "0" ] ; then
