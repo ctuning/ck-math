@@ -24,7 +24,6 @@
     },
     "compiler": {
       "local": "yes",
-      "duplicate_at_the_end":"yes",
       "name": "C++ compiler",
       "sort": 10,
       "tags": "compiler,lang-cpp"

@@ -17,7 +17,6 @@
       "tags": "cmake"
     },
     "compiler": {
-      "duplicate_at_the_end":"yes",
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
