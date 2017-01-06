@@ -10,12 +10,13 @@
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "-DBUILD_ZLIB=ON",
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "-DBUILD_ZLIB=ON -DBUILD_PERF_TESTS=OFF -DBUILD_WITH_STATIC_CRT=OFF -DBUILD_PACKAGE=OFF -DWITH_PTHREADS_PF=OFF -DBUILD_SHARED_LIBS=ON -DOpenCV_INSTALL_BINARIES_PREFIX=\"\" -DOPENCV_DLLVERSION=\"\"",
       "PACKAGE_COPY": "NO",
-      "PACKAGE_GIT": "NO",
+      "PACKAGE_GIT": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "NO",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
-      "PACKAGE_URL": "https://github.com/opencv/opencv"
+      "PACKAGE_URL": "https://github.com/opencv/opencv",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES"
     },
     "use_git_revision": "yes",
     "version": "development"
@@ -36,6 +37,7 @@
     }
   },
   "end_full_path": {
+    "linux": "install/lib/libopencv_core.a",
     "android": "install$#sep#$sdk$#sep#$native$#sep#$libs$#sep#$$#abi#$$#sep#$libopencv_core.a",
     "win": "install\\lib\\opencv_core320.lib"
   },
