@@ -1,3 +1,5 @@
+* 2017.01.08 - many fixes to support Caffe deps on Windows, Linux and Android in a unified way
+
 * 2016.12.21 - forcing package installation for libs targetting Android
                (otherwise may auto-detect local versions)
 

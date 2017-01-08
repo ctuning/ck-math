@@ -13,10 +13,10 @@
       "PACKAGE_GIT": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "NO",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
-      "PACKAGE_URL": "https://github.com/opencv/opencv",
-      "PACKAGE_SKIP_CLEAN_SRC_DIR":"YES"
+      "PACKAGE_URL": "https://github.com/opencv/opencv"
     },
     "use_git_revision": "yes",
     "version": "development"
@@ -37,8 +37,8 @@
     }
   },
   "end_full_path": {
-    "linux": "install/lib/libopencv_core.a",
     "android": "install$#sep#$sdk$#sep#$native$#sep#$libs$#sep#$$#abi#$$#sep#$libopencv_core.a",
+    "linux": "install/lib/libopencv_core.a",
     "win": "install\\lib\\opencv_core320.lib"
   },
   "need_cpu_info": "yes",

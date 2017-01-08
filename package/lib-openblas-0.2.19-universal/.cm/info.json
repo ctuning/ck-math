@@ -1,0 +1,21 @@
+{
+  "backup_data_uid": "3becaf2cd0422880",
+  "backup_module_uid": "1dc07ee0f4742028",
+  "backup_module_uoa": "package",
+  "control": {
+    "author": "Anton Lokhmotov",
+    "author_email": "anton@dividiti.com",
+    "author_webpage": "http://dividiti.com",
+    "copyright": "See CK COPYRIGHT.txt for copyright details",
+    "engine": "CK",
+    "iso_datetime": "2017-01-06T19:12:16.324892",
+    "license": "See CK LICENSE.txt for licensing details",
+    "version": [
+      "1",
+      "8",
+      "6",
+      "1"
+    ]
+  },
+  "data_name": "lib-openblas-trunk"
+}

@@ -47,20 +47,20 @@ echo "Building ..."
 cd ${INSTALL_DIR}
 cd src
 
-if [ "${CK_ANDROID_ABI}" == "arm64-v8a"  ]; then
+if [ "${CK_ANDROID_ABI}" = "arm64-v8a"  ]; then
   NO_LAPACK=${NO_LAPACK:-1}
   TARGET=ARMV8
-elif [ "${CK_ANDROID_ABI}" == "armeabi"  ]; then
+elif [ "${CK_ANDROID_ABI}" = "armeabi"  ]; then
   NO_LAPACK=1
   TARGET=ARMV5
-elif [ "${CK_ANDROID_ABI}" == "armeabi-v7a"  ]; then
+elif [ "${CK_ANDROID_ABI}" = "armeabi-v7a"  ]; then
   # ARMV7 can be used only with hardfp and neon - see later
   NO_LAPACK=1
   TARGET=ARMV5
-elif [ "${CK_ANDROID_ABI}" == "x86"  ]; then
+elif [ "${CK_ANDROID_ABI}" = "x86"  ]; then
   NO_LAPACK=1
   TARGET=ATOM
-elif [ "${CK_ANDROID_ABI}" == "x86_64"  ]; then
+elif [ "${CK_ANDROID_ABI}" = "x86_64"  ]; then
   NO_LAPACK=1
   TARGET=ATOM
 else
@@ -69,7 +69,7 @@ else
 fi
 
 CK_OPENMP=1
-if [ "${CK_HAS_OPENMP}" == "0"  ]; then
+if [ "${CK_HAS_OPENMP}" = "0"  ]; then
   CK_OPENMP=0
 fi
 

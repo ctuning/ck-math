@@ -6,23 +6,25 @@
       "PACKAGE_NAME": "boost_1_62_0.tar.bz2",
       "PACKAGE_NAME1": "boost_1_62_0.tar",
       "PACKAGE_NAME2": "boost_1_62_0",
-      "PACKAGE_RENAME": "YES",
-      "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
+      "PACKAGE_RENAME": "NO",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO",
       "PACKAGE_SKIP_CLEAN_INSTALL": "YES",
       "PACKAGE_SKIP_LINUX_MAKE": "YES",
+      "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
       "PACKAGE_SUB_DIR": "boost_1_62_0",
       "PACKAGE_SUB_DIR1": "boost_1_62_0",
-      "PACKAGE_UNBZIP": "NO",
-      "PACKAGE_UNTAR": "NO",
+      "PACKAGE_UNBZIP": "YES",
+      "PACKAGE_UNTAR": "YES",
       "PACKAGE_UNTAR_SKIP_ERROR_WIN": "YES",
       "PACKAGE_URL": "https://sourceforge.net/projects/boost/files/boost/1.62.0",
-      "PACKAGE_WGET": "NO"
+      "PACKAGE_WGET": "YES"
     },
     "version": "1.62.0"
   },
   "deps": {
     "cmake": {
       "local": "yes",
+      "force_target_as_host": "yes",
       "name": "cmake",
       "sort": 5,
       "tags": "tool,cmake"
@@ -35,7 +37,7 @@
     }
   },
   "end_full_path": {
-    "win": "install\\lib\\libboost_system.lib",
+    "win": "install\\lib\\boost_system-mt.lib",
     "linux": "install/lib/libboost_system.a",
     "android": "install$#sep#$lib$#sep#$libboost_system.a"
   },
