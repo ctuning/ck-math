@@ -12,11 +12,11 @@
 #  Check extra stuff
 
 if [ "${CK_ARMEABI_V7A}" == "ON" ] ; then
-  export CMAKE_EXTRA="$CMAKE_EXTRA -DARMEABI_V7A=ON"
+  export CK_CMAKE_EXTRA="$CK_CMAKE_EXTRA -DARMEABI_V7A=ON"
 fi
 
 if [ "${CK_ARMEABI_V7A_HARD}" == "ON" ] ; then
-  export CMAKE_EXTRA="$CMAKE_EXTRA -DARMEABI_V7A_HARD=ON"
+  export CK_CMAKE_EXTRA="$CK_CMAKE_EXTRA -DARMEABI_V7A_HARD=ON"
 fi
 
 export CK_CMAKE_EXTRA="${CK_CMAKE_EXTRA} \
