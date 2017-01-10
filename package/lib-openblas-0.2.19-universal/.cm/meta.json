@@ -19,7 +19,7 @@
       "PACKAGE_URL": "https://github.com/xianyi/OpenBLAS"
     },
     "use_git_revision": "yes",
-    "version": "development"
+    "version": "0.2.19"
   },
   "deps": {
     "compiler": {
@@ -68,7 +68,9 @@
     "blas",
     "cblas",
     "openblas",
-    "vtrunk"
+    "v0.2.19",
+    "v0.2",
+    "v0"
   ],
   "use_scripts_from_another_entry": {
     "data_uoa": "cd9ccc74060b3d18",
