@@ -49,6 +49,7 @@ cmake -DCMAKE_BUILD_TYPE=${CK_ENV_CMAKE_BUILD_TYPE:-Release} \
       -DOPENCL_LIBRARIES="${CK_ENV_LIB_OPENCL_LIB}/libOpenCL.so" \
       -DOPENCL_INCLUDE_DIRS="${CK_ENV_LIB_OPENCL_INCLUDE}" \
       -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}/install" \
+      -DBUILD_SHARED_LIBS=OFF \
       ../src
 
 ################################################################################

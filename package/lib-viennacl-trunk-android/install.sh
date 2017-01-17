@@ -16,6 +16,7 @@
 export VIENNACL_SRC_DIR=${INSTALL_DIR}/src
 export VIENNACL_OBJ_DIR=${INSTALL_DIR}/obj
 export VIENNACL_LIB_DIR=${INSTALL_DIR}/lib
+export VIENNACL_INCLUDE_DIR=${INSTALL_DIR}/include
 export VIENNACL_PATCH=${PACKAGE_DIR}/181.patch
 
 ################################################################################
@@ -105,3 +106,7 @@ if [ "$?" != "0" ]; then
   read -p "Press any key to continue!"
   exit $?
 fi
+
+mkdir -p
+cp -avr ${VIENNACL_SRC_DIR} ${VIENNACL_INCLUDE_DIR}
+
