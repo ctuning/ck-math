@@ -3,7 +3,7 @@
     "extra_dir": "",
     "git_src_dir": "src",
     "install_env": {
-      "CLBLAST_URL": "https://github.com/CNugteren/CLBlast"
+      "CLBLAST_URL": "https://github.com/DVEfremov/CLBlast"
     },
     "use_git_revision": "yes",
     "version": "development"
@@ -30,7 +30,7 @@
     }
   },
   "end_full_path": {
-    "android": "install$#sep#$lib$#sep#$libclblast.so"
+    "android": "install$#sep#$lib$#sep#$libclblast.a"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
