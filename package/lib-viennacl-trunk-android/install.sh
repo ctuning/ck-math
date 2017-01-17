@@ -107,6 +107,5 @@ if [ "$?" != "0" ]; then
   exit $?
 fi
 
-mkdir -p
 cp -avr ${VIENNACL_SRC_DIR} ${VIENNACL_INCLUDE_DIR}
 
