@@ -1,0 +1,37 @@
+{
+  "check_exit_status": "yes",
+  "customize": {
+    "extra_dir": "build",
+    "git_src_dir": "src",
+    "install_env": {
+      "PACKAGE_URL": "https://github.com/tiny-dnn/tiny-dnn"
+    },
+    "opt_version": "1.0",
+    "use_git_revision": "yes",
+    "version": "trunk"
+  },
+  "deps": {},
+  "end_full_path": {
+    "android": "src$#sep#$tiny_dnn$#sep#$/tiny_dnn.h",
+    "linux": "src/tiny_dnn/tiny_dnn.h",
+    "mingw": "src/tiny_dnn/tiny_dnn.h",
+    "win": "src\\tiny_dnn\\tiny_dnn.h"
+  },
+  "only_for_host_os_tags": [
+    "linux",
+    "windows"
+  ],
+  "only_for_target_os_tags": [
+    "linux",
+    "android",
+    "windows"
+  ],
+  "process_script": "process",
+  "soft_uoa": "954bc671f0a5737d",
+  "suggested_path": "lib-tiny-dnn",
+  "tags": [
+    "lib",
+    "dnn",
+    "tiny-dnn"
+  ]
+}

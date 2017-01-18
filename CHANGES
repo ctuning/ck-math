@@ -1,3 +1,5 @@
+* 2017.01.18 - added support for libDNN, moved tiny-dnn here
+
 * 2017.01.17 - added support for compiling ViennaCL (CPU/OpenCL) on Windows
 
 * 2017.01.08 - many fixes to support Caffe deps on Windows, Linux and Android in a unified way
