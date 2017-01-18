@@ -74,6 +74,7 @@
     "blas",
     "opencl-blas",
     "viennacl",
+    "vopencl",
     "vmaster"
   ],
   "use_preprocess_scripts_from_another_entry": {
