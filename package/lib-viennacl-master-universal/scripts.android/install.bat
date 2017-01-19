@@ -1,0 +1,46 @@
+@echo off
+
+rem
+rem Extra installation script
+rem
+rem See CK LICENSE.txt for licensing details.
+rem See CK Copyright.txt for copyright details.
+rem
+rem Developer(s): Grigori Fursin, 2016-2017
+rem
+
+rem  Check extra stuff
+
+rem if "%CK_TARGET_OS_ID%" == "android" (
+
+set CK_OPENMP=1
+if "%CK_HAS_OPENMP%" == "0" (
+  set CK_OPENMP=0
+)
+
+set CK_CMAKE_EXTRA=%CK_CMAKE_EXTRA% ^
+ -DENABLE_OPENCL=%CK_INSTALL_ENABLE_OPENCL% ^
+ -DENABLE_OPENMP=%CK_OPENMP% ^
+ -DBOOSTPATH=%CK_ENV_LIB_BOOST% ^
+ -DBOOST_ROOT=%CK_ENV_LIB_BOOST_INCLUDE% ^
+ -DBoost_ADDITIONAL_VERSIONS=1.62 ^
+ -DBoost_NO_SYSTEM_PATHS=ON ^
+ -DBOOST_ROOT=%CK_ENV_LIB_BOOST% ^
+ -DBOOST_INCLUDEDIR=%CK_ENV_LIB_BOOST_INCLUDE% ^
+ -DBOOST_LIBRARYDIR=%CK_ENV_LIB_BOOST_LIB% ^
+ -DBoost_INCLUDE_DIR=%CK_ENV_LIB_BOOST_INCLUDE% ^
+ -DBoost_LIBRARY_DIR=%CK_ENV_LIB_BOOST_LIB% ^
+ -DBOOSTPATH=%CK_ENV_LIB_BOOST% ^
+ -DTARGET_SUPPORTS_SHARED_LIBS=TRUE ^
+ -DCMAKE_SYSTEM_NAME="Android" ^
+ -DCMAKE_SYSTEM_VERSION="1" ^
+ -DCMAKE_SYSTEM_PROCESSOR="%CK_CMAKE_SYSTEM_PROCESSOR%" ^
+ -DCMAKE_CROSSCOMPILING="TRUE"
+
+cd %INSTALL_DIR%\%PACKAGE_SUB_DIR%
+
+patch -p1 < %ORIGINAL_PACKAGE_DIR%\scripts.android\patch-host-win
+
+rem )
+
+exit /b 0
