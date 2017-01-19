@@ -49,7 +49,7 @@
     "android": "install$#sep#$lib$#sep#$libclblast.a",
     "linux": "install/lib/libclblast.so",
     "mingw": "install\\lib\\libclblast.so",
-    "win": "install\\lib\\libclblast.so"
+    "win": "install\\lib\\clblast.dll"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
