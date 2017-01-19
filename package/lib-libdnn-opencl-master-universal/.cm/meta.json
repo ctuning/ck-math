@@ -62,8 +62,7 @@
   ],
   "only_for_target_os_tags": [
     "linux",
-    "windows",
-    "android"
+    "windows"
   ],
   "process_script": "install",
   "soft_uoa": "3ec4603341894656",

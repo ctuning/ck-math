@@ -9,12 +9,6 @@
 # Developer(s): Grigori Fursin, 2016-2017
 #
 
-############################################################
-CK_OPENMP=ON
-if [ "${CK_HAS_OPENMP}" = "0"  ]; then
-  CK_OPENMP=OFF
-fi
-
 export CK_CMAKE_EXTRA="${CK_CMAKE_EXTRA} \
  -DOPENCL_LIBRARIES=${CK_ENV_LIB_OPENCL_LIB}/libOpenCL.so \
  -DOPENCL_INCLUDE_DIRS=${CK_ENV_LIB_OPENCL_INCLUDE} \
