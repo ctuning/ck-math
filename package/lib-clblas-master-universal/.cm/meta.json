@@ -1,0 +1,84 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "git_src_dir": "src",
+    "install_env": {
+      "CMAKE_CONFIG": "Release",
+      "PACKAGE_AUTOGEN": "NO",
+      "PACKAGE_BUILD_TYPE": "cmake",
+      "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_TEST=OFF",
+      "PACKAGE_CONFIGURE_FLAGS_ANDROID": "-DSUFFIX_LIB=/",
+      "PACKAGE_CONFIGURE_FLAGS_LINUX": "-DSUFFIX_LIB=/",
+      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
+      "PACKAGE_GIT": "YES",
+      "PACKAGE_PATCH": "NO",
+      "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
+      "PACKAGE_SKIP_CLEAN_OBJ": "YES",
+      "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
+      "PACKAGE_SKIP_CMAKE_TARGET": "NO",
+      "PACKAGE_SUB_DIR": "src",
+      "PACKAGE_SUB_DIR1": "src/src",
+      "PACKAGE_URL": "https://github.com/clMathLibraries/clBLAS"
+    },
+    "use_git_revision": "yes",
+    "version": "master"
+  },
+  "deps": {
+    "boost": {
+      "local": "yes",
+      "name": "Boost C++ libraries",
+      "sort": 30,
+      "tags": "lib,boost"
+    },
+    "cmake": {
+      "local": "yes",
+      "name": "cmake",
+      "sort": 5,
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    },
+    "opencl": {
+      "local": "yes",
+      "name": "OpenCL library",
+      "sort": 20,
+      "tags": "lib,opencl"
+    }
+  },
+  "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libclBLAS.so",
+    "linux": "install/lib/libclBLAS.so",
+    "mingw": "install\\lib\\libclBLAS.so",
+    "win": "install\\lib\\libclBLAS.so"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "linux"
+  ],
+  "process_script": "install",
+  "soft_uoa": "c24825c3cad090f1",
+  "suggested_path": "lib-clblas",
+  "tags": [
+    "lib",
+    "blas",
+    "opencl-blas",
+    "clblas",
+    "vtrunk"
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "module_uoa": "84e27ad9dd12e734",
+    "data_uoa": "fd44428fbc77f77f"
+  },
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  }
+}

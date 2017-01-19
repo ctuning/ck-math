@@ -1,0 +1,27 @@
+#! /bin/bash
+
+#
+# Extra Installation script
+#
+# See CK LICENSE.txt for licensing details.
+# See CK COPYRIGHT.txt for copyright details.
+#
+# Developer(s):
+# - Grigori Fursin, grigori.fursin@cTuning.org, 2017
+#
+
+export CK_CMAKE_EXTRA="${CK_CMAKE_EXTRA} \
+ -DBoost_ADDITIONAL_VERSIONS=1.62 \
+ -DBoost_NO_SYSTEM_PATHS=ON \
+ -DBOOST_ROOT=${CK_ENV_LIB_BOOST} \
+ -DBOOST_INCLUDEDIR=${CK_ENV_LIB_BOOST_INCLUDE} \
+ -DBOOST_LIBRARYDIR=${CK_ENV_LIB_BOOST_LIB} \
+ -DBoost_INCLUDE_DIR=${CK_ENV_LIB_BOOST_INCLUDE} \
+ -DBoost_LIBRARY_DIR=${CK_ENV_LIB_BOOST_LIB} \
+ -DCMAKE_C_COMPILER=${CK_CC_PATH_FOR_CMAKE} \
+ -DCMAKE_CXX_COMPILER=${CK_CXX_PATH_FOR_CMAKE} \
+ -DCMAKE_C_FLAGS=${CK_CXX_FLAGS_FOR_CMAKE} \
+ -DCMAKE_CXX_FLAGS=${CK_CXX_FLAGS_FOR_CMAKE} \
+ -DOPENCL_ROOT=${CK_ENV_LIB_OPENCL}"
+
+return 0
