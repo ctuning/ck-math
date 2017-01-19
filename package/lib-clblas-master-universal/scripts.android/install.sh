@@ -10,11 +10,6 @@
 # - Grigori Fursin, grigori.fursin@cTuning.org, 2017
 #
 
-CK_OPENMP=ON
-if [ "${CK_HAS_OPENMP}" = "0"  ]; then
-  CK_OPENMP=OFF
-fi
-
 export CK_CMAKE_EXTRA="${CK_CMAKE_EXTRA} \
  -DBoost_ADDITIONAL_VERSIONS=1.62 \
  -DBoost_NO_SYSTEM_PATHS=ON \

@@ -9,7 +9,7 @@
       "PACKAGE_CONFIGURE_FLAGS": "-DBUILD_TEST=OFF",
       "PACKAGE_CONFIGURE_FLAGS_ANDROID": "-DSUFFIX_LIB=/",
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "-DSUFFIX_LIB=/",
-      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
+      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "-DSUFFIX_LIB=\\",
       "PACKAGE_GIT": "YES",
       "PACKAGE_PATCH": "NO",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
@@ -54,14 +54,16 @@
     "android": "install$#sep#$lib$#sep#$libclBLAS.so",
     "linux": "install/lib/libclBLAS.so",
     "mingw": "install\\lib\\libclBLAS.so",
-    "win": "install\\lib\\libclBLAS.so"
+    "win": "install\\bin\\clBLAS.dll"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
-    "linux"
+    "linux",
+    "windows"
   ],
   "only_for_target_os_tags": [
-    "linux"
+    "linux",
+    "windows"
   ],
   "process_script": "install",
   "soft_uoa": "c24825c3cad090f1",
