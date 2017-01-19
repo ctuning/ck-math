@@ -11,16 +11,17 @@
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "",
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
       "PACKAGE_GIT": "YES",
-      "PACKAGE_PATCH": "YES",
+      "PACKAGE_PATCH": "NO",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
-      "PACKAGE_SKIP_CLEAN_OBJ": "NO",
+      "PACKAGE_SKIP_CLEAN_OBJ": "YES",
       "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
       "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
       "PACKAGE_SKIP_CMAKE_TARGET": "NO",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
       "PACKAGE_URL": "https://github.com/viennacl/viennacl-dev",
-      "CMAKE_CONFIG":"Release"
+      "CMAKE_CONFIG":"Release",
+      "CK_INSTALL_ENABLE_OPENCL":"OFF"
     },
     "use_git_revision": "yes",
     "version": "master"
@@ -46,9 +47,9 @@
     }
   },
   "end_full_path": {
-    "android": "lib$#sep#$libviennacl.so",
-    "linux": "lib/libviennacl.so",
-    "mingw": "lib\\libviennacl.so",
+    "android": "install$#sep#$lib$#sep#$libviennacl.so",
+    "linux": "install//lib/libviennacl.so",
+    "mingw": "install\\lib\\libviennacl.so",
     "win": "install\\lib\\viennacl.lib"
   },
   "only_for_host_os_tags": [

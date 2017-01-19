@@ -20,7 +20,7 @@
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
       "PACKAGE_URL": "https://github.com/viennacl/viennacl-dev",
-      "PACKAGE_USE_OPENCL": 1
+      "CK_INSTALL_ENABLE_OPENCL":"ON"
     },
     "use_git_revision": "yes",
     "version": "master"
@@ -52,9 +52,9 @@
     }
   },
   "end_full_path": {
-    "android": "lib$#sep#$libviennacl.so",
-    "linux": "lib/libviennacl.so",
-    "mingw": "lib\\libviennacl.so",
+    "android": "install$#sep#$lib$#sep#$libviennacl.so",
+    "linux": "install/lib/libviennacl.so",
+    "mingw": "install\\lib\\libviennacl.so",
     "win": "install\\lib\\viennacl.lib"
   },
   "only_for_host_os_tags": [
