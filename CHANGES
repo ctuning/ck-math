@@ -1,5 +1,6 @@
 * 2017.01.19 - unified installation of ViennaCL (CPU,OpenCL) 
                across Linux, Windows, Android
+             - added universal package for CLBlast
 
 * 2017.01.18 - added support for libDNN, moved tiny-dnn here
 
