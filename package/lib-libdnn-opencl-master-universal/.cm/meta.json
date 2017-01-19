@@ -19,7 +19,7 @@
       "PACKAGE_SKIP_CMAKE_TARGET": "NO",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
-      "PACKAGE_URL": "https://github.com/ctuning/libdnn"
+      "PACKAGE_URL": "https://github.com/naibaf7/libdnn"
     },
     "use_git_revision": "yes",
     "version": "master"
@@ -51,9 +51,9 @@
     }
   },
   "end_full_path": {
-    "android": "install$#sep#$lib$#sep#$greentea_libdnn.so",
-    "linux": "install/lib/greentea_libdnn.so",
-    "mingw": "install\\lib\\greentea_libdnn.so",
+    "android": "install$#sep#$lib$#sep#$libgreentea_libdnn.so",
+    "linux": "install/lib/libgreentea_libdnn.so",
+    "mingw": "install\\lib\\libgreentea_libdnn.so",
     "win": "install\\lib\\greentea_libdnn.dll"
   },
   "only_for_host_os_tags": [
@@ -62,7 +62,8 @@
   ],
   "only_for_target_os_tags": [
     "linux",
-    "windows"
+    "windows",
+    "android"
   ],
   "process_script": "install",
   "soft_uoa": "3ec4603341894656",
