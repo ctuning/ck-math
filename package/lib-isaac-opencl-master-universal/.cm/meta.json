@@ -57,13 +57,10 @@
     "win": "install\\lib\\isaac.lib"
   },
   "only_for_host_os_tags": [
-    "linux",
-    "windows"
+    "linux"
   ],
   "only_for_target_os_tags": [
-    "linux",
-    "windows",
-    "android"
+    "linux"
   ],
   "process_script": "install",
   "soft_uoa": "6838ff78b50424f9",
