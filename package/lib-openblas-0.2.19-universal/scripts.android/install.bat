@@ -20,7 +20,7 @@ if "%CK_ANDROID_ABI%" == "arm64-v8a" (
   set TARGET=ARMV8
 ) else if "%CK_ANDROID_ABI%" == "armeabi" (
   set NO_LAPACK=1
-  set set TARGET=ARMV5
+  set TARGET=ARMV5
 ) else if "%CK_ANDROID_ABI%" == "armeabi-v7a" (
   rem  ARMV7 can be used only with hardfp and neon - see later
   set NO_LAPACK=1
@@ -58,7 +58,7 @@ cd %INSTALL_DIR%\%PACKAGE_SUB_DIR%
 patch -p1 < %ORIGINAL_PACKAGE_DIR%\scripts.android\patch-host-win
 
 make VERBOSE=1 -j%CK_HOST_CPU_NUMBER_OF_PROCESSORS% ^
-     HOSTCC="gcc" ^
+     HOSTCC=gcc ^
      CC="%CK_CC%" ^
      CFLAGS="%CK_COMPILER_FLAGS_OBLIGATORY% %CK_CC_FLAGS_ANDROID_TYPICAL% %EXTRA_FLAGS%" ^
      AR="%CK_AR%" ^

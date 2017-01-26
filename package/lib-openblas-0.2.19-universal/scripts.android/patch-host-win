@@ -7,8 +7,8 @@ diff -ruN src\Makefile.prebuild src.new\Makefile.prebuild
  all: getarch_2nd
 -	./getarch_2nd  0 >> $(TARGET_MAKE)
 -	./getarch_2nd  1 >> $(TARGET_CONF)
-+	getarch_2nd  0 >> $(TARGET_MAKE)
-+	getarch_2nd  1 >> $(TARGET_CONF)
++	./getarch_2nd.exe  0 >> $(TARGET_MAKE)
++	./getarch_2nd.exe  1 >> $(TARGET_CONF)
  
  config.h : c_check f_check getarch
  	perl ./c_check $(TARGET_MAKE) $(TARGET_CONF) $(CC) $(TARGET_FLAGS)
@@ -31,8 +31,8 @@ diff -ruN src\Makefile.prebuild src.new\Makefile.prebuild
  endif
 -	./getarch 0 >> $(TARGET_MAKE)
 -	./getarch 1 >> $(TARGET_CONF)
-+	getarch 0 >> $(TARGET_MAKE)
-+	getarch 1 >> $(TARGET_CONF)
++	./getarch.exe 0 >> $(TARGET_MAKE)
++	./getarch.exe 1 >> $(TARGET_CONF)
  
  
  getarch : getarch.c cpuid.S dummy $(CPUIDEMU)

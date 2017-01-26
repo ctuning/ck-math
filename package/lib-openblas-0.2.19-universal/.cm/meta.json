@@ -35,6 +35,7 @@
     },
     "compiler-mingw": {
       "local": "yes",
+      "force_target_as_host": "yes", 
       "add_to_path":"yes",
       "name": "C compiler",
       "skip_from_bat":"yes",
