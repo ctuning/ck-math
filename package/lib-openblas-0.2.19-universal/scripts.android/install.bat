@@ -20,7 +20,7 @@ if "%CK_ANDROID_ABI%" == "arm64-v8a" (
   set TARGET=ARMV8
 ) else if "%CK_ANDROID_ABI%" == "armeabi" (
   set NO_LAPACK=1
-  set set TARGET=ARMV5
+  set TARGET=ARMV5
 ) else if "%CK_ANDROID_ABI%" == "armeabi-v7a" (
   rem  ARMV7 can be used only with hardfp and neon - see later
   set NO_LAPACK=1
