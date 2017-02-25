@@ -1,0 +1,12 @@
+diff -ruN src\libviennacl\CMakeLists.txt src-new\libviennacl\CMakeLists.txt
+--- src\libviennacl\CMakeLists.txt	Thu Jan 19 21:11:53 2017
++++ src-new\libviennacl\CMakeLists.txt	Thu Jan 19 21:09:38 2017
+@@ -1,6 +1,8 @@
+ 
+ include_directories(${PROJECT_SOURCE_DIR}/libviennacl/include/)
+ 
++SET_PROPERTY(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS true)
++
+ if(ENABLE_CUDA)
+ 
+   if(ENABLE_OPENCL)
