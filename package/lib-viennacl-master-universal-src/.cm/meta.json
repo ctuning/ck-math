@@ -1,0 +1,71 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "git_src_dir": "src", 
+    "install_env": {
+      "CK_INSTALL_ENABLE_OPENCL": "OFF", 
+      "PACKAGE_AUTOGEN": "NO", 
+      "PACKAGE_CONFIGURE_FLAGS_ANDROID": "", 
+      "PACKAGE_CONFIGURE_FLAGS_LINUX": "", 
+      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
+      "PACKAGE_GIT": "YES", 
+      "PACKAGE_PATCH": "NO", 
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
+      "PACKAGE_SKIP_CLEAN_INSTALL": "NO", 
+      "PACKAGE_SKIP_CLEAN_OBJ": "NO", 
+      "PACKAGE_SKIP_CLEAN_SRC": "NO", 
+      "PACKAGE_SKIP_CLEAN_PACKAGE": "NO", 
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO", 
+      "PACKAGE_SKIP_CMAKE_TARGET": "NO", 
+      "PACKAGE_SUB_DIR": "src", 
+      "PACKAGE_SUB_DIR1": "src", 
+      "PACKAGE_URL": "https://github.com/viennacl/viennacl-dev", 
+      "PACKAGE_USE_OPENCL": 0
+    }, 
+    "use_git_revision": "yes", 
+    "version": "master"
+  }, 
+  "deps": {
+    "compiler": {
+      "add_to_path": "no",
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    }
+  }, 
+  "end_full_path": {
+    "android": "install$#sep#$include$#sep#$viennacl$#sep#$context.hpp", 
+    "linux": "install/include/viennacl/context.hpp", 
+    "mingw": "install\\include\\viennacl\\context.hpp", 
+    "win": "install\\include\\viennacl\\context.hpp"
+  }, 
+  "only_for_host_os_tags": [
+    "linux", 
+    "windows"
+  ], 
+  "only_for_target_os_tags": [
+    "linux", 
+    "windows", 
+    "android"
+  ], 
+  "process_script": "install", 
+  "soft_uoa": "b8319cc532802fe2", 
+  "suggested_path": "lib-viennacl-src", 
+  "tags": [
+    "lib", 
+    "blas", 
+    "opencl-blas", 
+    "viennacl", 
+    "vsrc", 
+    "vmaster"
+  ], 
+  "use_preprocess_scripts_from_another_entry": {
+    "data_uoa": "fd44428fbc77f77f", 
+    "module_uoa": "84e27ad9dd12e734"
+  }, 
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18", 
+    "module_uoa": "script"
+  }
+}
