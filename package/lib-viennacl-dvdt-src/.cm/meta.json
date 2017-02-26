@@ -1,0 +1,60 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "git_src_dir": "src", 
+    "install_env": {
+      "CK_INSTALL_ENABLE_OPENCL": "OFF", 
+      "PACKAGE_AUTOGEN": "NO", 
+      "PACKAGE_CONFIGURE_FLAGS_ANDROID": "", 
+      "PACKAGE_CONFIGURE_FLAGS_LINUX": "", 
+      "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
+      "PACKAGE_GIT": "YES", 
+      "PACKAGE_GIT_CHECKOUT": "compile-before-caching",
+      "PACKAGE_PATCH": "NO", 
+      "PACKAGE_SKIP_CLEAN_INSTALL": "NO", 
+      "PACKAGE_SKIP_CLEAN_OBJ": "NO", 
+      "PACKAGE_SKIP_CLEAN_PACKAGE": "NO", 
+      "PACKAGE_SKIP_CLEAN_SRC": "NO", 
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO", 
+      "PACKAGE_SKIP_CMAKE_TARGET": "NO", 
+      "PACKAGE_SKIP_LINUX_MAKE": "YES", 
+      "PACKAGE_SUB_DIR": "src", 
+      "PACKAGE_SUB_DIR1": "src", 
+      "PACKAGE_URL": "https://github.com/dividiti/viennacl-dev", 
+      "PACKAGE_USE_OPENCL": 0
+    }, 
+    "use_git_revision": "yes", 
+    "version": "compile-before-caching"
+  }, 
+  "deps": {}, 
+  "end_full_path": {
+    "android": "src$#sep#$viennacl$#sep#$version.hpp", 
+    "linux": "src/viennacl/version.hpp", 
+    "mingw": "src\\viennacl\\version.hpp", 
+    "win": "src\\viennacl\\version.hpp"
+  }, 
+  "only_for_host_os_tags": [
+    "linux", 
+    "windows"
+  ], 
+  "only_for_target_os_tags": [
+    "linux", 
+    "windows", 
+    "android"
+  ], 
+  "process_script": "install", 
+  "soft_uoa": "f41d49bd23afa84b", 
+  "suggested_path": "lib-viennacl-src", 
+  "tags": [
+    "lib", 
+    "blas", 
+    "opencl-blas", 
+    "viennacl", 
+    "vsrc", 
+    "vdvdt"
+  ], 
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18", 
+    "module_uoa": "script"
+  }
+}
