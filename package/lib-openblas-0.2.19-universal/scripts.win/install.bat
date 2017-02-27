@@ -15,7 +15,8 @@ echo Preparing vars ...
 
 cd %INSTALL_DIR%\%PACKAGE_SUB_DIR%
 
-mingw32-make PREFIX="%INSTALL_DIR%\install" BINARY=%CK_TARGET_CPU_BITS% ONLY_CBLAS=1 MAKE=mingw32-make.exe CFLAGS="-DMS_ABI" NOFORTRAN=1 NO_LAPACK=1
+rem mingw32-make PREFIX="%INSTALL_DIR%\install" BINARY=%CK_TARGET_CPU_BITS% ONLY_CBLAS=1 MAKE=mingw32-make.exe CFLAGS="-DMS_ABI" NOFORTRAN=1 NO_LAPACK=1
+make PREFIX="%INSTALL_DIR%\install" BINARY=%CK_TARGET_CPU_BITS% CC=gcc FC=gfortran
 
 if %errorlevel% neq 0 (
  echo.
