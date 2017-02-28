@@ -47,8 +47,7 @@
   "suggested_path": "tool-cltune-trunk", 
   "tags": [
     "tool",
-    "lib", 
-    "tune",  
+    "opencl", 
     "clblast", 
     "cltune", 
     "vtrunk", 
