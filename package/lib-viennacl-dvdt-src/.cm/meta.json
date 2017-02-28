@@ -9,7 +9,6 @@
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "", 
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
       "PACKAGE_GIT": "YES", 
-      "PACKAGE_GIT_CHECKOUT": "compile-before-caching",
       "PACKAGE_PATCH": "NO", 
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO", 
       "PACKAGE_SKIP_CLEAN_OBJ": "NO", 
@@ -24,7 +23,7 @@
       "PACKAGE_USE_OPENCL": 0
     }, 
     "use_git_revision": "yes", 
-    "version": "compile-before-caching"
+    "version": "dvdt-master"
   }, 
   "deps": {}, 
   "end_full_path": {
