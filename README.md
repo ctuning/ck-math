@@ -1,3 +1,7 @@
+[![logo](https://github.com/ctuning/ck-guide-images/blob/master/logo-powered-by-ck.png)](http://cKnowledge.org)
+[![logo](https://github.com/ctuning/ck-guide-images/blob/master/logo-validated-by-the-community-simple.png)](http://cTuning.org)
+[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+
 This Collective Knowledge repository contains various mathematical libraries 
 in the [portable and customizable CK format](http://github.com/ctuning/ck) 
 with JSON API and JSON meta information to be used 
@@ -92,5 +96,3 @@ If you have problems, questions or suggestions, do not hesitate to get in touch
 via the following mailing lists:
 * https://groups.google.com/forum/#!forum/collective-knowledge
 * https://groups.google.com/forum/#!forum/ctuning-discussions
-
-![logo](https://github.com/ctuning/ck-guide-images/blob/master/logo-validated-by-the-community-simple.png)
