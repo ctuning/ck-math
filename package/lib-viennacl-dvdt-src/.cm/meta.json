@@ -9,7 +9,7 @@
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "", 
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
       "PACKAGE_GIT": "YES", 
-      "PACKAGE_GIT_CHECKOUT": "avoid-overwriting-cache",
+      "PACKAGE_GIT_CHECKOUT": "master",
       "PACKAGE_PATCH": "NO", 
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO", 
       "PACKAGE_SKIP_CLEAN_OBJ": "NO", 
