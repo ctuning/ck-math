@@ -40,7 +40,6 @@
     }, 
     "tool-cltune": {
       "add_to_path": "yes", 
-      "force_target_as_host": "yes",
       "local": "yes", 
       "name": "CLTune tool", 
       "sort": 40, 

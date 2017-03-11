@@ -1,0 +1,21 @@
+{
+  "backup_data_uid": "4e3724aa982872c4",
+  "backup_module_uid": "1dc07ee0f4742028",
+  "backup_module_uoa": "package",
+  "control": {
+    "author": "Grigori Fursin",
+    "author_email": "Grigori.Fursin@cTuning.org",
+    "author_webpage": "http://fursin.net",
+    "copyright": "See CK COPYRIGHT.txt for copyright details",
+    "engine": "CK",
+    "iso_datetime": "2017-03-11T15:39:09.928244",
+    "license": "See CK LICENSE.txt for licensing details",
+    "version": [
+      "1",
+      "8",
+      "7",
+      "1"
+    ]
+  },
+  "data_name": "tool-cltune-master-universal"
+}
