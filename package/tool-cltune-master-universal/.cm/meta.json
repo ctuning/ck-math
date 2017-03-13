@@ -46,10 +46,10 @@
     }
   },
   "end_full_path": {
-    "android": "lib$#sep#$libcltune.so",
-    "linux": "lib/libcltune.so",
-    "mingw": "lib\\libcltune.so",
-    "win": "lib\\libcltune.so"
+    "android": "install$#sep#$lib$#sep#$libcltune.a",
+    "linux": "install/lib/libcltune.so",
+    "mingw": "install\\lib\\libcltune.so",
+    "win": "install\\lib\\libcltune.dll"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [

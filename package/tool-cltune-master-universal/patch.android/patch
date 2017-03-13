@@ -1,3 +1,33 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a3c3882..fa2b0cd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -120,7 +120,11 @@ if(USE_OPENCL)
+   find_package(OpenCL REQUIRED)
+   set(FRAMEWORK_INCLUDE_DIRS ${OPENCL_INCLUDE_DIRS})
+   set(FRAMEWORK_LIBRARY_DIRS )
+-  set(FRAMEWORK_LIBRARIES ${OPENCL_LIBRARIES})
++  if (ANDROID)
++    set(FRAMEWORK_LIBRARIES )
++  else()
++    set(FRAMEWORK_LIBRARIES ${OPENCL_LIBRARIES})
++  endif()
+ else()
+   find_package(CUDA REQUIRED)
+   set(FRAMEWORK_INCLUDE_DIRS ${CUDA_INCLUDE_DIRS})
+diff --git a/include/cltune.h b/include/cltune.h
+index f79834b..02dfb46 100644
+--- a/include/cltune.h
++++ b/include/cltune.h
+@@ -48,6 +48,8 @@
+   #define PUBLIC_API
+ #endif
+ 
++#include "internal/android_patch.h"
++
+ namespace cltune {
+ // =================================================================================================
+ 
 diff --git a/include/internal/android_patch.h b/include/internal/android_patch.h
 new file mode 100644
 index 0000000..244489f
