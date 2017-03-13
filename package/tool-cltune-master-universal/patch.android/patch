@@ -1,20 +1,3 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a3c3882..fa2b0cd 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -120,7 +120,11 @@ if(USE_OPENCL)
-   find_package(OpenCL REQUIRED)
-   set(FRAMEWORK_INCLUDE_DIRS ${OPENCL_INCLUDE_DIRS})
-   set(FRAMEWORK_LIBRARY_DIRS )
--  set(FRAMEWORK_LIBRARIES ${OPENCL_LIBRARIES})
-+  if (ANDROID)
-+    set(FRAMEWORK_LIBRARIES )
-+  else()
-+    set(FRAMEWORK_LIBRARIES ${OPENCL_LIBRARIES})
-+  endif()
- else()
-   find_package(CUDA REQUIRED)
-   set(FRAMEWORK_INCLUDE_DIRS ${CUDA_INCLUDE_DIRS})
 diff --git a/include/cltune.h b/include/cltune.h
 index f79834b..02dfb46 100644
 --- a/include/cltune.h
@@ -30,16 +13,16 @@ index f79834b..02dfb46 100644
  
 diff --git a/include/internal/android_patch.h b/include/internal/android_patch.h
 new file mode 100644
-index 0000000..244489f
+index 0000000..ae1a8c1
 --- /dev/null
 +++ b/include/internal/android_patch.h
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,35 @@
 +//
 +// Created by daniil on 1/11/17.
 +//
 +
-+#ifndef CLTUNE_ANDROID_PATCH_H
-+#define CLTUNE_ANDROID_PATCH_H
++#ifndef CLBLAST_ANDROID_PATCH_H
++#define CLBLAST_ANDROID_PATCH_H
 +
 +#include <string>
 +#include <sstream>
@@ -66,17 +49,19 @@ index 0000000..244489f
 +        return strtol (value.c_str(),NULL,0);
 +    }
 +}
-+#endif // CLTUNE_ANDROID_PATCH_H
++#endif //CLBLAST_ANDROID_PATCH_H
++
++
 diff --git a/include/internal/clpp11.h b/include/internal/clpp11.h
-index 2a7b22f..a9a461d 100644
+index 2a7b22f..17cbee5 100644
 --- a/include/internal/clpp11.h
 +++ b/include/internal/clpp11.h
-@@ -50,6 +50,8 @@
+@@ -49,7 +49,7 @@
+ #else
    #include <CL/opencl.h>
  #endif
- 
+-
 +#include "android_patch.h"
-+
  namespace cltune {
  // =================================================================================================
  
