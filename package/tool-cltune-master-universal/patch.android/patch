@@ -1,0 +1,52 @@
+diff --git a/include/internal/android_patch.h b/include/internal/android_patch.h
+new file mode 100644
+index 0000000..244489f
+--- /dev/null
++++ b/include/internal/android_patch.h
+@@ -0,0 +1,33 @@
++//
++// Created by daniil on 1/11/17.
++//
++
++#ifndef CLTUNE_ANDROID_PATCH_H
++#define CLTUNE_ANDROID_PATCH_H
++
++#include <string>
++#include <sstream>
++#include <cstdio>
++#include <cstdlib>
++namespace std {
++    template<typename T>
++    std::string to_string(T value) {
++        //create an output string stream
++        std::ostringstream os;
++
++        //throw the value into the string stream
++        os << value;
++
++        //convert the string stream into a string and return
++        return os.str();
++    }
++
++    inline double stod(string value) {
++        return strtod (value.c_str(), NULL);
++    }
++
++    inline int stoi(string value) {
++        return strtol (value.c_str(),NULL,0);
++    }
++}
++#endif // CLTUNE_ANDROID_PATCH_H
+diff --git a/include/internal/clpp11.h b/include/internal/clpp11.h
+index 2a7b22f..a9a461d 100644
+--- a/include/internal/clpp11.h
++++ b/include/internal/clpp11.h
+@@ -50,6 +50,8 @@
+   #include <CL/opencl.h>
+ #endif
+ 
++#include "android_patch.h"
++
+ namespace cltune {
+ // =================================================================================================
+ 
