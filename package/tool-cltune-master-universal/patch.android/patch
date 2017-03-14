@@ -1,3 +1,25 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a3c3882..a00fdd2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -128,6 +128,17 @@ else()
+   set(FRAMEWORK_LIBRARIES cuda nvrtc)
+ endif()
+ 
++# For Android, link against libgnustl_static. FIXME: Update the hardcoded path.
++if(ANDROID)
++  set(CMAKE_VERBOSE_MAKEFILE ON)
++  find_library(ANDROID_STL
++               NAMES libgnustl_static.a
++               HINTS ${HOME}/data/android-ndk-r13b/sources/cxx-stl/gnu-libstdc++/4.9/libs/arm64-v8a
++               NO_DEFAULT_PATH)
++  message("-- With ANDROID_STL=${ANDROID_STL}")
++  set(FRAMEWORK_LIBRARIES ${FRAMEWORK_LIBRARIES} ${ANDROID_STL})
++endif()
++
+ # ==================================================================================================
+ 
+ # Include directories: CLTune headers and OpenCL/CUDA includes
 diff --git a/include/cltune.h b/include/cltune.h
 index f79834b..02dfb46 100644
 --- a/include/cltune.h
@@ -13,10 +35,10 @@ index f79834b..02dfb46 100644
  
 diff --git a/include/internal/android_patch.h b/include/internal/android_patch.h
 new file mode 100644
-index 0000000..ae1a8c1
+index 0000000..f0cff6f
 --- /dev/null
 +++ b/include/internal/android_patch.h
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,33 @@
 +//
 +// Created by daniil on 1/11/17.
 +//
@@ -50,8 +72,6 @@ index 0000000..ae1a8c1
 +    }
 +}
 +#endif //CLBLAST_ANDROID_PATCH_H
-+
-+
 diff --git a/include/internal/clpp11.h b/include/internal/clpp11.h
 index 2a7b22f..17cbee5 100644
 --- a/include/internal/clpp11.h
