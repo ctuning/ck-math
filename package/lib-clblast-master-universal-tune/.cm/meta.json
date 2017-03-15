@@ -70,13 +70,13 @@
   ], 
   "process_script": "install", 
   "soft_uoa": "7b81c6ad862f4b38", 
-  "suggested_path": "lib-cblast-tune", 
+  "suggested_path": "lib-clblast-tune", 
   "tags": [
     "lib", 
     "blas", 
     "opencl-blas", 
     "clblast", 
-    "vmaster", 
+    "vmaster",
     "vdev",
     "vtune"
   ], 

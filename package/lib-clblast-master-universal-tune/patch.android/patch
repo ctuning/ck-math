@@ -1,6 +1,8 @@
-diff -ruN src/src/android_patch.h src-new/src/android_patch.h
---- src/src/android_patch.h	1970-01-01 01:00:00.000000000 +0100
-+++ src-new/src/android_patch.h	2017-01-19 16:45:23.387507282 +0100
+diff --git a/src/android_patch.h b/src/android_patch.h
+new file mode 100644
+index 0000000..11b92d4
+--- /dev/null
++++ b/src/android_patch.h
 @@ -0,0 +1,35 @@
 +//
 +// Created by daniil on 1/11/17.
@@ -13,13 +15,14 @@ diff -ruN src/src/android_patch.h src-new/src/android_patch.h
 +#include <sstream>
 +#include <cstdio>
 +#include <cstdlib>
++
 +namespace std {
 +    template<typename T>
 +    std::string to_string(T value) {
 +        //create an output string stream
 +        std::ostringstream os;
 +
-+        //throw the value into the string stream
++        //throw the value onto the string stream
 +        os << value;
 +
 +        //convert the string stream into a string and return
@@ -31,20 +34,20 @@ diff -ruN src/src/android_patch.h src-new/src/android_patch.h
 +    }
 +
 +    inline int stoi(string value) {
-+        return strtol (value.c_str(),NULL,0);
++        return strtol (value.c_str(), NULL, 0);
 +    }
 +}
-+#endif //CLBLAST_ANDROID_PATCH_H
 +
-+
-diff -ruN src/src/cxpp11_common.hpp src-new/src/cxpp11_common.hpp
---- src/src/cxpp11_common.hpp	2017-01-19 16:44:49.779506468 +0100
-+++ src-new/src/cxpp11_common.hpp	2017-01-19 16:45:23.391507282 +0100
++#endif // CLBLAST_ANDROID_PATCH_H
+diff --git a/src/cxpp11_common.hpp b/src/cxpp11_common.hpp
+index 6ac008b..9a7d5f3 100644
+--- a/src/cxpp11_common.hpp
++++ b/src/cxpp11_common.hpp
 @@ -18,6 +18,8 @@
  #include <string>    // std::string
  #include <stdexcept> // std::runtime_error
  
-+#include "android_patch.h"    // std::string
++#include "android_patch.h" // std::string
 +
  namespace clblast {
  // =================================================================================================
