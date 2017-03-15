@@ -49,7 +49,7 @@
     "android": "install$#sep#$lib$#sep#$libcltune.a",
     "linux": "install/lib/libcltune.so",
     "mingw": "install\\lib\\libcltune.so",
-    "win": "install\\lib\\libcltune.dll"
+    "win": "install\\lib\\cltune.dll"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
