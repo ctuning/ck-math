@@ -1,25 +1,27 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a3c3882..a00fdd2 100644
+index a3c3882..12b0b2f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -128,6 +128,17 @@ else()
-   set(FRAMEWORK_LIBRARIES cuda nvrtc)
- endif()
+@@ -39,6 +39,7 @@ set(cltune_VERSION_PATCH 0)
+ option(BUILD_SHARED_LIBS "Build a shared (ON) or static library (OFF)" ON)
+ option(SAMPLES "Enable compilation of sample programs" ON)
+ option(TESTS "Enable compilation of the Google tests" OFF)
++option(ANDROID "Build for Android (ON)" OFF)
  
-+# For Android, link against libgnustl_static. FIXME: Update the hardcoded path.
+ # Select between OpenCL and CUDA back-end
+ option(USE_OPENCL "Use OpenCL instead of CUDA" ON)
+@@ -157,6 +158,11 @@ else(BUILD_SHARED_LIBS)
+   add_library(cltune STATIC ${TUNER})
+ endif()
+ target_link_libraries(cltune ${FRAMEWORK_LIBRARIES})
++# When building for Android, also link against libgnustl.
 +if(ANDROID)
-+  set(CMAKE_VERBOSE_MAKEFILE ON)
-+  find_library(ANDROID_STL
-+               NAMES libgnustl_static.a
-+               HINTS ${HOME}/data/android-ndk-r13b/sources/cxx-stl/gnu-libstdc++/4.9/libs/arm64-v8a
-+               NO_DEFAULT_PATH)
-+  message("-- With ANDROID_STL=${ANDROID_STL}")
-+  set(FRAMEWORK_LIBRARIES ${FRAMEWORK_LIBRARIES} ${ANDROID_STL})
++  target_link_libraries(cltune libgnustl_shared.so)
 +endif()
 +
- # ==================================================================================================
  
- # Include directories: CLTune headers and OpenCL/CUDA includes
+ # Sets the proper __declspec(dllexport) keyword for Visual Studio when the library is built
+ if(MSVC)
 diff --git a/include/cltune.h b/include/cltune.h
 index f79834b..02dfb46 100644
 --- a/include/cltune.h
@@ -73,15 +75,15 @@ index 0000000..f0cff6f
 +}
 +#endif //CLBLAST_ANDROID_PATCH_H
 diff --git a/include/internal/clpp11.h b/include/internal/clpp11.h
-index 2a7b22f..17cbee5 100644
+index 2a7b22f..a9a461d 100644
 --- a/include/internal/clpp11.h
 +++ b/include/internal/clpp11.h
-@@ -49,7 +49,7 @@
- #else
+@@ -50,6 +50,8 @@
    #include <CL/opencl.h>
  #endif
--
+ 
 +#include "android_patch.h"
++
  namespace cltune {
  // =================================================================================================
  
