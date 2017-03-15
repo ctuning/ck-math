@@ -1,13 +1,14 @@
 #! /bin/bash
 
 #
-# Extra Installation script
+# Installation script.
 #
 # See CK LICENSE.txt for licensing details.
 # See CK COPYRIGHT.txt for copyright details.
 #
 # Developer(s):
 # - Grigori Fursin, grigori.fursin@cTuning.org, 2017
+# - Anton Lokhmotov, anton@dividiti.com, 2017
 #
 
 export CK_CXX_FLAGS_FOR_CMAKE="${CK_CXX_FLAGS_FOR_CMAKE} -std=c++11"
