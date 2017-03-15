@@ -1,3 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ef6156d..18aade0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -28,6 +28,7 @@ option(TUNERS "Enable compilation of the tuners" OFF)
+ option(CLIENTS "Enable compilation of the clients to test and compare performance" OFF)
+ option(TESTS "Enable compilation of the correctness tests" OFF)
+ option(NETLIB "Enable compilation of the CBLAS Netlib API" OFF)
++option(ANDROID "Build for Android" OFF)
+ 
+ # Compile in verbose mode with additional diagnostic messages
+ option(VERBOSE "Compile in verbose mode for additional diagnostic messages" OFF)
+@@ -201,6 +202,10 @@ else(BUILD_SHARED_LIBS)
+ endif()
+ 
+ target_link_libraries(clblast ${OPENCL_LIBRARIES})
++# When building for Android, also link against libgnustl.
++if(ANDROID)
++  target_link_libraries(clblast libgnustl_shared.so)
++endif()
+ 
+ # Includes directories: CLBlast and OpenCL
+ target_include_directories(clblast PUBLIC
 diff --git a/src/android_patch.h b/src/android_patch.h
 new file mode 100644
 index 0000000..11b92d4
