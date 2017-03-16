@@ -33,6 +33,28 @@
       "sort": 10,
       "tags": "compiler,lang-c"
     },
+    "utils-unix-win": {
+      "local": "yes",
+      "force_target_as_host": "yes", 
+      "name": "Perl",
+      "skip_from_bat":"yes",
+      "only_for_host_os_tags": [
+        "windows"
+      ],
+      "sort": 1,
+      "tags": "utils,unix-win"
+    },
+    "compiler-perl": {
+      "local": "yes",
+      "force_target_as_host": "yes", 
+      "name": "Perl",
+      "skip_from_bat":"yes",
+      "only_for_host_os_tags": [
+        "windows"
+      ],
+      "sort": 3,
+      "tags": "compiler,perl"
+    },
     "compiler-mingw": {
       "local": "yes",
       "force_target_as_host": "yes", 
