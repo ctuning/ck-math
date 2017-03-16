@@ -14,7 +14,7 @@ rem  Check extra stuff
 rem ############################################################
 cd /D %INSTALL_DIR%\%PACKAGE_SUB_DIR1%
 
-call bootstrap.bat
+call bootstrap.bat msvc
 
 if %errorlevel% neq 0 (
   echo.

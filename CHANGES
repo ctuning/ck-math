@@ -1,3 +1,5 @@
+* 2017.03.16 - fixing boost compilation on Windows with VS2017
+
 * 2017.01.19 - unified installation of ViennaCL (CPU,OpenCL) 
                across Linux, Windows, Android
              - added universal package for CLBlast
