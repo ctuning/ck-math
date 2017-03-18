@@ -29,6 +29,34 @@
       "sort": 5,
       "tags": "tool,cmake"
     },
+    "utils-unix-win": {
+      "local": "yes",
+      "force_target_as_host": "yes", 
+      "name": "Unix Utils for Windows",
+      "skip_from_bat":"yes",
+      "only_for_target_os_tags": [
+        "android"
+      ], 
+      "only_for_host_os_tags": [
+        "windows"
+      ],
+      "sort": 6,
+      "tags": "utils,unix-win"
+    },
+    "host-compiler": {
+      "local": "yes",
+      "force_target_as_host": "yes", 
+      "skip_from_bat":"yes",
+      "only_for_target_os_tags": [
+        "android"
+      ], 
+      "only_for_host_os_tags": [
+        "windows"
+      ],
+      "name": "HOST MingW C compiler (to bootstrap)",
+      "sort": 7,
+      "tags": "compiler,lang-c,gcc"
+    },
     "compiler": {
       "local": "yes",
       "name": "C++ compiler",
