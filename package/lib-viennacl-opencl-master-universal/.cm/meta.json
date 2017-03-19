@@ -48,6 +48,9 @@
     "opencl": {
       "local": "yes", 
       "name": "OpenCL library", 
+      "skip_installed": {
+        "android": "yes"
+      },
       "sort": 30, 
       "tags": "lib,opencl"
     }
