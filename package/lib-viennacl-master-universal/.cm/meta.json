@@ -30,6 +30,7 @@
     "cmake": {
       "local": "yes",
       "name": "CMake tool",
+      "force_target_as_host": "yes",
       "sort": 5,
       "tags": "cmake"
     },
