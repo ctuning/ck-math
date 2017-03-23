@@ -1,4 +1,5 @@
 {
+   "force_copy_input_files_to_remote":"yes",
   "data_name": "clblast",
   "no_compile": "yes",
   "no_target_file": "yes", 
@@ -17,13 +18,19 @@
       "run_time": {
         "post_process_via_ck": "no",
         "pre_process_cmds": [
-          "pwd"
+          "echo $<<CK_ENV_LIB_CLBLAST>>$ > ciao"
         ],
         "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm",
+        "run_cmd_main_remote": "./clblast_tuner_xgemm",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
-	"run_input_files": [
-          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm"
+        "run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm",
+          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+        ],
+        "run_output_files": [
+          "gem-stderr",
+          "gem-stedout"
         ]
       }
     }
@@ -35,7 +42,7 @@
      "sort": 40,
      "tags": "tool,cltune" 
     },
-    "opencl": { 
+    "opencl": {
       "local": "yes",
       "name": "OpenCL library",
       "sort": 20,
