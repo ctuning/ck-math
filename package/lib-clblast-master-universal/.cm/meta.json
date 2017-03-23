@@ -67,6 +67,7 @@
   "tags": [
     "lib",
     "blas",
+    "no-tune",
     "opencl-blas",
     "clblast",
     "vmaster",

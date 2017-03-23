@@ -1,0 +1,62 @@
+{
+  "data_name": "clblast",
+  "no_compile": "yes",
+  "no_target_file": "yes", 
+  "only_for_target_os_tags": [
+    "linux",
+    "android" 
+  ],
+  "print_files_after_run": [
+    "stderr.log"
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no",
+      "run_time": {
+        "post_process_via_ck": "no",
+        "pre_process_cmds": [
+          "pwd"
+        ],
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm",
+        "run_cmd_out1": "stdout.log",
+        "run_cmd_out2": "stderr.log",
+	"run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm"
+        ]
+      }
+    }
+  },
+  "run_deps": {
+    "tool-cltune": {
+     "local": "yes",
+     "name": "CLTune tool",
+     "sort": 40,
+     "tags": "tool,cltune" 
+    },
+    "opencl": { 
+      "local": "yes",
+      "name": "OpenCL library",
+      "sort": 20,
+      "tags": "lib,opencl" 
+    },
+    "lib-clblast": {
+      "local": "yes",
+      "name": "CLBlast library",
+      "sort": 10,
+      "tags": "lib,clblast"
+    }
+  },
+  "run_vars": {
+    "CK_CLBLAST_ITERATIONS": "1"
+  },
+  "tags": [
+    "clblast",
+    "cltune"
+  ]
+}
+
+
+
+
