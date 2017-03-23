@@ -28,7 +28,7 @@ if NOT "%CK_COMPILER_TOOLCHAIN_NAME%" == "" (
 rem ############################################################
 cd /D %INSTALL_DIR%\%PACKAGE_SUB_DIR1%
 
-call bootstrap.bat
+call bootstrap.bat gcc
 
 if %errorlevel% neq 0 (
   echo.
@@ -49,8 +49,18 @@ if EXIST %INSTALL_DIR%\install (
 
 mkdir %INSTALL_DIR%\install
 
+rem ############################################################
+echo.
+echo Preparing customized config via CK ...
+
 set BOOST_BUILD_PATH=%INSTALL_DIR%\install
-call ck convert_to_cygwin_path os --path="using %TOOLCHAIN% : arm : %CK_CXX_PATH_FOR_CMAKE% %CK_CXX_FLAGS_FOR_CMAKE% %CK_CXX_FLAGS_ANDROID_TYPICAL% %EXTRA_FLAGS% -DNO_BZIP2 : <flavor>mingw ;" > %BOOST_BUILD_PATH%\user-config.jam
+call python %ORIGINAL_PACKAGE_DIR%/scripts.android/convert_to_cygwin_path.py "using %TOOLCHAIN% : arm : %CK_CXX_PATH_FOR_CMAKE% %CK_CXX_FLAGS_FOR_CMAKE% %CK_CXX_FLAGS_ANDROID_TYPICAL% %EXTRA_FLAGS% -DNO_BZIP2 : <flavor>mingw <archiver>%CK_ENV_COMPILER_GCC_BIN%\%CK_AR% <ranlib>%CK_ENV_COMPILER_GCC_BIN%\%CK_RANLIB% ;" > %BOOST_BUILD_PATH%\user-config.jam
+
+if %errorlevel% neq 0 (
+  echo.
+  echo Error: ck execution failed!
+  exit /b 1
+)
 
 b2 install toolset=%TOOLCHAIN%-arm target-os=android threadapi=pthread --layout=system link=static --without-mpi --without-context --without-math address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --without-python --debug-configuration
 rem b2 install toolset=%TOOLCHAIN%-arm target-os=android --layout=system link=static --without-mpi --without-context --without-math address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --without-python --debug-configuration

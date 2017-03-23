@@ -28,6 +28,7 @@
     "cmake": {
       "local": "yes",
       "name": "CMake tool",
+      "force_target_as_host": "yes",
       "sort": 5,
       "tags": "cmake"
     },
@@ -41,6 +42,9 @@
       "local": "yes", 
       "name": "OpenCL library", 
       "sort": 30, 
+      "skip_installed": {
+        "android": "yes"
+      },
       "tags": "lib,opencl"
     },
     "viennalcl": {

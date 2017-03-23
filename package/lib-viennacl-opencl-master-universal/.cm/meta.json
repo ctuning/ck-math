@@ -29,6 +29,7 @@
     "cmake": {
       "local": "yes",
       "name": "CMake tool",
+      "force_target_as_host": "yes",
       "sort": 5,
       "tags": "cmake"
     },
@@ -47,6 +48,9 @@
     "opencl": {
       "local": "yes", 
       "name": "OpenCL library", 
+      "skip_installed": {
+        "android": "yes"
+      },
       "sort": 30, 
       "tags": "lib,opencl"
     }
