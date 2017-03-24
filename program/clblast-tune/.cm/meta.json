@@ -1,5 +1,5 @@
 {
-   "force_copy_input_files_to_remote":"yes",
+  "force_copy_input_files_to_remote":"yes",
   "data_name": "clblast",
   "no_compile": "yes",
   "no_target_file": "yes", 
@@ -7,6 +7,12 @@
     "linux",
     "android" 
   ],
+  "compiler_add_include_as_env_from_deps": [
+    "CK_ENV_LIB_STDCPP_INCLUDE",
+    "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA",
+    "CK_ENV_LIB_STDCPP_DYNAMIC"
+  ],
+  "extra_ld_vars": "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$ $<<CK_ENV_LIB_STDCPP_STATIC>>$",
   "print_files_after_run": [
     "stderr.log"
   ],
