@@ -42,6 +42,12 @@
     }
   },
   "run_deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C++ compiler", 
+      "sort": 0, 
+      "tags": "compiler,lang-cpp"
+    }, 
     "tool-cltune": {
      "local": "yes",
      "name": "CLTune tool",
