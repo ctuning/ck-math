@@ -80,6 +80,7 @@
     "blas", 
     "opencl-blas", 
     "clblast", 
+    "clblast-tune", 
     "vmaster",
     "vdev",
     "vtune"
