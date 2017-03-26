@@ -65,7 +65,7 @@
       "local": "yes",
       "name": "CLBlast library",
       "sort": 10,
-      "tags": "lib,clblast,vtune"
+      "tags": "lib,clblast-tune"
     }
   },
   "run_vars": {
