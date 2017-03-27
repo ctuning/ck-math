@@ -28,7 +28,7 @@
         "pre_process_cmds": [
         ],
         "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$",
-        "run_cmd_main_remote": "./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$",
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm ; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
