@@ -27,8 +27,8 @@
         "post_process_via_ck": "no",
         "pre_process_cmds": [
         ],
-        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$",
-        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm ; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$",
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$",
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm ; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
@@ -71,7 +71,11 @@
   "run_vars": {
     "CK_COMPUTE_DEVICE_ID": 0, 
     "CK_COMPUTE_PLATFORM_ID": 0, 
-    "CK_CLBLAST_ITERATIONS": 1
+    "CK_CLBLAST_ITERATIONS": 1,
+    "CK_CLBLAST_MSIZE": 256,
+    "CK_CLBLAST_NSIZE": 256,
+    "CK_CLBLAST_KSIZE": 256
+
   },
   "tags": [
     "clblast",
