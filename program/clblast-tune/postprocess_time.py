@@ -54,7 +54,9 @@ def ck_postprocess(i):
         r['return'] = 0
         return r
     #GREP DEFEAULT VALUE from CLBlast
-    print deps['CK_ENV_LIB_CLBLAST']
+    a= deps['lib-clblast']
+    b= a['cus']
+    print b['path_lib']
     mydict=rj1;
     mydict['post_processed']='yes'
 #    mydict['device_core_clock'] = 'value from script'
