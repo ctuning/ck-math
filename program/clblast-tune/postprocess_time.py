@@ -45,6 +45,7 @@ def ck_postprocess(i):
     if c1:
 	rj1 = json.loads(open(rf3).read())
         rj1['strategy']='exhaustive'
+        print rj1
 
     if c2:
         rj2= json.loads(open(rf3).read())
@@ -53,13 +54,27 @@ def ck_postprocess(i):
     if ((c1 == 0) and (c2 == 0)):
         r['return'] = 0
         return r
-    #GREP DEFEAULT VALUE from CLBlast
-    a= deps['lib-clblast']
-    b= a['cus']
-    print b['path_lib']
+
     mydict=rj1;
     mydict['post_processed']='yes'
 #    mydict['device_core_clock'] = 'value from script'
+
+
+    #GREP DEFEAULT VALUE from CLBlast
+    deps_cb= deps['lib-clblast']
+    b=deps_cb['cus']
+    pl = b['path_lib']
+    bench="xgemm"
+    bench +=".hpp"
+    pl=pl.split("install")[0]
+   
+    pl_suff= "src/src/database/kernels/" + bench 
+    pl+=pl_suff
+    if os.path.isfile(pl):
+       print "Try to parse " + pl
+
+
+
     rr={}
     rr['return']=0
     if mydict.get('post_processed','')=='yes':
