@@ -30,7 +30,7 @@
         ],
         "pre_process_cmds": [
         ],
-        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$",
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$",
         "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm ; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$ -precision 16",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
@@ -39,8 +39,8 @@
           "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
         ],
         "run_output_files": [
-          "clblast_xgemm_1_16.json",
-          "clblast_xgemm_2_16.json"
+          "clblast_xgemm_1_32.json",
+          "clblast_xgemm_2_32.json"
         ]
       }
     }
@@ -78,7 +78,7 @@
     "CK_CLBLAST_ITERATIONS": 1,
     "CK_CLBLAST_MSIZE": 128,
     "CK_CLBLAST_NSIZE": 128,
-    "CK_CLBLAST_KSIZE": 128,
+    "CK_CLBLAST_KSIZE": 64,
     "CK_CLBLAST_FRAC": 256
 
   },

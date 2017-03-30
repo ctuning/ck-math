@@ -29,7 +29,6 @@ def ck_postprocess(i):
     rf3=rt['run_output_files'][0]
     rf4=rt['run_output_files'][1]
 
-#    print rf3,rf4
     lst=[]
     r={}
     if os.path.isfile(rf1):
@@ -44,27 +43,59 @@ def ck_postprocess(i):
     c2 = os.path.isfile(rf4)
     if c1:
 	rj1 = json.loads(open(rf3).read())
-        rj1['strategy']='exhaustive'
-        print rj1
 
     if c2:
         rj2= json.loads(open(rf3).read())
-        rj2['strategy']='random'
 
     if ((c1 == 0) and (c2 == 0)):
         r['return'] = 0
         return r
-
-    mydict=rj1;
-    mydict['post_processed']='yes'
+    if ((c1)== 0):
+        rj1 = rj2
+    #### CREATE UNIQUE OUTPUT
+    
+    d['post_processed']='yes'
 #    mydict['device_core_clock'] = 'value from script'
+#   SET ARCH INFORMATION
+    d['device_vendor'] = rj1['device_vendor']
+    d['device_type'] = rj1['device_type']
+    d['device'] = rj1['device']
+    d['device_compute_units'] = rj1['device_compute_units']
+    # Notice that often is not really accurated; TBC 
+    d['device_core_clock'] = rj1['device_core_clock']
+
+    #Experiment Information
+    d['kernel'] = rj1['kernel_family'].split("_")[0]
+    d['arg_beta'] = rj1['arg_beta']
+    d['arg_m'] = rj1['arg_m']
+    d['arg_n'] = rj1['arg_n']
+    d['arg_k'] = rj1['arg_k']
+    d['arg_alpha'] = rj1['arg_alpha']
+    d['precision'] = rj1['precision']
+
+    #### Add results per strategy
+#    print "ADD RESULTs"
+    l=[]
+    if ( c1 ):
+        tmp = {'strategy':'exhaustive', 'result': rj1['results']}
+        l.append(tmp)
+    if ( c2 ):
+        tmp = {'strategy':'random', 'result': rj2['results']}
+        l.append(tmp)
+
+#    print l
+    d['results'] = l
 
 
+        #print l
+#    if ( c2==0 ):
+#    print "PRINT DICTIONARY"
+#    print d   
     #GREP DEFEAULT VALUE from CLBlast
     deps_cb= deps['lib-clblast']
     b=deps_cb['cus']
     pl = b['path_lib']
-    bench="xgemm"
+    bench=d['kernel']
     bench +=".hpp"
     pl=pl.split("install")[0]
    
@@ -77,13 +108,14 @@ def ck_postprocess(i):
 
     rr={}
     rr['return']=0
-    if mydict.get('post_processed','')=='yes':
-        r=ck.save_json_to_file({'json_file':'tmp-ck-clblast-tune.json', 'dict':mydict})
+    if d.get('post_processed','')=='yes':
+        r=ck.save_json_to_file({'json_file':'tmp-ck-clblast-tune.json', 'dict':d})
         if r['return']>0: return r
     else:
         rr['return']=1
         rr['error']='FAIL'
-        print(mydict)
+        print(d)
+#    print d['results'][1]
     return rr
 
 # Do not add anything here!
