@@ -30,7 +30,7 @@ VENDOR_TRANSLATION_TABLE = {
 
 # Server storing a copy of the database
 DATABASE_SERVER_URL = "https://raw.githubusercontent.com/CNugteren/CLBlast-database/master/database.json"
-VERBOSE=0
+VERBOSE=1
 def ck_postprocess(i):
     ck=i['ck_kernel']
     rt=i['run_time']
@@ -69,11 +69,13 @@ def ck_postprocess(i):
 
     if ((c1 == 0) and (c2 == 0)):
         r['return'] = 0
-        return r
+        print "[postprocessing] Unable to read json output"
+        r['return'] = 1;
+        return r;
     if ((c1)== 0):
         rj1 = rj2
     #### CREATE UNIQUE OUTPUT
-     
+    print "[postprocessing] Creating dictionary"
     d['post_processed']='yes'
 #    mydict['device_core_clock'] = 'value from script'
 #   SET ARCH INFORMATION
@@ -85,7 +87,12 @@ def ck_postprocess(i):
     d['device_core_clock'] = rj1['device_core_clock']
 
     #Experiment Information
-    d['kernel'] = rj1['kernel_family'].split("_")[0]
+    kernel_family=rj1['kernel_family'].split("_")[0]
+    if rj1['kernel_family'].split("_")[1] == "direct":
+        #concut again special case
+        kernel_family = kernel_family + "_" + "direct"
+    d['kernel'] = kernel_family
+    print  rj1['kernel_family']
     d['arg_beta'] = rj1['arg_beta']
     d['arg_m'] = rj1['arg_m']
     d['arg_n'] = rj1['arg_n']
@@ -116,7 +123,7 @@ def ck_postprocess(i):
     pl = b['path_lib']
     bench=d['kernel']
     bench +=".hpp"
-    pl=pl.split("install")[0]
+    pl=pl.split("install")[0] #### VERIFY WITH INSTALL SCRIPT 
     pl_suff= "src/scripts/database/"
     pl += pl_suff
 
@@ -146,7 +153,7 @@ def ck_postprocess(i):
     search_precision= d['precision']
     # Determines the defaults for other vendors and per vendor
     print("[database] Calculating the default values...")
-    database_defaults = defaults.calculate_defaults(database, VERBOSE)
+    database_defaults = defaults.calculate_defaults(database, 0) #second args denotes VERBOSE or NOT
     database_best_results["sections"].extend(database_defaults["sections"])
     database_best_filename='database_best.json'
     # Optionally outputs the database to disk
@@ -156,7 +163,7 @@ def ck_postprocess(i):
     best = database_best_results['sections']
     ll = []
     for best_entries in best:
-   #    print best_entries['kernel_family'] + " " + search_kernel
+       #print best_entries['kernel_family'] + " " + search_kernel
        if( (best_entries['kernel_family'] == search_kernel)   and \
            (best_entries['device_vendor'] == search_vendor)   and \
            (best_entries['precision'] == search_precision)    and \
