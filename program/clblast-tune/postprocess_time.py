@@ -12,6 +12,15 @@ import os
 import re
 import sys
 
+import sys
+import os.path
+import glob
+import argparse
+
+
+# Server storing a copy of the database
+DATABASE_SERVER_URL = "https://raw.githubusercontent.com/CNugteren/CLBlast-database/master/database.json"
+VERBOSE=1
 def ck_postprocess(i):
     ck=i['ck_kernel']
     rt=i['run_time']
@@ -28,7 +37,8 @@ def ck_postprocess(i):
     rf2=rt['run_cmd_out2']
     rf3=rt['run_output_files'][0]
     rf4=rt['run_output_files'][1]
-
+    print  "rf3: " + rt['run_output_files'][0]
+    print  "rf4: " + rt['run_output_files'][1] 
     lst=[]
     r={}
     if os.path.isfile(rf1):
@@ -45,7 +55,7 @@ def ck_postprocess(i):
 	rj1 = json.loads(open(rf3).read())
 
     if c2:
-        rj2= json.loads(open(rf3).read())
+        rj2= json.loads(open(rf4).read())
 
     if ((c1 == 0) and (c2 == 0)):
         r['return'] = 0
@@ -98,13 +108,40 @@ def ck_postprocess(i):
     bench=d['kernel']
     bench +=".hpp"
     pl=pl.split("install")[0]
-   
-    pl_suff= "src/src/database/kernels/" + bench 
-    pl+=pl_suff
-    if os.path.isfile(pl):
-       print "Try to parse " + pl
+    pl_suff= "src/scripts/database/"
+    pl += pl_suff
+
+    sys.path.append(pl)
+    ####
+    print "LOAD CLBlast python module"
+    import database.io as io
+    import database.db as db
+    import database.clblast as clblast
+    import database.bests as bests
+    import database.defaults as defaults
+    database_filename=pl+"database.json"
+    if not os.path.isfile(database_filename):
+       print "Download DB"
+       io.download_database(database_filename, DATABASE_SERVER_URL)
+    else:
+       print "Database found" 
+    if os.path.isfile(database_filename):
+       print "Load DB"
+       database = io.load_database(database_filename)
 
 
+    # Retrieves the best performing results
+    print("[database] Calculating the best results per device/kernel...")
+    database_best_results = bests.get_best_results(database)
+
+    # Determines the defaults for other vendors and per vendor
+    print("[database] Calculating the default values...")
+    database_defaults = defaults.calculate_defaults(database, VERBOSE)
+    database_best_results["sections"].extend(database_defaults["sections"])
+    database_best_filename='database_best.json'
+    # Optionally outputs the database to disk
+    if VERBOSE:
+        io.save_database(database_best_results, database_best_filename)
 
     rr={}
     rr['return']=0
