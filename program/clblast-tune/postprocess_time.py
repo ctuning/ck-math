@@ -17,10 +17,20 @@ import os.path
 import glob
 import argparse
 
+#OPTIONS
+# OpenCL vendor names and their short name
+VENDOR_TRANSLATION_TABLE = {
+  "GenuineIntel": "Intel",
+  "Intel(R) Corporation": "Intel",
+  "Advanced Micro Devices, Inc.": "AMD",
+  "NVIDIA Corporation": "NVIDIA",
+}
+
+
 
 # Server storing a copy of the database
 DATABASE_SERVER_URL = "https://raw.githubusercontent.com/CNugteren/CLBlast-database/master/database.json"
-VERBOSE=1
+VERBOSE=0
 def ck_postprocess(i):
     ck=i['ck_kernel']
     rt=i['run_time']
@@ -37,8 +47,8 @@ def ck_postprocess(i):
     rf2=rt['run_cmd_out2']
     rf3=rt['run_output_files'][0]
     rf4=rt['run_output_files'][1]
-    print  "rf3: " + rt['run_output_files'][0]
-    print  "rf4: " + rt['run_output_files'][1] 
+    print  "[postprocessing] Loading json output " + rt['run_output_files'][0]
+    print  "[postprocessing] Loading json output " + rt['run_output_files'][1] 
     lst=[]
     r={}
     if os.path.isfile(rf1):
@@ -63,7 +73,7 @@ def ck_postprocess(i):
     if ((c1)== 0):
         rj1 = rj2
     #### CREATE UNIQUE OUTPUT
-    
+     
     d['post_processed']='yes'
 #    mydict['device_core_clock'] = 'value from script'
 #   SET ARCH INFORMATION
@@ -83,6 +93,11 @@ def ck_postprocess(i):
     d['arg_alpha'] = rj1['arg_alpha']
     d['precision'] = rj1['precision']
 
+    for target in VENDOR_TRANSLATION_TABLE:
+            if d["device_vendor"] == target:
+                d["device_vendor"] = VENDOR_TRANSLATION_TABLE[target]
+
+
     #### Add results per strategy
 #    print "ADD RESULTs"
     l=[]
@@ -93,15 +108,9 @@ def ck_postprocess(i):
         tmp = {'strategy':'random', 'result': rj2['results']}
         l.append(tmp)
 
-#    print l
-    d['results'] = l
+    d['data'] = l
 
-
-        #print l
-#    if ( c2==0 ):
-#    print "PRINT DICTIONARY"
-#    print d   
-    #GREP DEFEAULT VALUE from CLBlast
+    #GET DEFAULT VALUE from CLBlast
     deps_cb= deps['lib-clblast']
     b=deps_cb['cus']
     pl = b['path_lib']
@@ -113,7 +122,6 @@ def ck_postprocess(i):
 
     sys.path.append(pl)
     ####
-    print "LOAD CLBlast python module"
     import database.io as io
     import database.db as db
     import database.clblast as clblast
@@ -121,19 +129,21 @@ def ck_postprocess(i):
     import database.defaults as defaults
     database_filename=pl+"database.json"
     if not os.path.isfile(database_filename):
-       print "Download DB"
        io.download_database(database_filename, DATABASE_SERVER_URL)
     else:
-       print "Database found" 
+       print "[database] DB found" 
     if os.path.isfile(database_filename):
-       print "Load DB"
        database = io.load_database(database_filename)
 
 
     # Retrieves the best performing results
     print("[database] Calculating the best results per device/kernel...")
     database_best_results = bests.get_best_results(database)
-
+    search_vendor=d['device_vendor']
+    search_device= d['device'] 
+    search_device_type=d['device_type']
+    search_kernel=d['kernel']
+    search_precision= d['precision']
     # Determines the defaults for other vendors and per vendor
     print("[database] Calculating the default values...")
     database_defaults = defaults.calculate_defaults(database, VERBOSE)
@@ -142,11 +152,31 @@ def ck_postprocess(i):
     # Optionally outputs the database to disk
     if VERBOSE:
         io.save_database(database_best_results, database_best_filename)
+    #### TEST to get best and default param 
+    best = database_best_results['sections']
+    ll = []
+    for best_entries in best:
+   #    print best_entries['kernel_family'] + " " + search_kernel
+       if( (best_entries['kernel_family'] == search_kernel)   and \
+           (best_entries['device_vendor'] == search_vendor)   and \
+           (best_entries['precision'] == search_precision)    and \
+           (best_entries['device_type']== search_device_type) and \
+           ((best_entries['device'] == search_device) or (best_entries['device']=='default')) ):
+            if VERBOSE: print best_entries
+            tmp=best_entries
+            ll.append(tmp)
 
+    if len(ll) > 0:
+        if VERBOSE: print len(ll)
+        d['db'] = ll
+    else:
+        d['db'] = 'na'
     rr={}
     rr['return']=0
+    output_filename='tmp-ck-clblast-tune-'+d['kernel']+'-'+d['arg_m']+'-'+d['arg_n']+'-'+d['arg_k']+'-'+d['precision'] +'.json' 
+##    print output_filename
     if d.get('post_processed','')=='yes':
-        r=ck.save_json_to_file({'json_file':'tmp-ck-clblast-tune.json', 'dict':d})
+        r=ck.save_json_to_file({'json_file':output_filename, 'dict':d})
         if r['return']>0: return r
     else:
         rr['return']=1
