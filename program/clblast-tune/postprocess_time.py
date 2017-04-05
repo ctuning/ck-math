@@ -92,7 +92,6 @@ def ck_postprocess(i):
         #concut again special case
         kernel_family = kernel_family + "_" + "direct"
     d['kernel'] = kernel_family
-    print  rj1['kernel_family']
     d['arg_beta'] = rj1['arg_beta']
     d['arg_m'] = rj1['arg_m']
     d['arg_n'] = rj1['arg_n']
@@ -180,7 +179,8 @@ def ck_postprocess(i):
         d['db'] = 'na'
     rr={}
     rr['return']=0
-    output_filename='tmp-ck-clblast-tune-'+d['kernel']+'-'+d['arg_m']+'-'+d['arg_n']+'-'+d['arg_k']+'-'+d['precision'] +'.json' 
+#    output_filename='tmp-ck-clblast-tune-'+d['kernel']+'-'+d['arg_m']+'-'+d['arg_n']+'-'+d['arg_k']+'-'+d['precision'] +'.json' 
+    output_filename='tmp-ck-clblast-tune.json'
 ##    print output_filename
     if d.get('post_processed','')=='yes':
         r=ck.save_json_to_file({'json_file':output_filename, 'dict':d})
