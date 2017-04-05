@@ -32,7 +32,7 @@
         "pre_process_cmds": [
         ],
         "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$",
-        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm ; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$ -precision 16",
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm ; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
@@ -45,7 +45,7 @@
         ]
       }
     },
-    "xgemm_direct": {
+    "xgemm_direct-fp32": {
       "ignore_return_code": "no",
       "run_time": {
         "fine_grain_timer_file": "tmp-ck-clblast-tune.json",
@@ -57,7 +57,7 @@
         "pre_process_cmds": [
         ],
         "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$",
-        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm_direct ; ./clblast_tuner_xgemm_direct -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$ -precision 16",
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm_direct ; ./clblast_tuner_xgemm_direct -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
@@ -67,6 +67,81 @@
         "run_output_files": [
           "clblast_xgemm_direct_1_32.json",
           "clblast_xgemm_direct_2_32.json"
+        ]
+      }
+    },
+    "xgemm_direct-fp16": {
+      "ignore_return_code": "no",
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-clblast-tune.json",
+        "need_compute_device": "opencl", 
+        "post_process_via_ck": "yes",
+        "post_process_cmds":[
+          "python $#src_path_local#$postprocess_time.py"
+        ],
+        "pre_process_cmds": [
+        ],
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -precision 16",
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm_direct ; ./clblast_tuner_xgemm_direct -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$ -precision 16",
+        "run_cmd_out1": "stdout.log",
+        "run_cmd_out2": "stderr.log",
+        "run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct",
+          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+        ],
+        "run_output_files": [
+          "clblast_xgemm_direct_1_16.json",
+          "clblast_xgemm_direct_2_16.json"
+        ]
+      }
+    },
+    "xgemm-fp16": {
+      "ignore_return_code": "no",
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-clblast-tune.json",
+        "need_compute_device": "opencl", 
+        "post_process_via_ck": "yes",
+        "post_process_cmds":[
+          "python $#src_path_local#$postprocess_time.py"
+        ],
+        "pre_process_cmds": [
+        ],
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -precision 16",
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$ -precision 16",
+        "run_cmd_out1": "stdout.log",
+        "run_cmd_out2": "stderr.log",
+        "run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct",
+          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+        ],
+        "run_output_files": [
+          "clblast_xgemm_1_16.json",
+          "clblast_xgemm_2_16.json"
+        ]
+      }
+    },
+    "xgemm-fp32": {
+      "ignore_return_code": "no",
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-clblast-tune.json",
+        "need_compute_device": "opencl", 
+        "post_process_via_ck": "yes",
+        "post_process_cmds":[
+          "python $#src_path_local#$postprocess_time.py"
+        ],
+        "pre_process_cmds": [
+        ],
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -precision 32",
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$ -precision 32",
+        "run_cmd_out1": "stdout.log",
+        "run_cmd_out2": "stderr.log",
+        "run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct",
+          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+        ],
+        "run_output_files": [
+          "clblast_xgemm_1_32.json",
+          "clblast_xgemm_2_32.json"
         ]
       }
     }

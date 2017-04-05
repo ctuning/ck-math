@@ -163,7 +163,7 @@ def do(i):
         for n in size_n:
             for k in size_k:
                  record_repo='local'
-                 record_uoa='explore-matrix-size'+kernel[0]+'-'+ str(precision)
+                 record_uoa='explore-matrix-size-'+kernel[0]+'-'+ str(precision)
                  ck.out('---------------------------------------------------------------------------------------')
                  ck.out('%s - %s - %s' % (m, n, k))
                  ck.out('Experiment - %s:%s' % (record_repo, record_uoa))
