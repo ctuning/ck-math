@@ -39,7 +39,7 @@ Lvl 3: 250Mhz
 #otherwise takes min and mix and divide per a fixed number 
 # 2 run all the frequencies
 clock_resolution = 1.0
-kernel = ['default']
+kernel = ['xgemm-fp32']
 title =  "My Experiment"
 # size of the matrix m,n,k
 size_m = [256]
@@ -49,7 +49,7 @@ size_k = [256]
 precision=32 # default 
 run = 5 # default 
 
-VERBOSE=1
+VERBOSE=0
 VERBOSE_STR="[VERBOSE] "
 DEBUG = 0
 DEBUG_STR="[DEBUG] "
@@ -195,7 +195,7 @@ def do(i):
                     'record_uoa':record_uoa,
                     'tags':['explore-clblast-matrix-size', kernel[0]],
                     'pipeline': cpipeline,
-                    'out':'con'  
+                    'out':'no'  
 
                  }
 		 r=ck.access(ii)
