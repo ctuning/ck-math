@@ -23,25 +23,20 @@
     "default": {
       "ignore_return_code": "no",
       "run_time": {
-        "fine_grain_timer_file": "tmp-ck-clblast-tune.json",
         "need_compute_device": "opencl", 
-        "post_process_via_ck": "yes",
+        "post_process_via_ck": "no",
         "post_process_cmds":[
-          "python $#src_path_local#$postprocess_time.py"
+          "cat stdout.log | cut -d \";\" -f15,16,17 > tmp-ck-clblast-tune-def.out"
         ],
         "pre_process_cmds": [
         ],
-        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$",
-        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm ; ./clblast_tuner_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$",
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_client_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -cblas 0 -clblas 0",
+        "run_cmd_main_remote": "chmod 755 ./clblast_client_xgemm ; ./clblast_client_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$",
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
-          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm",
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_client_xgemm",
           "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
-        ],
-        "run_output_files": [
-          "clblast_xgemm_1_32.json",
-          "clblast_xgemm_2_32.json"
         ]
       }
     },
@@ -111,7 +106,7 @@
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
-          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct",
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm",
           "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
         ],
         "run_output_files": [
@@ -136,7 +131,7 @@
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
-          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct",
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm",
           "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
         ],
         "run_output_files": [
@@ -164,6 +159,12 @@
       "name": "OpenCL library",
       "sort": 20,
       "tags": "lib,opencl" 
+    },
+    "show-opencl-devices": {
+     "local": "yes",
+     "name": "show-opencl-devices tool",
+     "sort": 50,
+     "tags": "tool,show-opencl-devices" 
     },
     "lib-clblast": {
       "local": "yes",
