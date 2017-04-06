@@ -42,9 +42,9 @@ clock_resolution = 1.0
 kernel = ['xgemm-fp32']
 title =  "My Experiment"
 # size of the matrix m,n,k
-size_m = [256]
-size_n = [256]
-size_k = [256]
+size_m = ["256", "512", "1024"]
+size_n = ["256", "512"]
+size_k = ["128","256"]
 
 precision=32 # default 
 run = 5 # default 
@@ -159,51 +159,56 @@ def do(i):
     pipeline=copy.deepcopy(r)
 
 
-    for m in size_m:
-        for n in size_n:
-            for k in size_k:
-                 record_repo='local'
-                 record_uoa='explore-matrix-size-'+kernel[0]+'-'+ str(precision)
-                 ck.out('---------------------------------------------------------------------------------------')
-                 ck.out('%s - %s - %s' % (m, n, k))
-                 ck.out('Experiment - %s:%s' % (record_repo, record_uoa))
+    record_repo='local'
+    record_uoa='explore-matrix-size-'+kernel[0]
+    ck.out('---------------------------------------------------------------------------------------')
+    ck.out('Experiment - %s:%s' % (record_repo, record_uoa))
 
-                 cpipeline=copy.deepcopy(pipeline)
-                 ii={
-                    'action':'autotune',
-                    'module_uoa':'pipeline',
-                    'data_uoa':'program',
-                    'choices_order':[
-                        [
-                            '##env#CK_CLBLAST_MSIZE'
-                        ]
-                    ],
-                    'choices_selection':[
-                        {"type":"loop", "choice":["256", "512" ], "default":"256"}
-                    ],
-                    'features_keys_to_process':['##choices#*'],
+    cpipeline=copy.deepcopy(pipeline)
+    ii={
+        'action':'autotune',
+        'module_uoa':'pipeline',
+        'data_uoa':'program',
+        'choices_order':[
+            [
+	     '##env#CK_CLBLAST_MSIZE'
+	    ],
+	    [
+	     '##env#CK_CLBLAST_NSIZE',
+	    ],
+	    [
+	     '##env#CK_CLBLAST_KSIZE'
+	    ]
+        ],
+        'choices_selection':[
+            {"type":"loop", "choice":size_m, "default":"256"},
+            {"type":"loop", "choice":size_n, "default":"256"},
+            {"type":"loop", "choice":size_k, "default":"256"}
 
+        ],
+        'features_keys_to_process':['##choices#*'],
+ 
 
-                    'iterations':-1,
-                    'repetitions':1, 
-                    'record':'yes',
-                    'record_failed':'yes',
-                    'record_params':{
-                        'search_point_by_features':'yes'
-                    },
-                    'record_repo':record_repo,
-                    'record_uoa':record_uoa,
-                    'tags':['explore-clblast-matrix-size', kernel[0]],
-                    'pipeline': cpipeline,
-                    'out':'no'  
+        'iterations':-1,
+        'repetitions':1, 
+        'record':'yes',
+        'record_failed':'yes',
+        'record_params':{
+            'search_point_by_features':'yes'
+        },
+        'record_repo':record_repo,
+        'record_uoa':record_uoa,
+        'tags':['explore-clblast-matrix-size', kernel[0]],
+        'pipeline': cpipeline,
+        'out':'no'  
 
-                 }
-		 r=ck.access(ii)
-                 if DEBUG > 0: print DEBUG_STR, r
-                 if r['return']>0: return r
-                 fail=r.get('fail','')
-                 if fail=='yes':
-                     return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
+    }
+    r=ck.access(ii)
+    if DEBUG > 0: print DEBUG_STR, r
+    if r['return']>0: return r
+    fail=r.get('fail','')
+    if fail=='yes':
+       return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
 
     return  {'return':0}
 
