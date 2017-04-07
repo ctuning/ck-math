@@ -39,15 +39,15 @@ Lvl 3: 250Mhz
 #otherwise takes min and mix and divide per a fixed number 
 # 2 run all the frequencies
 clock_resolution = 1.0
-kernel = ['xgemm-fp32']
+kernel = ['xgemm_direct-fp32']
 title =  "My Experiment"
 # size of the matrix m,n,k
-size_m = ["256", "512", "1024"]
-size_n = ["256", "512"]
-size_k = ["128","256"]
+size_m = ["512", "256", "128"]
+size_n = ["256", "512", "128"]
+size_k = ["128","256",  "1024"]
 
 precision=32 # default 
-run = 5 # default 
+run = 1 # default 
 
 VERBOSE=0
 VERBOSE_STR="[VERBOSE] "
@@ -181,9 +181,9 @@ def do(i):
 	    ]
         ],
         'choices_selection':[
-            {"type":"loop", "choice":size_m, "default":"256"},
-            {"type":"loop", "choice":size_n, "default":"256"},
-            {"type":"loop", "choice":size_k, "default":"256"}
+            {"type":"loop-with-next", "choice":size_m, "default":"256"},
+            {"type":"loop-with-next", "choice":size_n, "default":"256"},
+            {"type":"loop-with-next", "choice":size_k, "default":"256"}
 
         ],
         'features_keys_to_process':['##choices#*'],
