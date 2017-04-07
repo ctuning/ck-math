@@ -46,6 +46,13 @@
       "sort": 40, 
       "tags": "tool,cltune"
     },
+    "lib-openblas": {
+      "add_to_path": "yes", 
+      "local": "yes", 
+      "name": "OpenBLAS lib", 
+      "sort": 30, 
+      "tags": "lib,cblas"
+    },
     "opencl": {
       "local": "yes", 
       "name": "OpenCL library", 
