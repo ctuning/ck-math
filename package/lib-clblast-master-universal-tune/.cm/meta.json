@@ -34,26 +34,22 @@
       "tags": "tool,cmake"
     }, 
     "compiler": {
+      "add_to_path": "no",
       "local": "yes", 
       "name": "C++ compiler", 
       "sort": 10, 
       "tags": "compiler,lang-cpp"
     }, 
-    "tool-cltune": {
-      "add_to_path": "yes", 
-      "local": "yes", 
-      "name": "CLTune tool", 
-      "sort": 40, 
-      "tags": "tool,cltune"
-    },
     "lib-openblas": {
-      "add_to_path": "yes", 
-      "local": "yes", 
-      "name": "OpenBLAS lib", 
-      "sort": 30, 
-      "tags": "lib,cblas"
+      "local": "yes",
+      "name": "OpenBLAS library",
+      "sort": 25,
+      "skip_installed": {
+        "android": "yes"
+      },
+      "tags": "lib,openblas"
     },
-    "opencl": {
+    "lib-opencl": {
       "local": "yes", 
       "name": "OpenCL library", 
       "sort": 20, 
@@ -61,6 +57,12 @@
         "android": "yes"
       },
       "tags": "lib,opencl"
+    },
+    "tool-cltune": {
+      "local": "yes",
+      "name": "CLTune tool",
+      "sort": 40,
+      "tags": "tool,cltune"
     }
   }, 
   "end_full_path": {

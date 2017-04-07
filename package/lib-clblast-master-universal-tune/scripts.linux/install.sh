@@ -1,7 +1,7 @@
 #! /bin/bash
 
 #
-# Extra Installation script
+# Extra installation script.
 #
 # See CK LICENSE.txt for licensing details.
 # See CK COPYRIGHT.txt for copyright details.
@@ -15,7 +15,6 @@ export CK_CMAKE_EXTRA="${CK_CMAKE_EXTRA} \
  -DTUNERS=ON \
  -DCLTUNE_ROOT:PATH=${CK_ENV_TOOL_CLTUNE} \
  -DSAMPLES=ON \
- -DCLIENTS=ON "
-# -DANDROID=ON"
+ -DCLIENTS=ON"
 
 return 0
