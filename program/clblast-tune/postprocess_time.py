@@ -89,7 +89,7 @@ def ck_postprocess(i):
     #Experiment Information
     kernel_family=rj1['kernel_family'].split("_")[0]
     if rj1['kernel_family'].split("_")[1] == "direct":
-        #concut again special case
+        #concut again special case the kernal family of Xgemm_directNN is the same of other xgemm_direct
         kernel_family = kernel_family + "_" + "direct"
     d['kernel'] = kernel_family
     d['arg_beta'] = rj1['arg_beta']
