@@ -11,6 +11,11 @@ rem - Grigori Fursin, grigori@dividiti.com, 2016-2017
 rem - Anton Lokhmotov, anton@dividiti.com, 2017
 rem
 
+if "%CK_HAS_OPENMP%" != "0" (
+  set CK_REF_LIBRARIES=%CK_LINKER_FLAG_OPENMP%
+)
+
+
 rem To avoid problem linking OpenCL lib ...
 
 set CMAKE_C_FLAGS=%CMAKE_C_FLAGS% -L%CK_ENV_LIB_OPENCL_LIB%
@@ -27,6 +32,7 @@ set CK_CMAKE_EXTRA=%CK_CMAKE_EXTRA% ^
  -DCBLAS_INCLUDE_DIRS:PATH="%CK_ENV_LIB_OPENBLAS_INCLUDE%" ^
  -DCBLAS_LIBRARIES:FILEPATH="%CK_ENV_LIB_OPENBLAS_LIB%\%CK_ENV_LIB_OPENBLAS_STATIC_NAME%" ^
  -DSAMPLES=ON ^
+ -DCK_REF_LIBRARIES=%CK_REF_LIBRARIES% ^
  -DANDROID=ON
 
 exit /b 0
