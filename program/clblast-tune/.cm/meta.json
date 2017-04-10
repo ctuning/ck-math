@@ -160,12 +160,6 @@
       "sort": 20,
       "tags": "lib,opencl" 
     },
-    "show-opencl-devices": {
-     "local": "yes",
-     "name": "show-opencl-devices tool",
-     "sort": 50,
-     "tags": "tool,show-opencl-devices" 
-    },
     "lib-clblast": {
       "local": "yes",
       "name": "CLBlast library",
