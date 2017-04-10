@@ -42,9 +42,9 @@ clock_resolution = 1.0
 kernel = ['xgemm_direct-fp32']
 title =  "My Experiment"
 # size of the matrix m,n,k
-size_m = ["512", "256", "128"]
-size_n = ["256", "512", "128"]
-size_k = ["128","256",  "1024"]
+size_m = ["512", "256", "128", "1024" ]
+size_n = ["256", "512", "128", "1024" ]
+size_k = ["128","256",  "1024","128" ]
 
 precision=32 # default 
 run = 1 # default 
