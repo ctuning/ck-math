@@ -1,0 +1,13 @@
+diff -ruN src/CMakeLists.txt src-new/CMakeLists.txt
+--- src/CMakeLists.txt	2017-04-10 16:28:47.351226864 +0100
++++ src-new/CMakeLists.txt	2017-04-10 16:28:20.000000000 +0100
+@@ -326,6 +326,9 @@
+     endif()
+   endif()
+ 
++  # Add extra libs (useful for Android)
++  set (REF_LIBRARIES ${REF_LIBRARIES} ${CK_REF_LIBRARIES})
++
+ endif()
+ 
+ # ==================================================================================================
