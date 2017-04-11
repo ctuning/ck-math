@@ -66,7 +66,7 @@ def do(i):
     # Detect basic platform info. 
     ii={'action':'detect',
         'module_uoa':'platform',
-        'out':'out'}
+        'con':'con'}
     r=ck.access(ii)
     if DEBUG: print DEBUG_STR, r
     if r['return']>0: return r
@@ -104,11 +104,14 @@ def do(i):
     depl=copy.deepcopy(cdeps['lib-clblast'])
     if VERBOSE: print VERBOSE_STR, depl
     #ON LOCAL MACHINE 
+    tdid='192.168.0.18:5566'
+    tos='android21-arm-v7a'
     ii={'action':'resolve',
     'module_uoa':'env',
     'host_os':hos,
     'target_os':tos,
     'device_id':tdid,
+    'out':'con',
     'deps':{'lib-clblast':copy.deepcopy(depl)}
     }
     r=ck.access(ii) 
@@ -118,19 +121,6 @@ def do(i):
     if len(udepl)==0: return {'return':1, 'error':'no installed CLBlast libs'}
 
     #prepare pipeline
-    '''
-    ii={'action':'pipeline',
-        'module_uoa':'program',
-        'data_uoa':'clblast-tune',
-        'prepare':'yes',
-        'dependencies': cdeps,
-        'no_compiler_description':'yes',
-        'cmd_key':kernel[0], 
-        'cpu_freq':'max',
-        'gpu_freq':'max',
-        'flags':'-O3', 
-    }
-    '''
     ii={'action':'pipeline',
         'module_uoa':'program',
         'data_uoa':'clblast-tune',
@@ -138,8 +128,9 @@ def do(i):
         'dependencies': cdeps,
         'no_compiler_description':'yes',
         'cmd_key':kernel[0],
-        "target_os":"android21-arm-v7a",
-        "device_id":"192.168.0.18:5566",
+        "target_os":tos,
+        "device_id":tdid,
+        "out":'con',
         'flags':'-O3', 
     }
     r=ck.access(ii)
@@ -202,7 +193,7 @@ def do(i):
         'record_uoa':record_uoa,
         'tags':['explore-clblast-matrix-size', kernel[0]],
         'pipeline': cpipeline,
-        'out':'no'  
+        'out':'con'  
 
     }
     r=ck.access(ii)
