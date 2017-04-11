@@ -137,7 +137,9 @@ def do(i):
         'prepare':'yes',
         'dependencies': cdeps,
         'no_compiler_description':'yes',
-        'cmd_key':kernel[0], 
+        'cmd_key':kernel[0],
+        "target_os":"android21-arm-v7a",
+        "device_id":"192.168.0.18:5566",
         'flags':'-O3', 
     }
     r=ck.access(ii)
