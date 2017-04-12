@@ -1,6 +1,7 @@
 import ck.kernel as ck
 import copy
 import re 
+import argparse
 
 
 
@@ -55,7 +56,7 @@ DEBUG = 0
 DEBUG_STR="[DEBUG] "
 
 
-def do(i):
+def do(i, arg):
     if VERBOSE or DEBUG:
 	    print '[Experiment] ', title
 	    print '[Preparing pipeline] Clock resolution: ', clock_resolution
@@ -104,8 +105,10 @@ def do(i):
     depl=copy.deepcopy(cdeps['lib-clblast'])
     if VERBOSE: print VERBOSE_STR, depl
     #ON LOCAL MACHINE 
-    tdid='192.168.0.18:5566'
-    tos='android21-arm-v7a'
+    if ((arg.tos is not None) and (arg.did is not None) ):
+       tos=arg.tos
+       tdid=arg.did
+
     ii={'action':'resolve',
     'module_uoa':'env',
     'host_os':hos,
@@ -206,6 +209,12 @@ def do(i):
     return  {'return':0}
 
 
+parser = argparse.ArgumentParser(description='Short sample app')
 
-r=do({})
+parser.add_argument("--target_os", action="store", dest="tos")
+parser.add_argument("--device_id", action="store", dest="did")
+myarg=parser.parse_args()
+
+
+r=do({}, myarg)
 if r['return']>0: ck.err(r)
