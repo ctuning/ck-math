@@ -186,7 +186,7 @@ def do(i, arg):
  
 
         'iterations':-1,
-        'repetitions':1, 
+        'repetitions':3,
         'record':'yes',
         'record_failed':'yes',
         'record_params':{
