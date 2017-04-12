@@ -1,3 +1,4 @@
 *~
 *.pyc
 *tmp/
+.ipynb_checkpoints/
