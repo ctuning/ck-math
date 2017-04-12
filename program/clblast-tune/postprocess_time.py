@@ -171,7 +171,40 @@ def ck_postprocess(i):
             if VERBOSE: print best_entries
             tmp=best_entries
             ll.append(tmp)
-
+    ##### Find Timing in d[data]
+    stat=[]
+    for s in d['data']:
+  #      print s.get('strategy', {})
+        result=s.get('result',{})
+        for rrr in result:
+            compare = rrr['parameters']
+            best =  ll[0].get('results',{})[0].get('parameters',{})
+            ### comparing value by value
+            isBest= True
+            for bb in best.keys():
+            #    print bb, best[bb], compare[bb]
+                if (best[bb] != compare[bb]):
+                    isBest = False
+                    break
+            if (isBest):
+                stat.append(rrr)
+ #               print best, rrr
+    index=0
+    bindex=-1
+    bres={} 
+    min_time=sys.float_info.max
+    for s in d['data']:
+  #      print s.get('strategy', {})
+        result=s.get('result',{})
+        for i in result:
+            index +=1
+            if (i['time'] < min_time):
+                min_time=i['time']
+                bres=i
+                bindex=index
+#    print "Best performance: ", min_time,bres 
+#    print "Default performance: ", stat
+    d["statistics"] = {'best_configuration': [bres], 'default_configuration': stat}
     if len(ll) > 0:
         if VERBOSE: print len(ll)
         d['db'] = ll
