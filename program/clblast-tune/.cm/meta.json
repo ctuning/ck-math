@@ -30,6 +30,9 @@
         ],
         "pre_process_cmds": [
         ],
+        "pre_process_via_ck": {
+          "script_name": "ck_preprocess"
+        },
         "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_client_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -cblas 0 -clblas 0 -warm_up",
         "run_cmd_main_remote": "chmod 755 ./clblast_client_xgemm ; ./clblast_client_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -fraction $<<CK_CLBLAST_FRAC>>$",
         "run_cmd_out1": "stdout.log",
