@@ -1,16 +1,15 @@
+#!/bin/python
+
 import ck.kernel as ck
 import copy
-import re 
+import re
 import argparse
 
-
-
 #######################################
-#    Description
-#    
-#    
+#    Description:
+#
 #    KERNEL = Xgemm
-#    INPUT = M,N,K SIZE. PRECISION
+#    INPUT = SIZE (M,N,K); PRECISION
 #    OUTPUT = CONFIGURATION
 #######################################
 
@@ -18,53 +17,53 @@ import argparse
 Set interval or Resolution 25%
 Set resolution 0 //powersafe mode take min
 Set resolution 1// performance mode take max
-Set resolution x[0 and 1] 
+Set resolution x[0 and 1]
            Convert x in percent
-Start from lower Freq. The next freq is the first freq with freq_min + x % of power. 
-Set resolution 2 
-            Try all frequencies 
+Start from lower Freq. The next freq is the first freq with freq_min + x % of power.
+Set resolution 2
+            Try all frequencies
 
-Example of Set resolution x 
+Example of Set resolution x
 Freq availables 100 MHz, 200MHz, 400MHz, 800Mhz, 2000Mhz
 Set interval 50%.
 Lvl 0: 100Mhz
 Lvl 1: 150Mhz // value not allowed
 Lvl 2: 200Mhz OK
-Lvl 3: 250Mhz 
+Lvl 3: 250Mhz
 '''
 
 # clock_resolution
-# 0 min freq 
+# 0 min freq
 # 1 max freq [default]
 # (0,1) called resolution convert. Create intervals starting from min. Interval 0 = frequencies between min and min+(min*resolution)
-#otherwise takes min and mix and divide per a fixed number 
+#otherwise takes min and mix and divide per a fixed number
 # 2 run all the frequencies
 clock_resolution = 1.0
-kernel = ['xgemm_direct-fp32']
-title =  "My Experiment"
-# size of the matrix m,n,k
-size_m = ["512", "256", "128", "1024" ]
-size_n = ["256", "512", "128", "1024" ]
-size_k = ["128","256",  "1024","128" ]
+kernel = [ 'xgemm_direct-fp32' ]
+title = 'CLBlast tuning'
+# Matrix sizes: C[mxn] = A[mxk] * B[kxn].
+size_m = [ '512', '256',  '128', '1024' ]
+size_n = [ '256', '512',  '128', '1024' ]
+size_k = [ '128', '256', '1024', ' 128' ]
 
-precision=32 # default 
-run = 1 # default 
+precision = 32 # default
+run = 1 # default
 
-VERBOSE=0
-VERBOSE_STR="[VERBOSE] "
+VERBOSE = 0
+VERBOSE_STR = '[VERBOSE] '
 DEBUG = 0
-DEBUG_STR="[DEBUG] "
+DEBUG_STR = '[DEBUG] '
 
 
 def do(i, arg):
     if VERBOSE or DEBUG:
-	    print '[Experiment] ', title
-	    print '[Preparing pipeline] Clock resolution: ', clock_resolution
-	    print '[Preparing pipeline] Matrix sizes (m,n,k): ', size_m, size_n, size_k
-	    print '[Preparing pipeline] Precision: ', precision
-	    print '[Preparing pipeline] Run for configuration: ', run
-	    print '[Preparing pipeline] More parms... '
-    # Detect basic platform info. 
+        print ('[Experiment] %s' % title)
+        print ('[Preparing pipeline] Clock resolution: %d' % clock_resolution)
+        print ('[Preparing pipeline] Matrix sizes: m=%d, k=%d, n=%d: ' % (size_m, size_k, size_n)
+        print ('[Preparing pipeline] Precision: %d' % precision)
+        print ('[Preparing pipeline] Run for configuration: %d' % run)
+        print ('[Preparing pipeline] More parms... ')
+    # Detect basic platform info.
     ii={'action':'detect',
         'module_uoa':'platform',
         'con':'con'}
@@ -104,7 +103,7 @@ def do(i, arg):
     # CLblast libs.
     depl=copy.deepcopy(cdeps['lib-clblast'])
     if VERBOSE: print VERBOSE_STR, depl
-    #ON LOCAL MACHINE 
+    #ON LOCAL MACHINE
     if ((arg.tos is not None) and (arg.did is not None) ):
        tos=arg.tos
        tdid=arg.did
@@ -117,10 +116,10 @@ def do(i, arg):
     'out':'con',
     'deps':{'lib-clblast':copy.deepcopy(depl)}
     }
-    r=ck.access(ii) 
+    r=ck.access(ii)
     if DEBUG: print DEBUG_STR, r
     if r['return']>0: return r
-    udepl=r['deps']['lib-clblast'].get('choices',[]) 
+    udepl=r['deps']['lib-clblast'].get('choices',[])
     if len(udepl)==0: return {'return':1, 'error':'no installed CLBlast libs'}
 
     #prepare pipeline
@@ -135,7 +134,7 @@ def do(i, arg):
         "device_id":tdid,
         "out":'con',
         "no_state_check":"yes",
-        'flags':'-O3', 
+        'flags':'-O3',
     }
     r=ck.access(ii)
     if DEBUG: print DEBUG_STR, r
@@ -184,7 +183,7 @@ def do(i, arg):
 
         ],
         'features_keys_to_process':['##choices#*'],
- 
+
 
         'iterations':-1,
         'repetitions':3,
@@ -197,7 +196,7 @@ def do(i, arg):
         'record_uoa':record_uoa,
         'tags':['explore-clblast-matrix-size', kernel[0]],
         'pipeline': cpipeline,
-        'out':'con'  
+        'out':'con'
 
     }
     r=ck.access(ii)
