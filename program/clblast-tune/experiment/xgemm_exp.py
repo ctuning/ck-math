@@ -134,6 +134,7 @@ def do(i, arg):
         "target_os":tos,
         "device_id":tdid,
         "out":'con',
+        "no_state_check":"yes",
         'flags':'-O3', 
     }
     r=ck.access(ii)

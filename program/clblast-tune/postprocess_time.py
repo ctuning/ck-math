@@ -173,7 +173,7 @@ def ck_postprocess(i):
            (best_entries['device_type']== search_device_type) and \
            ((best_entries['device'] == search_device) or (best_entries['device']=='default')) ):
             if VERBOSE: print best_entries
-            tmp=best_entries
+            tmp=best_entries            
             ll.append(tmp)
     ##### Find Timing in d[data]
     stat=[]
@@ -184,6 +184,7 @@ def ck_postprocess(i):
             compare = rrr['parameters']
             for il in ll:
 		    best =  il.get('results',{})[0].get('parameters',{})
+                    dev= il['device']
 		    ### comparing value by value
 		    isBest= True
 		    for bb in best.keys():
@@ -192,8 +193,8 @@ def ck_postprocess(i):
 			    isBest = False
 			    break
 		    if (isBest):
+                        rrr['device'] = dev
 			stat.append(rrr)
-	 #               print best, rrr
     index=0
     bindex=-1
     bres={} 
@@ -208,8 +209,29 @@ def ck_postprocess(i):
                 bres=i
                 bindex=index
 #    print "Best performance: ", min_time,bres 
-#    print "Default performance: ", stat
-    d["statistics"] = {'best_configuration': [bres], 'default_configuration': stat}
+    m = float(d["arg_m"])
+    n = float(d["arg_n"])
+    k = float(d["arg_k"])
+    gflops = 2.0*m*n*k
+    time = float(bres["time"])/1000.0
+    gflops = gflops/time/1000.0/1000.0/1000.0
+    bres['GFLOPS'] =gflops
+
+
+    bestdefstat={}
+    for i in stat:
+        time=float(i["time"])/1000.0
+        gflops = 2.0*m*n*k
+        gflops = gflops/time/1000.0/1000.0/1000.0
+        i['GFLOPS'] =gflops
+        if i['device'] == 'default':
+            defstat=i
+        else:
+            bestdefstat=i
+
+    d["statistics"] = {'best_configuration': bres, 'default_configuration': defstat, 'default_family':bestdefstat}
+    if VERBOSE:
+        print d["statistics"]
     if len(ll) > 0:
         if VERBOSE: print len(ll)
         d['db'] = ll
