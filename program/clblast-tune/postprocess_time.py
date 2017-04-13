@@ -156,7 +156,7 @@ def ck_postprocess(i):
     database_best_results["sections"].extend(database_defaults["sections"])
     database_best_filename='database_best.json'
     # Optionally outputs the database to disk
-    if 1:
+    if VERBOSE:
         io.save_database(database_best_results, database_best_filename)
         print("[database] Producing a C++ database in current dir...")
         clblast.print_cpp_database(database_best_results, ".")
@@ -182,17 +182,18 @@ def ck_postprocess(i):
         result=s.get('result',{})
         for rrr in result:
             compare = rrr['parameters']
-            best =  ll[0].get('results',{})[0].get('parameters',{})
-            ### comparing value by value
-            isBest= True
-            for bb in best.keys():
-            #    print bb, best[bb], compare[bb]
-                if (best[bb] != compare[bb]):
-                    isBest = False
-                    break
-            if (isBest):
-                stat.append(rrr)
- #               print best, rrr
+            for il in ll:
+		    best =  il.get('results',{})[0].get('parameters',{})
+		    ### comparing value by value
+		    isBest= True
+		    for bb in best.keys():
+		    #    print bb, best[bb], compare[bb]
+			if (best[bb] != compare[bb]):
+			    isBest = False
+			    break
+		    if (isBest):
+			stat.append(rrr)
+	 #               print best, rrr
     index=0
     bindex=-1
     bres={} 
