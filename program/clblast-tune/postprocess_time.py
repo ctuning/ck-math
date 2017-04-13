@@ -156,11 +156,15 @@ def ck_postprocess(i):
     database_best_results["sections"].extend(database_defaults["sections"])
     database_best_filename='database_best.json'
     # Optionally outputs the database to disk
-    if VERBOSE:
+    if 1:
         io.save_database(database_best_results, database_best_filename)
+        print("[database] Producing a C++ database in current dir...")
+        clblast.print_cpp_database(database_best_results, ".")
     #### TEST to get best and default param 
     best = database_best_results['sections']
     ll = []
+    count = 0
+    index = -1
     for best_entries in best:
        #print best_entries['kernel_family'] + " " + search_kernel
        if( (best_entries['kernel_family'] == search_kernel)   and \
