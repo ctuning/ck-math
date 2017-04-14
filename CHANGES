@@ -1,3 +1,5 @@
+* 2017.04.14 - improving handling of OpenBLAS on Windows
+
 * 2017.04.05 - added package:lib-opencv-2.4.13.2 and lib-opencv-3.2.0
 
 * 2017.03.26 - finishing unifying CLBlast autotuning package across Linux, Windows, Android

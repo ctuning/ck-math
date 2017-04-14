@@ -13,10 +13,33 @@ rem ############################################################
 echo.
 echo Preparing vars ...
 
+rem Check make
+
+where make.exe
+if %errorlevel% == 0 (
+   set CK_CUR_MAKE=make
+)
+
+where mingw64-make.exe
+if %errorlevel% == 0 (
+   set CK_CUR_MAKE=mingw64-make
+)
+
+where mingw32-make.exe
+if %errorlevel% == 0 (
+   set CK_CUR_MAKE=mingw32-make
+)
+
+if "%CK_CUR_MAKE%" == "" (
+   echo.
+   echo Error: can't detect make!
+   goto err
+)
+
 cd %INSTALL_DIR%\%PACKAGE_SUB_DIR%
 
 rem mingw32-make PREFIX="%INSTALL_DIR%\install" BINARY=%CK_TARGET_CPU_BITS% ONLY_CBLAS=1 MAKE=mingw32-make.exe CFLAGS="-DMS_ABI" NOFORTRAN=1 NO_LAPACK=1
-make PREFIX="%INSTALL_DIR%\install" BINARY=%CK_TARGET_CPU_BITS% CC=gcc FC=gfortran
+%CK_CUR_MAKE% PREFIX="%INSTALL_DIR%\install" BINARY=%CK_TARGET_CPU_BITS% CC=gcc FC=gfortran
 
 if %errorlevel% neq 0 (
  echo.
@@ -24,7 +47,8 @@ if %errorlevel% neq 0 (
  goto err
 )
 
-mingw32-make install PREFIX="%INSTALL_DIR%\install" 
+rem mingw32-make install PREFIX="%INSTALL_DIR%\install" 
+%CK_CUR_MAKE% install PREFIX="%INSTALL_DIR%\install" 
 
 if %errorlevel% neq 0 (
  echo.
