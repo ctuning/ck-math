@@ -25,7 +25,6 @@
     "compiler": {
       "local": "yes",
       "name": "C compiler",
-      "skip_from_bat":"yes",
       "only_for_target_os_tags": [
         "android",
         "linux"
@@ -36,7 +35,6 @@
     "compiler-gfortran": {
       "local": "yes",
       "name": "GNU Fortran compiler",
-      "skip_from_bat":"yes",
       "only_for_target_os_tags": [
         "windows",
         "linux"
