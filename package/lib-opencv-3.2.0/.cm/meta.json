@@ -11,6 +11,8 @@
       "PACKAGE_COPY": "NO",
       "PACKAGE_GIT": "NO",
       "PACKAGE_NAME": "3.2.0.zip",
+      "PACKAGE_NAME2": "3.2.0",
+      "PACKAGE_RENAME": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "NO",
       "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO",

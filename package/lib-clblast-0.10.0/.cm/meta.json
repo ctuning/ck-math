@@ -50,6 +50,7 @@
   "tags": [
     "lib",
     "blas",
+    "no-tune",
     "opencl-blas",
     "clblast",
     "v0.10.0",
