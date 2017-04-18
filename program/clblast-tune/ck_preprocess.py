@@ -35,27 +35,65 @@ VERBOSE=0
 
 
 
-def make(a, src, dest):
-    myk = a['deps']
-    print "[Make CLBLAST] copy kernels header from "+src +"to "+dest
+def make(a, src, dest, tos, tdid, odepsi):
+    r=ck.access({'action':'search','module_uoa':'env','tags':'clblast-tune', 'target_os':tos})
+    if r['return']>0: return r
+    lst=r['lst']
+    muid=lst[0]['module_uid']
+    duid=lst[0]['data_uid']
+    r=ck.access({'action':'load','module_uoa':muid,'data_uoa':duid})
+    if r['return']>0: return r
 
+    odeps=r['dict']['deps']
+    myk = a['deps']
+    envd = {"CMAKE_CONFIG": "Release",
+            "PACKAGE_AUTOGEN": "NO",
+            "PACKAGE_BUILD_TYPE": "cmake",
+	    "PACKAGE_CONFIGURE_FLAGS": "",
+	    "PACKAGE_CONFIGURE_FLAGS_ANDROID": "-DBUILD_SHARED_LIBS=OFF",
+	    "PACKAGE_CONFIGURE_FLAGS_LINUX": "",
+	    "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
+	    "PACKAGE_GIT": "NO",
+	    "PACKAGE_GIT_CHECKOUT": "development",
+	    "PACKAGE_PATCH": "YES",
+	    "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
+	    "PACKAGE_SKIP_CLEAN_OBJ": "YES",
+	    "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
+	    "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
+	    "PACKAGE_SKIP_CMAKE_TARGET": "NO",
+	    "PACKAGE_SUB_DIR": "src",
+	    "PACKAGE_SUB_DIR1": "src",
+	    "PACKAGE_URL": "https://github.com/CNugteren/CLBlast"
+    }
+    print "[Make CLBLAST] copy kernels header from "+src +"to "+dest
+    ii={'action':'install',
+       'module_uoa':'package',
+       'data_uoa':'lib-clblast-master-universal-tune',
+       'target_os':tos,
+       'device_id':tdid,
+       'deps':odeps,
+       'env':envd,
+       'out':'con'
+    }
+    r=ck.access(ii)   
     #### API CK FOR COMPILATION
     #### MODIFY A RUN TIME SET PACKAGE_GIT
-
+    print "asdads"
     #### Compile again
    
-    return 1
-
-
-
+    return r
 
 
 def ck_preprocess(i):
     ck=i['ck_kernel']
+    del i['ck_kernel']
     rt=i['run_time']
     deps=i['deps']
     env=i.get('env',{})
     pass_to_make = i
+    pli = i['misc']
+       
+        
     # Load both stderr and stdout. Concatenate into one list.
     # NB: This assumes that Caffe iterates only once (--iterations=1).
     # Otherwise, looping over the log would be required.
@@ -64,7 +102,13 @@ def ck_preprocess(i):
 #            if d["device_vendor"] == target:
 #               d["device_vendor"] = VENDOR_TRANSLATION_TABLE[target]
 
+    tos = pli['target_os_uoa']
+    tdid = pli['device_id']
+    adf=pli['add_to_features']
+    compiler=adf['gpgpu'][0]['gpgpu_deps']['compiler']['uoa']
+    print (json.dumps(i, indent=2))
 
+    print tos, tdid
     #GET DEFAULT VALUE from CLBlast
     deps_cb= deps['lib-clblast']
     b=deps_cb['cus']
@@ -118,7 +162,7 @@ def ck_preprocess(i):
     best = database_best_results['sections']
     rr={}
     print "[Tuning] Checking new best configuration"
-    FIND = 0 
+    FIND = 1 
     if FIND:
         
         print "[Tuning] Modify databese_best entries"
@@ -134,18 +178,17 @@ def ck_preprocess(i):
         print "[Tuning] wrinting new kernel in "+src_new_kernels
         clblast.print_cpp_database(database_best_results, src_new_kernels)
 
-        rr['return'] = make(pass_to_make,src_new_kernels, pk)
+        rr = make(pass_to_make,src_new_kernels, pk, tos , tdid, "ciao")
         
     else:
         print "[Tuning] Nothing to do"
         print "[Tuning] Exit"
         rr['return']=0
 
-   
-
+    print "ENDING"
+    print  rr['return']
 
     #### NO ADD STUFF BELOW    
-
     return rr
 
 # Do not add anything here!
