@@ -45,7 +45,8 @@
       "name": "OpenBLAS library",
       "sort": 25,
       "skip_installed": {
-        "android": "yes"
+        "android": "yes",
+        "win": "yes"
       },
       "tags": "lib,openblas"
     },
