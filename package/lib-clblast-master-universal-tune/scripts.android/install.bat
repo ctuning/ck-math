@@ -11,10 +11,9 @@ rem - Grigori Fursin, grigori@dividiti.com, 2016-2017
 rem - Anton Lokhmotov, anton@dividiti.com, 2017
 rem
 
-if "%CK_HAS_OPENMP%" != "0" (
+if not "%CK_HAS_OPENMP%" == "0" (
   set CK_REF_LIBRARIES=%CK_LINKER_FLAG_OPENMP%
 )
-
 
 rem To avoid problem linking OpenCL lib ...
 

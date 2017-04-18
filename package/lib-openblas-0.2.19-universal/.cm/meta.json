@@ -70,6 +70,9 @@
       "add_to_path":"yes",
       "name": "C compiler",
       "skip_from_bat":"yes",
+      "skip_installed": {
+        "win": "yes"
+      },
       "only_for_host_os_tags": [
         "windows"
       ],
