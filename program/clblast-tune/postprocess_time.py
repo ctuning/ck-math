@@ -219,6 +219,7 @@ def ck_postprocess(i):
 
 
     bestdefstat={}
+    defstat = {}
     for i in stat:
         time=float(i["time"])/1000.0
         gflops = 2.0*m*n*k
