@@ -15,9 +15,6 @@ echo Preparing vars ...
 
 rem Check make
 
-set > D:\xyz.txt
-exit /b 1
-
 where make.exe
 if %errorlevel% == 0 (
    set CK_CUR_MAKE=make
