@@ -63,13 +63,15 @@ def ck2clblast(old, new):
            (best_entry['precision'] == new['precision'])    and \
            (best_entry['device_vendor'] == new['device_vendor'])   and \
            (best_entry['device_type']== new['device_type']) and \
-           ((best_entry['device'] == new['device']) or (best_entry['device']=='default')) ):
-            print best_entry
-            print best_entry['results'], len(best_entry['results'])
+           ((best_entry['device'] == new['device'])) ):
+#            print best_entry
+#            print best_entry['results'], len(best_entry['results'])
             exist = 1
+            print "[CK2CLBLAST] Replace a entry for ", new['device'], best_entry['device']
             best_entry['results'] = new['results']
     if not exist:
-        print old.append(new)
+        print "[CK2CLBLAST] Add new entry for ", new['device']
+        old.append(new)
     
     ## RETURN 0 to avoid CK RECOMP 
     return 1
@@ -85,6 +87,8 @@ def make(src, dest, tos, tdid):
     r=ck.access({'action':'search','module_uoa':'env','tags':'clblast-tune', 'target_os':tos})
     if r['return']>0: return r
     lst=r['lst']
+    if len(lst)==0 or len(lst)>1:
+       print lst
     muid=lst[0]['module_uid']
     duid=lst[0]['data_uid']
     r=ck.access({'action':'load','module_uoa':muid,'data_uoa':duid})
@@ -202,26 +206,18 @@ def ck_preprocess(i):
          print "[database] database_best.json found"
          print "[database] Loading ", best_filename
          database_best_results = json.loads(open(best_filename).read())
-#    if 1:
-#       print("[database] Producing a C++ database in current dir...")
-#        clblast.print_cpp_database(database_best_results, src_new_kernels)
-    
     best = database_best_results['sections']
     print "[Tuning] Checking new best configuration"
     ### loadfile To generilize
     mybestf=env['CK_CLBLAST_BEST_CONF_FILE']
     mybestd={}
     if os.path.isfile(mybestf):
-           mybestd = json.loads(open(mybestf).read())
-#           del mybestd['db']
-           del mybestd['data']
-           #####
-           MYFIND = ck2clblast(best, mybestd) 
+        mybestd = json.loads(open(mybestf).read())
+        del mybestd['data']
+        #####
+        MYFIND = ck2clblast(best, mybestd) 
     else:
-       MYFIND = 0
-
-
-#    MYFIND = 1 
+       MYFIND = 0 
     if MYFIND:
         print "[Tuning] Modify databese_best entries"
         print "[Tuning] Creating new kernels directory"
