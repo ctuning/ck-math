@@ -15,7 +15,7 @@
 
 # Configure ARM target.
 MACHINE=$(uname -m)
-if [ "${MACHINE}" == "armv7l" ]; then
+if [ "${MACHINE}" == "armv7l"] || [ "${CK_TARGET_CPU_BITS}" == "32" ]; then
   TARGET="TARGET=ARMV7"
 elif [ "${MACHINE}" == "aarch64" ]; then
   TARGET="TARGET=ARMV8"
@@ -35,6 +35,20 @@ elif [ "${CK_ANDROID_NDK_ARCH}" == "arm64" ] ; then
   TARGET="OSNAME=Android TARGET=ARMV8"
 fi
 
+if [ "${OPENBLAS_TARGET}" != "" ] ; then
+  TARGET="TARGET=${OPENBLAS_TARGET}"
+fi
+
+EXTRA2="NOFORTRAN=1"
+if [ "${OPENBLAS_FORTRAN}" == "YES" ] ; then
+  EXTRA2=""
+fi
+
+EXTRA3="NOLAPACK=1"
+if [ "${OPENBLAS_LAPACK}" == "YES" ] ; then
+  EXTRA3=""
+fi
+
 export CC=${CK_CC}
 export FC=${CK_FC}
 export AR=${CK_AR}
@@ -42,7 +56,7 @@ export AR=${CK_AR}
 # Building OpenBLAS produces lots of output which gets redirected to file.
 cd ${INSTALL_DIR}/${PACKAGE_SUB_DIR}
 
-make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} ${TARGET}
+make -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} ${TARGET} ${EXTRA2} ${EXTRA3}
 if [ "${?}" != "0" ] ; then
   echo "Error: Building of OpenBLAS failed!"
   exit 1
