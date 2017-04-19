@@ -15,7 +15,7 @@
 
 # Configure ARM target.
 MACHINE=$(uname -m)
-if [ "${MACHINE}" == "armv7l"] || [ "${CK_TARGET_CPU_BITS}" == "32" ]; then
+if [ "${MACHINE}" == "armv7l" ] || [ "${CK_TARGET_CPU_BITS}" == "32" ]; then
   TARGET="TARGET=ARMV7"
 elif [ "${MACHINE}" == "aarch64" ]; then
   TARGET="TARGET=ARMV8"
