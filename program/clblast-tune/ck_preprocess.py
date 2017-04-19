@@ -17,6 +17,8 @@ import os.path
 import glob
 import argparse
 
+### copy linux directory 
+import shutil, errno
 
 
 #OPTIONS
@@ -33,9 +35,53 @@ VENDOR_TRANSLATION_TABLE = {
 DATABASE_SERVER_URL = "https://raw.githubusercontent.com/CNugteren/CLBlast-database/master/database.json"
 VERBOSE=0
 
+def ck2clblast(old, new):
+##    print (json.dumps(new, indent=2))
+    temp_db = new['db']
+    temp_statistics = new['statistics']
+    del new['db']
+    del new['statistics']
+    ### now new has the head 
+    # From DB I copy the exact kernel name and kernel family. USE THE FIRST ELEM IN DB... 
+    new['kernel'] = temp_db[0]['kernel']
+    new['kernel_family'] = temp_db[0]['kernel_family']
+  
+    ####### EXTRACT BEST CONFIGURATION FROM STATISTICS
+#    print (json.dumps(temp_statistics, indent=2)) 
+    myparams = temp_statistics['best_configuration']['parameters']
+    #### TO FIX PRECISION IS IN PARAMETES
+    new['precision']= str(myparams['PRECISION'])
+    del myparams['PRECISION']
+ 
+    print myparams
+    ### NOW SEACH IN OLD
+    exist = 0 # if does not exist just add a new element in list 
+    new['results'] = [{'parameters': myparams, 'time': 0.1}]
+    for best_entry in old:
+        if ((best_entry['kernel_family'] == new['kernel_family'])   and \
+           (best_entry['kernel'] == new['kernel'])   and \
+           (best_entry['precision'] == new['precision'])    and \
+           (best_entry['device_vendor'] == new['device_vendor'])   and \
+           (best_entry['device_type']== new['device_type']) and \
+           ((best_entry['device'] == new['device']) or (best_entry['device']=='default')) ):
+            print best_entry
+            print best_entry['results'], len(best_entry['results'])
+            exist = 1
+            best_entry['results'] = new['results']
+    if not exist:
+        print old.append(new)
+    
+    ## RETURN 0 to avoid CK RECOMP 
+    return 1
 
+def copy(src, dst):
+    for filename in glob.glob(os.path.join(src, '*.hpp')):
+        shutil.copy(filename, dst)
 
-def make(a, src, dest, tos, tdid, odepsi):
+def make(src, dest, tos, tdid):
+    #### API CK FOR COMPILATION
+    #### MODIFY A RUN TIME SET PACKAGE_GIT
+    #### Compile again
     r=ck.access({'action':'search','module_uoa':'env','tags':'clblast-tune', 'target_os':tos})
     if r['return']>0: return r
     lst=r['lst']
@@ -45,7 +91,6 @@ def make(a, src, dest, tos, tdid, odepsi):
     if r['return']>0: return r
 
     odeps=r['dict']['deps']
-    myk = a['deps']
     envd = {"CMAKE_CONFIG": "Release",
             "PACKAGE_AUTOGEN": "NO",
             "PACKAGE_BUILD_TYPE": "cmake",
@@ -65,7 +110,6 @@ def make(a, src, dest, tos, tdid, odepsi):
 	    "PACKAGE_SUB_DIR1": "src",
 	    "PACKAGE_URL": "https://github.com/CNugteren/CLBlast"
     }
-    print "[Make CLBLAST] copy kernels header from "+src +"to "+dest
     ii={'action':'install',
        'module_uoa':'package',
        'data_uoa':'lib-clblast-master-universal-tune',
@@ -73,14 +117,13 @@ def make(a, src, dest, tos, tdid, odepsi):
        'device_id':tdid,
        'deps':odeps,
        'env':envd,
-       'out':'con'
+       'out':'con',
+       'quiet':'yes'
     }
+    print "[Make CLBLAST] copy kernels header from "+src +"to "+dest
+    copy(src, dest) 
+    print "[Make CLBLAST] compile CLBLAST-tune"
     r=ck.access(ii)   
-    #### API CK FOR COMPILATION
-    #### MODIFY A RUN TIME SET PACKAGE_GIT
-    print "asdads"
-    #### Compile again
-   
     return r
 
 
@@ -92,7 +135,8 @@ def ck_preprocess(i):
     env=i.get('env',{})
     pass_to_make = i
     pli = i['misc']
-       
+    rr={}
+  
         
     # Load both stderr and stdout. Concatenate into one list.
     # NB: This assumes that Caffe iterates only once (--iterations=1).
@@ -106,15 +150,18 @@ def ck_preprocess(i):
     tdid = pli['device_id']
     adf=pli['add_to_features']
     compiler=adf['gpgpu'][0]['gpgpu_deps']['compiler']['uoa']
-    print (json.dumps(i, indent=2))
-
-    print tos, tdid
+    #print (json.dumps(i['env'], indent=2))
+    if env['CK_FORCE_RECOMPILE'] == "0":
+           rr["return"] = 0
+           return rr
+    #print tos, tdid)
+    print "[CK_FORCE_RECOMPILE] ",env['CK_FORCE_RECOMPILE']
     #GET DEFAULT VALUE from CLBlast
     deps_cb= deps['lib-clblast']
     b=deps_cb['cus']
     pl = b['path_lib']
-    bench="xgemm"
-    bench +=".hpp"
+    #bench="xgemm"
+    #bench +=".hpp"
     pl=pl.split("install")[0] #### VERIFY WITH INSTALL SCRIPT 
     pl_suff= "src/scripts/database/"
     pk=pl
@@ -158,17 +205,26 @@ def ck_preprocess(i):
 #    if 1:
 #       print("[database] Producing a C++ database in current dir...")
 #        clblast.print_cpp_database(database_best_results, src_new_kernels)
-
+    
     best = database_best_results['sections']
-    rr={}
     print "[Tuning] Checking new best configuration"
-    FIND = 1 
-    if FIND:
-        
+    ### loadfile To generilize
+    mybestf=env['CK_CLBLAST_BEST_CONF_FILE']
+    mybestd={}
+    if os.path.isfile(mybestf):
+           mybestd = json.loads(open(mybestf).read())
+#           del mybestd['db']
+           del mybestd['data']
+           #####
+           MYFIND = ck2clblast(best, mybestd) 
+    else:
+       MYFIND = 0
+
+
+#    MYFIND = 1 
+    if MYFIND:
         print "[Tuning] Modify databese_best entries"
-
         print "[Tuning] Creating new kernels directory"
-
         cp = os.getcwd()
         src_new_kernels = cp+"/kernels_tmp"
         if not os.path.exists(src_new_kernels):
@@ -177,16 +233,13 @@ def ck_preprocess(i):
             print "[Tuning] " +src_new_kernels+ " already exists"
         print "[Tuning] wrinting new kernel in "+src_new_kernels
         clblast.print_cpp_database(database_best_results, src_new_kernels)
-
-        rr = make(pass_to_make,src_new_kernels, pk, tos , tdid, "ciao")
+        rr = make(src_new_kernels, pk, tos , tdid)
         
     else:
         print "[Tuning] Nothing to do"
         print "[Tuning] Exit"
         rr['return']=0
 
-    print "ENDING"
-    print  rr['return']
 
     #### NO ADD STUFF BELOW    
     return rr

@@ -171,8 +171,10 @@
     }
   },
   "run_vars": {
+    "CK_FORCE_RECOMPILE":1,
     "CK_COMPUTE_DEVICE_ID": 0, 
     "CK_COMPUTE_PLATFORM_ID": 0,
+    "CK_CLBLAST_BEST_CONF_FILE":"tmp-ck-clblast-tune.json",
     "CK_CLBLAST_ITERATIONS": 1,
     "CK_CLBLAST_MSIZE": 512,
     "CK_CLBLAST_NSIZE": 512,
