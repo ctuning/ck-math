@@ -80,17 +80,21 @@ def copy(src, dst):
     for filename in glob.glob(os.path.join(src, '*.hpp')):
         shutil.copy(filename, dst)
 
-def make(src, dest, tos, tdid):
+def make(src, dest, tos, tdid, myuoa):
     #### API CK FOR COMPILATION
     #### MODIFY A RUN TIME SET PACKAGE_GIT
     #### Compile again
-    r=ck.access({'action':'search','module_uoa':'env','tags':'clblast-tune', 'target_os':tos})
+    r=ck.access({'action':'search','module_uoa':'env','tags':'clblast-tune', 'target_os':tos, 'device_id':tdid})
     if r['return']>0: return r
     lst=r['lst']
+    ie = 0
     if len(lst)==0 or len(lst)>1:
-       print lst
-    muid=lst[0]['module_uid']
-    duid=lst[0]['data_uid']
+       for le in lst:
+           if le['data_uid'] == myuoa:
+              break
+           ie=ie+1
+    muid=lst[ie]['module_uid']
+    duid=lst[ie]['data_uid']
     r=ck.access({'action':'load','module_uoa':muid,'data_uoa':duid})
     if r['return']>0: return r
 
@@ -141,7 +145,9 @@ def ck_preprocess(i):
     pli = i['misc']
     rr={}
   
-        
+    print (json.dumps(deps['lib-clblast'], indent=2)) 
+    print "cacca"
+    print deps['lib-clblast']['uoa']
     # Load both stderr and stdout. Concatenate into one list.
     # NB: This assumes that Caffe iterates only once (--iterations=1).
     # Otherwise, looping over the log would be required.
@@ -162,6 +168,7 @@ def ck_preprocess(i):
     print "[CK_FORCE_RECOMPILE] ",env['CK_FORCE_RECOMPILE']
     #GET DEFAULT VALUE from CLBlast
     deps_cb= deps['lib-clblast']
+    uoa= deps_cb['uoa']
     b=deps_cb['cus']
     pl = b['path_lib']
     #bench="xgemm"
@@ -172,7 +179,7 @@ def ck_preprocess(i):
     pk_suff="src/src/database/kernels/"
     pl += pl_suff
     pk += pk_suff
-    print pl, pk
+#    print pl, pk
     sys.path.append(pl)
     ####
     import database.io as io
@@ -229,7 +236,7 @@ def ck_preprocess(i):
             print "[Tuning] " +src_new_kernels+ " already exists"
         print "[Tuning] wrinting new kernel in "+src_new_kernels
         clblast.print_cpp_database(database_best_results, src_new_kernels)
-        rr = make(src_new_kernels, pk, tos , tdid)
+        rr = make(src_new_kernels, pk, tos , tdid, uoa)
         
     else:
         print "[Tuning] Nothing to do"
