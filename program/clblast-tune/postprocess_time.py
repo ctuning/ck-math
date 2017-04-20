@@ -47,8 +47,8 @@ def ck_postprocess(i):
     rf2=rt['run_cmd_out2']
     rf3=rt['run_output_files'][0]
     rf4=rt['run_output_files'][1]
-    print  "[postprocessing] Loading json output " + rt['run_output_files'][0]
-    print  "[postprocessing] Loading json output " + rt['run_output_files'][1] 
+    print("[postprocessing] Loading json output %s " % (rt['run_output_files'][0] ))
+    print("[postprocessing] Loading json output %s " % (rt['run_output_files'][1] ))
     lst=[]
     r={}
     if os.path.isfile(rf1):
@@ -69,13 +69,13 @@ def ck_postprocess(i):
 
     if ((c1 == 0) and (c2 == 0)):
         r['return'] = 0
-        print "[postprocessing] Unable to read json output"
+        print("[postprocessing] Unable to read json output")
         r['return'] = 1;
         return r;
     if ((c1)== 0):
         rj1 = rj2
     #### CREATE UNIQUE OUTPUT
-    print "[postprocessing] Creating dictionary"
+    print("[postprocessing] Creating dictionary")
     d['post_processed']='yes'
 #    mydict['device_core_clock'] = 'value from script'
 #   SET ARCH INFORMATION
@@ -137,7 +137,7 @@ def ck_postprocess(i):
     if not os.path.isfile(database_filename):
        io.download_database(database_filename, DATABASE_SERVER_URL)
     else:
-       print "[database] DB found" 
+       print("[database] DB found")
     if os.path.isfile(database_filename):
        database = io.load_database(database_filename)
 
@@ -158,8 +158,8 @@ def ck_postprocess(i):
     # Optionally outputs the database to disk
     if VERBOSE:
         io.save_database(database_best_results, database_best_filename)
-        print("[database] Producing a C++ database in current dir...")
-        clblast.print_cpp_database(database_best_results, ".")
+        #print("[database] Producing a C++ database in current dir...")
+        #clblast.print_cpp_database(database_best_results, ".")
     #### TEST to get best and default param 
     best = database_best_results['sections']
     ll = []
@@ -172,7 +172,7 @@ def ck_postprocess(i):
            (best_entries['precision'] == search_precision)    and \
            (best_entries['device_type']== search_device_type) and \
            ((best_entries['device'] == search_device) or (best_entries['device']=='default')) ):
-            if VERBOSE: print best_entries
+            if VERBOSE: print("[postprocess] Best entry %s found" % (best_entries))
             tmp=best_entries            
             ll.append(tmp)
     ##### Find Timing in d[data]
@@ -232,7 +232,7 @@ def ck_postprocess(i):
 
     d["statistics"] = {'best_configuration': bres, 'default_configuration': defstat, 'default_family':bestdefstat}
     if VERBOSE:
-        print d["statistics"]
+        print ("[postprocessing] %s" %(d["statistics"]))
     if len(ll) > 0:
         if VERBOSE: print len(ll)
         d['db'] = ll
@@ -244,13 +244,13 @@ def ck_postprocess(i):
     output_filename='tmp-ck-clblast-tune.json'
 ##    print output_filename
     if d.get('post_processed','')=='yes':
-        r=ck.save_json_to_file({'json_file':output_filename, 'dict':d})
-        if r['return']>0: return r
+        rr=ck.save_json_to_file({'json_file':output_filename, 'dict':d})
+        if rr['return']>0: return rr
     else:
         rr['return']=1
         rr['error']='FAIL'
-        print(d)
-#    print d['results'][1]
+    print("[postprocessing] Exit code %s" %(rr['return']))
+    
     return rr
 
 # Do not add anything here!

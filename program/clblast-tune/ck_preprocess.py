@@ -53,7 +53,6 @@ def ck2clblast(old, new):
     new['precision']= str(myparams['PRECISION'])
     del myparams['PRECISION']
  
-    print myparams
     ### NOW SEACH IN OLD
     exist = 0 # if does not exist just add a new element in list 
     new['results'] = [{'parameters': myparams, 'time': 0.1}]
@@ -67,10 +66,10 @@ def ck2clblast(old, new):
 #            print best_entry
 #            print best_entry['results'], len(best_entry['results'])
             exist = 1
-            print "[CK2CLBLAST] Replace a entry for ", new['device'], best_entry['device']
+            print("[CK2CLBLAST] Replace %s device entry"  % (new['device']))
             best_entry['results'] = new['results']
     if not exist:
-        print "[CK2CLBLAST] Add new entry for ", new['device']
+        print("[CK2CLBLAST] Add new entry for %s" % (new['device']))
         old.append(new)
     
     ## RETURN 0 to avoid CK RECOMP 
@@ -128,9 +127,9 @@ def make(src, dest, tos, tdid, myuoa):
        'out':'con',
        'quiet':'yes'
     }
-    print "[Make CLBLAST] copy kernels header from "+src +"to "+dest
+    print("[Make CLBLAST] copy kernels header from %s to %s" %(src, dest))
     copy(src, dest) 
-    print "[Make CLBLAST] compile CLBLAST-tune"
+    print ("[Make CLBLAST] compile CLBLAST-tune")
     r=ck.access(ii)   
     return r
 
@@ -164,7 +163,7 @@ def ck_preprocess(i):
            rr["return"] = 0
            return rr
     #print tos, tdid)
-    print "[CK_FORCE_RECOMPILE] ",env['CK_FORCE_RECOMPILE']
+    print("[CK_FORCE_RECOMPILE] %s" %(env['CK_FORCE_RECOMPILE']))
     #GET DEFAULT VALUE from CLBlast
     deps_cb= deps['lib-clblast']
     uoa= deps_cb['uoa']
@@ -189,7 +188,7 @@ def ck_preprocess(i):
 
     best_filename="database_best.json"
     if not os.path.isfile(best_filename):
-        print "[database] database_best.json not found"
+        print("[database] database_best.json not found")
         database_filename=pl+"database.json"
         if not os.path.isfile(database_filename):
             io.download_database(database_filename, DATABASE_SERVER_URL)
@@ -209,11 +208,11 @@ def ck_preprocess(i):
         # Optionally outputs the database to disk
         #### TEST to get best and default param 
     else:
-         print "[database] database_best.json found"
-         print "[database] Loading ", best_filename
+         print("[database] database_best.json found")
+         print("[database] Loading %s" % (best_filename))
          database_best_results = json.loads(open(best_filename).read())
     best = database_best_results['sections']
-    print "[Tuning] Checking new best configuration"
+    print("[Tuning] Checking new best configuration")
     ### loadfile To generilize
     mybestf=env['CK_CLBLAST_BEST_CONF_FILE']
     mybestd={}
@@ -225,21 +224,21 @@ def ck_preprocess(i):
     else:
        MYFIND = 0 
     if MYFIND:
-        print "[Tuning] Modify databese_best entries"
-        print "[Tuning] Creating new kernels directory"
+        print("[Tuning] Modify databese_best entries")
+        print("[Tuning] Creating new kernels directory")
         cp = os.getcwd()
         src_new_kernels = cp+"/kernels_tmp"
         if not os.path.exists(src_new_kernels):
              os.makedirs(src_new_kernels)
         else:
-            print "[Tuning] " +src_new_kernels+ " already exists"
-        print "[Tuning] wrinting new kernel in "+src_new_kernels
+            print("[Tuning] %s already exists" % (src_new_kernels))
+        print("[Tuning] wrinting new kernel: %s " % (src_new_kernels))
         clblast.print_cpp_database(database_best_results, src_new_kernels)
         rr = make(src_new_kernels, pk, tos , tdid, uoa)
         
     else:
-        print "[Tuning] Nothing to do"
-        print "[Tuning] Exit"
+        print("[Tuning] Nothing to do")
+        print("[Tuning] Exit")
         rr['return']=0
 
 
