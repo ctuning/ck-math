@@ -97,7 +97,7 @@ def make(src, dest, tos, tdid, myuoa):
     duid=lst[ie]['data_uid']
     r=ck.access({'action':'load','module_uoa':muid,'data_uoa':duid})
     if r['return']>0: return r
-
+#DIFFERNCES: PACKAGE_GIT NO, PACKAGE_PATCH": "NO"
     odeps=r['dict']['deps']
     envd = {"CMAKE_CONFIG": "Release",
             "PACKAGE_AUTOGEN": "NO",
@@ -108,7 +108,7 @@ def make(src, dest, tos, tdid, myuoa):
 	    "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
 	    "PACKAGE_GIT": "NO",
 	    "PACKAGE_GIT_CHECKOUT": "development",
-	    "PACKAGE_PATCH": "YES",
+	    "PACKAGE_PATCH": "NO",
 	    "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
 	    "PACKAGE_SKIP_CLEAN_OBJ": "YES",
 	    "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
