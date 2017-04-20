@@ -4,7 +4,6 @@ import ck.kernel as ck
 import copy
 import re
 import argparse
-
 #######################################
 #    Description:
 #
@@ -57,18 +56,18 @@ DEBUG_STR = '[DEBUG] '
 
 def do(i, arg):
     if VERBOSE or DEBUG:
-        print ('[Experiment] %s' % title)
-        print ('[Preparing pipeline] Clock resolution: %d' % clock_resolution)
-        print ('[Preparing pipeline] Matrix sizes: m=%d, k=%d, n=%d: ' % (size_m, size_k, size_n)
-        print ('[Preparing pipeline] Precision: %d' % precision)
-        print ('[Preparing pipeline] Run for configuration: %d' % run)
-        print ('[Preparing pipeline] More parms... ')
+        print('[Experiment] %s' % title)
+        print('[Preparing pipeline] Clock resolution: %d' % clock_resolution)
+        print('[Preparing pipeline] Matrix sizes: m=%s, k=%s, n=%s: ' % (size_m, size_k, size_n))
+        print('[Preparing pipeline] Precision: %d' % precision)
+        print('[Preparing pipeline] Run for configuration: %d' % run)
+        print('[Preparing pipeline] More parms... ')
     # Detect basic platform info.
     ii={'action':'detect',
         'module_uoa':'platform',
         'con':'con'}
     r=ck.access(ii)
-    if DEBUG: print DEBUG_STR, r
+    if DEBUG: print("%s %s" %(DEBUG_STR, r))
     if r['return']>0: return r
 
     # Host and target OS params.
@@ -78,18 +77,17 @@ def do(i, arg):
     tosd=r['os_dict']
     tdid=r['device_id']
 
-    if DEBUG: print DEBUG_STR, hos, hosd
-    if DEBUG: print DEBUG_STR, tos, tosd, tdid
+    if DEBUG: print("%s %s %s" %(DEBUG_STR, hos, hosd))
+    if DEBUG: print("%s %s %s %s" %( DEBUG_STR, tos, tosd, tdid))
 
     # Load CLBLAST program meta and desc to check deps.
     ii={'action':'load',
         'module_uoa':'program',
         'data_uoa':'clblast-tune'}
     rx=ck.access(ii)
-    if DEBUG: print DEBUG_STR, rx
+    if DEBUG: print("%s %s " %(DEBUG_STR, rx))
     if rx['return']>0: return rx
     meta= rx['dict']
-    if VERBOSE: print VERBOSE_STR, meta
 
     # Get compile-time and run-time deps.
     cdeps=meta.get('compile_deps',{})
@@ -102,7 +100,6 @@ def do(i, arg):
         cdeps[k]['for_run_time']='yes'
     # CLblast libs.
     depl=copy.deepcopy(cdeps['lib-clblast'])
-    if VERBOSE: print VERBOSE_STR, depl
     #ON LOCAL MACHINE
     if ((arg.tos is not None) and (arg.did is not None) ):
        tos=arg.tos
@@ -117,7 +114,6 @@ def do(i, arg):
     'deps':{'lib-clblast':copy.deepcopy(depl)}
     }
     r=ck.access(ii)
-    if DEBUG: print DEBUG_STR, r
     if r['return']>0: return r
     udepl=r['deps']['lib-clblast'].get('choices',[])
     if len(udepl)==0: return {'return':1, 'error':'no installed CLBlast libs'}
@@ -137,7 +133,6 @@ def do(i, arg):
         'flags':'-O3',
     }
     r=ck.access(ii)
-    if DEBUG: print DEBUG_STR, r
     if r['return']>0: return r
     fail=r.get('fail','')
     if fail=='yes': return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
@@ -200,7 +195,7 @@ def do(i, arg):
 
     }
     r=ck.access(ii)
-    if DEBUG > 0: print DEBUG_STR, r
+    if DEBUG > 0: print("%s %s" %(DEBUG_STR, r))
     if r['return']>0: return r
     fail=r.get('fail','')
     if fail=='yes':
