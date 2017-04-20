@@ -97,7 +97,7 @@ def make(src, dest, tos, tdid, myuoa):
     duid=lst[ie]['data_uid']
     r=ck.access({'action':'load','module_uoa':muid,'data_uoa':duid})
     if r['return']>0: return r
-
+#DIFFERNCES: PACKAGE_GIT NO, PACKAGE_PATCH": "NO"
     odeps=r['dict']['deps']
     envd = {"CMAKE_CONFIG": "Release",
             "PACKAGE_AUTOGEN": "NO",
@@ -108,7 +108,7 @@ def make(src, dest, tos, tdid, myuoa):
 	    "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
 	    "PACKAGE_GIT": "NO",
 	    "PACKAGE_GIT_CHECKOUT": "development",
-	    "PACKAGE_PATCH": "YES",
+	    "PACKAGE_PATCH": "NO",
 	    "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
 	    "PACKAGE_SKIP_CLEAN_OBJ": "YES",
 	    "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
@@ -145,9 +145,8 @@ def ck_preprocess(i):
     pli = i['misc']
     rr={}
   
-    print (json.dumps(deps['lib-clblast'], indent=2)) 
-    print "cacca"
-    print deps['lib-clblast']['uoa']
+    #print (json.dumps(deps['lib-clblast'], indent=2)) 
+    #print deps['lib-clblast']['uoa']
     # Load both stderr and stdout. Concatenate into one list.
     # NB: This assumes that Caffe iterates only once (--iterations=1).
     # Otherwise, looping over the log would be required.
@@ -159,7 +158,7 @@ def ck_preprocess(i):
     tos = pli['target_os_uoa']
     tdid = pli['device_id']
     adf=pli['add_to_features']
-    compiler=adf['gpgpu'][0]['gpgpu_deps']['compiler']['uoa']
+    #compiler=adf['gpgpu'][0]['gpgpu_deps']['compiler']['uoa']
     #print (json.dumps(i['env'], indent=2))
     if env['CK_FORCE_RECOMPILE'] == "0":
            rr["return"] = 0
