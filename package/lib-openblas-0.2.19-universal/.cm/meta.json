@@ -34,6 +34,7 @@
     },
     "compiler-gfortran": {
       "local": "yes",
+      "skip_from_bat":"yes",
       "name": "GNU Fortran compiler",
       "only_for_target_os_tags": [
         "windows",
