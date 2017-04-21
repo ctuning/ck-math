@@ -90,10 +90,10 @@
     "blas", 
     "opencl-blas", 
     "clblast", 
+    "tune",
     "clblast-tune", 
     "vmaster",
-    "vdev",
-    "vtune"
+    "vdev"
   ], 
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "fd44428fbc77f77f", 
