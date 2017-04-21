@@ -45,7 +45,6 @@ def ck2clblast(old, new):
     # From DB I copy the exact kernel name and kernel family. USE THE FIRST ELEM IN DB... 
     new['kernel'] = temp_db[0]['kernel']
     new['kernel_family'] = temp_db[0]['kernel_family']
-  
     ####### EXTRACT BEST CONFIGURATION FROM STATISTICS
 #    print (json.dumps(temp_statistics, indent=2)) 
     myparams = temp_statistics['best_configuration']['parameters']
@@ -71,15 +70,20 @@ def ck2clblast(old, new):
     if not exist:
         print("[CK2CLBLAST] Add new entry for %s" % (new['device']))
         old.append(new)
-    
+    kernel2copy=new['kernel_family']+".hpp"
     ## RETURN 0 to avoid CK RECOMP 
-    return 1
+    return 1,kernel2copy
 
-def copy(src, dst):
-    for filename in glob.glob(os.path.join(src, '*.hpp')):
-        shutil.copy(filename, dst)
-
-def make(src, dest, tos, tdid, myuoa):
+def copy(src, dst, kernelname):
+    print("[Make CLBLAST] copy %s header from %s to %s" %(kernelname,src, dst)) 
+    kernelname= os.path.join(src,kernelname)
+    shutil.copy(kernelname, dst)
+    print("[Make CLBLAST] cp %s %s ...done!" %(kernelname, dst))
+#    for filename in glob.glob(os.path.join(src, '*.hpp')):
+#        if (kernelname == filename):
+#            shutil.copy(filename, dst) 
+#        print filename, kernelname
+def make(src, dest, tos, tdid, myuoa, kernelname):
     #### API CK FOR COMPILATION
     #### MODIFY A RUN TIME SET PACKAGE_GIT
     #### Compile again
@@ -127,8 +131,7 @@ def make(src, dest, tos, tdid, myuoa):
        'out':'con',
        'quiet':'yes'
     }
-    print("[Make CLBLAST] copy kernels header from %s to %s" %(src, dest))
-    copy(src, dest) 
+    copy(src, dest, kernelname) 
     print ("[Make CLBLAST] compile CLBLAST-tune")
     r=ck.access(ii)   
     return r
@@ -220,7 +223,7 @@ def ck_preprocess(i):
         mybestd = json.loads(open(mybestf).read())
         del mybestd['data']
         #####
-        MYFIND = ck2clblast(best, mybestd) 
+        MYFIND, k = ck2clblast(best, mybestd) 
     else:
        MYFIND = 0 
     if MYFIND:
@@ -234,7 +237,7 @@ def ck_preprocess(i):
             print("[Tuning] %s already exists" % (src_new_kernels))
         print("[Tuning] wrinting new kernel: %s " % (src_new_kernels))
         clblast.print_cpp_database(database_best_results, src_new_kernels)
-        rr = make(src_new_kernels, pk, tos , tdid, uoa)
+        rr = make(src_new_kernels, pk, tos , tdid, uoa, k)
         
     else:
         print("[Tuning] Nothing to do")
