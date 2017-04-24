@@ -39,12 +39,21 @@ def ck2clblast(old, new):
 ##    print (json.dumps(new, indent=2))
     temp_db = new['db']
     temp_statistics = new['statistics']
-    del new['db']
-    del new['statistics']
+    
     ### now new has the head 
     # From DB I copy the exact kernel name and kernel family. USE THE FIRST ELEM IN DB... 
-    new['kernel'] = temp_db[0]['kernel']
-    new['kernel_family'] = temp_db[0]['kernel_family']
+#    new['kernel'] = temp_db[0]['kernel']
+#    new['kernel_family'] = temp_db[0]['kernel_family']
+    
+    new['kernel_family'] = new.get("kernel")
+
+    new['kernel'] =  new.get('statistics').get('best_configuration').get('kernel')
+    del new['statistics']
+    del new['db']
+
+#    print( new['kernel_family'], new['kernel'] )
+    print("[CK2CLBLAST] swap kernel_family and kernel key is new dictionary")
+#    exit(1)
     ####### EXTRACT BEST CONFIGURATION FROM STATISTICS
 #    print (json.dumps(temp_statistics, indent=2)) 
     myparams = temp_statistics['best_configuration']['parameters']
@@ -57,7 +66,7 @@ def ck2clblast(old, new):
     new['results'] = [{'parameters': myparams, 'time': 0.1}]
     for best_entry in old:
         if ((best_entry['kernel_family'] == new['kernel_family'])   and \
-           (best_entry['kernel'] == new['kernel'])   and \
+           #(best_entry['kernel'] == new['kernel'])   and \
            (best_entry['precision'] == new['precision'])    and \
            (best_entry['device_vendor'] == new['device_vendor'])   and \
            (best_entry['device_type']== new['device_type']) and \
