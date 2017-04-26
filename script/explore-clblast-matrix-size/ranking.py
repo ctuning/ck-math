@@ -8,7 +8,8 @@ import os.path
 import glob
 import argparse
 
-
+import ck.kernel as ck
+print('CK version: %s' % ck.__version__)
 
 # Find Json files in a specific directory... 
 
@@ -22,7 +23,8 @@ def find_json(p):
 
 
 def get_data(f):
-    exp = json.loads(open(f).read()) 
+#    exp = json.loads(open(f).read()) 
+    exp = json.load(f)
     name =exp['characteristics_list'][0]
     name= name['run']
     ne = name['arg_m'] +'-' + name['arg_n'] +'-' + name['arg_k']
@@ -40,10 +42,6 @@ def get_data_db(f):
     s= {'name': ne}
     res = name['db']
     return res
-
-
-
-
 
 
 def find_it(p, o):
@@ -82,61 +80,76 @@ def old_new():
 
 ################################
 def main():
+    
     path='/home/flavio/CK_REPOS/local/experiment/explore-matrix-size-xgemm_direct-fp32/' 
     
-    jl = find_json(path)
-    print jl
+#    jl = find_json(path)
+#    print jl
     dlist=[]
     dblist=[]
-    for i in jl:
-        d = get_data(i)
-        print len(d)
-        #ds = assign_score(d)
-        dlist.append(d)
-
-
-
+#new stuff here 
+    module_uoa = 'experiment'
+    repo_uoa = 'local'
+    tags='explore-clblast-matrix-size'
+    r=ck.access({'action':'search', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'tags':tags})
+    if r['return']>0:
+        print ("Error: %s" % r['error'])
+    print '\n',r
+    experiments=r['lst']
+    print '\n', experiments
+    print 'experiments' 
+    for exp in experiments:
+        print exp
+        data_uoa = exp['data_uoa']
+        r = ck.access({'action':'list_points', 'repo_oua':repo_uoa, 'module_uoa':module_uoa, 'data_uoa':data_uoa})
+        if r['return']>0:
+            print ("Error: %s" % r['error'])
+            exit(1)
+        print r
     
-    d2 =  get_data_db(jl[0])
-    for d2c in d2:
-        dblist.append(d2c)
-        
-    ## get just one set of configuration
-#    dl = find_best(dl)
-    listconf = dlist[0]
+    tags = r['dict']['tags']
+    print tags
+    for point in r['points']:
+        with open(os.path.join(r['path'], 'ckp-%s.0001.json' % point)) as point_file:
+            pdr = json.load(point_file)
+            print (json.dumps(pdr, indent=2))
+    #        d = get_data(point_file) 
+    #        dlist.append(d)
+            break
+    exit(1)
+     #print point_data_raw
+
+#    print (json.dumps(d, indent=2))
+
+    configurations = dlist[0]
 #    print dlist
     best = sys.float_info.max
-    index =  len(listconf)
-    print index
-    conf =0
+    configuration_best_index =  len(configurations)
+    configuration_count = 0
     final_score = []
-    for  i in listconf:
+    for  configuration in configurations:
 #        print i['parameters']
 #        print conf
-        res = find_it(i['parameters'],dlist)
+        res = find_it(configuration['parameters'],dlist)
         tmp_time = 0
         for ctime in res["time"]:
               tmp_time +=ctime
         if tmp_time < best:
            best= tmp_time
-           index = conf
+           configuration_best_index = configuration_count
         res["total_time"] = tmp_time
         final_score.append(res)
-        conf +=1
-#        print i['time']
-    for ii in dblist:
-       i = ii['results']
-       #print i[0]
-       res = find_it(i[0]['parameters'],dlist)
-       print res
-    print "Best Result is: ",final_score[index]
-#    sorted(final_score, key=operator.itemgetter('total_time'))    
-#    print "TOP 5 Results"
-#    for top in range(0, 6):
-#        print final_score[top]
+        configuration_count +=1
+    print "Best Result is: ",final_score[configuration_best_index]
 
- #   print "Best Result (check) is: ", final_score[0]
- #   print "Worst Result (check) is: ", final_score[len(final_score)-1]
+
+
+
+
+
+
+
+
 
 main()
 
