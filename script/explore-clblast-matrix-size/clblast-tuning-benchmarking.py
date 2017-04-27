@@ -40,10 +40,13 @@ Lvl 3: 250Mhz
 clock_resolution = 1.0
 kernel = [ 'xgemm_direct-fp32' ]
 title = 'CLBlast tuning'
+model = 'something'
 # Matrix sizes: C[mxn] = A[mxk] * B[kxn].
 size_m = [ '512', '256',  '128', '1024' ]
 size_n = [ '256', '512',  '128', '1024' ]
 size_k = [ '128', '256', '1024', ' 128' ]
+
+
 
 precision = 32 # default
 run = 1 # default
@@ -62,6 +65,14 @@ def do(i, arg):
         print('[Preparing pipeline] Precision: %d' % precision)
         print('[Preparing pipeline] Run for configuration: %d' % run)
         print('[Preparing pipeline] More parms... ')
+    ntrip = len(size_m) 
+    print ('[Experiment] Number of triple(s) %s' % (ntrip))
+    size_tag = ''
+    for tp in range (0, ntrip):
+        if (tp == ntrip-1):
+            size_tag += str((int(size_m[tp])*int(size_n[tp])*int(size_k[tp])))
+        else:
+            size_tag += str((int(size_m[tp])*int(size_n[tp])*int(size_k[tp])))+','
     # Detect basic platform info.
     ii={'action':'detect',
         'module_uoa':'platform',
@@ -189,7 +200,7 @@ def do(i, arg):
         },
         'record_repo':record_repo,
         'record_uoa':record_uoa,
-        'tags':['explore-clblast-matrix-size', kernel[0]],
+        'tags':['explore-clblast-matrix-size', kernel[0], model, size_tag],
         'pipeline': cpipeline,
         'out':'con'
 
