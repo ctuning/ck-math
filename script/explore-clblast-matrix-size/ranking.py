@@ -132,7 +132,7 @@ def main():
     for exp in experiments:
 #        print exp
         data_uoa = exp['data_uoa']
-        r = ck.access({'action':'list_points', 'repo_oua':repo_uoa, 'module_uoa':module_uoa, 'data_uoa':data_uoa})
+        r = ck.access({'action':'list_points', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'data_uoa':data_uoa})
         if r['return']>0:
             print ("Error: %s" % r['error'])
             exit(1)
