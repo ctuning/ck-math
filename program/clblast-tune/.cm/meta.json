@@ -23,6 +23,7 @@
     "default": {
       "ignore_return_code": "no",
       "run_time": {
+        "fine_grain_timer_file": "tmp-ck-clblast-client.json",
         "need_compute_device": "opencl", 
         "post_process_cmds":[
           "python $#src_path_local#$ck_postprocess.py"

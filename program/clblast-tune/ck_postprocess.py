@@ -56,7 +56,7 @@ def ck_postprocess(i):
     rr['return']=0
     if d.get('post_processed','')=='yes':
        # Save to file.
-       r=ck.save_json_to_file({'json_file':'tmp-ck-timer.json', 'dict':d})
+       r=ck.save_json_to_file({'json_file':'tmp-ck-clblast-client.json', 'dict':d})
        if r['return']>0: return r
     else:
        rr['return']=1

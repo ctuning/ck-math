@@ -50,7 +50,7 @@ size_k = [ '128', '256', '1024', ' 128' ]
 
 
 precision = 32 # default
-run = 1 # default
+run = 10 # default
 
 VERBOSE = 0
 VERBOSE_STR = '[VERBOSE] '
@@ -62,11 +62,11 @@ def do(i, arg):
     if arg.fp is not None:
         fin = arg.fp
         if (os.path.isfile(fin)):
-#LOAD FILE and TRIPLES
            
+          print ("File loading %s " %(fin))
+#LOAD FILE and TRIPLES
         else:
            print("File %s not found " %(fin))
-    exit(1)
     if VERBOSE or DEBUG:
         print('[Experiment] %s' % title)
         print('[Preparing pipeline] Clock resolution: %d' % clock_resolution)
@@ -209,7 +209,7 @@ def do(i, arg):
         },
         'record_repo':record_repo,
         'record_uoa':record_uoa,
-        'tags':['explore-clblast-matrix-size', kernel[0], model, size_tag],
+        'tags':['explore-clblast-matrix-size-client', kernel[0], size_tag],
         'pipeline': cpipeline,
         'out':'con'
 
