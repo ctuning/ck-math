@@ -113,7 +113,7 @@ def setup(i):
        if tabi=='': # Means x86 (indirectly)
           tabi='x86'
           if str(tbits)=='64': tabi='x86_64'
-    
+
     neon=False
     if env.get('USE_NEON','').lower()=='on' or tneon=='yes':
        neon=True
@@ -175,13 +175,16 @@ def setup(i):
 
     if tname2=='android':
         flags += ['-DANDROID']
+        if compiler_env.get('CK_ENV_LIB_STDCPP_STATIC','')!='':
+           lflags+=[compiler_env['CK_ENV_LIB_STDCPP_STATIC']]
+           lcore_flags+=[compiler_env['CK_ENV_LIB_STDCPP_STATIC']]
 # Done via CK
-#        lflags+=['-pie','-static-libstdc++']
-#        lcore_flags+=['-pie','-static-libstdc++']
+#        lflags+=['-static-libstdc++']
+#        lcore_flags+=['-static-libstdc++']
     elif env.get('USE_BARE_METAL','').lower()=='on':
         flags += ['-fPIC','-DNO_MULTI_THREADING']
-#        lflags+=['-static']
-#        lcore_flags+=['-static']
+        lflags+=['-static']
+        lcore_flags+=['-static']
     else:
         lflags += ['-lpthread']
 
@@ -243,7 +246,7 @@ def post_setup(i):
     libprefix=''
     if winh!='yes' or tname2=='android':
        libprefix='lib'
-    
+
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
     obj_ext=compiler_env.get('CK_OBJ_EXT')
 
