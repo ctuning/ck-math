@@ -156,7 +156,7 @@ def setup(i):
         lflags += ['-fopenmp']
         lcore_flags += ['-fopenmp']
 
-    if 'armv7a' in tabi:
+    if 'v7a' in tabi:
         flags += ['-march=armv7-a','-mthumb','-mfpu=neon']
 
         if hardfp:
@@ -262,6 +262,9 @@ def post_setup(i):
     build_dir=pi
     if pi1!='': build_dir=os.path.join(pi,pi1)
 
+    if not os.path.isdir(build_dir):
+       return {'return':1, 'error':'Something is wrong - build directory is not there ('+build_dir+')'}
+
     os.chdir(build_dir)
 
     xcore_files = glob.glob('src/core/*.cpp')
@@ -323,6 +326,7 @@ def post_setup(i):
     sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
     sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
     sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute_core\n'
+    sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
 
     sb+=hosd.get('env_call','')+' '+os.path.join(pp,'build'+sext)
 
@@ -363,6 +367,7 @@ def post_setup(i):
     sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
     sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
     sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute\n'
+    sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
 
     sb+=hosd.get('env_call','')+' '+os.path.join(pp,'build'+sext)
 

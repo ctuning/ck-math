@@ -41,25 +41,28 @@ if %errorlevel% neq 0 (
 
 rem *******************************************************************************************************************************
 
-echo.
-echo Building dynamic library ...
-echo.
+if not "%CK_BARE_METAL%" == "on" (
 
-set CK_TARGET_FILE=%CK_TARGET_LIB%%CK_DLL_EXT%
+   echo.
+   echo Building dynamic library ...
+   echo.
 
-echo "%CK_CXX% %CK_COMPILER_FLAGS_OBLIGATORY% %CK_FLAGS_DLL% %CK_CXXFLAGS% %CK_SRC_FILES% %CK_FLAG_PREFIX_INCLUDE%.. %CK_FLAGS_OUTPUT%%CK_TARGET_FILE% %CK_FLAGS_DLL_EXTRA% %CK_LD_FLAGS_MISC% %CK_LD_FLAGS_EXTRA%"
-%CK_CXX% %CK_COMPILER_FLAGS_OBLIGATORY% %CK_FLAGS_DLL% %CK_CXXFLAGS% %CK_SRC_FILES% %CK_FLAG_PREFIX_INCLUDE%.. %CK_FLAGS_OUTPUT%%CK_TARGET_FILE% %CK_FLAGS_DLL_EXTRA% %CK_LD_FLAGS_MISC% %CK_LD_FLAGS_EXTRA%
-if %errorlevel% neq 0 (
- echo.
- echo Building dynamic library failed!
- exit /b 1
-)
+   set CK_TARGET_FILE=%CK_TARGET_LIB%%CK_DLL_EXT%
 
-copy /b %CK_TARGET_FILE% ..\..\install\lib
-if %errorlevel% neq 0 (
- echo.
- echo Copying dynamic library failed!
- exit /b 1
+   echo "%CK_CXX% %CK_COMPILER_FLAGS_OBLIGATORY% %CK_FLAGS_DLL% %CK_CXXFLAGS% %CK_SRC_FILES% %CK_FLAG_PREFIX_INCLUDE%.. %CK_FLAGS_OUTPUT%%CK_TARGET_FILE% %CK_FLAGS_DLL_EXTRA% %CK_LD_FLAGS_MISC% %CK_LD_FLAGS_EXTRA%"
+   %CK_CXX% %CK_COMPILER_FLAGS_OBLIGATORY% %CK_FLAGS_DLL% %CK_CXXFLAGS% %CK_SRC_FILES% %CK_FLAG_PREFIX_INCLUDE%.. %CK_FLAGS_OUTPUT%%CK_TARGET_FILE% %CK_FLAGS_DLL_EXTRA% %CK_LD_FLAGS_MISC% %CK_LD_FLAGS_EXTRA%
+   if %errorlevel% neq 0 (
+    echo.
+    echo Building dynamic library failed!
+    exit /b 1
+   )
+
+   copy /b %CK_TARGET_FILE% ..\..\install\lib
+   if %errorlevel% neq 0 (
+    echo.
+    echo Copying dynamic library failed!
+    exit /b 1
+   )
 )
 
 rem *******************************************************************************************************************************
@@ -69,7 +72,7 @@ echo Copying include files ...
 echo.
 
 cd ..
-xcopy arm_compute ..\install\include /e /c /i /y
-xcopy test_helpers ..\install\include /e /c /i /y
+xcopy arm_compute ..\install\include\arm_compute /e /c /i /y
+xcopy test_helpers ..\install\include\test_helpers /e /c /i /y
 
 exit /b 0
