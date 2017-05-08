@@ -10,71 +10,89 @@
 # Developer(s): Grigori Fursin, 2015
 #
 
-export CK_SOURCE_FILES="xopenme.c"
-export CK_OBJ_FILES=xopenme${CK_OBJ_EXT}
-export CK_INCLUDE_FILE=xopenme.h
 
-export LIB_NAME=librtlxopenme
+# *******************************************************************************************************************************
 
-export CK_COMPILER_FLAGS_MISC="${CK_FLAG_PREFIX_INCLUDE} . ${CK_COMPILER_FLAGS_MISC}"
+mkdir ../install
 
+rm -rf ../install/lib
+mkdir ../install/lib
 
+mkdir obj
+cd obj
 
+# *******************************************************************************************************************************
 
 echo ""
 echo "Building static library ..."
 echo ""
 
-export CK_TARGET_FILE=${LIB_NAME}${CK_LIB_EXT}
-export CK_TARGET_FILE_S=${CK_TARGET_FILE}
+CK_TARGET_FILE=${CK_TARGET_LIB}${CK_LIB_EXT}
+rm -f $CK_TARGET_FILE
 
-export CK_CC_FLAGS="${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_COMPILER_FLAGS_MISC} ${CK_COMPILER_FLAGS_CC_OPTS} ${CK_COMPILER_FLAGS_ARCH} ${CK_COMPILER_FLAGS_PAR}"
+echo "${CK_CXX} ${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_FLAGS_STATIC_LIB} ${CK_FLAGS_CREATE_OBJ} ${CK_CXXFLAGS} ${CK_SRC_FILES} ${CK_FLAG_PREFIX_INCLUDE}.."
+echo ""
 
-echo "Executing ${CK_CC} ${CK_OPT_SPEED} ${CK_FLAGS_STATIC_LIB} ${CK_FLAGS_CREATE_OBJ} ${CK_CC_FLAGS} ${CK_SOURCE_FILES} ${CK_LD_FLAGS_MISC} ${CK_LD_FLAGS_EXTRA}"
-${CK_CC} ${CK_OPT_SPEED} ${CK_FLAGS_STATIC_LIB} ${CK_FLAGS_CREATE_OBJ} ${CK_CC_FLAGS} ${CK_SOURCE_FILES} ${CK_LD_FLAGS_MISC} ${CK_LD_FLAGS_EXTRA}
-  if [ "${?}" != "0" ] ; then
-    echo "Error: Compilation failed in $PWD!" 
-    exit 1
-  fi
+${CK_CXX} ${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_FLAGS_STATIC_LIB} ${CK_FLAGS_CREATE_OBJ} ${CK_CXXFLAGS} ${CK_SRC_FILES} ${CK_FLAG_PREFIX_INCLUDE}..
+if [ "${?}" != "0" ] ; then
+ echo ""
+ echo "Building failed!"
+ exit 1
+fi
 
-echo "Executing ${CK_LB} ${CK_LB_OUTPUT}${CK_TARGET_FILE} ${CK_OBJ_FILES}"
+echo "${CK_LB} ${CK_LB_OUTPUT}${CK_TARGET_FILE} ${CK_OBJ_FILES}"
+echo ""
+
 ${CK_LB} ${CK_LB_OUTPUT}${CK_TARGET_FILE} ${CK_OBJ_FILES}
-  if [ "${?}" != "0" ] ; then
-    echo "Error: Compilation failed in $PWD!" 
+if [ "${?}" != "0" ] ; then
+ echo ""
+ echo "Building static library failed!"
+ exit 1
+fi
+
+cp -f $CK_TARGET_FILE ../../install/lib
+if [ "${?}" != "0" ] ; then
+ echo ""
+ echo "Copying static library failed"
+ exit 1
+fi
+
+# *******************************************************************************************************************************
+
+CK_TARGET_FILE_D=${CK_TARGET_LIB}${CK_DLL_EXT}
+if [ "${CK_BARE_METAL}" != "on" ] ; then
+   echo ""
+   echo "Building dynamic library ..."
+   echo ""
+
+   rm -f $CK_TARGET_FILE_D
+
+   echo "${CK_CXX} ${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_FLAGS_DLL} ${CK_CXXFLAGS} ${CK_SRC_FILES} ${CK_FLAG_PREFIX_INCLUDE}.. ${CK_FLAGS_OUTPUT}${CK_TARGET_FILE_D} ${CK_FLAGS_DLL_EXTRA} ${CK_LD_FLAGS_MISC} ${CK_LD_FLAGS_EXTRA}"
+   ${CK_CXX} ${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_FLAGS_DLL} ${CK_CXXFLAGS} ${CK_SRC_FILES} ${CK_FLAG_PREFIX_INCLUDE}.. ${CK_FLAGS_OUTPUT}${CK_TARGET_FILE_D} ${CK_FLAGS_DLL_EXTRA} ${CK_LD_FLAGS_MISC} ${CK_LD_FLAGS_EXTRA}
+   if [ "${?}" != "0" ] ; then
+    echo ""
+    echo "Building dynamic library failed!"
     exit 1
-  fi
+   fi
 
-
-
-
-
-
-echo ""
-echo "Building dynamic library ..."
-echo ""
-
-export CK_TARGET_FILE=${LIB_NAME}${CK_DLL_EXT}
-export CK_TARGET_FILE_D=${CK_TARGET_FILE}
-
-export CK_CC_FLAGS="${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_COMPILER_FLAGS_MISC} ${CK_COMPILER_FLAGS_CC_OPTS} ${CK_COMPILER_FLAGS_ARCH} ${CK_COMPILER_FLAGS_PAR}"
-
-echo "Executing ${CK_CC} ${CK_OPT_SPEED} ${CK_FLAGS_DLL} ${CK_CC_FLAGS} ${CK_SOURCE_FILES} ${CK_FLAGS_OUTPUT}${CK_TARGET_FILE} ${CK_FLAGS_DLL_EXTRA} ${CK_LD_FLAGS_MISC} ${CK_LD_FLAGS_EXTRA}"
-${CK_CC} ${CK_OPT_SPEED} ${CK_FLAGS_DLL} ${CK_CC_FLAGS} ${CK_SOURCE_FILES} ${CK_FLAGS_OUTPUT}${CK_TARGET_FILE} ${CK_FLAGS_DLL_EXTRA} ${CK_LD_FLAGS_MISC} ${CK_LD_FLAGS_EXTRA}
-  if [ "${?}" != "0" ] ; then
-    echo "Error: Compilation failed in $PWD!" 
+   cp -f $CK_TARGET_FILE_D ../../install/lib
+   if [ "${?}" != "0" ] ; then
+    echo ""
+    echo "Copying dynamic library failed!"
     exit 1
-  fi
+   fi
+fi
 
-
-
+# *******************************************************************************************************************************
 
 echo ""
-echo "Installing ..."
+echo "Copying include files ..."
 echo ""
 
-mkdir ${INSTALL_DIR}/lib
-cp -f ${CK_TARGET_FILE_S} ${INSTALL_DIR}/lib
-cp -f ${CK_TARGET_FILE_D} ${INSTALL_DIR}/lib
+cd ..
+rm -rf ../install/include
+mkdir ../install/include
+cp -rf arm_compute ../install/include/arm_compute
+cp -rf test_helpers ../install/include/test_helpers
 
-mkdir ${INSTALL_DIR}/include
-cp ${CK_INCLUDE_FILE} ${INSTALL_DIR}/include
+exit 0

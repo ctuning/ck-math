@@ -15,6 +15,7 @@
       "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
       "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO",
       "PACKAGE_SKIP_CMAKE_TARGET": "NO",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
       "PACKAGE_URL": "https://github.com/ARM-software/ComputeLibrary"
