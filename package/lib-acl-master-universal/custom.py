@@ -81,7 +81,7 @@ def setup(i):
 
     p=i['path']
 
-    env=i['env']
+    env=i['new_env']
 
     pi=i.get('install_path','')
 
@@ -175,12 +175,13 @@ def setup(i):
 
     if tname2=='android':
         flags += ['-DANDROID']
-        lflags+=['-pie','-static-libstdc++']
-        lcore_flags+=['-pie','-static-libstdc++']
+# Done via CK
+#        lflags+=['-pie','-static-libstdc++']
+#        lcore_flags+=['-pie','-static-libstdc++']
     elif env.get('USE_BARE_METAL','').lower()=='on':
         flags += ['-fPIC','-DNO_MULTI_THREADING']
-        lflags+=['-static']
-        lcore_flags+=['-static']
+#        lflags+=['-static']
+#        lcore_flags+=['-static']
     else:
         lflags += ['-lpthread']
 
@@ -235,8 +236,7 @@ def post_setup(i):
     hname2=hosd.get('ck_name2','')  # win, mingw, linux, android
     tname2=tosd.get('ck_name2','')  # win, mingw, linux, android
 
-    env=i.get('env',{})
-    nenv=i.get('new_env',{})
+    env=i.get('new_env',{})
 
     deps=i.get('deps',{})
 
@@ -247,11 +247,11 @@ def post_setup(i):
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
     obj_ext=compiler_env.get('CK_OBJ_EXT')
 
-    flags=nenv.get('CXXFLAGS','')
-    lflags=nenv.get('LFLAGS','')
-    lcore_flags=nenv.get('LCORE_FLAGS','')
-    bare_metal=nenv.get('USE_BARE_METAL','').lower()
-    use_neon=nenv.get('USE_NEON','').lower()
+    flags=env.get('CXXFLAGS','')
+    lflags=env.get('LFLAGS','')
+    lcore_flags=env.get('LCORE_FLAGS','')
+    bare_metal=env.get('USE_BARE_METAL','').lower()
+    use_neon=env.get('USE_NEON','').lower()
 
     pp=i.get('path_original_package','')
 
