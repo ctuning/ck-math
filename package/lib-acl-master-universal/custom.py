@@ -128,7 +128,17 @@ def setup(i):
        return {'return':1, 'error':'Cannot compile NEON for x86'}
 
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
-    cxx=compiler_env.get('CK_CXX')
+    cxx=compiler_env['CK_CXX']
+
+    if compiler_env.get('CK_ENV_LIB_STDCPP_INCLUDE','')!='':
+       flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE']]
+    if compiler_env.get('CK_ENV_LIB_STDCPP_INCLUDE_EXTRA','')!='':
+       flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE_EXTRA']]
+
+#       env['CK_ENV_LIB_STDCPP_STATIC']=libstdcpppath+sep+'libgnustl_static.a'
+#       env['CK_ENV_LIB_STDCPP_DYNAMIC']=libstdcpppath+sep+'libgnustl_shared.so'
+#       env['CK_ENV_LIB_STDCPP_INCLUDE_EXTRA']=libstdcpppath+sep+'include'
+
 
     if 'clang++' in cxx:
        flags += ['-Wno-format-nonliteral','-Wno-deprecated-increment-bool','-Wno-vla-extension','-Wno-mismatched-tags']
@@ -215,6 +225,8 @@ def post_setup(i):
     hosd=i['host_os_dict']
     tosd=i['target_os_dict']
 
+    winh=hosd.get('windows_base','')
+
     eset=hosd.get('env_set','')
     eifs=hosd.get('env_quotes_if_space','')
     sext=hosd.get('script_ext','')
@@ -228,6 +240,10 @@ def post_setup(i):
 
     deps=i.get('deps',{})
 
+    libprefix=''
+    if winh!='yes' or tname2=='android':
+       libprefix='lib'
+    
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
     obj_ext=compiler_env.get('CK_OBJ_EXT')
 
@@ -306,7 +322,7 @@ def post_setup(i):
     sb+=eset+' CK_LFLAGS='+eifs+lcore_flags+eifs+'\n'
     sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
     sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
-    sb+=eset+' CK_TARGET_LIB=arm_compute_core\n'
+    sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute_core\n'
 
     sb+=hosd.get('env_call','')+' '+os.path.join(pp,'build'+sext)
 
@@ -346,7 +362,7 @@ def post_setup(i):
     sb+=eset+' CK_LFLAGS='+eifs+lflags+eifs+'\n'
     sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
     sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
-    sb+=eset+' CK_TARGET_LIB=arm_compute\n'
+    sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute\n'
 
     sb+=hosd.get('env_call','')+' '+os.path.join(pp,'build'+sext)
 
