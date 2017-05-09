@@ -38,7 +38,7 @@ Lvl 3: 250Mhz
 #otherwise takes min and mix and divide per a fixed number
 # 2 run all the frequencies
 clock_resolution = 1.0
-kernel = [ 'xgemm_direct-fp32' ]
+kernel = [ 'xgemm-fp32' ]
 title = 'CLBlast tuning'
 model = 'something'
 # Matrix sizes: C[mxn] = A[mxk] * B[kxn].

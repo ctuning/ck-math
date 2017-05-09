@@ -110,13 +110,14 @@ def find_best(dlist, w):
 
 
 ################################
-def main():
+def main(arg):
     # CUSTOMIZABLE VARIABLES!!!!
     module_uoa = 'experiment'
     repo_uoa = 'local'
     tags='explore-clblast-matrix-size'
     output_filename = 'tmp-ck-clblast-tune.json'
-    weights_filename='asd'
+    
+    weights_filename=arg.fp
     WEIGHTS = 1 
    
     ### END CUST
@@ -129,6 +130,10 @@ def main():
     if r['return']>0:
         print ("Error: %s" % r['error'])
     experiments=r['lst']
+    if len(experiments) == 0:
+        print("No experiments found in repo %s with tags %s" %(repo_uoa, tags))
+        exit(1)
+
     for exp in experiments:
 #        print exp
         data_uoa = exp['data_uoa']
@@ -139,22 +144,26 @@ def main():
     tags = r['dict']['tags']
 #    print tags
     npoint = len(r['points'])
-#    print npoint
+    print npoint
+        #    print npoint
     for point in r['points']:
         point_file = os.path.join(r['path'], 'ckp-%s.0001.json' % point)
         d = get_data(point_file) 
         dlist.append(d)
 
     # LOAD WEIGHTS
+    
     w = []
     WEIGHTS = os.path.isfile(weights_filename) and WEIGHTS
     if (WEIGHTS == 0):
-       for i in range(0,npoint):
-           w.append(1)
+        for i in range(0,npoint):
+            w.append(1)
     else: 
         print("Loading weights %s" %(weights_filename))
         wdict = json.loads(open(weights_filename).read())
-
+        for i in wdict:
+            print i.get('Execution time (%)')
+            w.append(float(i.get('Execution time (%)')))
 
     output = get_data_header(point_file)
     # FIND THE BEST
@@ -188,9 +197,12 @@ def main():
     #print (json.dumps(output, indent=2))
     rr=ck.save_json_to_file({'json_file':output_filename, 'dict':output})
 
+parser = argparse.ArgumentParser(description='Short sample app')
+parser.add_argument("--file", action="store", dest="fp")
+myarg=parser.parse_args()
 
 
-main()
+main(myarg)
 
 
 
