@@ -16,7 +16,7 @@ index a3c3882..a7b981a 100644
  target_link_libraries(cltune ${FRAMEWORK_LIBRARIES})
 +# When building for Android, also link against libgnustl.
 +if(ANDROID)
-+  target_link_libraries(cltune libgnustl_shared.so)
++  target_link_libraries(cltune libgnustl_static.a)
 +endif()
  
  # Sets the proper __declspec(dllexport) keyword for Visual Studio when the library is built

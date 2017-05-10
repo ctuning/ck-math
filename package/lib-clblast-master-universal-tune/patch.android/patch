@@ -16,7 +16,7 @@ index b26de79..e94fda6 100644
  target_link_libraries(clblast ${OPENCL_LIBRARIES})
 +# When building for Android, also link against libgnustl.
 +if(ANDROID)
-+  target_link_libraries(clblast libgnustl_shared.so)
++  target_link_libraries(clblast libgnustl_static.so)
 +endif()
  
  # Includes directories: CLBlast and OpenCL
