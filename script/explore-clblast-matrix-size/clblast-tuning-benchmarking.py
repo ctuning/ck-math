@@ -4,6 +4,9 @@ import ck.kernel as ck
 import copy
 import re
 import argparse
+import os.path
+import json
+
 #######################################
 #    Description:
 #
@@ -58,6 +61,20 @@ DEBUG_STR = '[DEBUG] '
 
 
 def do(i, arg):
+    fp = arg.fp
+    fromfile = os.path.isfile(fp)
+    if (fromfile):
+        print("Loading triples %s" %(fp))
+        triples = json.loads(open(fp).read())
+        del size_m[:]
+        del size_n[:]
+        del size_k[:]
+        for i in triples:
+            size_m.append(str(i.get('bSizeM'))) 
+            size_n.append(str(i.get('bSizeN'))) 
+            size_k.append(str(i.get('bSizeK'))) 
+
+
     if VERBOSE or DEBUG:
         print('[Experiment] %s' % title)
         print('[Preparing pipeline] Clock resolution: %d' % clock_resolution)
@@ -216,7 +233,7 @@ def do(i, arg):
 
 
 parser = argparse.ArgumentParser(description='Short sample app')
-
+parser.add_argument("--file", action="store", dest="fp")
 parser.add_argument("--target_os", action="store", dest="tos")
 parser.add_argument("--device_id", action="store", dest="did")
 myarg=parser.parse_args()
