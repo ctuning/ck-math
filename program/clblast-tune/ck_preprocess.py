@@ -172,7 +172,7 @@ def ck_preprocess(i):
     #compiler=adf['gpgpu'][0]['gpgpu_deps']['compiler']['uoa']
     #print (json.dumps(i['env'], indent=2))
     docompile=int(env['CK_FORCE_RECOMPILE']) 
-    if env['CK_FORCE_RECOMPILE'] == 0:
+    if docompile == 0:
            print("[CK_FORCE_RECOMPILE] Exit %s" %(env['CK_FORCE_RECOMPILE']))
            rr["return"] = 0
            return rr
