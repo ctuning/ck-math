@@ -19,11 +19,11 @@
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
       "PACKAGE_URL": "https://github.com/CNugteren/CLBlast",
-      "PACKAGE_GIT_CHECKOUT":"development",
+      "PACKAGE_GIT_CHECKOUT":"master",
       "CMAKE_CONFIG":"Release"
     },
     "use_git_revision": "yes",
-    "version": "development"
+    "version": "0.11.0"
   },
   "deps": {
     "cmake": {

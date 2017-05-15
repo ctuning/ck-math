@@ -11,7 +11,7 @@
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "", 
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "", 
       "PACKAGE_GIT": "YES", 
-      "PACKAGE_GIT_CHECKOUT": "development", 
+      "PACKAGE_GIT_CHECKOUT": "master", 
       "PACKAGE_PATCH": "YES", 
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO", 
       "PACKAGE_SKIP_CLEAN_OBJ": "YES", 
@@ -23,7 +23,7 @@
       "PACKAGE_URL": "https://github.com/CNugteren/CLBlast"
     }, 
     "use_git_revision": "yes", 
-    "version": "development"
+    "version": "0.11.0"
   }, 
   "deps": {
     "cmake": {
