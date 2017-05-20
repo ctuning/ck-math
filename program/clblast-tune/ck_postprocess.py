@@ -28,29 +28,35 @@ def ck_postprocess(i):
     column_count = 0
 
     for line in r['lst']:
- 	if (not found_header):
-	    #  m; n; k; layout; transA; transB; lda; ldb; ldc; offa; offb; offc; alpha; beta; ms_1; GFLOPS_1; GBs_1
-	    header_regex = '(^\s+m;\s+n;\s+k;\s+layout;\s+transA;\s+transB;\s+lda;\s+ldb;\s+ldc;\s+offa;\s+offb;\s+offc;\s+alpha;\s+beta;\s+ms_1;\s+GFLOPS_1;\s+GBs_1\s*$)'
+        if (not found_header):
+            #  m; n; k; layout; transA; transB; lda; ldb; ldc; offa; offb; offc; alpha; beta; ms_1; GFLOPS_1; GBs_1
+            header_regex = '(^\s+m;\s+n;\s+k;\s+layout;\s+transA;\s+transB;\s+lda;\s+ldb;\s+ldc;\s+offa;\s+offb;\s+offc;\s+alpha;\s+beta;\s+ms_1;\s+GFLOPS_1;\s+GBs_1\s*$)'
             match = re.search(header_regex, line)
-  	    if match:
-	        found_header = True
+            if match:
+                found_header = True
                 header_line = line.split(";")
                 column_count = len(header_line)
-	        table.append(header_line)
-	else: # we haven found the header
-	    candidate_line = line.split(";")
-	    if len(candidate_line) == column_count:
-		table.append(candidate_line)
+                table.append(header_line)
+        else: # we haven found the header
+            candidate_line = line.split(";")
+            if len(candidate_line) == column_count:
+                table.append(candidate_line)
 	    
 
     # transpose the table
-    transposed_table = map(list, zip(*table))
+    transposed_table = list(map(list, zip(*table)))
 
     for column in transposed_table:
-    	d[column[0].strip()] = map(lambda c: c.strip(), column[1:])
+    	d[column[0].strip()] = list(map(lambda c: c.strip(), column[1:]))
 
     if d != {}:
         d["post_processed"] = "yes"
+
+    if len(d.get('GFLOPS_1',[]))>0:
+       d['processed_gflops']=float(d['GFLOPS_1'][0])
+
+    if len(d.get('ms_1',[]))>0:
+       d['execution_time']=float(d['ms_1'][0])/1000
 
     rr={}
     rr['return']=0

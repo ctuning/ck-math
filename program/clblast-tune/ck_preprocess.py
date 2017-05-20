@@ -207,7 +207,7 @@ def ck_preprocess(i):
         if not os.path.isfile(database_filename):
             io.download_database(database_filename, DATABASE_SERVER_URL)
         else:
-            print "[database] DB found" 
+            print ("[database] DB found")
         if os.path.isfile(database_filename):
             database = io.load_database(database_filename)
         # Retrieves the best performing results
