@@ -62,7 +62,7 @@ def ck_postprocess(i):
     c1 = os.path.isfile(rf3)
     c2 = os.path.isfile(rf4)
     if c1:
-	rj1 = json.loads(open(rf3).read())
+        rj1 = json.loads(open(rf3).read())
 
     if c2:
         rj2= json.loads(open(rf4).read())
@@ -183,18 +183,18 @@ def ck_postprocess(i):
         for rrr in result:
             compare = rrr['parameters']
             for il in ll:
-		    best =  il.get('results',{})[0].get('parameters',{})
+                    best =  il.get('results',{})[0].get('parameters',{})
                     dev= il['device']
-		    ### comparing value by value
-		    isBest= True
-		    for bb in best.keys():
-		    #    print bb, best[bb], compare[bb]
-			if (best[bb] != compare[bb]):
-			    isBest = False
-			    break
-		    if (isBest):
+                    ### comparing value by value
+                    isBest= True
+                    for bb in best.keys():
+                    #    print bb, best[bb], compare[bb]
+                         if (best[bb] != compare[bb]):
+                            isBest = False
+                            break
+                    if (isBest):
                         rrr['device'] = dev
-			stat.append(rrr)
+                        stat.append(rrr)
     index=0
     bindex=-1
     bres={} 
@@ -234,7 +234,8 @@ def ck_postprocess(i):
     if VERBOSE:
         print ("[postprocessing] %s" %(d["statistics"]))
     if len(ll) > 0:
-        if VERBOSE: print len(ll)
+        if VERBOSE: 
+            print (len(ll))
         d['db'] = ll
     else:
         d['db'] = 'na'
