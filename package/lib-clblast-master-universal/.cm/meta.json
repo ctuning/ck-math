@@ -23,7 +23,7 @@
       "CMAKE_CONFIG":"Release"
     },
     "use_git_revision": "yes",
-    "version": "0.11.0"
+    "version": "master"
   },
   "deps": {
     "cmake": {
