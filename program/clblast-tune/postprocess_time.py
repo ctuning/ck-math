@@ -123,10 +123,12 @@ def ck_postprocess(i):
     bench=d['kernel']
     bench +=".hpp"
     pl=pl.split("install")[0] #### VERIFY WITH INSTALL SCRIPT 
-    pl_suff= "src/scripts/database/"
+    pl_suff= "src"+os.sep+"scripts"+os.sep+"database"+os.sep
     pl += pl_suff
+    pl1 = pl+"database"+os.sep
 
     sys.path.append(pl)
+    sys.path.append(pl1)
     ####
     import database.io as io
     import database.db as db
