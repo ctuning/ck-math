@@ -111,32 +111,33 @@ def make(src, dest, tos, tdid, myuoa, kernelname):
     if r['return']>0: return r
 #DIFFERNCES: PACKAGE_GIT NO, PACKAGE_PATCH": "NO"
     odeps=r['dict']['deps']
-    envd = {"CMAKE_CONFIG": "Release",
-            "PACKAGE_AUTOGEN": "NO",
-            "PACKAGE_BUILD_TYPE": "cmake",
-	    "PACKAGE_CONFIGURE_FLAGS": "",
-	    "PACKAGE_CONFIGURE_FLAGS_ANDROID": "-DBUILD_SHARED_LIBS=OFF",
-	    "PACKAGE_CONFIGURE_FLAGS_LINUX": "",
-	    "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
-	    "PACKAGE_GIT": "NO",
-	    "PACKAGE_GIT_CHECKOUT": "development",
-	    "PACKAGE_PATCH": "NO",
-	    "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
-	    "PACKAGE_SKIP_CLEAN_OBJ": "YES",
-	    "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
-	    "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
-	    "PACKAGE_SKIP_CMAKE_TARGET": "NO",
-	    "PACKAGE_SUB_DIR": "src",
-	    "PACKAGE_SUB_DIR1": "src",
-	    "PACKAGE_URL": "https://github.com/CNugteren/CLBlast"
-    }
+#    envd = {"CMAKE_CONFIG": "Release",
+#            "PACKAGE_AUTOGEN": "NO",
+#            "PACKAGE_BUILD_TYPE": "cmake",
+#	    "PACKAGE_CONFIGURE_FLAGS": "",
+#	    "PACKAGE_CONFIGURE_FLAGS_ANDROID": "-DBUILD_SHARED_LIBS=OFF",
+#	    "PACKAGE_CONFIGURE_FLAGS_LINUX": "",
+#	    "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
+#	    "PACKAGE_GIT": "NO",
+#	    "PACKAGE_GIT_CHECKOUT": "development",
+#	    "PACKAGE_PATCH": "NO",
+#	    "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
+#	    "PACKAGE_SKIP_CLEAN_OBJ": "YES",
+#	    "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
+#	    "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
+#	    "PACKAGE_SKIP_CMAKE_TARGET": "NO",
+#	    "PACKAGE_SUB_DIR": "src",
+#	    "PACKAGE_SUB_DIR1": "src",
+#	    "PACKAGE_URL": "https://github.com/CNugteren/CLBlast"
+#    }
     ii={'action':'install',
        'module_uoa':'package',
        'data_uoa':'lib-clblast-master-universal-tune',
        'target_os':tos,
        'device_id':tdid,
        'deps':odeps,
-       'env':envd,
+#       'env':envd,
+       'rebuild':'yes',
        'out':'con',
        'quiet':'yes'
     }
@@ -190,9 +191,12 @@ def ck_preprocess(i):
     pk=pl
     pk_suff="src/src/database/kernels/"
     pl += pl_suff
+    pl1 = pl+'/database'
     pk += pk_suff
 #    print pl, pk
+
     sys.path.append(pl)
+    sys.path.append(pl1)
     ####
     import database.io as io
     import database.db as db
