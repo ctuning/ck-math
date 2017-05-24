@@ -388,7 +388,6 @@ def crowdsource(i):
 
     # Process deps
     xdeps={}
-    xnn=''
     xblas=''
 
     for k in ydeps:
@@ -422,8 +421,11 @@ def crowdsource(i):
 
     meta['xversions']=dvers
     meta['xdeps']=xdeps
-    meta['nn_type']=xnn
     meta['choices']=xchoices
+
+    meta['dataset_m']=dm
+    meta['dataset_n']=dn
+    meta['dataset_k']=dk
 
     meta['clblast_engine_name']=d_engine_name
     meta['clblast_engine_package_uoa']=d_engine_package_uoa
@@ -449,15 +451,16 @@ def crowdsource(i):
     record_module_uoa=cfg['record_module_uoa']
 
     # Find remote entry
-#    ii={'action':'search',
-#        'module_uoa':record_module_uoa,
-#        'repo_uoa':er,
-#        'remote_repo_uoa':esr,
-#        'search_dict':{'meta':meta}}
-#    rx=ck.access(ii)
-#    if rx['return']>0: return rx
+    ii={'action':'search',
+        'module_uoa':record_module_uoa,
+        'repo_uoa':er,
+        'remote_repo_uoa':esr,
+        'search_dict':{'meta':meta}}
+    rx=ck.access(ii)
+    if rx['return']>0: return rx
 
-    lst=[] #rx['lst']
+    lst=rx['lst']
+    best_gflops=-1
 
     if len(lst)==1:
         rduid=lst[0]['data_uid']
@@ -472,10 +475,11 @@ def crowdsource(i):
                       'module_uoa':record_module_uoa,
                       'data_uoa':rduid,
                       'repo_uoa':er,
-                      'remote_repo_uoa':esr,
-                      'load_extra_json_files':[ffstat]})
+                      'remote_repo_uoa':esr})
         if rx['return']==0:
-           aggregated_stats=rx.get('extra_json_files',{}).get(ffstat,{})
+           drx=rx['dict']
+           if drx.get('best_gflops','')!='':
+              best_gflops=drx['best_gflops']
         else:
            ck.out('')
            ck.out('WARNING: couldn\'t load data ('+rx['error']+')')
@@ -524,36 +528,56 @@ def crowdsource(i):
 
     ##characteristics#run#statistics
 
-    r=ck.save_json_to_file({'json_file':'d:\\xyz.json','dict':rrr})
+#    r=ck.save_json_to_file({'json_file':'d:\\xyz.json','dict':rrr})
 
     ls=rrr.get('last_iteration_output',{})
     state=ls.get('state',{})
     xchoices=copy.deepcopy(ls.get('choices',{}))
     lsaf=rrr.get('last_stat_analysis',{}).get('dict_flat',{})
 
-    ddd={'meta':mmeta}
+    # Check if has good result
+    al=rrr.get('all',[])
+    best_params={}
+    best_time=0
+    for q in al:
+        qq=q.get('characteristics_list',[])
+        for q1 in qq:
+            bc=q1.get('run',{}).get('statistics',{}).get('best_configuration',{})
+            gf=bc.get('GFLOPS','')
+            if gf=='': gf='0.0'
+            gf=float(gf)
+            if gf>best_gflops+0.5:
+               best_gflops=gf
+               best_params=bc.get('parameters',{})
+               best_time=bc.get('time','')
 
-    ddd['choices']=xchoices
+    if len(best_params)==0:
+       ck.out('')
+       ck.out('WARNING: no better solutions was found by CLBlast ...')
+    else:   
+       ddd={'meta':mmeta}
 
-    features=ls.get('features',{})
+       ddd['choices']=xchoices
 
-    deps=ls.get('dependencies',{})
+       ddd['best_parameters']=best_params
+       ddd['best_gflops']=best_gflops
+       ddd['best_time']=best_time
 
-    fail=ls.get('fail','')
-    fail_reason=ls.get('fail_reason','')
+       features=ls.get('features',{})
 
-    ch=ls.get('characteristics',{})
+       deps=ls.get('dependencies',{})
 
-    # Save pipeline
-    ddd['state']={'fail':fail, 'fail_reason':fail_reason}
-    ddd['characteristics']=ch
+       fail=ls.get('fail','')
+       fail_reason=ls.get('fail_reason','')
 
-    ddd['user']=user
+       ch=ls.get('characteristics',{})
 
-    # Add files
-    ddd['file_stat']=ffstat
+       # Save pipeline
+       ddd['state']={'fail':fail, 'fail_reason':fail_reason}
+       ddd['characteristics']=ch
 
-    if not found:
+       ddd['user']=user
+
        if o=='con':
           ck.out('')
           ck.out('Saving results to the remote public repo ('+rduid+') ...')
@@ -568,72 +592,16 @@ def crowdsource(i):
                      'sort_keys':'yes'})
        if rx['return']>0: return rx
 
-    # Push statistical characteristics
-    x0=lsaf.get("##characteristics#run#time_fwbw_ms#min",None)
-
-    if x0!=None and x0>0:
-       if o=='con':
-          ck.out('')
-          ck.out('Pushing file with statistics to server ...')
-
-       fstat=os.path.join(pp,tmp_dir,ffstat)
-
-       r=ck.save_json_to_file({'json_file':fstat, 'dict':lsaf, 'sort_keys':'yes'})
+       # Check host URL prefix and default module/action
+       url=ck_url+'&highlight_uid='+rduid+'#'+rduid
+       ck.out('')
+       r=ck.inp({'text':'Would you like to open a browser to see results "'+url+'" (y/N)? '})
        if r['return']>0: return r
 
-       rx=ck.access({'action':'push',
-                     'module_uoa':record_module_uoa,
-                     'data_uoa':rduid,
-                     'repo_uoa':er,
-                     'remote_repo_uoa':esr,
-                     'filename':fstat,
-                     'overwrite':'yes'})
-       if rx['return']>0: return rx
-
-       os.remove(fstat)
-
-       # Push statistical characteristics
-
-       dmin={"##characteristics#run#time_fwbw_ms#min":x0}
-
-       if o=='con':
-          ck.out('')
-          ck.out('Pushing file with min stats to server ...')
-
-       fmin=os.path.join(pp,tmp_dir,ffmin)
-
-       r=ck.save_json_to_file({'json_file':fmin, 'dict':dmin, 'sort_keys':'yes'})
-       if r['return']>0: return r
-
-       rx=ck.access({'action':'push',
-                     'module_uoa':record_module_uoa,
-                     'data_uoa':rduid,
-                     'repo_uoa':er,
-                     'remote_repo_uoa':esr,
-                     'filename':fmin,
-                     'overwrite':'yes'})
-       if rx['return']>0: return rx
-
-       os.remove(fmin)
-
-       if o=='con':
-           ck.out('')
-           ck.out('Succesfully recorded results in remote repo (Entry UID='+rduid+')')
-    else:
-       if o=='con':
-           ck.out('')
-           ck.out('WARNING: did not record results to remote repo (Entry UID='+rduid+')')
-
-    # Check host URL prefix and default module/action
-    url=ck_url+'&highlight_uid='+rduid+'#'+rduid
-    ck.out('')
-    r=ck.inp({'text':'Would you like to open a browser to see results "'+url+'" (y/N)? '})
-    if r['return']>0: return r
-
-    x=r['string'].strip().lower()
-    if x=='y' or x=='yes':
-       import webbrowser
-       webbrowser.open(url)
+       x=r['string'].strip().lower()
+       if x=='y' or x=='yes':
+          import webbrowser
+          webbrowser.open(url)
 
     return {'return':0}
 
