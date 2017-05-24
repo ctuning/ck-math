@@ -1,12 +1,6 @@
 {
   "backup_data_uid": "4bafba9fbfd798b9",
-  "compiler_add_include_as_env_from_deps": [
-    "CK_ENV_LIB_STDCPP_INCLUDE",
-    "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA",
-    "CK_ENV_LIB_STDCPP_DYNAMIC"
-  ],
   "data_name": "clblast-tune-xgemm-direct-fp16",
-  "extra_ld_vars": "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$ $<<CK_ENV_LIB_STDCPP_STATIC>>$",
   "force_copy_input_files_to_remote": "yes",
   "no_compile": "yes",
   "no_target_file": "yes",
@@ -38,8 +32,7 @@
         "run_cmd_out1": "stdout.log",
         "run_cmd_out2": "stderr.log",
         "run_input_files": [
-          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct",
-          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm_direct"
         ],
         "run_output_files": [
           "clblast_xgemm_direct_1_16.json",
