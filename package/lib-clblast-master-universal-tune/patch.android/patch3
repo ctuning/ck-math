@@ -13,15 +13,6 @@ diff -ruN a/scripts/benchmark/benchmark.py b/scripts/benchmark/benchmark.py
 diff -ruN a/scripts/database/database/io.py b/scripts/database/database/io.py
 --- a/scripts/database/database/io.py	Mon May 22 22:35:12 2017
 +++ b/scripts/database/database/io.py	Tue May 23 11:20:39 2017
-@@ -18,7 +18,7 @@
-     """Downloads a database and saves it to disk"""
-     print("[database] Downloading database from '" + database_url + "'...")
-     database = urlopen(database_url)
--    with open(filename, "wb") as f:
-+    with open(filename, "w") as f:
-         f.write(database.read())
- 
- 
 @@ -32,7 +32,7 @@
  def save_database(database, filename):
      """Saves a database to disk"""
