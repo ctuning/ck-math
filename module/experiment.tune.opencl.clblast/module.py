@@ -802,7 +802,7 @@ def show(i):
         bgraph['1']=[]
 
     # Sort
-    splst=sorted(plst, key=lambda x: x.get('best_gflops',0))
+    splst=sorted(plst, key=lambda x: x.get('meta',{}).get('best_gflops',0), reverse=True)
 
     for q in splst:
         ix+=1
