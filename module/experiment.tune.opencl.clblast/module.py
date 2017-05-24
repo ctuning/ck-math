@@ -1,5 +1,5 @@
 #
-# Collective Knowledge: CK-powered Caffe crowdbenchmarking (very early prototyping)
+# Collective Knowledge: CK-powered CLBlast crowd-tuning
 #
 # See CK LICENSE.txt for licensing details
 # See CK COPYRIGHT.txt for copyright details
@@ -24,16 +24,6 @@ ffmin='ck-stat-flat-min.json'
 form_name='wa_web_form'
 onchange='document.'+form_name+'.submit();'
 
-#hextra='<i><center>\n'
-#hextra+='This is an on-going long-term project. Please check our vision [ '
-#hextra+='<a href="http://doi.acm.org/10.1145/2909437.2909449">IWOCL\'16</a>, \n'
-#hextra+='<a href="http://arxiv.org/abs/1506.06256">CPC\'15</a>, \n'
-#hextra+='<a href="https://www.youtube.com/watch?v=Q94yWxXUMP0">YouTube</a>, \n'
-#hextra+='<a href="http://ctuning.org/cm/wiki/index.php?title=CM:data:45741e3fbcf4024b:1db78910464c9d05">wiki</a> ] '
-#hextra+=' and <a href="https://github.com/dividiti/ck-caffe">CK-Caffe GitHub repo</a> for more details!'
-#hextra+='</center></i>\n'
-#hextra+='<br>\n'
-
 hextra='<i><center>\n'
 hextra+=' [ <a href="https://en.wikipedia.org/wiki/Collective_Knowledge_(software)">CK intro</a>, \n'
 hextra+='<a href="https://arxiv.org/abs/1506.06256">universal workload crowd-tuning</a>; \n'
@@ -42,11 +32,9 @@ hextra+='<a href="https://www.youtube.com/watch?v=Q94yWxXUMP0">YouTube lecture</
 hextra+='</center></i>\n'
 hextra+='<br>\n'
 
-selector=[{'name':'CLBlast engine', 'key':'clblast_engine', 'flat_key':'##xdeps#lib-clblast#data_name'},
-          {'name':'GPGPU', 'key':'gpgpu_name'},
-          {'name':'Model', 'key':'nn_type'},
-          {'name':'Platform', 'key':'plat_name', 'new_line':'yes'},
+selector=[{'name':'GPGPU', 'key':'gpgpu_name'},
           {'name':'CPU', 'key':'cpu_name'},
+          {'name':'Platform', 'key':'plat_name', 'new_line':'yes'},
           {'name':'OS', 'key':'os_name', 'new_line':'yes'}]
 
 ##############################################################################
@@ -176,7 +164,6 @@ def crowdsource(i):
        ii=copy.deepcopy(i)
        ii['action']='initialize'
        ii['module_uoa']=cfg['module_deps']['program.optimization']
-#       ii['data_uoa']='caffe'
        ii['exchange_repo']=er
        ii['exchange_subrepo']=esr
        ii['skip_welcome']='yes'
@@ -529,9 +516,6 @@ def crowdsource(i):
     if rrr['return']>0: return rrr
 
     ##characteristics#run#statistics
-
-#    r=ck.save_json_to_file({'json_file':'d:\\xyz.json','dict':rrr})
-
     ls=rrr.get('last_iteration_output',{})
     state=ls.get('state',{})
     xchoices=copy.deepcopy(ls.get('choices',{}))
@@ -572,11 +556,8 @@ def crowdsource(i):
        fail=ls.get('fail','')
        fail_reason=ls.get('fail_reason','')
 
-       ch=ls.get('characteristics',{})
-
        # Save pipeline
        ddd['state']={'fail':fail, 'fail_reason':fail_reason}
-       ddd['characteristics']=ch
 
        ddd['user']=user
 
@@ -640,11 +621,8 @@ def show(i):
     hi_uid=i.get('highlight_uid','')
 
     h=''
-#    h='<hr>\n'
     h+='<center>\n'
     h+='\n\n<script language="JavaScript">function copyToClipboard (text) {window.prompt ("Copy to clipboard: Ctrl+C, Enter", text);}</script>\n\n' 
-
-#    h+='<h2>Aggregated results from Caffe crowd-benchmarking (time, accuracy, energy, cost, ...)</h2>\n'
 
     h+=hextra
 
@@ -796,21 +774,16 @@ def show(i):
 
     h+='  <tr style="background-color:#dddddd">\n'
     h+='   <td '+ha+'><b>#</b></td>\n'
+    h+='   <td '+ha+'><b>GPGPU</b></td>\n'
+    h+='   <td '+ha+'><b>CPU</b></td>\n'
     h+='   <td '+ha+'><b>Platform</b></td>\n'
     h+='   <td '+ha+'><b>OS</b></td>\n'
-    h+='   <td '+ha+'><b>CPU</b></td>\n'
-    h+='   <td '+ha+'><b>GPGPU</b></td>\n'
-    h+='   <td '+ha+'><b>Type</b></td>\n'
-    h+='   <td '+ha+'><b>DNN engine</b></td>\n'
-    h+='   <td '+ha+'><b>Model</b></td>\n'
+    h+='   <td '+ha+'><b>GFLOPs</b></td>\n'
+    h+='   <td '+ha+'><b>Time (s)</b></td>\n'
+    h+='   <td '+ha+'><b>Dataset (M N K)</b></td>\n'
+    h+='   <td '+ha+'><b>Best parameters</b></td>\n'
     h+='   <td '+ha+'><b>Choices (env)</b></td>\n'
-    h+='   <td '+ha+'><b>FWBW<br>min time</b><br><br>(exp&nbsp;time)<br>stat.&nbsp;repetitions</td>\n'
-    h+='   <td '+ha+'><b>FW</b></td>\n'
-    h+='   <td '+ha+'><b>BW</b></td>\n'
-    h+='   <td '+ha+'><b>Per layer</b></td>\n'
-    h+='   <td '+ha+'><b>Model size</b></td>\n'
-    h+='   <td '+ha+'><b><a href="https://github.com/dividiti/ck-caffe/blob/master/script/explore-accuracy/explore_accuracy.20160808.ipynb">Model accuracy on ImageNet</a></td>\n'
-    h+='   <td '+ha+'><b>Model topology and parameters</td>\n'
+    h+='   <td '+ha+'><b>CLBlast engine</b></td>\n'
     h+='   <td '+ha+'><b>Power consumption (W)<br>min / max</td>\n'
     h+='   <td '+ha+'><b>Memory usage (MB)</td>\n'
     h+='   <td '+ha+'><b>Bug detected?</b></td>\n'
@@ -826,16 +799,8 @@ def show(i):
     if hi_uid!='':
         bgraph['1']=[]
 
-    # Load min stat
-    for q in plst:
-        pmin=os.path.join(q['path'],ffmin)
-        if os.path.isfile(pmin):
-           rx=ck.load_json_file({'json_file':pmin})
-           if rx['return']==0:
-              q['min_stat']=rx['dict']
-
     # Sort
-    splst=sorted(plst, key=lambda x: x.get('min_stat',{}).get('##characteristics#run#time_fwbw_ms#min',0))
+    splst=sorted(plst, key=lambda x: x.get('best_gflops',0))
 
     for q in splst:
         ix+=1
@@ -864,20 +829,15 @@ def show(i):
         env=choices.get('env',{})
         params=choices.get('params',{}).get('params',{})
 
+        best_gflops=d.get('best_gflops',0)
+        best_time=d.get('best_time',0)
+
         xdeps=meta.get('xdeps',{})
 
-        d_model=xdeps.get('caffemodel',{})
-        d_model_name=d_model.get('data_name','')
-        d_model_package_uoa=d_model.get('package_uoa','')
-        d_model_ver=d_model.get('ver','')
-
-        d_engine=xdeps.get('lib-caffe',{})
+        d_engine=xdeps.get('lib-clblast',{})
         d_engine_name=d_engine.get('data_name','')
         d_engine_package_uoa=d_engine.get('package_uoa','')
         d_engine_ver=d_engine.get('ver','')
-
-        tp=meta.get('dnn_type','')
-        nn=meta.get('nn_type','')
 
         plat_name=meta.get('plat_name','')
         cpu_name=meta.get('cpu_name','')
@@ -907,6 +867,10 @@ def show(i):
 #            bgraph['0'].append([ix,None])
 #            bgraph['1'].append([ix,x0])
 
+        bgraph['0'].append([ix,best_gflops])
+        if fail!='yes' and best_gflops!=0 and duid!=hi_uid:
+            if hi_uid!='': bgraph['1'].append([ix,best_gflops])
+
         bg=' style="background-color:#'+bgc+';"'
 
         h+='  <tr'+bg+'>\n'
@@ -915,6 +879,16 @@ def show(i):
         h+='   <td '+ha+'>'+str(ix)+'</a></td>\n'
 
         # Platform, etc ...
+        x=gpgpu_name
+        if gpgpu_uid!='':
+            x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform.gpgpu']+':'+gpgpu_uid+'">'+x+'</a>'
+        h+='   <td '+ha+'>'+x+'</td>\n'
+
+        x=cpu_name
+        if cpu_uid!='':
+            x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform.cpu']+':'+cpu_uid+'">'+x+'</a>'
+        h+='   <td '+ha+'>'+x+'</td>\n'
+
         x=plat_name
         if plat_uid!='':
             x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform']+':'+plat_uid+'">'+x+'</a>'
@@ -925,24 +899,57 @@ def show(i):
             x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform']+':'+os_uid+'">'+x+'</a>'
         h+='   <td '+ha+'>'+x+'</td>\n'
 
-        x=cpu_name
-        if cpu_uid!='':
-            x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform.cpu']+':'+cpu_uid+'">'+x+'</a>'
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
-        x=gpgpu_name
-        if gpgpu_uid!='':
-            x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform.gpgpu']+':'+gpgpu_uid+'">'+x+'</a>'
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
         # All files
         uu1=work['self_module_uid']
         if cmuoa!='': uu1=cmuoa
         uu2=str(ix)+')&nbsp;<a href="'+url0+'&wcid='+uu1+':'+duid+'">'+duid+'</a>'
         uu3='[&nbsp;<a href="'+url0+'&wcid='+uu1+':'+duid+'">See&nbsp;raw&nbsp;files</a>&nbsp;]'
 
-        # Type
-        h+='   <td '+ha+'>'+tp+'</a></td>\n'
+        # GFLOPs
+        h+='   <td '+ha+'>'+('%.1f'%best_gflops)+'&nbsp;&PlusMinus;&nbsp;?</a></td>\n'
+
+        # Time
+        h+='   <td '+ha+'>'+('%.3f'%best_time)+'&nbsp;&PlusMinus;&nbsp;?</a></td>\n'
+
+        # Dataset
+        x=''
+        dm=meta.get('dataset_m','')
+        dn=meta.get('dataset_n','')
+        dk=meta.get('dataset_k','')
+
+        x=str(dm)+' x '+str(dn)+' x '+str(dk)
+        h+='   <td '+ha+'>'+x+'</a></td>\n'
+
+        # Best parameters
+        x=''
+        bp=d.get('best_parameters',{})
+        for k in sorted(bp):
+            v=bp[k]
+            x+=str(k)+'='+str(v)+'\n'
+        x=x.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
+
+        x1=''
+        if x!='':
+            x1+='<input type="button" class="ck_small_button" onClick="alert(\''+x+'\');" value="View all">'
+
+        h+='   <td '+ha+'>'+x1+'</td>\n'
+
+        # Choices (for now env)
+#        x='<table border="0" cellpadding="0" cellspacing="2">\n'
+        x=''
+        for k in sorted(env):
+            v=env[k]
+            x+=str(k)+'='+str(v)+'\n'
+#            x+='<tr><td>'+str(k)+'=</td><td>'+str(v)+'</td></tr>\n'
+#        x+='</table>\n'
+#        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
+        x=x.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
+
+        x1=''
+        if x!='':
+            x1+='<input type="button" class="ck_small_button" onClick="alert(\''+x+'\');" value="View all">'
+
+        h+='   <td '+ha+'>'+x1+'</td>\n'
 
         # Engine
         x=d_engine_name
@@ -966,196 +973,6 @@ def show(i):
             ver='<input type="button" class="ck_small_button" onClick="alert(\''+ver+'\');" value="See versions of all deps">'
 
         h+='   <td '+ha+'>'+x+'<br><br>'+ver+'</td>\n'
-
-        # Model
-
-        x=nn
-
-        msize=''
-        mtop=''
-        mtop5=''
-
-        if d_model_package_uoa!='':
-           x='<a href="'+url0+'&wcid=package:'+d_model_package_uoa+'">'+x+'</a>'
-
-           # Load features
-           rx=ck.access({'action':'load',
-                         'module_uoa':'package',
-                         'data_uoa':d_model_package_uoa})
-           if rx['return']>0: return rx
-           mft=rx['dict'].get('features',{})
-
-           msize=str(mft.get('model_size_mb',''))+'&nbsp;MB'
-           mtop=str(mft.get('accuracy',''))
-           mtop5=str(mft.get('accuracy_top5',''))
-
-#        if x!='' and d_model_ver!='':
-#           x+='\n<br><br>Version&nbsp;<b>'+d_model_ver+'</b>'
-
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
-        # Choices (for now env)
-#        x='<table border="0" cellpadding="0" cellspacing="2">\n'
-        x=''
-        for k in sorted(env):
-            v=env[k]
-            x+=str(k)+'='+str(v)+'\n'
-#            x+='<tr><td>'+str(k)+'=</td><td>'+str(v)+'</td></tr>\n'
-#        x+='</table>\n'
-#        x=x.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
-        x=x.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
-
-        x1=''
-        if x!='':
-            if env.get('CK_CAFFE_BATCH_SIZE','')!='':
-               x1+='Batch&nbsp;size='+env['CK_CAFFE_BATCH_SIZE']+'<br><br>\n'
-            x1+='<input type="button" class="ck_small_button" onClick="alert(\''+x+'\');" value="View all">'
-
-        h+='   <td '+ha+'>'+x1+'</td>\n'
-
-        # Characteristics
-        # Check if has statistics
-        x=''
-
-        # Check if has stats
-        x0e=dstat.get("##characteristics#run#time_fwbw_ms#exp",None)
-        x1=dstat.get("##characteristics#run#time_fwbw_ms#center",None)
-        xr=dstat.get("##characteristics#run#time_fwbw_ms#repeats",None)
-        x2=dstat.get("##characteristics#run#time_fwbw_ms#halfrange",None)
-        x=''
-        if x0!=None:
-            x='<b>'+('%.0f'%x0)+'&nbsp;ms.</b>\n'
-#            x+='('+('%.0f'%x1)+'&nbsp;&PlusMinus;&nbsp;'+('%.0f'%x2)+'&nbsp;ms.)'
-
-        if x1!=None and x2!=None:
-            x+='<br><br>('+('%.0f'%x0e)+'&nbsp;&PlusMinus;&nbsp;'+('%.0f'%x2)+'&nbsp;ms.)\n'
-
-        if xr!=None:
-            x+='<br><i>'+str(xr)+' repetitions</i>\n'
-
-        h+='   <td '+ha+' style="background-color:#afffaf">'+x+'</td>\n'
-
-        bgraph['0'].append([ix,x0])
-        if fail!='yes' and x0!=None and duid!=hi_uid:
-#            bgraph['0'].append([ix,x0])
-            if hi_uid!='': bgraph['1'].append([ix,None])
-
-        x1=dstat.get("##characteristics#run#time_fw_ms#center",None)
-        x2=dstat.get("##characteristics#run#time_fw_ms#halfrange",None)
-        if x1!=None and x2!=None:
-            x=('%.0f'%x1)+'&nbsp;&PlusMinus;&nbsp;'+('%.0f'%x2)+'&nbsp;ms.'
-
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
-        x1=dstat.get("##characteristics#run#time_bw_ms#center",None)
-        x2=dstat.get("##characteristics#run#time_bw_ms#halfrange",None)
-        if x1!=None and x2!=None:
-            x=('%.0f'%x1)+'&nbsp;&PlusMinus;&nbsp;'+('%.0f'%x2)+'&nbsp;ms.'
-
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
-        # Check all characteristics
-        x=''
-        x5=''
-        for k in sorted(te):
-            v=te[k]
-
-            kx="##characteristics#run#"+k
-
-            kx1=dstat.get(kx+'#center',None)
-            kx2=dstat.get(kx+'#halfrange',None)
-
-            x6=''
-            if type(v)==int:
-                if kx1!=None and kx2!=None:
-                    x6=str(kx1)+' +- '+str(kx2)
-                else:
-                    x6=str(v)
-            elif type(v)==float:
-                if kx1!=None and kx2!=None:
-                    x6=('%.1f'%kx1)+' +- '+('%.1f'%kx2)
-                else:
-                    x6=('%.1f'%v)
-
-            if x6!='':
-                x5+=str(k)+'='+x6+'\n'
-
-        # Also layers
-        y5=''
-        for j in range(0,1000):
-            k1='##characteristics#run#per_layer_info@'+str(j)+'#direction#min'
-            k2='##characteristics#run#per_layer_info@'+str(j)+'#label#min'
-            k3='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#min'
-            k4='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#max'
-            k5='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#exp_allx'
-
-            v1=dstat.get(k1,'')
-            v2=dstat.get(k2,'')
-            v3=dstat.get(k3,'')
-            v4=dstat.get(k4,'')
-            v5=dstat.get(k5,[])
-
-            if v1!='' and v2!='' and v3!='' and v4!='':
-               v6=0
-               if len(v5)>0:
-                  v6=v5[0]
-
-               xv3=''
-               xv4=''
-               xv5=''
-
-               if v3!='': xv3=('%.1f'%v3)
-               if v4!='': xv4=('%.1f'%v4)
-               if v6!='': xv6=('%.1f'%v6)
-
-               if y5=='': y5='Layers:\nName (direction): min time (ms.) ; expected time (ms.) ; max time (ms.)\n'
-
-               y5+='\n'+v2+' ('+v1+'): '+xv3+';'+xv6+';'+xv4
-            else:
-               break
-
-        y5=y5.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
-        if y5!='':
-            x+='<a href="'+ck_url1+duid+'">Stats per layer</a><br><br>\n'
-            x+='<input type="button" class="ck_small_button" onClick="alert(\''+y5+'\');" value="All layers as pop-up">'
-
-#        x5=x5.replace("'","\'").replace('"',"\\'").replace('\n','\\n')
-        x5=x5.replace("\'","'").replace("'","\\'").replace('\"','"').replace('"',"\\'").replace('\n','\\n')
-        if x5!='':
-            x+='<br><br><input type="button" class="ck_small_button" onClick="alert(\''+x5+'\');" value="CK vars">'
-
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
-        # Model size
-        h+='   <td '+ha+'>'+msize+'</td>\n'
-
-        # Accuracy
-        x=''
-
-        if mtop!='' and mtop5!='':
-           x=mtop+'&nbsp;/&nbsp;'+mtop5
-
-#        if nn=='bvlc, alexnet':
-#            x='0.568279&nbsp;/&nbsp;0.799501'
-#        elif nn=='bvlc, googlenet':
-#            x='0.689299&nbsp;/&nbsp;0.891441'
-#        elif nn=='deepscale, squeezenet, 1.1':
-#            x='0.583880&nbsp;/&nbsp;0.810123'
-#        elif nn=='deepscale, squeezenet, 1.0':
-#            x='0.576801&nbsp;/&nbsp;0.803903'
-
-        h+='   <td '+ha+'>'+x+'</td>\n'
-
-        # Model topology
-        x=''
-
-        fmt=d.get('file_model_topology','')
-        if fmt!='':
-           pfmt=os.path.join(path,fmt)
-           if os.path.isfile(pfmt):
-               x='<a href="'+url0+'&action=pull&common_action=yes&cid='+work['self_module_uid']+':'+duid+'&filename='+fmt+'">deploy.prototxt</a>\n'
-
-        h+='   <td '+ha+'>'+x+'</td>\n'
 
         # Power consumption (TBD)
         x=''
@@ -1185,7 +1002,7 @@ def show(i):
 
         h+='   <td '+ha+'><a href="'+url0+'&action=index&module_uoa=wfe&native_action=show&native_module_uoa=experiment.user">'+user+'</a></td>\n'
 
-        h+='   <td '+ha+'><input type="button" class="ck_small_button" onClick="copyToClipboard(\'ck replay caffe\');" value="Replay"><br><br>\n'
+        h+='   <td '+ha+'><input type="button" class="ck_small_button" onClick="copyToClipboard(\'TBD - need support in CLBlast\');" value="Replay"><br><br>\n'
         h+='              '+uu3+'</td>\n'
 
         h+='  <tr>\n'
@@ -1215,7 +1032,7 @@ def show(i):
            "title":"Powered by Collective Knowledge",
 
            "axis_x_desc":"Experiment",
-           "axis_y_desc":"Neural network total time (ms.)",
+           "axis_y_desc":"GFLOPs",
 
            "plot_grid":"yes",
 
@@ -1259,13 +1076,7 @@ def replay(i):
 
     """
 
-    # TBD - take params from remote/local experiment and pre-set ...
-    # Run locally, i.e. do not share stats unless requested ...
-
-#    i['action']='crowdsource'
-#    i['module_uoa']=cfg['module_deps']['experiment.bench.caffe']
-
-    return ck.access(i)
+    return {'return':1, 'error':'TBD: need support in CLBlast'}
 
 ##############################################################################
 # browse public results
@@ -1290,223 +1101,3 @@ def browse(i):
     webbrowser.open(ck_url)
 
     return {'return':0}
-
-##############################################################################
-# show info for all layers
-
-def html_viewer(i):
-    """
-    Input:  {
-              data_uoa - CK entry UOA to view
-            }
-
-    Output: {
-              return       - return code =  0, if successful
-                                         >  0, if error
-              (error)      - error text if return > 0
-            }
-
-    """
-
-    import os
-
-    duoa=i.get('data_uoa','')
-
-    # Load entry
-    r=ck.access({'action':'load',
-                 'module_uoa':work['self_module_uid'],
-                 'data_uoa':duoa})
-    if r['return']>0: return r
-    p=r['path']
-    d=r['dict']
-
-    dchars=d.get('characteristics',{})
-    dchoices=d.get('choices',{})
-    dmeta=d.get('meta',{})
-
-    # Load stats
-    dstat={}
-    fstat=os.path.join(p,'ck-stat-flat-characteristics.json')
-    if os.path.isfile(fstat):
-        r=ck.load_json_file({'json_file':fstat, 'dict':dstat})
-        if r['return']>0: return r
-        dstat=r['dict']
-
-    # Prepare table
-    h=''
-    h+='<hr>\n'
-    h+='<center>\n'
-    h+='<h2>DNN engine and model evaluation statistics per layer (crowd-tuning)</h2><br>\n'
-    h+='</center>\n'
-
-    xdeps=dmeta.get('xdeps',{})
-    lcaffe=xdeps.get('lib-caffe',{})
-    lmodel=xdeps.get('caffemodel',{})
-
-    # Prepare extra info
-    h+='<p>\n'
-    h+='<table border="1" cellpadding="8" cellspacing="0">\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>DNN engine name:</b></td>\n'
-    h+='  <td>'+lcaffe.get('data_name','')+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>DNN engine version:</b></td>\n'
-    h+='  <td>'+lcaffe.get('ver','')+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>DNN engine type:</b></td>\n'
-    h+='  <td>'+dmeta.get('dnn_type','')+'</td>\n'
-    h+=' </tr>\n'
-
-    x=''
-
-    dx=dmeta.get('xversions',{})
-    for k in sorted(dx):
-        v=dx[k]
-        if v!='':
-           if x!='': x+='<br>\n'
-           x+=k+'='+str(v)+'\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>DNN engine dependencies:</b></td>\n'
-    h+='  <td>'+x+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>DNN model name:</b></td>\n'
-    h+='  <td>'+lmodel.get('data_name','')+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>DNN model version:</b></td>\n'
-    h+='  <td>'+lmodel.get('ver','')+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>Batch size:</b></td>\n'
-    h+='  <td>'+dchars.get('run',{}).get('REAL_ENV_CK_CAFFE_BATCH_SIZE','')+'</td>\n'
-    h+=' </tr>\n'
-
-# TBD: Need to show min,exp,max!
-#    h+=' <tr>\n'
-#    h+='  <td><b>FWBW time (ms.):</b></td>\n'
-#    h+='  <td>'+str(dchars.get('run',{}).get('time_bw_ms',''))+'</td>\n'
-#    h+=' </tr>\n'
-
-#    h+=' <tr>\n'
-#    h+='  <td><b>FW time (ms.):</b></td>\n'
-#    h+='  <td>'+str(dchars.get('run',{}).get('time_fw_ms',''))+'</td>\n'
-#    h+=' </tr>\n'
-
-#    h+=' <tr>\n'
-#    h+='  <td><b>BW time (ms.):</b></td>\n'
-#    h+='  <td>'+str(dchars.get('run',{}).get('time_bw_ms',''))+'</td>\n'
-#    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>Platform:</b></td>\n'
-    h+='  <td>'+dmeta.get('plat_name','')+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>OS:</b></td>\n'
-    h+='  <td>'+dmeta.get('os_name','')+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>CPU:</b></td>\n'
-    h+='  <td>'+dmeta.get('cpu_name','')+'</td>\n'
-    h+=' </tr>\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>GPU:</b></td>\n'
-    h+='  <td>'+dmeta.get('gpu_name','')+'</td>\n'
-    h+=' </tr>\n'
-
-
-    h+=' </tr>\n'
-    h+='</table>\n'
-
-    h+='<center>\n'
-    h+='<p>\n'
-    h+='<table border="0" cellpadding="10" cellspacing="0">\n'
-
-    h+=' <tr>\n'
-    h+='  <td><b>Name</b></td>\n'
-    h+='  <td><b>Direction</b></td>\n'
-    h+='  <td align="right"><b>Min time (ms.):</b></td>\n'
-    h+='  <td align="right"><b>Expected time (ms.):</b></td>\n'
-    h+='  <td align="right"><b>Max time (ms.):</b></td>\n'
-    h+='  <td align="right"><b>Repetitions:</b></td>\n'
-    h+=' </tr>\n'
-
-    # Detecting number of layers
-    jj={}
-
-    for j in range(0,1000):
-        k3='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#min'
-        v3=dstat.get(k3,'')
-
-        if v3=='': break
-
-        jj[j]=v3
-
-    # Sorting by min time
-    if i.get('all_params',{}).get('skip_sort','')!='yes':
-       jj=sorted(jj, key=lambda x: jj[x], reverse=True)
-
-    # Also layers
-    for j in jj:
-        k1='##characteristics#run#per_layer_info@'+str(j)+'#direction#min'
-        k2='##characteristics#run#per_layer_info@'+str(j)+'#label#min'
-        k3='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#min'
-        k4='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#max'
-        k5='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#exp_allx'
-        k7='##characteristics#run#per_layer_info@'+str(j)+'#time_ms#repeats'
-
-        v1=dstat.get(k1,'')
-        v2=dstat.get(k2,'')
-        v3=dstat.get(k3,'')
-        v4=dstat.get(k4,'')
-        v5=dstat.get(k5,[])
-        v7=dstat.get(k7,'')
-
-        if v1!='' and v2!='' and v3!='' and v4!='':
-           v6=0
-           if len(v5)>0:
-              v6=v5[0]
-
-           xv3=''
-           xv4=''
-           xv6=''
-
-           if v3!='':
-              if v3<0.1: xv3='0'
-              else: xv3='<b>'+('%.1f'%v3)+'</b>'
-
-           if v4!='':
-              if v4<0.1: xv4='0'
-              else: xv4='<b>'+('%.1f'%v4)+'</b>'
-
-           if v6!='':
-              if v6<0.1: xv6='0'
-              else: xv6='<b>'+('%.1f'%v6)+'</b>'
-
-           h+=' <tr>\n'
-           h+='  <td>'+v2+'</td>\n'
-           h+='  <td>'+v1+'</td>\n'
-           h+='  <td align="right">'+xv3+'</td>\n'
-           h+='  <td align="right">'+xv6+'</td>\n'
-           h+='  <td align="right">'+xv4+'</td>\n'
-           h+='  <td align="right">'+str(v7)+'</td>\n'
-           h+=' </tr>\n'
-
-    h+='</table>\n'
-
-    h+='</center>\n'
-
-    return {'return':0, 'html':h, 'show_top':'yes'}
