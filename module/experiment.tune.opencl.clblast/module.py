@@ -379,12 +379,15 @@ def crowdsource(i):
     if 'fail' in rr: del(rr['fail'])
     if 'return' in rr: del(rr['return'])
 
+    duoa=rr.get('choices',{}).get('data_uoa','')
+
     # Prepare high-level experiment meta
     meta={'cpu_name':cpu_name,
           'os_name':os_name,
           'plat_name':plat_name,
           'gpu_name':gpu_name,
-          'gpgpu_name':gpgpu_name}
+          'gpgpu_name':gpgpu_name,
+          'program_uoa':duoa}
 
     # Process deps
     xdeps={}
