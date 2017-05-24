@@ -1,3 +1,5 @@
+* 2017.05.24 - started working on CLBlast crowd-tuning via CK
+
 * 2017.05.08 - added ARM compute lib package
              - added simple ARM SGEMM benchmark with NEON
 

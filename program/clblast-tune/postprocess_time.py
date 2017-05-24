@@ -43,6 +43,12 @@ def ck_postprocess(i):
     # Load both stderr and stdout. Concatenate into one list.
     # NB: This assumes that Caffe iterates only once (--iterations=1).
     # Otherwise, looping over the log would be required.
+
+#    For debugging
+#    rt['run_cmd_out1']='stdout.log'
+#    rt['run_cmd_out2']='stderr.log'
+#    rt['run_output_files']=["clblast_xgemm_1_32.json","clblast_xgemm_2_32.json"]
+
     rf1=rt['run_cmd_out1']
     rf2=rt['run_cmd_out2']
     rf3=rt['run_output_files'][0]
@@ -136,6 +142,10 @@ def ck_postprocess(i):
     import database.bests as bests
     import database.defaults as defaults
     database_filename=pl+"database.json"
+
+    if os.path.isfile(database_filename) and os.path.getsize(database_filename)==0:
+       os.remove(database_filename)
+
     if not os.path.isfile(database_filename):
        io.download_database(database_filename, DATABASE_SERVER_URL)
     else:
@@ -210,14 +220,16 @@ def ck_postprocess(i):
                 min_time=i['time']
                 bres=i
                 bindex=index
+
 #    print "Best performance: ", min_time,bres 
     m = float(d["arg_m"])
     n = float(d["arg_n"])
     k = float(d["arg_k"])
-    gflops = 2.0*m*n*k
-    time = float(bres["time"])/1000.0
-    gflops = gflops/time/1000.0/1000.0/1000.0
-    bres['GFLOPS'] =gflops
+    if bres.get('time','')!='':
+       gflops = 2.0*m*n*k
+       time = float(bres["time"])/1000.0
+       gflops = gflops/time/1000.0/1000.0/1000.0
+       bres['GFLOPS'] =gflops
 
 
     bestdefstat={}
