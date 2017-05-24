@@ -1,1 +1,1 @@
-ck crowdtune clblast --repetitions=2 --m=32 --n=32 --k=32
+ck crowdtune clblast --repetitions=2 --m=128 --n=128 --k=128

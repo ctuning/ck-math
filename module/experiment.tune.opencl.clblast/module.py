@@ -250,22 +250,25 @@ def crowdsource(i):
     # Check input (later add ML-based exploration)
     dm=i.get('m','').strip()
     if dm=='': 
-       if square==1: dm=dim
-       else: dm=random.randrange(64,1025,64)
+       dm=512
+#       if square==1: dm=dim
+#       else: dm=random.randrange(64,1025,64)
     dm=int(dm)
     env['CK_CLBLAST_MSIZE']=dm
 
     dn=i.get('n','').strip()
     if dn=='': 
-       if square==1: dn=dim
-       else: dn=random.randrange(64,1025,64)
+       dn=512
+#       if square==1: dn=dim
+#       else: dn=random.randrange(64,1025,64)
     dn=int(dn)
     env['CK_CLBLAST_NSIZE']=dn
 
     dk=i.get('n','').strip()
     if dk=='': 
-       if square==1: dk=dim
-       else: dk=random.randrange(64,1025,64)
+       dk=512
+#       if square==1: dk=dim
+#       else: dk=random.randrange(64,1025,64)
     dk=int(dk)
     env['CK_CLBLAST_KSIZE']=dk
 
