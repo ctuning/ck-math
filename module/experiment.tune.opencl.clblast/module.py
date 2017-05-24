@@ -32,10 +32,11 @@ hextra+='<a href="https://www.youtube.com/watch?v=Q94yWxXUMP0">YouTube lecture</
 hextra+='</center></i>\n'
 hextra+='<br>\n'
 
-selector=[{'name':'GPGPU', 'key':'gpgpu_name'},
+selector=[{'name':'Routine (CK wrapper)', 'key':'program_uoa'},
+          {'name':'GPGPU', 'key':'gpgpu_name'},
           {'name':'CPU', 'key':'cpu_name'},
           {'name':'Platform', 'key':'plat_name', 'new_line':'yes'},
-          {'name':'OS', 'key':'os_name', 'new_line':'yes'}]
+          {'name':'OS', 'key':'os_name'}]
 
 ##############################################################################
 # Initialize module
@@ -778,6 +779,7 @@ def show(i):
     h+='   <td '+ha+'><b>CPU</b></td>\n'
     h+='   <td '+ha+'><b>Platform</b></td>\n'
     h+='   <td '+ha+'><b>OS</b></td>\n'
+    h+='   <td '+ha+'><b>Routine (CK wrapper)</b></td>\n'
     h+='   <td '+ha+'><b>GFLOPs</b></td>\n'
     h+='   <td '+ha+'><b>Time (s)</b></td>\n'
     h+='   <td '+ha+'><b>Dataset (M N K)</b></td>\n'
@@ -844,6 +846,8 @@ def show(i):
         os_name=meta.get('os_name','')
         gpgpu_name=meta.get('gpgpu_name','')
 
+        program_uoa=meta.get('program_uoa','')
+
         plat_uid=meta.get('platform_uid','')
         cpu_uid=meta.get('cpu_uid','')
         os_uid=meta.get('os_uid','')
@@ -899,6 +903,11 @@ def show(i):
             x='<a href="'+url0+'&wcid='+cfg['module_deps']['platform']+':'+os_uid+'">'+x+'</a>'
         h+='   <td '+ha+'>'+x+'</td>\n'
 
+        x1=program_uoa
+        if x1.startswith('clblast-tune-'): x1=x1[13:]
+        x='<a href="'+url0+'&wcid='+cfg['module_deps']['program']+':'+program_uoa+'">'+x1+'</a>'
+        h+='   <td '+ha+'>'+x+'</td>\n'
+
         # All files
         uu1=work['self_module_uid']
         if cmuoa!='': uu1=cmuoa
@@ -917,7 +926,7 @@ def show(i):
         dn=meta.get('dataset_n','')
         dk=meta.get('dataset_k','')
 
-        x=str(dm)+' x '+str(dn)+' x '+str(dk)
+        x=str(dm)+'&nbsp;x&nbsp;'+str(dn)+'&nbsp;x&nbsp;'+str(dk)
         h+='   <td '+ha+'>'+x+'</a></td>\n'
 
         # Best parameters
