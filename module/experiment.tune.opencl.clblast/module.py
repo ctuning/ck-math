@@ -961,13 +961,9 @@ def show(i):
         h+='   <td '+ha+'>'+x1+'</td>\n'
 
         # Engine
-        x=d_engine_name
-
-        if d_engine_package_uoa!='':
-           x='<a href="'+url0+'&wcid=package:'+d_engine_package_uoa+'">'+x+'</a>'
-
-        if x!='' and d_engine_ver!='':
-           x+='\n<br><br>Version&nbsp;<b>'+d_engine_ver+'</b>'
+        x=''
+        if d_engine_ver!='':
+           x+='Version&nbsp;<b><a href="'+url0+'&wcid=package:'+d_engine_package_uoa+'">'+d_engine_ver+'</a></b>'
 
         # Versions
         ver=''
