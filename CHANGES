@@ -1,4 +1,5 @@
 * 2017.05.25 - first version of CLBlast crowd-tuning via CK is now working on Linux, Windows, Android
+             - moved CLBLast crowd-tuning to ck-crowdtuning repo
 
 * 2017.05.24 - started working on CLBlast crowd-tuning via CK
 
