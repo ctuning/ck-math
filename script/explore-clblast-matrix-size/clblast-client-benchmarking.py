@@ -62,9 +62,8 @@ def do(i, arg):
     if arg.fp is not None:
         fin = arg.fp
         if (os.path.isfile(fin)):
-           
           print ("File loading %s " %(fin))
-#LOAD FILE and TRIPLES
+          #LOAD FILE and TRIPLES
         else:
            print("File %s not found " %(fin))
     if VERBOSE or DEBUG:
