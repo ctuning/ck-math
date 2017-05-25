@@ -113,15 +113,23 @@ def find_best(dlist, w):
 def main(arg):
     # CUSTOMIZABLE VARIABLES!!!!
     module_uoa = 'experiment'
-    repo_uoa = 'local'
+    repo_uoa = 'explore-matrix-size-xgemm-fp32-firefly-rk3399'
     tags='explore-clblast-matrix-size'
     output_filename = 'tmp-ck-clblast-tune.json'
     
-    weights_filename=arg.fp
-    WEIGHTS = 1 
+    weights_filename='NULL'
+    
+    WEIGHTS = 0 
+    if arg.fp is not None:
+        weights_filename = arg.fp
+        if (os.path.isfile(weights_filename)):
+            print("{RANKING ERROR %s not found. USE WEIGHTS=0}" %(weights_filename))
+            WEIGHTS = 1 
+        else:
+             print("[RANKING ERROR] %s not found. USE WEIGHTS=0" %(weights_filename))
+
    
     ### END CUST
-   
     
     
     dlist=[]
@@ -144,7 +152,7 @@ def main(arg):
     tags = r['dict']['tags']
 #    print tags
     npoint = len(r['points'])
-    print npoint
+    print ("[RANKING] Number of matrices: %s" %(npoint))
         #    print npoint
     for point in r['points']:
         point_file = os.path.join(r['path'], 'ckp-%s.0001.json' % point)
@@ -154,7 +162,7 @@ def main(arg):
     # LOAD WEIGHTS
     
     w = []
-    WEIGHTS = os.path.isfile(weights_filename) and WEIGHTS
+#    WEIGHTS = os.path.isfile(weights_filename) and WEIGHTS
     if (WEIGHTS == 0):
         for i in range(0,npoint):
             w.append(1)

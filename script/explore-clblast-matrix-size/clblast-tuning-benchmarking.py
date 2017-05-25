@@ -45,9 +45,9 @@ kernel = [ 'xgemm-fp32' ]
 title = 'CLBlast tuning'
 model = 'something'
 # Matrix sizes: C[mxn] = A[mxk] * B[kxn].
-size_m = [ '512', '256',  '128', '1024' ]
-size_n = [ '256', '512',  '128', '1024' ]
-size_k = [ '128', '256', '1024', ' 128' ]
+size_m = [ '512', '256',  '128']
+size_n = [ '256', '512',  '128']
+size_k = [ '128', '256', '1024']
 
 
 
@@ -62,17 +62,18 @@ DEBUG_STR = '[DEBUG] '
 
 def do(i, arg):
     fp = arg.fp
-    fromfile = os.path.isfile(fp)
-    if (fromfile):
-        print("Loading triples %s" %(fp))
-        triples = json.loads(open(fp).read())
-        del size_m[:]
-        del size_n[:]
-        del size_k[:]
-        for i in triples:
-            size_m.append(str(i.get('bSizeM'))) 
-            size_n.append(str(i.get('bSizeN'))) 
-            size_k.append(str(i.get('bSizeK'))) 
+    if fp is not None:
+        fromfile = os.path.isfile(fp)
+        if (fromfile):
+            print("Loading triples %s" %(fp))
+            triples = json.loads(open(fp).read())
+            del size_m[:]
+            del size_n[:]
+            del size_k[:]
+            for i in triples:
+                size_m.append(str(i.get('bSizeM'))) 
+                size_n.append(str(i.get('bSizeN'))) 
+                size_k.append(str(i.get('bSizeK'))) 
 
 
     if VERBOSE or DEBUG:
