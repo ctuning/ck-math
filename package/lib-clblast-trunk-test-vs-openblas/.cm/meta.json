@@ -3,11 +3,11 @@
     "extra_dir": "", 
     "git_src_dir": "src", 
     "install_env": {
-      "CLBLAST_BRANCH": "development", 
+      "CLBLAST_BRANCH": "master", 
       "CLBLAST_URL": "https://github.com/CNugteren/CLBlast"
     }, 
     "use_git_revision": "yes", 
-    "version": "development"
+    "version": "master"
   }, 
   "deps": {
     "cmake": {
