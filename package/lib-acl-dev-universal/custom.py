@@ -1,4 +1,4 @@
-#!/usr/bin/python
+
 
 #
 # Developer: Grigori Fursin, Grigori.Fursin@cTuning.org, http://fursin.net
@@ -127,8 +127,10 @@ def setup(i):
 #       ck.debug_out(openclenv)
        ipath = openclenv.get('path_include')
        lpath = openclenv.get('path_lib')
-       flags += ['-I'+ipath]
-       lflags += ['-L'+lpath+' -lOpenCL']
+#       flags += ['-I'+ipath] ACL uses local CL/cl.h cl2.h
+       flags += ['-I../include']
+#       nie['CK_FLAG_PREFIX_INCLUDE'] = ''
+       lflags +=['-L'+lpath+' -lOpenCL']
 #       lcore_flags += ['']
 
 
@@ -304,10 +306,10 @@ def post_setup(i):
              xfiles += glob.glob('src/runtime/OMP/OMPScheduler.cpp')
 
     if use_opencl=='on':
-       xcore_files += Glob('src/core/CL/*.cpp')
-       xcore_files += Glob('src/core/CL/kernels/*.cpp')
-       xfiles += Glob('src/runtime/CL/*.cpp')
-       xfiles += Glob('src/runtime/CL/functions/*.cpp')
+       xcore_files += glob.glob('src/core/CL/*.cpp')
+       xcore_files += glob.glob('src/core/CL/kernels/*.cpp')
+       xfiles += glob.glob('src/runtime/CL/*.cpp')
+       xfiles += glob.glob('src/runtime/CL/functions/*.cpp')
 
     # Generate embed files for opencl TO FIX
 
