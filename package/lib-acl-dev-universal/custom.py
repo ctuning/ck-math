@@ -124,7 +124,6 @@ def setup(i):
        opencl=True
        nie['USE_OPENCL']='ON'
        openclenv = deps['opencl']['dict'].get('customize')
-
 #       ck.debug_out(openclenv)
        ipath = openclenv.get('path_include')
        lpath = openclenv.get('path_lib')
@@ -268,7 +267,7 @@ def post_setup(i):
     lcore_flags=env.get('LCORE_FLAGS','')
     bare_metal=env.get('USE_BARE_METAL','').lower()
     use_neon=env.get('USE_NEON','').lower()
-    use_opencl= env.get('USE_NEON','').lower()
+    use_opencl= env.get('USE_OPENCL','').lower()
 
     pp=i.get('path_original_package','')
 
@@ -310,18 +309,18 @@ def post_setup(i):
        files += Glob('src/runtime/CL/*.cpp')
        files += Glob('src/runtime/CL/functions/*.cpp')
 
-    # Generate embed files
+    # Generate embed files for opencl TO FIX
 
-#    if env['embed_kernels']:
-#        cl_files  = Glob('src/core/CL/cl_kernels/*.cl') + Glob('src/core/CL/cl_kernels/*.h')
-#        source_list = []
-#        for file in cl_files:
-#            source_name = file.rstr()
-#            source_list.append(source_name)
-#            embed_files.append(source_name + "embed")
-#        generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
-#        Default(generate_embed)
-#        files_to_delete += embed_files
+#      if env['embed_kernels']:
+#          cl_files  = Glob('src/core/CL/cl_kernels/*.cl') + Glob('src/core/CL/cl_kernels/*.h')
+#          source_list = []
+#          for file in cl_files:
+#              source_name = file.rstr()
+#              source_list.append(source_name)
+#              embed_files.append(source_name + "embed")
+#          generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
+#          Default(generate_embed)
+#          files_to_delete += embed_files
 
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
