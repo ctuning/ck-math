@@ -304,10 +304,10 @@ def post_setup(i):
              xfiles += glob.glob('src/runtime/OMP/OMPScheduler.cpp')
 
     if use_opencl=='on':
-       core_files += Glob('src/core/CL/*.cpp')
-       core_files += Glob('src/core/CL/kernels/*.cpp')
-       files += Glob('src/runtime/CL/*.cpp')
-       files += Glob('src/runtime/CL/functions/*.cpp')
+       xcore_files += Glob('src/core/CL/*.cpp')
+       xcore_files += Glob('src/core/CL/kernels/*.cpp')
+       xfiles += Glob('src/runtime/CL/*.cpp')
+       xfiles += Glob('src/runtime/CL/functions/*.cpp')
 
     # Generate embed files for opencl TO FIX
 
