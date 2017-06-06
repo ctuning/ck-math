@@ -123,8 +123,13 @@ def setup(i):
     if env.get('USE_OPENCL','').lower()=='on':
        opencl=True
        nie['USE_OPENCL']='ON'
-       flags += ['']
-       lflags += ['-lOpenCL']
+       openclenv = deps['opencl']['dict'].get('customize')
+
+#       ck.debug_out(openclenv)
+       ipath = openclenv.get('path_include')
+       lpath = openclenv.get('path_lib')
+       flags += ['-I'+ipath]
+       lflags += ['-L'+lpath+' -lOpenCL']
 #       lcore_flags += ['']
 
 
@@ -143,7 +148,6 @@ def setup(i):
        flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE']]
     if compiler_env.get('CK_ENV_LIB_STDCPP_INCLUDE_EXTRA','')!='':
        flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE_EXTRA']]
-
 #       env['CK_ENV_LIB_STDCPP_STATIC']=libstdcpppath+sep+'libgnustl_static.a'
 #       env['CK_ENV_LIB_STDCPP_DYNAMIC']=libstdcpppath+sep+'libgnustl_shared.so'
 #       env['CK_ENV_LIB_STDCPP_INCLUDE_EXTRA']=libstdcpppath+sep+'include'

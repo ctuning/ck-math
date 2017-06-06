@@ -30,6 +30,15 @@
       "name": "C++ compiler",
       "sort": 10,
       "tags": "compiler,lang-cpp"
+    },
+    "opencl": {
+      "local": "yes",
+      "name": "OpenCL library",
+      "skip_installed": {
+        "android": "yes"
+      },
+      "sort": 20,
+      "tags": "lib,opencl"
     }
   },
   "end_full_path": {
