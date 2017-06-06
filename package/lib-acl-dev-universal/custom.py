@@ -268,6 +268,7 @@ def post_setup(i):
     lcore_flags=env.get('LCORE_FLAGS','')
     bare_metal=env.get('USE_BARE_METAL','').lower()
     use_neon=env.get('USE_NEON','').lower()
+    use_opencl= env.get('USE_NEON','').lower()
 
     pp=i.get('path_original_package','')
 
@@ -303,11 +304,34 @@ def post_setup(i):
         if env.get('USE_OPENMP','').lower()=='on':
              xfiles += glob.glob('src/runtime/OMP/OMPScheduler.cpp')
 
+    if use_opencl=='on':
+       core_files += Glob('src/core/CL/*.cpp')
+       core_files += Glob('src/core/CL/kernels/*.cpp')
+       files += Glob('src/runtime/CL/*.cpp')
+       files += Glob('src/runtime/CL/functions/*.cpp')
+
+    # Generate embed files
+
+#    if env['embed_kernels']:
+#        cl_files  = Glob('src/core/CL/cl_kernels/*.cl') + Glob('src/core/CL/cl_kernels/*.h')
+#        source_list = []
+#        for file in cl_files:
+#            source_name = file.rstr()
+#            source_list.append(source_name)
+#            embed_files.append(source_name + "embed")
+#        generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
+#        Default(generate_embed)
+#        files_to_delete += embed_files
+
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
         xfiles += glob.glob('src/runtime/NEON/*.cpp')
         xfiles += glob.glob('src/runtime/NEON/functions/*.cpp')
+
+
+
+
 
     # Generate string with build options library version to embed in the library:
     r=ck.run_and_get_stdout({'cmd':['git','rev-parse','HEAD']})
