@@ -89,13 +89,13 @@ class TuneXgemm {
       //RANDOM_SEARCH & PSO
       tuner.AddParameter(id, "MWG", {16, 32, 64, 128});
       tuner.AddParameter(id, "NWG", {16, 32, 64, 128});
-      tuner.AddParameter(id, "KWG", {16, 32});
-      tuner.AddParameter(id, "MDIMC", {8, 16, 32});
+      tuner.AddParameter(id, "KWG", {16, 32,64});
+      tuner.AddParameter(id, "MDIMC", {4,8, 16, 32});
       tuner.AddParameter(id, "NDIMC", {8, 16, 32});
-      tuner.AddParameter(id, "MDIMA", {8, 16, 32});
+      tuner.AddParameter(id, "MDIMA", {4,8, 16, 32});
       tuner.AddParameter(id, "NDIMB", {8, 16, 32});
-      tuner.AddParameter(id, "KWI", {2});
-      tuner.AddParameter(id, "VWM", {1, 2, 4, 8});
+      tuner.AddParameter(id, "KWI", {1,2});
+      tuner.AddParameter(id, "VWM", {1, 2, 4, 8, 16});
       tuner.AddParameter(id, "VWN", {1, 2, 4, 8});
       tuner.AddParameter(id, "STRM", {0, 1});
       tuner.AddParameter(id, "STRN", {0, 1});
