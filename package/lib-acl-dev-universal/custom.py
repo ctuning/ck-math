@@ -7,9 +7,6 @@
 import os
 import sys
 import json
-import collections
-import re
-import subprocess
 import rstr
 ##############################################################################
 def resolve_includes(target, source, env):
