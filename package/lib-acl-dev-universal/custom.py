@@ -7,9 +7,67 @@
 import os
 import sys
 import json
-
+import collections
+import re
+import subprocess
+import rstr
 ##############################################################################
-# customize installation
+def resolve_includes(target, source, env):
+    # File collection
+    FileEntry = collections.namedtuple('FileEntry', 'target_name file_contents')
+
+    # Include pattern
+    pattern = re.compile("#include \"(.*)\"")
+
+    # Get file contents
+    files = []
+    for s in source:
+        name = s.rstr().split("/")[-1]
+        contents = s.get_contents().splitlines()
+        embed_target_name = s.abspath + "embed"
+        entry = FileEntry(target_name=embed_target_name, file_contents=contents)
+        files.append((name,entry))
+
+    # Create dictionary of tupled list
+    files_dict = dict(files)
+
+    # Check for includes (can only be files in the same folder)
+    final_files = []
+    for file in files:
+        done = False
+        tmp_file = file[1].file_contents
+        while not done:
+            file_count = 0
+            updated_file = []
+            for line in tmp_file:
+                found = pattern.search(line)
+                if found:
+                    include_file = found.group(1)
+                    data = files_dict[include_file].file_contents
+                    updated_file.extend(data)
+                else:
+                    updated_file.append(line)
+                    file_count += 1
+
+            # Check if all include are replaced.
+            if file_count == len(tmp_file):
+                done = True
+
+            # Update temp file
+            tmp_file = updated_file
+
+        # Append and prepend string literal identifiers and add expanded file to final list
+        tmp_file.insert(0, "R\"(\n")
+        tmp_file.append("\n)\"")
+        entry = FileEntry(target_name=file[1].target_name, file_contents=tmp_file)
+        final_files.append((file[0], entry))
+
+    # Write output files
+    for file in final_files:
+        with open(file[1].target_name, 'w+') as out_file:
+            contents = file[1].file_contents
+            for line in contents:
+                out_file.write("%s\n" % line)
 
 def setup(i):
     """
@@ -132,7 +190,8 @@ def setup(i):
 #       nie['CK_FLAG_PREFIX_INCLUDE'] = ''
        lflags +=['-L'+lpath+' -lOpenCL']
 #       lcore_flags += ['']
-
+       if env.get('USE_EMBEDDED_KERNELS','').lower()=='on': 
+           flags += ['-DEMBEDDED_KERNELS']
 
     hardfp=False
     if env.get('USE_BARE_METAL','').lower()=='on' or thardfp=='yes':
@@ -270,6 +329,7 @@ def post_setup(i):
     bare_metal=env.get('USE_BARE_METAL','').lower()
     use_neon=env.get('USE_NEON','').lower()
     use_opencl= env.get('USE_OPENCL','').lower()
+    use_embed_kernel= env.get('USE_EMBEDDED_KERNELS','').lower()
 
     pp=i.get('path_original_package','')
 
@@ -310,20 +370,16 @@ def post_setup(i):
        xcore_files += glob.glob('src/core/CL/kernels/*.cpp')
        xfiles += glob.glob('src/runtime/CL/*.cpp')
        xfiles += glob.glob('src/runtime/CL/functions/*.cpp')
-
-    # Generate embed files for opencl TO FIX
-
-#      if env['embed_kernels']:
-#          cl_files  = Glob('src/core/CL/cl_kernels/*.cl') + Glob('src/core/CL/cl_kernels/*.h')
-#          source_list = []
-#          for file in cl_files:
-#              source_name = file.rstr()
-#              source_list.append(source_name)
-#              embed_files.append(source_name + "embed")
-#          generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
-#          Default(generate_embed)
-#          files_to_delete += embed_files
-
+       if use_embed_kernel == 'on':
+          cl_files  = glob.glob('src/core/CL/cl_kernels/*.cl') + glob.glob('src/core/CL/cl_kernels/*.h')
+          source_list = []
+          for file in cl_files:
+              source_name = file.rstr()
+              source_list.append(source_name)
+              embed_files.append(source_name + "embed")
+          generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
+          Default(generate_embed)
+          files_to_delete += embed_files
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
