@@ -7,21 +7,25 @@
 import os
 import sys
 import json
-import rstr
+import re
+import collections
 ##############################################################################
-def resolve_includes(target, source, env):
+def file_get_contents(filename):
+    return open(filename).read()
+def resolve_includes(target, source, lpath):
     # File collection
     FileEntry = collections.namedtuple('FileEntry', 'target_name file_contents')
-
     # Include pattern
     pattern = re.compile("#include \"(.*)\"")
 
     # Get file contents
     files = []
     for s in source:
-        name = s.rstr().split("/")[-1]
-        contents = s.get_contents().splitlines()
-        embed_target_name = s.abspath + "embed"
+        name = s.split("/")[-1]
+        s_absp = lpath +'/src/'+ s
+        mycontents = file_get_contents(s_absp)
+        contents=mycontents.splitlines()
+        embed_target_name = s_absp + "embed"
         entry = FileEntry(target_name=embed_target_name, file_contents=contents)
         files.append((name,entry))
 
@@ -312,7 +316,7 @@ def post_setup(i):
     env=i.get('new_env',{})
 
     deps=i.get('deps',{})
-
+    pi=i.get('install_path','')
     libprefix=''
     if winh!='yes' or tname2=='android':
        libprefix='lib'
@@ -348,6 +352,8 @@ def post_setup(i):
     xfiles = glob.glob('src/runtime/*.cpp')
 
     embed_files = []
+    files_to_delete = []
+
     xcore_files += glob.glob('src/core/CPP/kernels/*.cpp')
 
     # CLHarrisCorners uses the Scheduler to run CPP kernels
@@ -371,11 +377,12 @@ def post_setup(i):
           cl_files  = glob.glob('src/core/CL/cl_kernels/*.cl') + glob.glob('src/core/CL/cl_kernels/*.h')
           source_list = []
           for file in cl_files:
-              source_name = file.rstr()
+              source_name = file
               source_list.append(source_name)
               embed_files.append(source_name + "embed")
-          generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
-          Default(generate_embed)
+#          generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
+          generate_embed = resolve_includes(embed_files, source_list,pi) 
+          #Default(generate_embed)
           files_to_delete += embed_files
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
@@ -392,7 +399,7 @@ def post_setup(i):
     if r['return']==0 and r['return_code']==0: 
        git_hash=r['stdout'].strip()
 
-    version_filename = 'arm_compute_version.embed' #"%s/arm_compute_version.embed" % os.path.dirname(glob.glob("src/core/*")[0].rstr())
+    version_filename = 'arm_compute_version.embed' #"%s/arm_compute_version.embed" % os.path.dirname(glob.glob("src/core/*")[0].rrstr())
     build_info = "\"arm_compute_version=%s Build options: %s Git hash=%s\"" % ('', '', git_hash.strip())
 
     r=ck.save_text_file({'text_file':version_filename, 'string':build_info})
