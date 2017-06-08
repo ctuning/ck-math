@@ -54,8 +54,6 @@ size_k = [ '512', '128', '512', '256', '1024', '1024', '512', '512', '1024', '20
 #size_n = ['256', '256', '512']
 #size_k = ['512', '1024', '1024']
 
-#pso_inf_g = ['0.1', '0.5']
-#pso_inf_l = ['0.1', '0.3']
 #pso_inf_r = ['0.0', '0.3']
 
 pso_inf_g = ['0.1', '0.3', '0.6', '0.9']
@@ -169,118 +167,123 @@ def do(i, arg):
 
     for curr_pso_inf_g in pso_inf_g:
         for curr_pso_inf_l in pso_inf_l:
-        #prepare pipeline
-            ii={'action':'pipeline',
-                'module_uoa':'program',
-                'data_uoa':'clblast-tune',
-                'prepare':'yes',
-                'dependencies': cdeps,
-                'no_compiler_description':'yes',
-                'cmd_key':kernel[0],
-                "target_os":tos,
-                "device_id":tdid,
-                "out":'con',
-                "no_state_check":"yes",
-                'flags':'-O3',
-             }
-            r=ck.access(ii)
-            if r['return']>0: return r
-            fail=r.get('fail','')
-            if fail=='yes': return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
+            for curr_pso_inf_r in pso_inf_r:
+                #prepare pipeline
+                ii={'action':'pipeline',
+                    'module_uoa':'program',
+                    'data_uoa':'clblast-tune',
+                    'prepare':'yes',
+                    'dependencies': cdeps,
+                    'no_compiler_description':'yes',
+                    'cmd_key':kernel[0],
+                    "target_os":tos,
+                    "device_id":tdid,
+                    "out":'con',
+                    "no_state_check":"yes",
+                    'flags':'-O3',
+                 }
+                r=ck.access(ii)
+                if r['return']>0: return r
+                fail=r.get('fail','')
+                if fail=='yes': return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
     
-            ready=r.get('ready','')
-            if ready!='yes': return {'return':11, 'error':'pipeline not ready'}
+                ready=r.get('ready','')
+                if ready!='yes': return {'return':11, 'error':'pipeline not ready'}
     
-            state=r['state']
-            tmp_dir=state['tmp_dir']
-            xcdeps=r.get('dependencies',{})
-            # Clean pipeline.
-            if 'ready' in r: del(r['ready'])
-            if 'fail' in r: del(r['fail'])
-            if 'return' in r: del(r['return'])
-            pipeline=copy.deepcopy(r)
+                state=r['state']
+                tmp_dir=state['tmp_dir']
+                xcdeps=r.get('dependencies',{})
+                # Clean pipeline.
+                if 'ready' in r: del(r['ready'])
+                if 'fail' in r: del(r['fail'])
+                if 'return' in r: del(r['return'])
+                pipeline=copy.deepcopy(r)
     
-            ck.out('PSO_INF_G : '+curr_pso_inf_g)
-            curr_pso_inf_g_tag="inf_g" + curr_pso_inf_g
-            ck.out('PSO_INF_L : '+curr_pso_inf_l)
-            curr_pso_inf_l_tag="inf_l" + curr_pso_inf_l
-            record_repo='local'
-            record_uoa='explore-matrix-size-'+kernel[0]+'-pso-'+curr_pso_inf_g_tag + curr_pso_inf_l_tag
-            ck.out('---------------------------------------------------------------------------------------')
-            ck.out('Experiment - %s:%s' % (record_repo, record_uoa))
-            local_pso_inf_g=[]
-    	    local_pso_inf_g.append(curr_pso_inf_g)
-            local_pso_inf_l=[]
-    	    local_pso_inf_l.append(curr_pso_inf_l)
-            cpipeline=copy.deepcopy(pipeline)
-            ii={
-                'action':'autotune',
-                'module_uoa':'pipeline',
-                'data_uoa':'program',
-                'choices_order':[
-                    [
-    	         '##env#CK_CLBLAST_MSIZE'
-    	        ],
-    	        [
-    	         '##env#CK_CLBLAST_NSIZE',
-    	        ],
-    	        [
-    	         '##env#CK_CLBLAST_KSIZE'
-    	        ],
-    	        [
-                     '##env#CK_TUNER_NUM_OF_STRATEGIES'
-    	        ],
-                    [
-    	         '##env#CK_SEARCH_STRATEGY'
-    	        ],
-                    [
-                     '##env#CK_PSO_SWARM_SIZE'
+                ck.out('PSO_INF_G : '+curr_pso_inf_g)
+                curr_pso_inf_g_tag="inf_g" + curr_pso_inf_g
+                ck.out('PSO_INF_L : '+curr_pso_inf_l)
+                curr_pso_inf_l_tag="inf_l" + curr_pso_inf_l 
+                ck.out('PSO_INF_R : '+curr_pso_inf_r)
+                curr_pso_inf_r_tag="inf_r" + curr_pso_inf_r
+                record_repo='local'
+                record_uoa='explore-matrix-size-'+kernel[0]+'-pso-'+curr_pso_inf_g_tag + curr_pso_inf_l_tag + curr_pso_inf_r_tag
+                ck.out('---------------------------------------------------------------------------------------')
+                ck.out('Experiment - %s:%s' % (record_repo, record_uoa))
+                local_pso_inf_g=[]
+    	        local_pso_inf_g.append(curr_pso_inf_g)
+                local_pso_inf_l=[]
+    	        local_pso_inf_l.append(curr_pso_inf_l)
+                local_pso_inf_r=[]
+                local_pso_inf_r.append(curr_pso_inf_r)
+                cpipeline=copy.deepcopy(pipeline)
+                ii={
+                    'action':'autotune',
+                    'module_uoa':'pipeline',
+                    'data_uoa':'program',
+                    'choices_order':[
+                        [
+    	             '##env#CK_CLBLAST_MSIZE'
+    	            ],
+    	            [
+    	             '##env#CK_CLBLAST_NSIZE',
+    	            ],
+    	            [
+    	             '##env#CK_CLBLAST_KSIZE'
+    	            ],
+    	            [
+                         '##env#CK_TUNER_NUM_OF_STRATEGIES'
+    	            ],
+                        [
+    	             '##env#CK_SEARCH_STRATEGY'
+    	            ],
+                        [
+                         '##env#CK_PSO_SWARM_SIZE'
+                        ],
+                        [
+                         '##env#CK_PSO_INF_G'
+                        ],
+                        [
+                         '##env#CK_PSO_INF_L'
+                        ],
+                        [
+                         '##env#CK_PSO_INF_R'
+                        ]
                     ],
-                    [
-                     '##env#CK_PSO_INF_G'
+                    'choices_selection':[
+                        {"type":"loop-with-next", "choice":size_m, "default":"256"},
+                        {"type":"loop-with-next", "choice":size_n, "default":"256"},
+                        {"type":"loop-with-next", "choice":size_k, "default":"256"},
+                        {"type":"loop", "choice":num_strategy, "default":"1"},
+                        {"type":"loop", "choice":strategy, "default":"2"},
+                        {"type":"loop", "choice":pso_swarm_size, "default":"4"},
+    	            {"type":"loop", "choice":local_pso_inf_g, "default":"0.4"},
+    	            {"type":"loop", "choice":local_pso_inf_l, "default":"0.0"},
+    	            {"type":"loop", "choice":local_pso_inf_r, "default":"0.4"},
+                    
                     ],
-                    [
-                     '##env#CK_PSO_INF_L'
-                    ],
-                    [
-                     '##env#CK_PSO_INF_R'
-                    ]
-                ],
-                'choices_selection':[
-                    {"type":"loop-with-next", "choice":size_m, "default":"256"},
-                    {"type":"loop-with-next", "choice":size_n, "default":"256"},
-                    {"type":"loop-with-next", "choice":size_k, "default":"256"},
-                    {"type":"loop", "choice":num_strategy, "default":"1"},
-                    {"type":"loop", "choice":strategy, "default":"2"},
-                    {"type":"loop", "choice":pso_swarm_size, "default":"4"},
-    	        {"type":"loop", "choice":local_pso_inf_g, "default":"0.4"},
-    	        {"type":"loop-with-next", "choice":local_pso_inf_l, "default":"0.0"},
-    	        {"type":"loop-with-next", "choice":pso_inf_r, "default":"0.4"},
-                
-                ],
-                'features_keys_to_process':['##choices#*'],
+                    'features_keys_to_process':['##choices#*'],
     
     
-                'iterations':-1,
-                'repetitions':1,
-                'record':'yes',
-                'record_failed':'yes',
-                'record_params':{
-                    'search_point_by_features':'yes'
-                },
-                'record_repo':record_repo,
-                'record_uoa':record_uoa,
-                'tags':['explore-clblast-matrix-size', kernel[0], model, size_tag,curr_pso_inf_g_tag, curr_pso_inf_l_tag],
-                'pipeline': cpipeline,
-                'out':'con'
+                    'iterations':-1,
+                    'repetitions':1,
+                    'record':'yes',
+                    'record_failed':'yes',
+                    'record_params':{
+                        'search_point_by_features':'yes'
+                    },
+                    'record_repo':record_repo,
+                    'record_uoa':record_uoa,
+                    'tags':['explore-clblast-matrix-size', kernel[0], model, size_tag,curr_pso_inf_g_tag, curr_pso_inf_l_tag, curr_pso_inf_r_tag],
+                    'pipeline': cpipeline,
+                    'out':'con'
     
-            }
-            r=ck.access(ii)
-            if DEBUG > 0: print("%s %s" %(DEBUG_STR, r))
-            if r['return']>0: return r
-            fail=r.get('fail','')
-            if fail=='yes':
-               return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
+                }
+                r=ck.access(ii)
+                if DEBUG > 0: print("%s %s" %(DEBUG_STR, r))
+                if r['return']>0: return r
+                fail=r.get('fail','')
+                if fail=='yes':
+                   return {'return':10, 'error':'pipeline failed ('+r.get('fail_reason','')+')'}
     
     return  {'return':0}
 
