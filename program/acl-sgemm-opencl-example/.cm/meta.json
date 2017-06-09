@@ -1,10 +1,9 @@
 {
   "backup_data_uid": "3ab3ec9613969aa1", 
   "build_compiler_vars": {
-    "MK": "9", 
-    "MM": "32", 
-    "MN": "30000", 
-    "XOPENME": ""
+    "MK": "1024", 
+    "MM": "1024", 
+    "MN": "1024"
   }, 
   "compile_deps": {
     "compiler": {
@@ -19,6 +18,15 @@
       "sort": 30, 
       "tags": "lib,arm-compute-lib"
     }, 
+    "opencl": {
+      "local": "yes",
+      "name": "OpenCL library",
+      "skip_installed": {
+        "android": "yes"
+      },
+      "sort": 20,
+      "tags": "lib,opencl"
+    },
     "xopenme": {
       "local": "yes", 
       "name": "xOpenME library", 
@@ -31,7 +39,7 @@
     "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA"
   ], 
   "compiler_env": "CK_CXX", 
-  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_CPP11>>$", 
+  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_CPP11>>$ -fpermissive", 
   "data_name": "acl-sgemm-opencl-example", 
   "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
   "linker_add_lib_as_env": [
@@ -65,7 +73,7 @@
     }
   }, 
   "run_vars": {
-    "CT_REPEAT_MAIN": "1"
+    "CT_REPEAT_MAIN": "100"
   }, 
   "source_files": [
     "sgemm.c"

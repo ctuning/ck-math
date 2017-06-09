@@ -2,11 +2,18 @@
 #include <xopenme.h>
 #endif
 
-#include <arm_compute/runtime/NEON/NEFunctions.h>
+//#include <arm_compute/runtime/NEON/NEFunctions.h>
+
+#define ARM_COMPUTE_CL /* So that OpenCL exceptions get caught too */
+#include "arm_compute/core/Types.h"
+#include "arm_compute/runtime/CL/CLFunctions.h"
+#include "arm_compute/runtime/CL/CLScheduler.h"
+#include "test_helpers/Utils.h"
+
+
 
 #include <arm_compute/core/Helpers.h>
 #include <arm_compute/core/ITensor.h>
-#include <arm_compute/core/Types.h>
 #include <arm_compute/core/Validate.h>
 #include <arm_compute/runtime/Tensor.h>
 
@@ -19,8 +26,15 @@
 #include <cerrno>
 #include <iomanip>
 #include <string>
-
+#include <sys/time.h> 
 using namespace arm_compute;
+using namespace test_helpers;
+# define MYTIMER1 double
+# define MYTIMER2 struct timeval
+static MYTIMER1 start;
+static MYTIMER2 before, after;
+static double secs;
+
 
 int main(void)
 {
@@ -28,45 +42,48 @@ int main(void)
   long ct_repeat_max=1;
   int ct_return=0;
 
-  unsigned int m=MM;
-  unsigned int n=MN;
-  unsigned int k=MK;
+  const unsigned int m=MM;
+  const unsigned int n=MN;
+  const unsigned int k=MK;
 
-  TensorShape AShape(k,m);
-  TensorShape BShape(n,k);
+  const TensorShape AShape(k,m);
+  const TensorShape BShape(n,k);
   TensorShape OShape(n,m);
 
-  Tensor ATensor;
-  Tensor BTensor;
-  Tensor OTensor;
+  CLTensor ATensor;
+  CLTensor BTensor;
+  CLTensor OTensor;
+  CLScheduler::get().default_init();
 
   ATensor.allocator()->init(TensorInfo(AShape,Format::F32));
   BTensor.allocator()->init(TensorInfo(BShape,Format::F32));
   OTensor.allocator()->init(TensorInfo(OShape,Format::F32));
+ 
+  CLGEMM gemm;
+  gemm.configure(&ATensor, &BTensor, NULL, &OTensor, 1.0f, 0.0f);
+//  gemm.configure(A, B, NULL, O, 1.0, 0.0);
 
-  NEGEMM gemm;
 
-  gemm.configure(&ATensor,&BTensor,nullptr,&OTensor,1.0,0.0);
 
+  //gemm.configure(&A,&B,NULL,&O,1.0,1.0);
   ATensor.allocator()->allocate();
   BTensor.allocator()->allocate();
   OTensor.allocator()->allocate();
-
+  CLScheduler::get().default_init();
   if (getenv("CT_REPEAT_MAIN")!=NULL) ct_repeat_max=atol(getenv("CT_REPEAT_MAIN"));
-
-#ifdef XOPENME
-  xopenme_init(1,2);
-  xopenme_clock_start(0);
-#endif
-
-  for (ct_repeat=0; ct_repeat<ct_repeat_max; ct_repeat++)
+  gettimeofday(&before, NULL);
+  for (ct_repeat=0; ct_repeat<ct_repeat_max; ct_repeat++){
     gemm.run();
+    CLScheduler::get().sync();
+  }
+  gettimeofday(&after, NULL);
+  secs= (after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0;
+  double avg_time = secs / ct_repeat_max;
+  double ops=m*n*k*2/avg_time;
+  double gops= ops/(1000000000);
+  printf("Matrix Size = %u * %u * %u avg time = %lf over %lu repetions\n", m,n,k,avg_time, ct_repeat_max);
+  printf("GFLOPS = %lf\n", gops);
 
-#ifdef XOPENME
-  xopenme_clock_end(0);
-  xopenme_dump_state();
-  xopenme_finish();
-#endif
 
   return 0;
 }
