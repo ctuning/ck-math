@@ -73,7 +73,7 @@
     }
   }, 
   "run_vars": {
-    "CT_REPEAT_MAIN": "100"
+    "RUNS": "10"
   }, 
   "source_files": [
     "sgemm.c"

@@ -29,17 +29,15 @@
 #include <sys/time.h> 
 using namespace arm_compute;
 using namespace test_helpers;
-# define MYTIMER1 double
 # define MYTIMER2 struct timeval
-static MYTIMER1 start;
 static MYTIMER2 before, after;
 static double secs;
 
 
 int main(void)
 {
-  long ct_repeat=0;
-  long ct_repeat_max=1;
+  long r=0;
+  long runs_max=10;
   int ct_return=0;
 
   const unsigned int m=MM;
@@ -70,18 +68,20 @@ int main(void)
   BTensor.allocator()->allocate();
   OTensor.allocator()->allocate();
   CLScheduler::get().default_init();
-  if (getenv("CT_REPEAT_MAIN")!=NULL) ct_repeat_max=atol(getenv("CT_REPEAT_MAIN"));
-  gettimeofday(&before, NULL);
-  for (ct_repeat=0; ct_repeat<ct_repeat_max; ct_repeat++){
+
+  if (getenv("RUNS")!=NULL) runs_max=atol(getenv("RUNS"));
+  for (r=0; r< runs_max; r++){
+    gettimeofday(&before, NULL); 
     gemm.run();
     CLScheduler::get().sync();
+    gettimeofday(&after, NULL);
+    secs += (after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0;
+
   }
-  gettimeofday(&after, NULL);
-  secs= (after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0;
-  double avg_time = secs / ct_repeat_max;
+  double avg_time = secs / runs_max;
   double ops=m*n*k*2/avg_time;
   double gops= ops/(1000000000);
-  printf("Matrix Size = %u * %u * %u avg time = %lf over %lu repetions\n", m,n,k,avg_time, ct_repeat_max);
+  printf("Matrix Size = %u * %u * %u avg time = %lf over %lu repetions\n", m,n,k,avg_time, runs_max);
   printf("GFLOPS = %lf\n", gops);
 
 
