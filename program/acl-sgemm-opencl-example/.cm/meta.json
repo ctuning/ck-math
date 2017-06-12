@@ -48,8 +48,8 @@
   ], 
   "main_language": "cpp", 
   "print_files_after_run": [
-    "tmp-output1.tmp", 
-    "tmp-output2.tmp"
+    "stdout.log", 
+    "stderr.log"
   ], 
   "process_in_tmp": "yes", 
   "program": "yes", 
@@ -57,23 +57,26 @@
     "default": {
       "ignore_return_code": "no", 
       "run_time": {
-        "fine_grain_timer_file": "tmp-ck-timer.json", 
-        "run_cmd_main": "$#BIN_FILE#$ $#dataset_path#$$#dataset_filename#$ tmp-output.tmp -c", 
-        "run_cmd_out1": "tmp-output1.tmp", 
-        "run_cmd_out2": "tmp-output2.tmp", 
-        "run_correctness_output_files": [
-          "tmp-output1.tmp", 
-          "tmp-output2.tmp"
-        ], 
+        "fine_grain_timer_file": "tmp-ck-acl-sgemm-client.json", 
+        "need_compute_device": "opencl",
+        "post_process_cmds":[
+          "python $#src_path_local#$ck_postprocess.py"
+        ],
+        "post_process_via_ck": "yes", 
+        "run_cmd_main": "$#BIN_FILE#$ ", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
         "run_output_files": [
-          "tmp-output1.tmp", 
-          "tmp-ck-timer.json"
+          "tmp-output.json" 
         ]
       }
     }
   }, 
   "run_vars": {
-    "RUNS": "10"
+    "CK_CLBLAST_ITERATIONS":5,
+    "CK_CLBLAST_MSIZE": 512,
+    "CK_CLBLAST_NSIZE": 1024,
+    "CK_CLBLAST_KSIZE": 256
   }, 
   "source_files": [
     "sgemm.c"

@@ -34,15 +34,27 @@ static MYTIMER2 before, after;
 static double secs;
 
 
-int main(void)
+
+
+
+int main( int argc, char *argv[] )
 {
+
   long r=0;
   long runs_max=10;
   int ct_return=0;
 
-  const unsigned int m=MM;
-  const unsigned int n=MN;
-  const unsigned int k=MK;
+// MM MN and MK come from compiler options... se .cm/meta
+
+  unsigned int m=MM;
+  unsigned int n=MN;
+  unsigned int k=MK;
+  if (getenv("CK_CLBLAST_MSIZE")!=NULL)  m=atol(getenv("CK_CLBLAST_MSIZE"));
+  if (getenv("CK_CLBLAST_NSIZE")!=NULL)  n=atol(getenv("CK_CLBLAST_NSIZE"));
+  if (getenv("CK_CLBLAST_KSIZE")!=NULL)  k=atol(getenv("CK_CLBLAST_KSIZE"));
+  if (getenv("CK_CLBLAST_ITERATIONS")!=NULL)  runs_max=atol(getenv("CK_CLBLAST_ITERATIONS"));
+
+  
 
   const TensorShape AShape(k,m);
   const TensorShape BShape(n,k);
@@ -58,7 +70,7 @@ int main(void)
   OTensor.allocator()->init(TensorInfo(OShape,Format::F32));
  
   CLGEMM gemm;
-  gemm.configure(&ATensor, &BTensor, NULL, &OTensor, 1.0f, 0.0f);
+  gemm.configure(&ATensor, &BTensor, NULL, &OTensor, 1.0f, 1.0f);
 //  gemm.configure(A, B, NULL, O, 1.0, 0.0);
 
 
@@ -69,7 +81,7 @@ int main(void)
   OTensor.allocator()->allocate();
   CLScheduler::get().default_init();
 
-  if (getenv("RUNS")!=NULL) runs_max=atol(getenv("RUNS"));
+//  if (getenv("RUNS")!=NULL) runs_max=atol(getenv("RUNS"));
   for (r=0; r< runs_max; r++){
     gettimeofday(&before, NULL); 
     gemm.run();
@@ -81,9 +93,10 @@ int main(void)
   double avg_time = secs / runs_max;
   double ops=m*n*k*2/avg_time;
   double gops= ops/(1000000000);
-  printf("Matrix Size = %u * %u * %u avg time = %lf over %lu repetions\n", m,n,k,avg_time, runs_max);
+  printf("M = %u\nN = %u\nK = %u\n",m,n,k);
+  printf("AVG = %lf\nREPETIOTIONS = %lu\n",avg_time, runs_max);
   printf("GFLOPS = %lf\n", gops);
-
+  printf("STATUS = %d\n", 0);
 
   return 0;
 }
