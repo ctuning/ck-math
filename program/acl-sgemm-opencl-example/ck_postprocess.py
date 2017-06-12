@@ -32,6 +32,8 @@ def ck_postprocess(i):
            d[ld[0]] = ld[1]
 
 
+    d["post_processed"] = 'yes'
+    d["processed_gflops"]=d['GFLOPS']
     if 'GFLOPS' in d:
        check = 0
     r['return'] = check or d['STATUS']

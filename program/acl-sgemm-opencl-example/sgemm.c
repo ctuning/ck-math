@@ -98,5 +98,11 @@ int main( int argc, char *argv[] )
   printf("GFLOPS = %lf\n", gops);
   printf("STATUS = %d\n", 0);
 
+  printf("------------- CLBLAST-STYLE_OUTPUT\n");
+  printf("m = %u\nn = %u\nk = %u\n",m,n,k);
+  printf("ms_1 = %lf\n",avg_time*1000);
+  printf("GFLOPS_1 = %lf\n", gops);
+  
+
   return 0;
 }
