@@ -84,7 +84,8 @@
   "tags": [
     "demo", 
     "program", 
-    "arm-compute-lib", 
+    "arm-compute-lib",
+    "opencl", 
     "sgemm"
   ], 
   "target_file": "a"

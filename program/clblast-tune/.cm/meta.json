@@ -192,6 +192,7 @@
   "tags": [
     "clblast",
     "cltune",
+    "opencl",
     "sgemm"
   ]
 }
