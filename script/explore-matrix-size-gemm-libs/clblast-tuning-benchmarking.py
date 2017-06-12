@@ -237,7 +237,7 @@ def do(i, arg):
             },
             'record_repo':record_repo,
             'record_uoa':record_uoa,
-            'tags':['explore-matrix-size-libs-sgmem', p['data_uoa']],
+            'tags':['explore-matrix-size-libs-sgemm', p['data_uoa']],
             'pipeline': cpipeline,
             'out':'con'
 
