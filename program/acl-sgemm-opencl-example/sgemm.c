@@ -70,7 +70,7 @@ int main( int argc, char *argv[] )
   OTensor.allocator()->init(TensorInfo(OShape,Format::F32));
  
   CLGEMM gemm;
-  gemm.configure(&ATensor, &BTensor, NULL, &OTensor, 1.0f, 1.0f);
+  gemm.configure(&ATensor, &BTensor, NULL, &OTensor, 2.0f, 2.0f);
 //  gemm.configure(A, B, NULL, O, 1.0, 0.0);
 
 
@@ -87,6 +87,7 @@ int main( int argc, char *argv[] )
     gemm.run();
     CLScheduler::get().sync();
     gettimeofday(&after, NULL);
+    printf("ROUND %d = %lf\n",r, ((after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0));
     secs += (after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0;
 
   }
@@ -94,7 +95,7 @@ int main( int argc, char *argv[] )
   double ops=m*n*k*2/avg_time;
   double gops= ops/(1000000000);
   printf("M = %u\nN = %u\nK = %u\n",m,n,k);
-  printf("AVG = %lf\nREPETIOTIONS = %lu\n",avg_time, runs_max);
+  printf("AVG = %lf\nREPETITIONS = %lu\n",avg_time, runs_max);
   printf("GFLOPS = %lf\n", gops);
   printf("STATUS = %d\n", 0);
 

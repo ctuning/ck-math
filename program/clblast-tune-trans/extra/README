@@ -1,0 +1,45 @@
+# INSTALLATION: 
+
+1) Install the clblast-master-universal-tune
+ - ck install package:clblast-master-universal-tune
+
+2) Modify the meta.json in ${CK_REPOS}/ck-math/package/clblast-master-universal-tune/.cm/ 	"PACKAGE_GIT" : "YES" -> "PACKAGE_GIT" : "NO"
+      "PACKAGE_PATCH": "YES" -> "PACKAGE_PATCH" : :"NO" 
+
+3) Copy the following files in 
+CLBLAST_INST_PATH=${CK_TOOLS}/lib-clblast-tune-master*/src/src
+
+	i) Copy tuning.hpp in ${CLBLAST_INST_PATH}/tuning
+	ii) Copy xgemm.cpp in ${CLBLAST_INST_PATH}/tuning/kernels/
+	iii) Copy utilities.* in ${CLBLAST_INST_PATH}/utilities/
+
+4) Install again the library 
+ - ck install package:clblast-master-universal-tune
+
+
+
+#PARAMETERS EXPLANATION:
+
+CK_SEARCH_STRATEGY (option --strategy): 
+ - 0 EXAUSTIVE_SEARCH
+ - 1 RANDOM_SEARCH
+ - 2 PSO_SEARCH
+ - 3 DVDT_SEARCH (not implemented yet)
+
+CK_TUNER_NUM_OF_STRATEGIES:
+ - 1 : run only the strategy selected in CK_SEARCH_STRATEGY
+ - 2 : run the EXAUSTIVE_SEARCH and the strategy selected in CK_SEARCH_STRATEGY
+
+CK_PSO_INF_G (option --psoInfG) : 
+ - Define the GLOBAL influence
+
+CK_PSO_INF_L (option --psoInfL) :
+ - Define the LOCAL influence
+
+CK_PSO_INF_R (option --psoInfR) :
+ - Define the RANDOM influence 
+
+CK_PSO_SWARM_SIZE (option --psoSwarmSize) :
+- Define the PSO population size
+
+

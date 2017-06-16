@@ -1,0 +1,145 @@
+{
+  "backup_data_uid": "cb780bb2eda93e54", 
+  "compiler_add_include_as_env_from_deps": [
+    "CK_ENV_LIB_STDCPP_INCLUDE", 
+    "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA", 
+    "CK_ENV_LIB_STDCPP_DYNAMIC"
+  ], 
+  "data_name": "clblast-tune-trans", 
+  "extra_ld_vars": "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$ $<<CK_ENV_LIB_STDCPP_STATIC>>$", 
+  "force_copy_input_files_to_remote": "yes", 
+  "no_compile": "yes", 
+  "no_target_file": "yes", 
+  "only_for_target_os_tags": [
+    "linux", 
+    "windows", 
+    "android"
+  ], 
+  "print_files_after_run": [
+    "stdout.log", 
+    "stderr.log"
+  ], 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-clblast-client.json", 
+        "need_compute_device": "opencl", 
+        "post_process_cmds": [
+          "python $#src_path_local#$ck_postprocess.py"
+        ], 
+        "post_process_via_ck": "yes", 
+        "pre_process_cmds": [], 
+        "pre_process_via_ck": {
+          "script_name": "ck_preprocess"
+        }, 
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_client_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -cblas 0 -clblas 0 -warm_up", 
+        "run_cmd_main_remote": "chmod 755 ./clblast_client_xgemm ; ./clblast_client_xgemm -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -cblas 0 -clblas 0 -warm_up", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_client_xgemm", 
+          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+        ]
+      }
+    }, 
+    "trans-fast": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-clblast-tune.json", 
+        "need_compute_device": "opencl", 
+        "post_process_cmds": [
+          "python $#src_path_local#$postprocess_time.py"
+        ], 
+        "post_process_via_ck": "yes", 
+        "pre_process_cmds": [], 
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_transpose_fast -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -precision 32", 
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_transpose_fast; ./clblast_tuner_transpose_fast -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$  -precision 32", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm", 
+          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+        ], 
+        "run_output_files": [
+          "clblast_transponse_32.json"
+        ]
+      }
+    }, 
+    "trans-pad": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-clblast-tune.json", 
+        "need_compute_device": "opencl", 
+        "post_process_cmds": [
+          "python $#src_path_local#$postprocess_time.py"
+        ], 
+        "post_process_via_ck": "yes", 
+        "pre_process_cmds": [], 
+        "run_cmd_main": "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_transpose_pad -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -precision 32", 
+        "run_cmd_main_remote": "chmod 755 ./clblast_tuner_xgemm; ./clblast_tuner__tuner_transpose_pad -platform $<<CK_COMPUTE_PLATFORM_ID>>$ -device $<<CK_COMPUTE_DEVICE_ID>>$ -runs $<<CK_CLBLAST_ITERATIONS>>$ -m $<<CK_CLBLAST_MSIZE>>$ -n $<<CK_CLBLAST_NSIZE>>$ -k $<<CK_CLBLAST_KSIZE>>$ -precision 32", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_input_files": [
+          "$<<CK_ENV_LIB_CLBLAST>>$/bin/clblast_tuner_xgemm", 
+          "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$"
+        ], 
+        "run_output_files": [
+          "clblast_padtransponse_1_32.json", 
+          "clblast_padtransponse_2_32.json"
+        ]
+      }
+    } 
+  }, 
+  "run_deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C++ compiler", 
+      "sort": 0, 
+      "tags": "compiler,lang-cpp"
+    }, 
+    "lib-clblast": {
+      "local": "yes", 
+      "name": "CLBlast library", 
+      "sort": 10, 
+      "tags": "lib,clblast-tune"
+    }, 
+    "opencl": {
+      "local": "yes", 
+      "name": "OpenCL library", 
+      "sort": 20, 
+      "tags": "lib,opencl"
+    }, 
+    "tool-cltune": {
+      "local": "yes", 
+      "name": "CLTune tool", 
+      "sort": 40, 
+      "tags": "tool,cltune"
+    }
+  }, 
+  "run_vars": {
+    "CK_CLBLAST_BEST_CONF_FILE": "tmp-ck-clblast-tune.json", 
+    "CK_CLBLAST_FRAC": 256, 
+    "CK_CLBLAST_ITERATIONS": 1, 
+    "CK_CLBLAST_KSIZE": 1024, 
+    "CK_CLBLAST_MSIZE": 1024, 
+    "CK_CLBLAST_NSIZE": 1024, 
+    "CK_COMPUTE_DEVICE_ID": 0, 
+    "CK_COMPUTE_PLATFORM_ID": 0, 
+    "CK_FORCE_RECOMPILE": 0, 
+    "CK_PSO_INF_G": 0.2, 
+    "CK_PSO_INF_L": 0.3, 
+    "CK_PSO_INF_R": 0.5, 
+    "CK_PSO_SWARM_SIZE": 32, 
+    "CK_SEARCH_STRATEGY": 0, 
+    "CK_TUNER_NUM_OF_STRATEGIES": 1
+  }, 
+  "tags": [
+    "clblast", 
+    "cltune", 
+    "opencl", 
+    "transposition"
+  ]
+}
