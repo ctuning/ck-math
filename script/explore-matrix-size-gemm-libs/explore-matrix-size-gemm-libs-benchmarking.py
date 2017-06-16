@@ -45,13 +45,15 @@ kernel = [ 'default' ]
 title = 'CLBlast tuning'
 model = 'something'
 # Matrix sizes: C[mxn] = A[mxk] * B[kxn].
-#size_m = [ '512', '256',  '128']
-#size_n = [ '256', '512',  '128']
-#size_k = [ '128', '256', '1024']
+# Real googlenet sizes
+size_m = [ '192', '192',  '64', '320', '128']
+size_n = [ '3136', '800',  '12544', '224','800']
+size_k = [ '576', '1152', '160', '1440', '864']
 
-size_m = [ '1024', '64',  '256', '128', '256', '128', '128', '128', '128', '128', '256', '128']
-size_n = [ '256', '4096',  '256', '1024', '256', '1024', '4096', '256', '512', '128', '128', '2048']
-size_k = [ '512', '128', '512', '256', '1024', '1024', '512', '512', '1024', '2048', '2048', '256'] 
+# Bucket sizes of : alexnet, googlenet, and squeezenet-1.1 (unordered list)
+#size_m = [ '1024', '64',  '256', '128', '256', '128', '128', '128', '128', '128', '256', '128']
+#size_n = [ '256', '4096',  '256', '1024', '256', '1024', '4096', '256', '512', '128', '128', '2048']
+#size_k = [ '512', '128', '512', '256', '1024', '1024', '512', '512', '1024', '2048', '2048', '256'] 
 
 precision = 32 # default
 run = 1 # default
@@ -110,8 +112,10 @@ def do(i, arg):
 
     if DEBUG: print("%s %s %s" %(DEBUG_STR, hos, hosd))
     if DEBUG: print("%s %s %s %s" %( DEBUG_STR, tos, tosd, tdid))
-   
+    
+    #PROGRAM TAGS 
     program_tags='sgemm,opencl' 
+    
     # Search program on tags 
     ii={'action':'search',
         'module_uoa':'program',
@@ -135,34 +139,13 @@ def do(i, arg):
         # Get compile-time and run-time deps.
         cdeps=meta.get('compile_deps',{})
         rdeps=meta.get('run_deps',{})
-
+        print(cdeps)
         # Merge rdeps with cdeps for setting up the pipeline (which uses
         # common deps), but tag them as "for_run_time".
         for k in rdeps:
             cdeps[k]=rdeps[k]
             cdeps[k]['for_run_time']='yes'
         # CLblast libs.
-       # depl=copy.deepcopy(cdeps['lib-clblast'])
-       # #ON LOCAL MACHINE
-       # if ((arg.tos is not None) and (arg.did is not None) ):
-       #    tos=arg.tos
-       #    tdid=arg.did
-
-       # ii={'action':'resolve',
-       # 'module_uoa':'env',
-       # 'host_os':hos,
-       # 'target_os':tos,
-       # 'device_id':tdid,
-       # 'out':'con',
-       # 'deps':{'lib-clblast':copy.deepcopy(depl)}
-       # }
-       # r=ck.access(ii)
-       # if r['return']>0: return r
-       # udepl=r['deps']['lib-clblast'].get('choices',[])
-       # if len(udepl)==0: return {'return':1, 'error':'no installed CLBlast libs'}
-    
-    for p in programs_list:     
-        #prepare pipeline
 	cmd=""
         if 'clblast' in p['data_uoa'] :
 	   cmd=kernel[0]
@@ -176,6 +159,7 @@ def do(i, arg):
 	    'cmd_key':cmd,
             "target_os":tos,
             "device_id":tdid,
+            'dvdt_prof':'yes',
             "out":'con',
             "no_state_check":"yes",
             'flags':'-O3',
@@ -199,7 +183,7 @@ def do(i, arg):
 
 
         record_repo='local'
-        record_uoa='explore-matrix-size-gemm-libs-'+p['data_uoa']
+        record_uoa='explore-matrix-size-gemm-libs-'+p['data_uoa'] 
         ck.out('---------------------------------------------------------------------------------------')
         ck.out('Experiment - %s:%s' % (record_repo, record_uoa))
 
@@ -237,7 +221,7 @@ def do(i, arg):
             },
             'record_repo':record_repo,
             'record_uoa':record_uoa,
-            'tags':['explore-matrix-size-libs-sgemm', p['data_uoa']],
+            'tags':['dvdt-prof', 'explore-matrix-size-libs-sgemm', p['data_uoa']],
             'pipeline': cpipeline,
             'out':'con'
 
