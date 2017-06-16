@@ -207,7 +207,7 @@ def do(i, arg):
         },
         'record_repo':record_repo,
         'record_uoa':record_uoa,
-        'tags':['explore-matrix-size-acl', 'acl-sgemm-opencl', size_tag, platform_id],
+        'tags':[, 'acl-sgemm-opencl', size_tag, platform_id],
         'pipeline': cpipeline,
         'out':'con'
 
