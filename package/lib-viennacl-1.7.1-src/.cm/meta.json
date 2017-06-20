@@ -19,7 +19,7 @@
   "soft_uoa": "f41d49bd23afa84b",
   "suggested_path": "lib-viennacl",
   "tags": [
-    "src",
+    "vsrc",
     "lib",
     "blas",
     "opencl-blas",
