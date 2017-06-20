@@ -3,7 +3,7 @@ index 11b03fa..1eb81b0 100644
 --- a/src/database/kernel_selection.hpp
 +++ b/src/database/kernel_selection.hpp
 @@ -52,6 +52,11 @@ const Database::DatabaseEntry KernelSelectionSingle = {
-         { "default",                                         { {"XGEMM_MIN_INDIRECT_SIZE",768*768*768} } },
+         { "default",                                         { {"XGEMM_MIN_INDIRECT_SIZE",1280*1280*1280} } },
        }
      },
 +    { // ARM GPUs
