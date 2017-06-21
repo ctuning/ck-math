@@ -1,0 +1,441 @@
+diff --git a/src/database/kernels/copy.hpp b/src/database/kernels/copy.hpp
+index 8963c9e..bb8f1ed 100644
+--- a/src/database/kernels/copy.hpp
++++ b/src/database/kernels/copy.hpp
+@@ -63,6 +63,12 @@ const Database::DatabaseEntry CopySingle = {
+         { "default",                                         { {"COPY_DIMX",32}, {"COPY_DIMY",8}, {"COPY_VW",2}, {"COPY_WPT",4} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"COPY_DIMX",8}, {"COPY_DIMY",32}, {"COPY_VW",8}, {"COPY_WPT",4} } },
++        { "default",                                         { {"COPY_DIMX",8}, {"COPY_DIMY",32}, {"COPY_VW",8}, {"COPY_WPT",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"COPY_DIMX",32}, {"COPY_DIMY",16}, {"COPY_VW",8}, {"COPY_WPT",1} } },
+@@ -140,6 +146,12 @@ const Database::DatabaseEntry CopyComplexSingle = {
+         { "default",                                         { {"COPY_DIMX",16}, {"COPY_DIMY",8}, {"COPY_VW",1}, {"COPY_WPT",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"COPY_DIMX",16}, {"COPY_DIMY",8}, {"COPY_VW",2}, {"COPY_WPT",4} } },
++        { "default",                                         { {"COPY_DIMX",16}, {"COPY_DIMY",8}, {"COPY_VW",2}, {"COPY_WPT",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"COPY_DIMX",32}, {"COPY_DIMY",16}, {"COPY_VW",4}, {"COPY_WPT",2} } },
+diff --git a/src/database/kernels/pad.hpp b/src/database/kernels/pad.hpp
+index 5606d80..c43ff66 100644
+--- a/src/database/kernels/pad.hpp
++++ b/src/database/kernels/pad.hpp
+@@ -63,6 +63,12 @@ const Database::DatabaseEntry PadSingle = {
+         { "default",                                         { {"PAD_DIMX",32}, {"PAD_DIMY",8}, {"PAD_WPTX",1}, {"PAD_WPTY",4} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"PAD_DIMX",32}, {"PAD_DIMY",16}, {"PAD_WPTX",1}, {"PAD_WPTY",2} } },
++        { "default",                                         { {"PAD_DIMX",32}, {"PAD_DIMY",16}, {"PAD_WPTX",1}, {"PAD_WPTY",2} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"PAD_DIMX",32}, {"PAD_DIMY",32}, {"PAD_WPTX",4}, {"PAD_WPTY",4} } },
+@@ -146,6 +152,12 @@ const Database::DatabaseEntry PadComplexSingle = {
+         { "default",                                         { {"PAD_DIMX",32}, {"PAD_DIMY",8}, {"PAD_WPTX",1}, {"PAD_WPTY",4} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"PAD_DIMX",32}, {"PAD_DIMY",8}, {"PAD_WPTX",2}, {"PAD_WPTY",4} } },
++        { "default",                                         { {"PAD_DIMX",32}, {"PAD_DIMY",8}, {"PAD_WPTX",2}, {"PAD_WPTY",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"PAD_DIMX",32}, {"PAD_DIMY",8}, {"PAD_WPTX",4}, {"PAD_WPTY",2} } },
+diff --git a/src/database/kernels/padtranspose.hpp b/src/database/kernels/padtranspose.hpp
+index a595355..b50d839 100644
+--- a/src/database/kernels/padtranspose.hpp
++++ b/src/database/kernels/padtranspose.hpp
+@@ -63,6 +63,12 @@ const Database::DatabaseEntry PadtransposeSingle = {
+         { "default",                                         { {"PADTRA_PAD",0}, {"PADTRA_TILE",8}, {"PADTRA_WPT",2} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"PADTRA_PAD",1}, {"PADTRA_TILE",8}, {"PADTRA_WPT",2} } },
++        { "default",                                         { {"PADTRA_PAD",1}, {"PADTRA_TILE",8}, {"PADTRA_WPT",2} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"PADTRA_PAD",0}, {"PADTRA_TILE",8}, {"PADTRA_WPT",8} } },
+@@ -114,7 +120,7 @@ const Database::DatabaseEntry PadtransposeSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"PADTRA_PAD",1}, {"PADTRA_TILE",16}, {"PADTRA_WPT",2} } },
++        { "default",                                         { {"PADTRA_PAD",1}, {"PADTRA_TILE",16}, {"PADTRA_WPT",1} } },
+       }
+     },
+   }
+@@ -145,6 +151,12 @@ const Database::DatabaseEntry PadtransposeComplexSingle = {
+         { "default",                                         { {"PADTRA_PAD",1}, {"PADTRA_TILE",16}, {"PADTRA_WPT",2} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"PADTRA_PAD",1}, {"PADTRA_TILE",16}, {"PADTRA_WPT",1} } },
++        { "default",                                         { {"PADTRA_PAD",1}, {"PADTRA_TILE",16}, {"PADTRA_WPT",1} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"PADTRA_PAD",0}, {"PADTRA_TILE",8}, {"PADTRA_WPT",8} } },
+@@ -196,7 +208,7 @@ const Database::DatabaseEntry PadtransposeComplexSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"PADTRA_PAD",1}, {"PADTRA_TILE",16}, {"PADTRA_WPT",2} } },
++        { "default",                                         { {"PADTRA_PAD",1}, {"PADTRA_TILE",8}, {"PADTRA_WPT",2} } },
+       }
+     },
+   }
+diff --git a/src/database/kernels/transpose.hpp b/src/database/kernels/transpose.hpp
+index 7b9c3c6..53d085e 100644
+--- a/src/database/kernels/transpose.hpp
++++ b/src/database/kernels/transpose.hpp
+@@ -63,6 +63,12 @@ const Database::DatabaseEntry TransposeSingle = {
+         { "default",                                         { {"TRA_DIM",8}, {"TRA_PAD",0}, {"TRA_SHUFFLE",1}, {"TRA_WPT",4} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"TRA_DIM",4}, {"TRA_PAD",1}, {"TRA_SHUFFLE",0}, {"TRA_WPT",4} } },
++        { "default",                                         { {"TRA_DIM",4}, {"TRA_PAD",1}, {"TRA_SHUFFLE",0}, {"TRA_WPT",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"TRA_DIM",4}, {"TRA_PAD",1}, {"TRA_SHUFFLE",0}, {"TRA_WPT",16} } },
+@@ -115,7 +121,7 @@ const Database::DatabaseEntry TransposeSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"TRA_DIM",8}, {"TRA_PAD",0}, {"TRA_SHUFFLE",1}, {"TRA_WPT",4} } },
++        { "default",                                         { {"TRA_DIM",4}, {"TRA_PAD",0}, {"TRA_SHUFFLE",1}, {"TRA_WPT",4} } },
+       }
+     },
+   }
+@@ -146,6 +152,12 @@ const Database::DatabaseEntry TransposeComplexSingle = {
+         { "default",                                         { {"TRA_DIM",16}, {"TRA_PAD",0}, {"TRA_SHUFFLE",0}, {"TRA_WPT",2} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"TRA_DIM",16}, {"TRA_PAD",1}, {"TRA_SHUFFLE",0}, {"TRA_WPT",1} } },
++        { "default",                                         { {"TRA_DIM",16}, {"TRA_PAD",1}, {"TRA_SHUFFLE",0}, {"TRA_WPT",1} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"TRA_DIM",4}, {"TRA_PAD",0}, {"TRA_SHUFFLE",1}, {"TRA_WPT",8} } },
+@@ -191,7 +203,7 @@ const Database::DatabaseEntry TransposeComplexSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"TRA_DIM",8}, {"TRA_PAD",1}, {"TRA_SHUFFLE",1}, {"TRA_WPT",2} } },
++        { "default",                                         { {"TRA_DIM",16}, {"TRA_PAD",1}, {"TRA_SHUFFLE",1}, {"TRA_WPT",1} } },
+       }
+     },
+   }
+diff --git a/src/database/kernels/xaxpy.hpp b/src/database/kernels/xaxpy.hpp
+index c9da40e..64aef82 100644
+--- a/src/database/kernels/xaxpy.hpp
++++ b/src/database/kernels/xaxpy.hpp
+@@ -63,6 +63,12 @@ const Database::DatabaseEntry XaxpySingle = {
+         { "default",                                         { {"VW",4}, {"WGS",256}, {"WPT",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"VW",4}, {"WGS",256}, {"WPT",2} } },
++        { "default",                                         { {"VW",4}, {"WGS",256}, {"WPT",2} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"VW",8}, {"WGS",512}, {"WPT",1} } },
+@@ -146,6 +152,12 @@ const Database::DatabaseEntry XaxpyComplexSingle = {
+         { "default",                                         { {"VW",1}, {"WGS",256}, {"WPT",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"VW",2}, {"WGS",256}, {"WPT",4} } },
++        { "default",                                         { {"VW",2}, {"WGS",256}, {"WPT",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"VW",4}, {"WGS",1024}, {"WPT",1} } },
+diff --git a/src/database/kernels/xdot.hpp b/src/database/kernels/xdot.hpp
+index d8cc716..7ded4cc 100644
+--- a/src/database/kernels/xdot.hpp
++++ b/src/database/kernels/xdot.hpp
+@@ -56,6 +56,12 @@ const Database::DatabaseEntry XdotSingle = {
+         { "default",                                         { {"WGS1",256}, {"WGS2",32} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"WGS1",64}, {"WGS2",32} } },
++        { "default",                                         { {"WGS1",64}, {"WGS2",32} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"WGS1",32}, {"WGS2",32} } },
+@@ -121,6 +127,12 @@ const Database::DatabaseEntry XdotComplexSingle = {
+         { "default",                                         { {"WGS1",256}, {"WGS2",32} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"WGS1",64}, {"WGS2",32} } },
++        { "default",                                         { {"WGS1",64}, {"WGS2",32} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"WGS1",128}, {"WGS2",64} } },
+diff --git a/src/database/kernels/xgemm.hpp b/src/database/kernels/xgemm.hpp
+index dd7c386..57aa661 100644
+--- a/src/database/kernels/xgemm.hpp
++++ b/src/database/kernels/xgemm.hpp
+@@ -62,6 +62,12 @@ const Database::DatabaseEntry XgemmSingle = {
+         { "default",                                         { {"KWG",16}, {"KWI",2}, {"MDIMA",8}, {"MDIMC",8}, {"MWG",64}, {"NDIMB",8}, {"NDIMC",16}, {"NWG",16}, {"SA",0}, {"SB",0}, {"STRM",1}, {"STRN",1}, {"VWM",8}, {"VWN",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"KWG",16}, {"KWI",2}, {"MDIMA",16}, {"MDIMC",16}, {"MWG",128}, {"NDIMB",16}, {"NDIMC",8}, {"NWG",32}, {"SA",0}, {"SB",1}, {"STRM",0}, {"STRN",1}, {"VWM",4}, {"VWN",2} } },
++        { "default",                                         { {"KWG",16}, {"KWI",2}, {"MDIMA",16}, {"MDIMC",16}, {"MWG",128}, {"NDIMB",16}, {"NDIMC",8}, {"NWG",32}, {"SA",0}, {"SB",1}, {"STRM",0}, {"STRN",1}, {"VWM",4}, {"VWN",2} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"KWG",16}, {"KWI",2}, {"MDIMA",8}, {"MDIMC",8}, {"MWG",128}, {"NDIMB",16}, {"NDIMC",8}, {"NWG",128}, {"SA",0}, {"SB",1}, {"STRM",1}, {"STRN",1}, {"VWM",1}, {"VWN",8} } },
+@@ -114,7 +120,7 @@ const Database::DatabaseEntry XgemmSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"KWG",32}, {"KWI",2}, {"MDIMA",16}, {"MDIMC",16}, {"MWG",64}, {"NDIMB",8}, {"NDIMC",8}, {"NWG",64}, {"SA",1}, {"SB",1}, {"STRM",0}, {"STRN",0}, {"VWM",4}, {"VWN",4} } },
++        { "default",                                         { {"KWG",32}, {"KWI",2}, {"MDIMA",8}, {"MDIMC",8}, {"MWG",32}, {"NDIMB",8}, {"NDIMC",8}, {"NWG",32}, {"SA",1}, {"SB",1}, {"STRM",0}, {"STRN",0}, {"VWM",4}, {"VWN",4} } },
+       }
+     },
+   }
+@@ -145,6 +151,12 @@ const Database::DatabaseEntry XgemmComplexSingle = {
+         { "default",                                         { {"KWG",16}, {"KWI",2}, {"MDIMA",8}, {"MDIMC",16}, {"MWG",128}, {"NDIMB",16}, {"NDIMC",8}, {"NWG",128}, {"SA",0}, {"SB",0}, {"STRM",0}, {"STRN",1}, {"VWM",8}, {"VWN",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"KWG",32}, {"KWI",2}, {"MDIMA",8}, {"MDIMC",8}, {"MWG",64}, {"NDIMB",16}, {"NDIMC",16}, {"NWG",64}, {"SA",0}, {"SB",0}, {"STRM",0}, {"STRN",0}, {"VWM",4}, {"VWN",4} } },
++        { "default",                                         { {"KWG",32}, {"KWI",2}, {"MDIMA",8}, {"MDIMC",8}, {"MWG",64}, {"NDIMB",16}, {"NDIMC",16}, {"NWG",64}, {"SA",0}, {"SB",0}, {"STRM",0}, {"STRN",0}, {"VWM",4}, {"VWN",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"KWG",16}, {"KWI",2}, {"MDIMA",32}, {"MDIMC",8}, {"MWG",128}, {"NDIMB",16}, {"NDIMC",16}, {"NWG",128}, {"SA",1}, {"SB",1}, {"STRM",0}, {"STRN",1}, {"VWM",1}, {"VWN",2} } },
+@@ -196,7 +208,7 @@ const Database::DatabaseEntry XgemmComplexSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"KWG",32}, {"KWI",2}, {"MDIMA",16}, {"MDIMC",16}, {"MWG",32}, {"NDIMB",8}, {"NDIMC",8}, {"NWG",32}, {"SA",1}, {"SB",1}, {"STRM",0}, {"STRN",0}, {"VWM",2}, {"VWN",1} } },
++        { "default",                                         { {"KWG",32}, {"KWI",2}, {"MDIMA",8}, {"MDIMC",8}, {"MWG",32}, {"NDIMB",8}, {"NDIMC",8}, {"NWG",32}, {"SA",0}, {"SB",0}, {"STRM",0}, {"STRN",0}, {"VWM",4}, {"VWN",4} } },
+       }
+     },
+   }
+diff --git a/src/database/kernels/xgemm_direct.hpp b/src/database/kernels/xgemm_direct.hpp
+index f3e1bbe..878eba9 100644
+--- a/src/database/kernels/xgemm_direct.hpp
++++ b/src/database/kernels/xgemm_direct.hpp
+@@ -52,6 +52,12 @@ const Database::DatabaseEntry XgemmDirectSingle = {
+         { "default",                                         { {"KWID",2}, {"MDIMAD",16}, {"MDIMCD",16}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",1}, {"VWND",1}, {"WGD",16} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"KWID",8}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",2}, {"VWND",2}, {"WGD",16} } },
++        { "default",                                         { {"KWID",8}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",2}, {"VWND",2}, {"WGD",16} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"KWID",2}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",0}, {"PADB",0}, {"VWMD",1}, {"VWND",8}, {"WGD",64} } },
+@@ -79,7 +85,7 @@ const Database::DatabaseEntry XgemmDirectSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"KWID",2}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",4}, {"VWND",2}, {"WGD",32} } },
++        { "default",                                         { {"KWID",2}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",1}, {"VWND",2}, {"WGD",16} } },
+       }
+     },
+   }
+@@ -99,6 +105,12 @@ const Database::DatabaseEntry XgemmDirectComplexSingle = {
+         { "default",                                         { {"KWID",2}, {"MDIMAD",16}, {"MDIMCD",16}, {"NDIMBD",16}, {"NDIMCD",16}, {"PADA",1}, {"PADB",1}, {"VWMD",2}, {"VWND",2}, {"WGD",32} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"KWID",2}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",1}, {"VWND",1}, {"WGD",8} } },
++        { "default",                                         { {"KWID",2}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",1}, {"VWND",1}, {"WGD",8} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"KWID",2}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",0}, {"PADB",0}, {"VWMD",4}, {"VWND",4}, {"WGD",32} } },
+@@ -125,7 +137,7 @@ const Database::DatabaseEntry XgemmDirectComplexSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"KWID",2}, {"MDIMAD",32}, {"MDIMCD",32}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",1}, {"VWND",1}, {"WGD",32} } },
++        { "default",                                         { {"KWID",2}, {"MDIMAD",8}, {"MDIMCD",8}, {"NDIMBD",8}, {"NDIMCD",8}, {"PADA",1}, {"PADB",1}, {"VWMD",1}, {"VWND",1}, {"WGD",8} } },
+       }
+     },
+   }
+diff --git a/src/database/kernels/xgemv.hpp b/src/database/kernels/xgemv.hpp
+index ccb151a..5f73a9f 100644
+--- a/src/database/kernels/xgemv.hpp
++++ b/src/database/kernels/xgemv.hpp
+@@ -57,6 +57,12 @@ const Database::DatabaseEntry XgemvSingle = {
+         { "default",                                         { {"WGS1",128}, {"WPT1",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"WGS1",64}, {"WPT1",1} } },
++        { "default",                                         { {"WGS1",64}, {"WPT1",1} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"WGS1",128}, {"WPT1",4} } },
+@@ -133,6 +139,12 @@ const Database::DatabaseEntry XgemvComplexSingle = {
+         { "default",                                         { {"WGS1",64}, {"WPT1",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"WGS1",64}, {"WPT1",2} } },
++        { "default",                                         { {"WGS1",64}, {"WPT1",2} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"WGS1",32}, {"WPT1",4} } },
+diff --git a/src/database/kernels/xgemv_fast.hpp b/src/database/kernels/xgemv_fast.hpp
+index 37508e3..a08d0fe 100644
+--- a/src/database/kernels/xgemv_fast.hpp
++++ b/src/database/kernels/xgemv_fast.hpp
+@@ -57,6 +57,12 @@ const Database::DatabaseEntry XgemvFastSingle = {
+         { "default",                                         { {"VW2",1}, {"WGS2",64}, {"WPT2",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"VW2",2}, {"WGS2",32}, {"WPT2",2} } },
++        { "default",                                         { {"VW2",2}, {"WGS2",32}, {"WPT2",2} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"VW2",1}, {"WGS2",32}, {"WPT2",4} } },
+@@ -133,6 +139,12 @@ const Database::DatabaseEntry XgemvFastComplexSingle = {
+         { "default",                                         { {"VW2",1}, {"WGS2",64}, {"WPT2",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"VW2",2}, {"WGS2",16}, {"WPT2",2} } },
++        { "default",                                         { {"VW2",2}, {"WGS2",16}, {"WPT2",2} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"VW2",2}, {"WGS2",64}, {"WPT2",4} } },
+diff --git a/src/database/kernels/xgemv_fast_rot.hpp b/src/database/kernels/xgemv_fast_rot.hpp
+index 2bd46eb..cc84929 100644
+--- a/src/database/kernels/xgemv_fast_rot.hpp
++++ b/src/database/kernels/xgemv_fast_rot.hpp
+@@ -52,6 +52,12 @@ const Database::DatabaseEntry XgemvFastRotSingle = {
+         { "default",                                         { {"VW3",8}, {"WGS3",32}, {"WPT3",32} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"VW3",8}, {"WGS3",32}, {"WPT3",16} } },
++        { "default",                                         { {"VW3",8}, {"WGS3",32}, {"WPT3",16} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"VW3",4}, {"WGS3",32}, {"WPT3",32} } },
+@@ -84,7 +90,7 @@ const Database::DatabaseEntry XgemvFastRotSingle = {
+     },
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"VW3",8}, {"WGS3",32}, {"WPT3",32} } },
++        { "default",                                         { {"VW3",4}, {"WGS3",32}, {"WPT3",16} } },
+       }
+     },
+   }
+@@ -105,6 +111,12 @@ const Database::DatabaseEntry XgemvFastRotComplexSingle = {
+         { "default",                                         { {"VW3",8}, {"WGS3",16}, {"WPT3",16} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"VW3",8}, {"WGS3",16}, {"WPT3",16} } },
++        { "default",                                         { {"VW3",8}, {"WGS3",16}, {"WPT3",16} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"VW3",4}, {"WGS3",32}, {"WPT3",32} } },
+diff --git a/src/database/kernels/xger.hpp b/src/database/kernels/xger.hpp
+index 9d3187d..050b2c2 100644
+--- a/src/database/kernels/xger.hpp
++++ b/src/database/kernels/xger.hpp
+@@ -63,6 +63,12 @@ const Database::DatabaseEntry XgerSingle = {
+         { "default",                                         { {"WGS1",64}, {"WGS2",4}, {"WPT",4} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"WGS1",4}, {"WGS2",2}, {"WPT",4} } },
++        { "default",                                         { {"WGS1",4}, {"WGS2",2}, {"WPT",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"WGS1",32}, {"WGS2",4}, {"WPT",4} } },
+@@ -134,6 +140,12 @@ const Database::DatabaseEntry XgerComplexSingle = {
+         { "default",                                         { {"WGS1",128}, {"WGS2",1}, {"WPT",1} } },
+       }
+     },
++    { // Imagination Technologies GPUs
++      kDeviceTypeGPU, "Imagination Technologies", {
++        { "PowerVR Rogue GX6650",                            { {"WGS1",256}, {"WGS2",2}, {"WPT",4} } },
++        { "default",                                         { {"WGS1",256}, {"WGS2",2}, {"WPT",4} } },
++      }
++    },
+     { // Intel CPUs
+       kDeviceTypeCPU, "Intel", {
+         { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"WGS1",128}, {"WGS2",2}, {"WPT",4} } },
