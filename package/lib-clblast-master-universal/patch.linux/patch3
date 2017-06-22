@@ -439,3 +439,52 @@ index 9d3187d..050b2c2 100644
      { // Intel CPUs
        kDeviceTypeCPU, "Intel", {
          { "Intel(R) Core(TM) i7-2670QM CPU @ 2.20GHz",       { {"WGS1",128}, {"WGS2",2}, {"WPT",4} } },
+diff --git a/src/database/kernels/xtrsv.hpp b/src/database/kernels/xtrsv.hpp
+index 0741569..187531b 100644
+--- a/src/database/kernels/xtrsv.hpp
++++ b/src/database/kernels/xtrsv.hpp
+@@ -19,7 +19,7 @@ const Database::DatabaseEntry XtrsvHalf = {
+   "Xtrsv", Precision::kHalf, {
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"TRSV_BLOCK_SIZE",32} } },
++        { "default",                                         { {"TRSV_BLOCK_SIZE",16} } },
+       }
+     },
+   }
+@@ -31,7 +31,7 @@ const Database::DatabaseEntry XtrsvSingle = {
+   "Xtrsv", Precision::kSingle, {
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"TRSV_BLOCK_SIZE",32} } },
++        { "default",                                         { {"TRSV_BLOCK_SIZE",16} } },
+       }
+     },
+   }
+@@ -43,7 +43,7 @@ const Database::DatabaseEntry XtrsvComplexSingle = {
+   "Xtrsv", Precision::kComplexSingle, {
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"TRSV_BLOCK_SIZE",32} } },
++        { "default",                                         { {"TRSV_BLOCK_SIZE",16} } },
+       }
+     },
+   }
+@@ -55,7 +55,7 @@ const Database::DatabaseEntry XtrsvDouble = {
+   "Xtrsv", Precision::kDouble, {
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"TRSV_BLOCK_SIZE",32} } },
++        { "default",                                         { {"TRSV_BLOCK_SIZE",16} } },
+       }
+     },
+   }
+@@ -67,7 +67,7 @@ const Database::DatabaseEntry XtrsvComplexDouble = {
+   "Xtrsv", Precision::kComplexDouble, {
+     { // Default
+       kDeviceTypeAll, "default", {
+-        { "default",                                         { {"TRSV_BLOCK_SIZE",32} } },
++        { "default",                                         { {"TRSV_BLOCK_SIZE",16} } },
+       }
+     },
+   }
