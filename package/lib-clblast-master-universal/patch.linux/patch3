@@ -272,7 +272,7 @@ index 7a1cd98..4bb24e9 100644
      },
 +    { // Imagination Technologies GPUs
 +      kDeviceTypeGPU, "Imagination Technologies", {
-+        { "PowerVR Rogue GX6650",                            { 2, 8, 8, 8, 8, 1, 1, 2, 2, 16 } },
++        { "PowerVR Rogue GX6650",                            { 2, 8, 4, 8, 4, 1, 1, 2, 2, 8 } },
 +        { "default",                                         { 2, 8, 8, 8, 8, 1, 1, 2, 2, 16 } },
 +      }
 +    },
