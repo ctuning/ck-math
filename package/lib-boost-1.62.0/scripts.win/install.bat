@@ -4,9 +4,11 @@ rem
 rem Extra installation script
 rem
 rem See CK LICENSE.txt for licensing details.
-rem See CK Copyright.txt for copyright details.
+rem See CK COPYRIGHT.txt for copyright details.
 rem
-rem Developer(s): Grigori Fursin, 2016-2017
+rem Developer(s):
+rem - Grigori Fursin, 2016-2017
+rem - ANton Lokhmotov, 2017
 rem
 
 rem  Check extra stuff
@@ -24,7 +26,7 @@ if %errorlevel% neq 0 (
 
 rem ############################################################
 echo.
-echo Building (can be very long) ...
+echo Building Boost (can take a long time) ...
 
 if EXIST %INSTALL_DIR%\install (
   rmdir /s /q %INSTALL_DIR%\install

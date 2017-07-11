@@ -4,9 +4,11 @@
 # Extra installation script
 #
 # See CK LICENSE.txt for licensing details.
-# See CK Copyright.txt for copyright details.
+# See CK COPYRIGHT.txt for copyright details.
 #
-# Developer(s): Grigori Fursin, 2016-2017
+# Developer(s):
+# - Grigori Fursin, 2016-2017
+# - Anton Lokhmtoov, 2017
 #
 
 #  Check extra stuff
@@ -30,7 +32,7 @@ fi
 
 ############################################################
 echo ""
-echo "Building (can be very long) ..."
+echo "Building Boost (can take a long time) ..."
 
 if [ -d ${INSTALL_DIR}/install ] ; then
   rm -rf ${INSTALL_DIR}/install
