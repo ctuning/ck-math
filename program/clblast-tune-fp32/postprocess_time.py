@@ -237,9 +237,9 @@ def ck_postprocess(i):
                 bindex=index
 
 #    print "Best performance: ", min_time,bres 
-    l_m = 1
-    l_n = 1
-    l_k = 1
+    l_m = 0
+    l_n = 0
+    l_k = 0
     if 'arg_m' in d:
         l_m = float(d["arg_m"])
     if 'arg_n' in d:
