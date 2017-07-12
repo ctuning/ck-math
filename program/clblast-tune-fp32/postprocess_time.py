@@ -237,9 +237,18 @@ def ck_postprocess(i):
                 bindex=index
 
 #    print "Best performance: ", min_time,bres 
-    m = float(d["arg_m"])
-    n = float(d["arg_n"])
-    k = float(d["arg_k"])
+    l_m = 1
+    l_n = 1
+    l_k = 1
+    if 'arg_m' in d:
+        l_m = float(d["arg_m"])
+    if 'arg_n' in d:
+        l_n = float(d["arg_n"])
+    if 'arg_k' in d:
+        l_k = float(d["arg_k"])
+    m = l_m
+    n = l_n
+    k = l_k
     if bres.get('time','')!='':
        gflops = 2.0*m*n*k
        time = float(bres["time"])/1000.0
