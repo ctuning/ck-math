@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
 #
-# Developer: Grigori Fursin, Grigori.Fursin@cTuning.org, http://fursin.net
+# Developers:
+# - Grigori Fursin, Grigori.Fursin@cTuning.org, http://fursin.net
+# - Anton Lokhmotov, anton@dividiti.com
 #
 
 import os
@@ -109,31 +111,31 @@ def setup(i):
     # ABI for Android
     tabi=tosd.get('abi','')
     if tabi=='': # Means host
-       tabi=habi # Means ARM
-       if tabi=='': # Means x86 (indirectly)
-          tabi='x86'
-          if str(tbits)=='64': tabi='x86_64'
+        tabi=habi # Means ARM
+        if tabi=='': # Means x86 (indirectly)
+            tabi='x86'
+            if str(tbits)=='64': tabi='x86_64'
 
     neon=False
     if env.get('USE_NEON','').lower()=='on' or tneon=='yes':
-       neon=True
-       nie['USE_NEON']='ON'
+        neon=True
+        nie['USE_NEON']='ON'
 
     hardfp=False
     if env.get('USE_BARE_METAL','').lower()=='on' or thardfp=='yes':
-       hardfp=True
-       nie['USE_BARE_METAL']='ON'
+        hardfp=True
+        nie['USE_BARE_METAL']='ON'
 
     if neon and 'x86' in tabi:
-       return {'return':1, 'error':'Cannot compile NEON for x86'}
+        return {'return':1, 'error':'Cannot compile NEON for x86'}
 
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
     cxx=compiler_env['CK_CXX']
 
     if compiler_env.get('CK_ENV_LIB_STDCPP_INCLUDE','')!='':
-       flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE']]
+        flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE']]
     if compiler_env.get('CK_ENV_LIB_STDCPP_INCLUDE_EXTRA','')!='':
-       flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE_EXTRA']]
+        flags+=['-I'+compiler_env['CK_ENV_LIB_STDCPP_INCLUDE_EXTRA']]
 
 #       env['CK_ENV_LIB_STDCPP_STATIC']=libstdcpppath+sep+'libgnustl_static.a'
 #       env['CK_ENV_LIB_STDCPP_DYNAMIC']=libstdcpppath+sep+'libgnustl_shared.so'
@@ -141,9 +143,9 @@ def setup(i):
 
 
     if 'clang++' in cxx:
-       flags += ['-Wno-format-nonliteral','-Wno-deprecated-increment-bool','-Wno-vla-extension','-Wno-mismatched-tags']
+        flags += ['-Wno-format-nonliteral','-Wno-deprecated-increment-bool','-Wno-vla-extension','-Wno-mismatched-tags']
     elif 'g++' in cxx:
-       flags += ['-Wlogical-op','-Wnoexcept','-Wstrict-null-sentinel']
+        flags += ['-Wlogical-op','-Wnoexcept','-Wstrict-null-sentinel']
 
     if env.get('USE_CPPTHREADS','').lower()=='on':
         flags += ['-DARM_COMPUTE_CPP_SCHEDULER=1']
@@ -245,7 +247,7 @@ def post_setup(i):
 
     libprefix=''
     if winh!='yes' or tname2=='android':
-       libprefix='lib'
+        libprefix='lib'
 
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
     obj_ext=compiler_env.get('CK_OBJ_EXT')
@@ -266,7 +268,7 @@ def post_setup(i):
     if pi1!='': build_dir=os.path.join(pi,pi1)
 
     if not os.path.isdir(build_dir):
-       return {'return':1, 'error':'Something is wrong - build directory is not there ('+build_dir+')'}
+        return {'return':1, 'error':'Something is wrong - build directory is not there ('+build_dir+')'}
 
     os.chdir(build_dir)
 
@@ -282,13 +284,13 @@ def post_setup(i):
     xfiles += glob.glob('src/runtime/CPP/SingleThreadScheduler.cpp')
 
     if bare_metal=='on':
-       if env.get('USE_CPPTHREADS','').lower()=='on' or env.get('USE_OPENMP','').lower()=='on':
-          return {'return':1, 'error':'OpenMP and C++11 threads not supported in bare_metal. use --env.USE_CPPTHREADS=OFF --env.USE_OPENMP=OFF'}
+        if env.get('USE_CPPTHREADS','').lower()=='on' or env.get('USE_OPENMP','').lower()=='on':
+            return {'return':1, 'error':'OpenMP and C++11 threads not supported in bare_metal. use --env.USE_CPPTHREADS=OFF --env.USE_OPENMP=OFF'}
     else:
         if env.get('USE_CPPTHREADS','').lower()=='on':
-             xfiles += glob.glob('src/runtime/CPP/CPPScheduler.cpp')
+            xfiles += glob.glob('src/runtime/CPP/CPPScheduler.cpp')
         if env.get('USE_OPENMP','').lower()=='on':
-             xfiles += glob.glob('src/runtime/OMP/OMPScheduler.cpp')
+            xfiles += glob.glob('src/runtime/OMP/OMPScheduler.cpp')
 
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
@@ -299,7 +301,7 @@ def post_setup(i):
     # Generate string with build options library version to embed in the library:
     r=ck.run_and_get_stdout({'cmd':['git','rev-parse','HEAD']})
     if r['return']==0 and r['return_code']==0: 
-       git_hash=r['stdout'].strip()
+        git_hash=r['stdout'].strip()
 
     version_filename = 'arm_compute_version.embed' #"%s/arm_compute_version.embed" % os.path.dirname(glob.glob("src/core/*")[0].rstr())
     build_info = "\"arm_compute_version=%s Build options: %s Git hash=%s\"" % ('', '', git_hash.strip())
@@ -344,8 +346,8 @@ def post_setup(i):
     # Check if need to set executable flags
     se=hosd.get('set_executable','')
     if se!='':
-       x=se+' '+fn
-       rx=os.system(x)
+        x=se+' '+fn
+        rx=os.system(x)
 
     # Run script
     rx=os.system(fn)
@@ -385,8 +387,8 @@ def post_setup(i):
     # Check if need to set executable flags
     se=hosd.get('set_executable','')
     if se!='':
-       x=se+' '+fn
-       rx=os.system(x)
+        x=se+' '+fn
+        rx=os.system(x)
 
     # Run script
     rx=os.system(fn)
