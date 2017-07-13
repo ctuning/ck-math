@@ -3,13 +3,14 @@
     "extra_dir": "",
     "git_src_dir": "src",
     "install_env": {
-      "USE_NEON":"OFF",
-      "USE_BARE_METAL":"OFF",
-      "USE_ARM64_V82A":"OFF",
-      "USE_CPPTHREADS":"ON",
-      "USE_OPENMP":"OFF",
+      "USE_NEON": "OFF",
+      "USE_BARE_METAL": "OFF",
+      "USE_ARM64_V82A": "OFF",
+      "USE_CPPTHREADS": "ON",
+      "USE_OPENMP": "OFF",
       "PACKAGE_AUTOGEN": "NO",
       "PACKAGE_GIT": "YES",
+      "PACKAGE_PATCH": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "NO",
       "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
@@ -54,7 +55,7 @@
     "lib",
     "arm",
     "acl",
-    "arm-compute-lib",
+    "arm-compute-library",
     "vmaster"
   ],
   "use_scripts_from_another_entry": {
