@@ -258,7 +258,7 @@ def post_setup(i):
     bare_metal=env.get('USE_BARE_METAL','').lower()
     use_neon=env.get('USE_NEON','').lower()
 
-    pp=i.get('path_original_package','')
+    path_original_package=i.get('path_original_package','')
 
     pi=i.get('install_path','')
     pi1=cfg.get('customize',{}).get('extra_dir','')
@@ -300,7 +300,7 @@ def post_setup(i):
 
     # Generate string with build options library version to embed in the library:
     r=ck.run_and_get_stdout({'cmd':['git','rev-parse','HEAD']})
-    if r['return']==0 and r['return_code']==0: 
+    if r['return']==0 and r['return_code']==0:
         git_hash=r['stdout'].strip()
 
     version_filename = 'arm_compute_version.embed' #"%s/arm_compute_version.embed" % os.path.dirname(glob.glob("src/core/*")[0].rstr())
@@ -309,88 +309,54 @@ def post_setup(i):
     r=ck.save_text_file({'text_file':version_filename, 'string':build_info})
     if r['return']>0: return r
 
-    # BUILDING CORE LIB **************************************************************
-    # Clean up files and prepare obj names
-    core_files=''
-    obj_core_files=''
+    # Common functionality to build the core lib or the core+runtime libs.
+    def build(files, link_flags, path_original_package, hosd, deps, eset, eifs, sext, libprefix, bare_metal):
+        # Clean up files and prepare obj names.
+        core_files=''
+        obj_core_files=''
 
-    for f in xcore_files:
-        f=f.replace('\\','/') # fix windows names
-        fo=os.path.basename(os.path.splitext(f)[0]+obj_ext)
+        for f in files:
+            f=f.replace('\\','/') # fix windows names
+            fo=os.path.basename(os.path.splitext(f)[0]+obj_ext)
 
-        core_files+=' ../'+f
-        obj_core_files+=' '+fo
+            core_files+=' ../'+f
+            obj_core_files+=' '+fo
 
-    # Compiler env
-    sb=hosd.get('batch_prefix','')+'\n'
+        # Set up compiler env.
+        sb=hosd.get('batch_prefix','')+'\n'
 
-    sb+=deps.get('compiler',{}).get('bat','')+'\n'
+        sb+=deps.get('compiler',{}).get('bat','')+'\n'
 
-    sb+=eset+' CK_CXXFLAGS='+eifs+flags+eifs+'\n'
-    sb+=eset+' CK_LFLAGS='+eifs+lcore_flags+eifs+'\n'
-    sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
-    sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
-    sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute_core\n'
-    sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
+        sb+=eset+' CK_CXXFLAGS='+eifs+flags+eifs+'\n'
+        sb+=eset+' CK_LFLAGS='+eifs+link_flags+eifs+'\n'
+        sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
+        sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
+        sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute_core\n'
+        sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
 
-    sb+=hosd.get('env_call','')+' '+os.path.join(pp,'build'+sext)
+        sb+=hosd.get('env_call','')+' '+os.path.join(path_original_package,'build'+sext)
 
-    # Prepare tmp bat file
-    rx=ck.gen_tmp_file({'prefix':'tmp-ck-', 'suffix':sext})
-    if rx['return']>0: return rx
-    fn=rx['file_name']
+        # Prepare tmp script.
+        rx=ck.gen_tmp_file({'prefix':'tmp-ck-', 'suffix':sext})
+        if rx['return']>0: return rx
+        fn=rx['file_name']
 
-    rx=ck.save_text_file({'text_file':fn, 'string':sb})
-    if rx['return']>0: return rx
+        rx=ck.save_text_file({'text_file':fn, 'string':sb})
+        if rx['return']>0: return rx
 
-    # Check if need to set executable flags
-    se=hosd.get('set_executable','')
-    if se!='':
-        x=se+' '+fn
-        rx=os.system(x)
+        # Set script as executable if required.
+        se=hosd.get('set_executable','')
+        if se!='':
+            x=se+' '+fn
+            rx=os.system(x)
 
-    # Run script
-    rx=os.system(fn)
+        # Run script.
+        rx=os.system(fn)
 
-    # BUILDING CORE + RUNTIME LIB **************************************************************
-    # Clean up files and prepare obj names
-    files=''
-    for f in xfiles:
-        f=f.replace('\\','/') # fix windows names
-        fo=os.path.basename(os.path.splitext(f)[0]+obj_ext)
+    # Build the core lib.
+    build(xcore_files, lcore_flags, path_original_package, hosd, deps, eset, eifs, sext, libprefix, bare_metal)
 
-        core_files+=' ../'+f
-        obj_core_files+=' '+fo
-
-    # Compiler env
-    sb=hosd.get('batch_prefix','')+'\n'
-
-    sb+=deps.get('compiler',{}).get('bat','')+'\n'
-
-    sb+=eset+' CK_CXXFLAGS='+eifs+flags+eifs+'\n'
-    sb+=eset+' CK_LFLAGS='+eifs+lflags+eifs+'\n'
-    sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
-    sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
-    sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute\n'
-    sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
-
-    sb+=hosd.get('env_call','')+' '+os.path.join(pp,'build'+sext)
-
-    # Prepare tmp bat file
-    rx=ck.gen_tmp_file({'prefix':'tmp-ck-', 'suffix':sext})
-    if rx['return']>0: return rx
-    fn=rx['file_name']
-
-    rx=ck.save_text_file({'text_file':fn, 'string':sb})
-    if rx['return']>0: return rx
-
-    # Check if need to set executable flags
-    se=hosd.get('set_executable','')
-    if se!='':
-        x=se+' '+fn
-        rx=os.system(x)
-
-    # Run script
-    rx=os.system(fn)
+    # Build the core and runtime libs.
+    build(xcore_files+xfiles, lflags, path_original_package, hosd, deps, eset, eifs, sext, libprefix, bare_metal)
 
     return {'return':0}
