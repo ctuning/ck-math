@@ -230,27 +230,17 @@ def post_setup(i):
     cfg=i.get('cfg',{})
     hosd=i['host_os_dict']
     tosd=i['target_os_dict']
-
-    winh=hosd.get('windows_base','')
-
-    eset=hosd.get('env_set','')
-    eifs=hosd.get('env_quotes_if_space','')
-    sext=hosd.get('script_ext','')
+    env=i.get('new_env',{})
+    deps=i.get('deps',{})
 
     hname=hosd.get('ck_name','')    # win, linux
     hname2=hosd.get('ck_name2','')  # win, mingw, linux, android
     tname2=tosd.get('ck_name2','')  # win, mingw, linux, android
+    winh=hosd.get('windows_base','')
 
-    env=i.get('new_env',{})
-
-    deps=i.get('deps',{})
-
-    libprefix=''
+    lib_prefix=''
     if winh!='yes' or tname2=='android':
-        libprefix='lib'
-
-    compiler_env=deps['compiler'].get('dict',{}).get('env',{})
-    obj_ext=compiler_env.get('CK_OBJ_EXT')
+        lib_prefix='lib'
 
     flags=env.get('CXXFLAGS','')
     lflags=env.get('LFLAGS','')
@@ -258,8 +248,7 @@ def post_setup(i):
     bare_metal=env.get('USE_BARE_METAL','').lower()
     use_neon=env.get('USE_NEON','').lower()
 
-    path_original_package=i.get('path_original_package','')
-
+    pop=i.get('path_original_package','')
     pi=i.get('install_path','')
     pi1=cfg.get('customize',{}).get('extra_dir','')
     if pi1=='': pi1=cfg.get('customize',{}).get('git_src_dir','')
@@ -310,14 +299,18 @@ def post_setup(i):
     if r['return']>0: return r
 
     # Common functionality to build the core lib or the core+runtime libs.
-    def build(files, link_flags, path_original_package, hosd, deps, eset, eifs, sext, libprefix, bare_metal):
-        # Clean up files and prepare obj names.
+    def build(lib_target, files, link_flags, hosd, deps, pop, bare_metal):
+        oext=deps.get('compiler',{}).get('dict',{}).get('env',{}).get('CK_OBJ_EXT','')
+        sext=hosd.get('script_ext','')
+        eset=hosd.get('env_set','')
+        eifs=hosd.get('env_quotes_if_space','')
+
+        # Prepare obj names.
         core_files=''
         obj_core_files=''
-
         for f in files:
             f=f.replace('\\','/') # fix windows names
-            fo=os.path.basename(os.path.splitext(f)[0]+obj_ext)
+            fo=os.path.basename(os.path.splitext(f)[0]+oext)
 
             core_files+=' ../'+f
             obj_core_files+=' '+fo
@@ -327,14 +320,14 @@ def post_setup(i):
 
         sb+=deps.get('compiler',{}).get('bat','')+'\n'
 
+        sb+=eset+' CK_TARGET_LIB='+lib_target+'\n'
+        sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
         sb+=eset+' CK_CXXFLAGS='+eifs+flags+eifs+'\n'
         sb+=eset+' CK_LFLAGS='+eifs+link_flags+eifs+'\n'
         sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n'
         sb+=eset+' CK_OBJ_FILES='+eifs+obj_core_files+eifs+'\n'
-        sb+=eset+' CK_TARGET_LIB='+libprefix+'arm_compute_core\n'
-        sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
 
-        sb+=hosd.get('env_call','')+' '+os.path.join(path_original_package,'build'+sext)
+        sb+=hosd.get('env_call','')+' '+os.path.join(pop,'build'+sext)
 
         # Prepare tmp script.
         rx=ck.gen_tmp_file({'prefix':'tmp-ck-', 'suffix':sext})
@@ -354,9 +347,9 @@ def post_setup(i):
         rx=os.system(fn)
 
     # Build the core lib.
-    build(xcore_files, lcore_flags, path_original_package, hosd, deps, eset, eifs, sext, libprefix, bare_metal)
+    build(lib_prefix+'arm_compute_core', xcore_files, lcore_flags, hosd, deps, pop, bare_metal)
 
     # Build the core and runtime libs.
-    build(xcore_files+xfiles, lflags, path_original_package, hosd, deps, eset, eifs, sext, libprefix, bare_metal)
+    build(lib_prefix+'arm_compute', xcore_files+xfiles, lflags, hosd, deps, pop, bare_metal)
 
     return {'return':0}
