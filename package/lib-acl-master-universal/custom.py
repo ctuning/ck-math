@@ -320,6 +320,8 @@ def post_setup(i):
 
         sb+=deps.get('compiler',{}).get('bat','')+'\n'
 
+        sb+=eset+' INSTALL_DIR='+pi+'\n'
+        sb+=eset+' BUILD_DIR='+build_dir+'\n'
         sb+=eset+' CK_TARGET_LIB='+lib_target+'\n'
         sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
         sb+=eset+' CK_CXXFLAGS='+eifs+flags+eifs+'\n'
