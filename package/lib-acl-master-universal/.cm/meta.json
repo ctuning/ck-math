@@ -3,7 +3,7 @@
     "extra_dir": "",
     "git_src_dir": "src",
     "install_env": {
-      "USE_NEON": "OFF",
+      "USE_NEON": "ON",
       "USE_BARE_METAL": "OFF",
       "USE_ARM64_V82A": "OFF",
       "USE_CPPTHREADS": "ON",
