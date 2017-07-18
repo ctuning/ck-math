@@ -14,11 +14,15 @@
 
 # ******************************************************************************
 
-mkdir -p ../install
-mkdir -p ../install/lib
+echo "Installing into ... \`${INSTALL_DIR}\`"
 
-mkdir -p obj
-cd obj
+mkdir -p ${INSTALL_DIR}/install
+mkdir -p ${INSTALL_DIR}/install/lib
+mkdir -p ${INSTALL_DIR}/install/include
+
+mkdir -p ${INSTALL_DIR}/src
+mkdir -p ${INSTALL_DIR}/src/obj
+cd ${INSTALL_DIR}/src/obj
 
 # ******************************************************************************
 
@@ -27,7 +31,7 @@ echo "Building static library ..."
 echo ""
 
 CK_TARGET_FILE=${CK_TARGET_LIB}${CK_LIB_EXT}
-rm -f $CK_TARGET_FILE
+rm -f ${CK_TARGET_FILE}
 
 echo "${CK_CXX} ${CK_COMPILER_FLAGS_OBLIGATORY} ${CK_FLAGS_STATIC_LIB} ${CK_FLAGS_CREATE_OBJ} ${CK_CXXFLAGS} ${CK_SRC_FILES} ${CK_FLAG_PREFIX_INCLUDE}.."
 echo ""
@@ -49,7 +53,7 @@ if [ "${?}" != "0" ] ; then
   exit 1
 fi
 
-cp -f $CK_TARGET_FILE ../../install/lib
+cp -f ${CK_TARGET_FILE} ${INSTALL_DIR}/install/lib
 if [ "${?}" != "0" ] ; then
   echo ""
   echo "Copying static library failed"
@@ -74,7 +78,7 @@ if [ "${CK_BARE_METAL}" != "on" ] ; then
     exit 1
   fi
 
-  cp -f $CK_TARGET_FILE_D ../../install/lib
+  cp -f $CK_TARGET_FILE_D ${INSTALL_DIR}/install/lib
   if [ "${?}" != "0" ] ; then
     echo ""
     echo "Copying dynamic library failed!"
@@ -85,13 +89,15 @@ fi
 # ******************************************************************************
 
 echo ""
-echo "Copying include files ..."
+echo "Copying include headers ..."
 echo ""
 
-cd ..
-rm -rf ../install/include
-mkdir ../install/include
-cp -rf arm_compute ../install/include/arm_compute
-cp -rf test_helpers ../install/include/test_helpers
+cp -rf ${INSTALL_DIR}/src/arm_compute ${INSTALL_DIR}/install/include/arm_compute
+cp -rf ${INSTALL_DIR}/src/tests/ ${INSTALL_DIR}/install/include/arm_compute
+if [ "${?}" != "0" ] ; then
+  echo ""
+  echo "Copying include headers failed!"
+  exit 1
+fi
 
 exit 0
