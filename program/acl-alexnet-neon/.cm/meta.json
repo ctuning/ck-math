@@ -4,22 +4,28 @@
     "XOPENME": ""
   },
   "compile_deps": {
+    "caffemodel-alexnet": {
+      "local": "yes",
+      "name": "BVLC Caffe AlexNet model",
+      "sort": 5,
+      "tags": "caffemodel,alexnet"
+    },
     "compiler": {
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
       "tags": "compiler,lang-cpp"
     },
-    "lib-arm-compute": {
+    "lib-arm-compute-neon": {
       "local": "yes",
-      "name": "ARM Compute Library (w/ NEON)",
+      "name": "ARM Compute Library with NEON support",
       "sort": 30,
       "tags": "lib,arm-compute-library,vneon"
     },
     "xopenme": {
       "local": "yes",
       "name": "xOpenME library",
-      "sort": 20,
+      "sort": 50,
       "tags": "lib,xopenme"
     }
   },
