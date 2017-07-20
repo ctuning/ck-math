@@ -50,12 +50,13 @@
   ],
   "process_script": "install",
   "soft_uoa": "fc544df6941a5491",
-  "suggested_path": "lib-acl",
+  "suggested_path": "lib-acl-neon",
   "tags": [
     "lib",
     "arm",
     "acl",
     "arm-compute-library",
+    "vneon",
     "vmaster"
   ],
   "use_scripts_from_another_entry": {
