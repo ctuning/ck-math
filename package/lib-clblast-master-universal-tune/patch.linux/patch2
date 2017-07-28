@@ -1,17 +1,1 @@
-diff --git a/src/database/kernel_selection.hpp b/src/database/kernel_selection.hpp
-index 44ef0d3..ac7722b 100644
---- a/src/database/kernel_selection.hpp
-+++ b/src/database/kernel_selection.hpp
-@@ -52,6 +52,12 @@ const Database::DatabaseEntry KernelSelectionSingle = {
-         { "default",                                         { 1280*1280*1280 } },
-       }
-     },
-+    {
-+      kDeviceTypeGPU, "ARM", {
-+        { "default",                                         { 128*128*128 } },
-+      }
-+    },
-+
-     { // Default
-       kDeviceTypeAll, "default", {
-         { "default",                                         { 512*512*512 } },
+
