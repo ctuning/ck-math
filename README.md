@@ -50,7 +50,7 @@ Install above package for Android target (if Android SDK and NDK are installed):
 Please check [this repository](https://github.com/dividiti/ck-caffe) to see how above packages are used for customizable
 and universal DNN crowd-benchmarking and crowd-tuning.
 
-Example to build and use ACM Compute Lib
+Example to build and use ARM Compute Lib
 ========================================
 
 You can build library for Android/ARM64 (NEON) and run simple SGEMM benchmark as following:

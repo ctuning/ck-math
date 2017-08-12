@@ -1,5 +1,8 @@
-Grigori Fursin converted original sconscript from ACM Compute Lib to CK format
-to add ACL to CK auto/crowd-tuning workflows.
+Grigori Fursin converted original sconscript from ARM Compute Lib 
+(https://github.com/ARM-software/ComputeLibrary)
+to multi-platform software manager in the CK 
+(https://github.com/ctuning/ck/wiki/Portable-workflows)
+to support portable experimental workflows.
 
-https://github.com/ARM-software/ComputeLibrary
+
 
