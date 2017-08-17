@@ -199,8 +199,17 @@ def setup(i):
        hardfp=True
        nie['USE_BARE_METAL']='ON'
 
+    
+#    if env.get('USE_VALIDATION_TEST','').lower()=='on':
+#       print "VALIDATION"
+
+#    if env.get('USE_BENCHMARK_TEST','').lower()=='on':
+#       print "BENCHMARK"
+
+
     if neon and 'x86' in tabi:
        return {'return':1, 'error':'Cannot compile NEON for x86'}
+
 
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
     cxx=compiler_env['CK_CXX']
