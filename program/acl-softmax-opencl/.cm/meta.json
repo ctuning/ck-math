@@ -1,0 +1,92 @@
+{
+  "backup_data_uid": "0a1c7d2d30044852", 
+  "build_compiler_vars": {
+    "MK": "1024", 
+    "MM": "1024", 
+    "MN": "1024"
+  }, 
+  "compile_deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C compiler", 
+      "sort": 10, 
+      "tags": "compiler,lang-c"
+    }, 
+    "lib-arm-compute": {
+      "local": "yes", 
+      "name": "ARM Compute Library", 
+      "sort": 30, 
+      "tags": "lib,arm-compute-lib"
+    }, 
+    "opencl": {
+      "local": "yes", 
+      "name": "OpenCL library", 
+      "skip_installed": {
+        "android": "yes"
+      }, 
+      "sort": 20, 
+      "tags": "lib,opencl"
+    }, 
+    "xopenme": {
+      "local": "yes", 
+      "name": "xOpenME library", 
+      "sort": 20, 
+      "tags": "lib,xopenme"
+    }
+  }, 
+  "compiler_add_include_as_env_from_deps": [
+    "CK_ENV_LIB_STDCPP_INCLUDE", 
+    "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA"
+  ], 
+  "compiler_env": "CK_CXX", 
+  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_CPP11>>$ -fpermissive", 
+  "data_name": "acl-softmax-opencl", 
+  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
+  "linker_add_lib_as_env": [
+    "CK_CXX_EXTRA", 
+    "CK_ENV_LIB_STDCPP_DYNAMIC"
+  ], 
+  "main_language": "cpp", 
+  "print_files_after_run": [
+    "stdout.log", 
+    "stderr.log"
+  ], 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-acl-softmax-client.json", 
+        "need_compute_device": "opencl", 
+        "post_process_cmds": [
+          "python $#src_path_local#$ck_postprocess.py"
+        ], 
+        "post_process_via_ck": "yes", 
+        "run_cmd_main": "$#BIN_FILE#$ ", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "tmp-output.json"
+        ]
+      }
+    }
+  }, 
+  "run_vars": {
+    "CK_SEED": 5, 
+    "CK_WIDTH": 8, 
+    "CK_HEIGHT": 8, 
+    "CK_BSIZE": 4
+  }, 
+  "source_files": [
+    "softmax.c"
+  ], 
+  "tags": [
+    "demo", 
+    "program", 
+    "arm-compute-lib", 
+    "opencl", 
+    "softmax"
+  ], 
+  "target_file": "a"
+}
