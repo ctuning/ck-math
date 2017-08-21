@@ -1,5 +1,5 @@
 {
-  "backup_data_uid": "0a1c7d2d30044852", 
+  "backup_data_uid": "ac9650c8c5f4de89", 
   "build_compiler_vars": {
     "MK": "1024", 
     "MM": "1024", 
@@ -27,6 +27,12 @@
       "sort": 20, 
       "tags": "lib,opencl"
     }, 
+    "tool-cltune": {
+      "local": "yes",
+      "name": "CLTune tool",
+      "sort": 40,
+      "tags": "tool,cltune"
+    },
     "xopenme": {
       "local": "yes", 
       "name": "xOpenME library", 
@@ -39,8 +45,8 @@
     "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA"
   ], 
   "compiler_env": "CK_CXX", 
-  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_CPP11>>$ -fpermissive", 
-  "data_name": "acl-softmax-opencl", 
+  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_CPP11>>$ -fpermissive -I$<<CK_ENV_TOOL_CLTUNE_INCLUDE>>$", 
+  "data_name": "acl-softmax-opencl-tuner", 
   "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
   "linker_add_lib_as_env": [
     "CK_CXX_EXTRA", 
@@ -73,16 +79,17 @@
     }
   }, 
   "run_vars": {
-    "CK_SEED": 5, 
-    "CK_WIDTH": 32, 
+    "CK_BSIZE": 4, 
     "CK_HEIGHT": 32, 
-    "CK_BSIZE": 4
+    "CK_SEED": 5, 
+    "CK_WIDTH": 32
   }, 
   "source_files": [
     "softmax.c"
   ], 
   "tags": [
     "demo", 
+    "cltune",
     "program", 
     "arm-compute-lib", 
     "opencl", 
