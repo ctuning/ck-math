@@ -82,7 +82,7 @@ int main( int argc, char *argv[] )
   //tuner.Tune();
   //tuner.PrintToScreen();
 // OpenCL init
-  //CLScheduler::get().default_init();
+  CLScheduler::get().default_init();
 
   CLTensor ATensor; //NETensor for Neon 
   CLTensor OTensor;
@@ -107,12 +107,30 @@ int main( int argc, char *argv[] )
   
   ATensor.unmap();
 
+  const ITensorInfo *info    = ATensor.info();
+  const Strides     &strides = info->strides_in_bytes(); // strides[dim] in our case 2 dimentions ... 
+  unsigned int offset_first_element = info->offset_first_element_in_bytes();
+  printf("offeset: %d\n",offset_first_element);
 
+/*
   tuner.AddArgumentInput(ATensor);
   tuner.AddArgumentInput(OTensor);
   tuner.AddArgumentScalar(static_cast<int>(width));
+*/
 
+ tuner.AddArgumentInput(src_ptr);
+ tuner.AddArgumentScalar(static_cast<unsigned int>(src_stride_x)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(src_step_x)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(src_stride_y)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(src_step_y)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(offset_first_element));
 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(dst_stride_x)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(dst_step_x)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(dst_stride_y)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(dst_step_y)); 
+ tuner.AddArgumentScalar(static_cast<unsigned int>(offset_first_element));
+ tuner.AddArgumentScalar(static_cast<unsigned  int>(width));
 
 
 
