@@ -202,6 +202,9 @@ def setup(i):
 ##############################################################################
 # customize installation after download
 
+def _slash(s):
+    return s.replace('\\','/')
+
 def post_setup(i):
     """
     Input:  {
@@ -310,7 +313,7 @@ def post_setup(i):
         core_files=''
         obj_core_files=''
         for f in files:
-            f=f.replace('\\','/') # fix windows names
+            f=_slash(f)
             fo=os.path.splitext(f)[0]+oext
 
             core_files+=' ../'+f
@@ -321,17 +324,18 @@ def post_setup(i):
 
         sb+=deps.get('compiler',{}).get('bat','')+'\n'
 
-        sb+=eset+' INSTALL_DIR='+pi+'\n\n'
-        sb+=eset+' BUILD_DIR='+build_dir+'\n\n'
-        sb+=eset+' CK_TARGET_LIB='+lib_target+'\n\n'
-        sb+=eset+' CK_BARE_METAL='+bare_metal+'\n\n'
-        sb+=eset+' CK_CXXFLAGS='+eifs+flags+eifs+'\n\n'
-        sb+=eset+' CK_LFLAGS='+eifs+link_flags+eifs+'\n\n'
-        sb+=eset+' CK_SRC_FILES='+eifs+core_files+eifs+'\n\n'
-        sb+=eset+' ORIGINAL_PACKAGE_DIR='+pop+'\n\n'
-        sb+=eset+' CK_HOST_CPU_NUMBER_OF_PROCESSORS='+env.get('CK_HOST_CPU_NUMBER_OF_PROCESSORS', '1')+'\n\n'
+        sb+=eset+' INSTALL_DIR='+_slash(pi)+'\n\n'
+        sb+=eset+' BUILD_DIR='+_slash(build_dir)+'\n\n'
+        sb+=eset+' CK_TARGET_LIB='+_slash(lib_target)+'\n\n'
+        sb+=eset+' CK_BARE_METAL='+_slash(bare_metal)+'\n\n'
+        sb+=eset+' CK_CXXFLAGS='+_slash(eifs+flags+eifs)+'\n\n'
+        sb+=eset+' CK_LFLAGS='+_slash(eifs+link_flags+eifs)+'\n\n'
+        sb+=eset+' CK_SRC_FILES='+_slash(eifs+core_files+eifs)+'\n\n'
+        sb+=eset+' ORIGINAL_PACKAGE_DIR='+_slash(pop)+'\n\n'
+        sb+=eset+' CK_HOST_CPU_NUMBER_OF_PROCESSORS='+str(env.get('CK_HOST_CPU_NUMBER_OF_PROCESSORS', 1))+'\n\n'
 
-        sb+=hosd.get('env_call','')+' '+os.path.join(pop,'build'+sext)
+        rest_params_var = '%*' if hname == 'win' else '$@'
+        sb+=hosd.get('env_call','')+' '+os.path.join(pop,'build'+sext) + ' ' + rest_params_var
 
         # Prepare build script
         fn=os.path.join(pi, build_script_name + sext)
