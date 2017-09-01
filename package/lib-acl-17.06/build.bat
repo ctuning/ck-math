@@ -10,8 +10,8 @@ set code=%errorlevel%
 
 if %code% equ 0 (
     cd ..
-    xcopy arm_compute ..\install\include /e /c /i /y
-    xcopy tests ..\install\include\arm_compute /e /c /i /y
+    xcopy arm_compute ..\install\include\arm_compute /e /c /i /y
+    xcopy tests ..\install\include\arm_compute\tests /e /c /i /y
 )
 
 cd "%INSTALL_DIR%"
