@@ -19,3 +19,9 @@ mkdir -p ${INSTALL_DIR}/src/obj
 cd ${INSTALL_DIR}/src/obj
 
 ${CK_MAKE} -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} -f ${ORIGINAL_PACKAGE_DIR}/Makefile $@
+
+cd ..
+rm -rf ../install/include
+mkdir ../install/include
+cp -rf arm_compute ../install/include
+cp -rf tests ../install/include/arm_compute
