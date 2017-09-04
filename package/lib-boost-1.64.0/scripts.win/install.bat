@@ -8,7 +8,7 @@ rem See CK COPYRIGHT.txt for copyright details.
 rem
 rem Developer(s):
 rem - Grigori Fursin, 2016-2017
-rem - ANton Lokhmotov, 2017
+rem - Anton Lokhmotov, 2017
 rem
 
 rem  Check extra stuff

@@ -43,7 +43,7 @@ echo.
 echo Building Boost (can take a long time) ...
 
 if EXIST %INSTALL_DIR%\install (
-   rmdir /s /q %INSTALL_DIR%\install
+  rmdir /s /q %INSTALL_DIR%\install
 )
 if EXIST %INSTALL_DIR%\install (
   rmdir %INSTALL_DIR%\install
