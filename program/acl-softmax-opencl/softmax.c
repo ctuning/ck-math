@@ -33,8 +33,7 @@ using namespace arm_compute;
 static MYTIMER2 before, after;
 static double secs;
 #define MYMAX 100
-
-
+#define STEP 1 
 
 
 int main( int argc, char *argv[] )
@@ -62,7 +61,8 @@ int main( int argc, char *argv[] )
      for(unsigned int h = 0; h < height; h++){
        for(unsigned int w = 0; w < width; w++){
          float r = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/MYMAX));
-         src_data[b * (width * height) + h * width + w] = static_cast<float>(100 * b + 10 * h + w); //replace with random fixed seed value
+         src_data[b * (width * height) + h * width + w] = r; //replace with random fixed seed value
+         dst_data[b * (width * height) + h * width + w] = 0;
        }
      }
    }
@@ -84,14 +84,24 @@ int main( int argc, char *argv[] )
   //FILL TENSORS... easiest way is: create an iteretor 
   Window input_window;
   input_window.use_tensor_dimensions(ATensor.info());
-  if ((width*height*bsize) < 16){
+/*  input_window.set_dimension_step(0,STEP);
+  input_window.set_dimension_step(1,STEP);
+  printf("Number of iterations(0) %d\n", input_window.num_iterations(0));
+  printf("Number of iterations(1) %d\n", input_window.num_iterations(1));
+  printf("Number of threads %d\n", input_window.num_threads());
+  input_window.set_num_threads(32);
+  printf("Number of threads %d\n", input_window.num_threads());
+*/
+  if ((width*height) < 32){
    std::cout << " Dimensions of the input's iterator:\n";
    std::cout << " X = [start=" << input_window.x().start() << ", end=" << input_window.x().end() << ", step=" << input_window.x().step() << "]\n";
    std::cout << " Y = [start=" << input_window.y().start() << ", end=" << input_window.y().end() << ", step=" << input_window.y().step() << "]\n";
    std::cout << " Z = [start=" << input_window.z().start() << ", end=" << input_window.z().end() << ", step=" << input_window.z().step() << "]\n";
   }
+  printf("Softmax kernel configuration\n");
   CLSoftmaxLayer softmax;
   softmax.configure(&ATensor,&OTensor);
+  printf("END\n");
 
   //Data in/out
   ATensor.allocator()->allocate();
@@ -108,10 +118,12 @@ int main( int argc, char *argv[] )
   
   ATensor.unmap();
 //Execution
+  printf("Softmax kernel execution\n");
   gettimeofday(&before, NULL); 
   softmax.run();
   CLScheduler::get().sync();
   gettimeofday(&after, NULL);
+  printf("END\n");
 
 //Get output
   Window output_window;
