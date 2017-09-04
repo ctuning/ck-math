@@ -60,21 +60,17 @@ int main( int argc, char *argv[] )
   srand(seed);
   
 
-  auto *src_data = new float[width * height * bsize];
+  auto *src_data = new float[width * height * bsize];  
   auto *dst_data = new float[width * height * bsize];
   for(unsigned int b = 0; b < bsize; b++){
      for(unsigned int h = 0; h < height; h++){
        for(unsigned int w = 0; w < width; w++){
    //      float r = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/MYMAX));
          src_data[b * (width * height) + h * width + w] = static_cast<float>(100 * b + 10 * h + w); //replace with random fixed seed value
+         dst_data[b * (width * height) + h * width + w] = 0;
        }
      }
    }
-  auto kernel_file = std::vector<std::string>{"/home/flavio/CK_REPOS/ck-math/program/acl-softmax-opencl-tuner/softmax_layer2.cl"};
-  cltune::Tuner tuner(size_t{0}, size_t{0});
-  const auto id = tuner.AddKernel(kernel_file, "softmax_layer_max",{width,height,bsize} , {1});  
-  tuner.AddParameter(id, "GROUP_SIZE", {1, 2, 4, 8, 16, 32});
-  tuner.MulLocalSize(id, {"GROUP_SIZE"});
   //tuner.AddArgumentInput(src_data);
   //tuner.AddArgumentInput(dst_data);
   //tuner.AddArgumentScalar(static_cast<int>(width));
@@ -92,9 +88,9 @@ int main( int argc, char *argv[] )
   OTensor.allocator()->init(TensorInfo(shape,  Format::F32));
   
   //FILL TENSORS... easiest way is: create an iteretor 
-  Window input_window;
+  Window input_window,output_window;
   input_window.use_tensor_dimensions(ATensor.info());
-
+  output_window.use_tensor_dimensions(ATensor.info());
   //Data in/out
   ATensor.allocator()->allocate();
   OTensor.allocator()->allocate();
@@ -107,33 +103,59 @@ int main( int argc, char *argv[] )
   
   ATensor.unmap();
 
-  const ITensorInfo *info    = ATensor.info();
-  const Strides     &strides = info->strides_in_bytes(); // strides[dim] in our case 2 dimentions ... 
-  unsigned int offset_first_element = info->offset_first_element_in_bytes();
-  printf("offeset: %d\n",offset_first_element);
+  const ITensorInfo *Ainfo    = ATensor.info();
+  const ITensorInfo *Oinfo    = OTensor.info();
+  const unsigned int num_elems_processed_per_iteration = ceil_to_multiple(ATensor.info()->dimension(0),16);
+  printf("[KERNEL SET-UP] num_elems_processed_per_iteration=%d\n",num_elems_processed_per_iteration);   if (ATensor.info()->dimension(0) % 16 != 0){
+     setenv("CLTUNE_BUILD_OPTION","-DNON_MULTIPLE_OF_16", true);
+     printf("SET CLTUNE BUILD\n");
 
-/*
-  tuner.AddArgumentInput(ATensor);
-  tuner.AddArgumentInput(OTensor);
-  tuner.AddArgumentScalar(static_cast<int>(width));
-*/
+  }
+  printf("READ %s\n",getenv("CLTUNE_BUILD_OPTION"));
+  auto kernel_file = std::vector<std::string>{"/home/flavio/CK_REPOS/ck-math/program/acl-softmax-opencl-tuner/softmax_layer2.cl"};
 
- tuner.AddArgumentInput(src_ptr);
- tuner.AddArgumentScalar(static_cast<unsigned int>(src_stride_x)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(src_step_x)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(src_stride_y)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(src_step_y)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(offset_first_element));
+  cltune::Tuner tuner(size_t{0}, size_t{0});
+  unsigned int gws_x = (input_window.x().end()-input_window.x().start())/16;
+  unsigned gws_y =(input_window.y().end()-input_window.y().start())/1;
 
- tuner.AddArgumentScalar(static_cast<unsigned int>(dst_stride_x)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(dst_step_x)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(dst_stride_y)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(dst_step_y)); 
- tuner.AddArgumentScalar(static_cast<unsigned int>(offset_first_element));
- tuner.AddArgumentScalar(static_cast<unsigned  int>(width));
+  const auto id = tuner.AddKernel(kernel_file, "softmax_layer_max", {1, gws_y}, {1,1});  
+  tuner.AddParameter(id, "GROUP_SIZE", {1, 2, 4, 8, 16, 32});
+  tuner.MulLocalSize(id, {"GROUP_SIZE"});
 
+  const Strides     &Astrides = Ainfo->strides_in_bytes();
+  unsigned int Aoffset_first_element = Ainfo->offset_first_element_in_bytes();
 
+  for(unsigned int n = 0; n < Ainfo->num_dimensions(); ++n){
+	Aoffset_first_element += input_window[n].start() * Astrides[n];
+  }
 
+  const Strides     &Ostrides = Oinfo->strides_in_bytes();
+  unsigned int Ooffset_first_element = Oinfo->offset_first_element_in_bytes();
+
+  for(unsigned int n = 0; n < Oinfo->num_dimensions(); ++n){
+	Ooffset_first_element += output_window[n].start() * Ostrides[n];
+  }
+
+  std::vector<float> v(src_data, src_data + sizeof src_data / sizeof src_data[0]);
+  std::vector<float> vout(dst_data, dst_data + sizeof dst_data / sizeof dst_data[0]);
+
+  uint step_y = 1;
+  tuner.AddArgumentInput(v);
+  tuner.AddArgumentScalar(static_cast<unsigned int>(Astrides[0])); 
+  tuner.AddArgumentScalar(static_cast<unsigned int>(width)); 
+  tuner.AddArgumentScalar(static_cast<unsigned int>(Astrides[1])); 
+  tuner.AddArgumentScalar(static_cast<unsigned int>(step_y)); 
+  tuner.AddArgumentScalar(static_cast<unsigned int>(Aoffset_first_element));
+  tuner.AddArgumentScalar(static_cast<unsigned int>(Ostrides[0])); 
+  tuner.AddArgumentInput(vout);
+  tuner.AddArgumentScalar(static_cast<unsigned int>(Ostrides[1])); 
+  tuner.AddArgumentScalar(static_cast<unsigned int>(step_y)); 
+  tuner.AddArgumentScalar(static_cast<unsigned int>(Ooffset_first_element));
+  tuner.AddArgumentScalar(static_cast<unsigned  int>(width));
+
+  tuner.SetNumRuns(10);
+  tuner.Tune();
+ // tuner.PrintToScreen();
 //Get output
 /*  Window output_window;
   output_window.use_tensor_dimensions(OTensor.info());

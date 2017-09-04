@@ -61,9 +61,9 @@ __kernel void softmax_layer_max(
     IMAGE_DECLARATION(dst),
     uint width)
 {
+    return ;
     Image src = CONVERT_TO_IMAGE_STRUCT(src);
     Image dst = CONVERT_TO_IMAGE_STRUCT(dst);
-
     // Initialize local maximum
     VEC_DATA_TYPE(DATA_TYPE, 16)
     max_val = (VEC_DATA_TYPE(DATA_TYPE, 16))type_min;
