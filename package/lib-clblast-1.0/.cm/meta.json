@@ -53,9 +53,9 @@
     "no-tune", 
     "opencl-blas", 
     "clblast", 
-    "v0.11.0", 
-    "v0.11", 
-    "v0"
+    "v1.0.1",
+    "v1.0",
+    "v1"
   ], 
   "use_scripts_from_another_entry": {
     "data_uoa": "9426bb100e41d57c"
