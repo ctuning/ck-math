@@ -91,7 +91,6 @@ echo ""
 cd ..
 rm -rf ../install/include
 mkdir ../install/include
-cp -rf include/* ../install/include
 cp -rf arm_compute ../install/include/arm_compute
 cp -rf test_helpers ../install/include/test_helpers
 
