@@ -12,11 +12,11 @@
       "sort": 10, 
       "tags": "compiler,lang-c"
     }, 
-    "lib-arm-compute": {
+    "arm-compute-opencl": {
       "local": "yes", 
-      "name": "ARM Compute Library", 
+      "name": "ARM Compute Library (OpenCL)",
       "sort": 30, 
-      "tags": "lib,arm-compute-lib"
+      "tags": "lib,arm-compute-lib,vopencl"
     }, 
     "opencl": {
       "local": "yes",
@@ -30,7 +30,7 @@
     "xopenme": {
       "local": "yes", 
       "name": "xOpenME library", 
-      "sort": 20, 
+      "sort": 15,
       "tags": "lib,xopenme"
     }
   }, 
