@@ -4,6 +4,7 @@
 
 #define ARM_COMPUTE_CL /* So that OpenCL exceptions get caught too */
 
+#include "arm_compute/core/CL/CLKernelLibrary.h"
 #include "arm_compute/core/Types.h"
 #include "arm_compute/runtime/CL/CLFunctions.h"
 #include "arm_compute/runtime/CL/CLScheduler.h"
@@ -52,22 +53,39 @@ int main( int argc, char *argv[] )
   const TensorShape BShape(n,k);
   TensorShape OShape(n,m);
 
+  printf("tensors\n");
+
   CLTensor ATensor;
   CLTensor BTensor;
   CLTensor OTensor;
   CLScheduler::get().default_init();
 
+  const char* kernel_path = getenv("CK_ENV_LIB_ACL_CL_KERNELS");
+  if (NULL != kernel_path) {
+    printf("hooray %s\n", kernel_path);
+    CLKernelLibrary::get().set_kernel_path(kernel_path);
+  } else {
+    printf("n ofound kernel path\n");
+  }
+
+  printf("scheduler\n");
+
   ATensor.allocator()->init(TensorInfo(AShape,Format::F32));
   BTensor.allocator()->init(TensorInfo(BShape,Format::F32));
   OTensor.allocator()->init(TensorInfo(OShape,Format::F32));
 
+  printf("alloc\n");
+
   CLGEMM gemm;
   gemm.configure(&ATensor, &BTensor, NULL, &OTensor, 2.0f, 2.0f);
+
+  printf("gemm\n");
 
   ATensor.allocator()->allocate();
   BTensor.allocator()->allocate();
   OTensor.allocator()->allocate();
-  CLScheduler::get().default_init();
+
+  printf("def_init\n");
 
 //  if (getenv("RUNS")!=NULL) runs_max=atol(getenv("RUNS"));
   for (r=0; r< runs_max; r++) {
