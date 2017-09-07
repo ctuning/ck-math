@@ -7,4 +7,5 @@ To customize build use the following vars:
 * OPENBLAS_LAPACK (YES) to build lapack
 
 For example,
-$ ck install package:lib-openblas-0.2.19-universal --env.OPENBLAS_TARGET=ARMV7 --env.OPENBLAS_FORTRAN=YES --env.OPENBLAS_LAPACK=YES
+
+    $ ck install package:lib-openblas-0.2.20-universal --env.OPENBLAS_TARGET=ARMV7 --env.OPENBLAS_FORTRAN=YES --env.OPENBLAS_LAPACK=YES
