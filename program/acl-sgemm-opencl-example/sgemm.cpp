@@ -8,11 +8,11 @@
 #include "arm_compute/core/Types.h"
 #include "arm_compute/runtime/CL/CLFunctions.h"
 #include "arm_compute/runtime/CL/CLScheduler.h"
-#include "arm_compute/tests/Utils.h"
+//#include "arm_compute/tests/Utils.h"
 
 #include <arm_compute/core/Helpers.h>
 #include <arm_compute/core/ITensor.h>
-#include <arm_compute/core/Validate.h>
+//#include <arm_compute/core/Validate.h>
 #include <arm_compute/runtime/Tensor.h>
 
 #include <cstdlib>
@@ -27,7 +27,7 @@
 #include <sys/time.h>
 
 using namespace arm_compute;
-using namespace test;
+//using namespace test;
 
 # define MYTIMER2 struct timeval
 static MYTIMER2 before, after;

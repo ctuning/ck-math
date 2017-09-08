@@ -38,7 +38,11 @@ static double secs;
 
 int main( int argc, char *argv[] )
 {
-
+  const char* kernel_path = getenv("CK_ENV_LIB_ACL_CL_KERNELS");
+  if (NULL != kernel_path) {
+    CLKernelLibrary::get().set_kernel_path(kernel_path);
+    
+  }
   int r=0;
 /*data init to be replaced with ppm images*/
   unsigned int width  = 16;
