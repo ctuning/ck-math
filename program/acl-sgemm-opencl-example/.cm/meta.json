@@ -74,9 +74,9 @@
   }, 
   "run_vars": {
     "CK_CLBLAST_ITERATIONS":5,
-    "CK_CLBLAST_MSIZE": 512,
+    "CK_CLBLAST_MSIZE": 1024,
     "CK_CLBLAST_NSIZE": 1024,
-    "CK_CLBLAST_KSIZE": 256
+    "CK_CLBLAST_KSIZE": 1024
   }, 
   "source_files": [
     "sgemm.c"
