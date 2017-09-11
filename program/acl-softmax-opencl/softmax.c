@@ -45,7 +45,7 @@ int main( int argc, char *argv[] )
   unsigned int width  = 16;
   unsigned int height = 16;
   unsigned int bsize = 2;
-  unsigned int seed = 12;
+  unsigned int seed = 42;
   
   if (getenv("CK_WIDTH")!=NULL)  width=atol(getenv("CK_WIDTH"));
   if (getenv("CK_HEIGHT")!=NULL)  height=atol(getenv("CK_HEIGHT"));
@@ -62,6 +62,7 @@ int main( int argc, char *argv[] )
      for(unsigned int h = 0; h < height; h++){
        for(unsigned int w = 0; w < width; w++){
          float r = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/MYMAX));
+//         printf("%f\n", r);
          src_data[b * (width * height) + h * width + w] = r; //replace with random fixed seed value
          dst_data[b * (width * height) + h * width + w] = 0;
        }
@@ -139,15 +140,20 @@ int main( int argc, char *argv[] )
   OTensor.map();
   Iterator output_it(&OTensor, output_window);
   execute_window_loop(output_window, [&](const Coordinates & id){
-#ifdef PRINT
-    std::cout << "Copying one row starting from [" << id.x() << "," << id.y() << "," << id.z() << "]\n";
-#endif
+    //std::cout << "Copying one row starting from [" << id.x() << "," << id.y() << "," << id.z() << "]\n";
     // Copy one whole row:
-    memcpy(dst_data + id.z() * (width * height) + id.y() * width, output_it.ptr(), width * sizeof(float));
+   dst_data[id.z() * (width * height) + id.y() * width + id.x()]= *reinterpret_cast<float*>(output_it.ptr());
   }, output_it);
   OTensor.unmap();
-
-
+printf("output:\n");
+for(unsigned int b = 0; b < bsize; b++){
+     for(unsigned int h = 0; h < height; h++){
+       for(unsigned int w = 0; w < width; w++){
+         printf("%f ", dst_data[b * (width * height) + h * width + w]);
+       }
+     }
+   }
+ printf("\n");
 
 // Compute time
   secs += (after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0;
