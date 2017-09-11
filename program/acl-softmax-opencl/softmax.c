@@ -8,6 +8,8 @@
 #include "arm_compute/core/Types.h"
 #include "arm_compute/runtime/CL/CLFunctions.h"
 #include "arm_compute/runtime/CL/CLScheduler.h"
+#include "arm_compute/core/CL/CLKernelLibrary.h"
+
 //#include "tests/Utils.h"
 
 
@@ -38,7 +40,6 @@ static double secs;
 
 int main( int argc, char *argv[] )
 {
-
   int r=0;
 /*data init to be replaced with ppm images*/
   unsigned int width  = 16;
@@ -73,6 +74,12 @@ int main( int argc, char *argv[] )
 
 // OpenCL init
   CLScheduler::get().default_init();
+  const char* kernel_path = getenv("CK_ENV_LIB_ACL_CL_KERNELS");
+  if (NULL != kernel_path) {
+    printf("%s\n",kernel_path);
+    CLKernelLibrary::get().set_kernel_path(kernel_path);
+    
+  }
 
   CLTensor ATensor; //NETensor for Neon 
   CLTensor OTensor;

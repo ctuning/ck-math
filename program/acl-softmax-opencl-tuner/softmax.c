@@ -140,6 +140,7 @@ int main( int argc, char *argv[] )
   std::vector<float> vout(dst_data, dst_data + sizeof dst_data / sizeof dst_data[0]);
 
   uint step_y = 1;
+/*
   tuner.AddArgumentInput(v);
   tuner.AddArgumentScalar(static_cast<unsigned int>(Astrides[0])); 
   tuner.AddArgumentScalar(static_cast<unsigned int>(width)); 
@@ -155,7 +156,8 @@ int main( int argc, char *argv[] )
 
   tuner.SetNumRuns(10);
   tuner.Tune();
- // tuner.PrintToScreen();
+*/
+  tuner.PrintToScreen();
 //Get output
 /*  Window output_window;
   output_window.use_tensor_dimensions(OTensor.info());

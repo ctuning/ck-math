@@ -79,7 +79,7 @@
     "CK_CLBLAST_KSIZE": 1024
   }, 
   "source_files": [
-    "sgemm.c"
+    "sgemm.cpp"
   ], 
   "tags": [
     "demo", 

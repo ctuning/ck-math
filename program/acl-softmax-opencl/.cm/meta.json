@@ -16,7 +16,7 @@
       "local": "yes", 
       "name": "ARM Compute Library", 
       "sort": 30, 
-      "tags": "lib,arm-compute-lib"
+      "tags": "lib,arm-compute-lib, vopencl"
     }, 
     "opencl": {
       "local": "yes", 
