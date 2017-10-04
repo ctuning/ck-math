@@ -1,4 +1,5 @@
 {
+  "comment":"only sources without building",
   "customize": {
     "extra_dir": "",
     "install_env": {
