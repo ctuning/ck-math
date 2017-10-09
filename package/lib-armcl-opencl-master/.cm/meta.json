@@ -58,7 +58,6 @@
   "package_extra_name": " (opencl)",
   "process_script": "install", 
   "soft_uoa": "fc544df6941a5491", 
-  "sort": 100, 
   "suggested_path": "lib-armcl-opencl-master", 
   "tags": [
     "lib", 
