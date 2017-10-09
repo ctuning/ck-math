@@ -1,3 +1,5 @@
+* 2017.10.09 - added package:lib-armcl-opencl-master
+
 * 2017.06.01 - removing patch3 from CLBlast (was added to mainline)
 
 * 2017.05.25 - first version of CLBlast crowd-tuning via CK is now working on Linux, Windows, Android
