@@ -1,4 +1,5 @@
 * 2017.10.09 - added package:lib-armcl-* packages (CPU/OpenCL with master/17.09 version)
+             - moved outdated package:lib-acl-* to ck-old-packages repo
 
 * 2017.06.01 - removing patch3 from CLBlast (was added to mainline)
 
