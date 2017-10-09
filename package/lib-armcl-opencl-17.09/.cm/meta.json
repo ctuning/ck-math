@@ -8,6 +8,7 @@
       "PACKAGE_SKIP_LINUX_MAKE": "YES", 
       "PACKAGE_SUB_DIR": "src", 
       "PACKAGE_SUB_DIR1": "src", 
+      "PACKAGE_GIT_CHECKOUT": "v17.09",
       "PACKAGE_URL": "https://github.com/ARM-software/ComputeLibrary", 
       "USE_ARM64_V82A": "OFF", 
       "USE_BARE_METAL": "OFF", 
@@ -20,7 +21,7 @@
       "USE_VALIDATION_TEST": "OFF"
     }, 
     "use_git_revision": "yes", 
-    "version": "master"
+    "version": "17.09"
   }, 
   "deps": {
     "compiler": {
@@ -58,16 +59,17 @@
   "process_script": "install", 
   "soft_uoa": "fc544df6941a5491", 
   "sort": 100, 
-  "suggested_path": "lib-armcl-opencl-master", 
+  "suggested_path": "lib-armcl-opencl-17.09", 
   "tags": [
     "lib", 
     "arm", 
+    "arm", 
     "armcl", 
-    "arm-compute-library", 
+    "arm-compute-library",
     "vopencl", 
-    "vmaster", 
     "vdefault", 
-    "vdev"
+    "v17.09", 
+    "v17"
   ], 
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "85f4594654f4becb"

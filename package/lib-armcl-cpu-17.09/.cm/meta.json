@@ -5,6 +5,7 @@
     "install_env": {
       "PACKAGE_AUTOGEN": "NO", 
       "PACKAGE_GIT": "YES", 
+      "PACKAGE_GIT_CHECKOUT": "v17.09", 
       "PACKAGE_SKIP_LINUX_MAKE": "YES", 
       "PACKAGE_SUB_DIR": "src", 
       "PACKAGE_SUB_DIR1": "src", 
@@ -15,12 +16,12 @@
       "USE_CPPTHREADS": "ON", 
       "USE_EMBEDDED_KERNELS": "OFF", 
       "USE_NEON": "OFF", 
-      "USE_OPENCL": "ON", 
+      "USE_OPENCL": "OFF", 
       "USE_OPENMP": "OFF", 
       "USE_VALIDATION_TEST": "OFF"
     }, 
     "use_git_revision": "yes", 
-    "version": "master"
+    "version": "17.09"
   }, 
   "deps": {
     "compiler": {
@@ -28,16 +29,7 @@
       "name": "C++ compiler", 
       "sort": 10, 
       "tags": "compiler,lang-cpp"
-    }, 
-    "opencl": {
-      "local": "yes", 
-      "name": "OpenCL library", 
-      "skip_installed": {
-        "android": "yes"
-      }, 
-      "sort": 20, 
-      "tags": "lib,opencl"
-    }
+    } 
   }, 
   "end_full_path": {
     "android": "install$#sep#$lib$#sep#$libarm_compute.a", 
@@ -58,16 +50,16 @@
   "process_script": "install", 
   "soft_uoa": "fc544df6941a5491", 
   "sort": 100, 
-  "suggested_path": "lib-armcl-opencl-master", 
+  "suggested_path": "lib-armcl-cpu-17.09", 
   "tags": [
     "lib", 
     "arm", 
     "armcl", 
     "arm-compute-library", 
-    "vopencl", 
-    "vmaster", 
+    "vcpu", 
     "vdefault", 
-    "vdev"
+    "v17.09", 
+    "v17"
   ], 
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "85f4594654f4becb"

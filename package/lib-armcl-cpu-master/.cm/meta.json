@@ -15,7 +15,7 @@
       "USE_CPPTHREADS": "ON", 
       "USE_EMBEDDED_KERNELS": "OFF", 
       "USE_NEON": "OFF", 
-      "USE_OPENCL": "ON", 
+      "USE_OPENCL": "OFF", 
       "USE_OPENMP": "OFF", 
       "USE_VALIDATION_TEST": "OFF"
     }, 
@@ -28,16 +28,7 @@
       "name": "C++ compiler", 
       "sort": 10, 
       "tags": "compiler,lang-cpp"
-    }, 
-    "opencl": {
-      "local": "yes", 
-      "name": "OpenCL library", 
-      "skip_installed": {
-        "android": "yes"
-      }, 
-      "sort": 20, 
-      "tags": "lib,opencl"
-    }
+    } 
   }, 
   "end_full_path": {
     "android": "install$#sep#$lib$#sep#$libarm_compute.a", 
@@ -58,13 +49,13 @@
   "process_script": "install", 
   "soft_uoa": "fc544df6941a5491", 
   "sort": 100, 
-  "suggested_path": "lib-armcl-opencl-master", 
+  "suggested_path": "lib-armcl-cpu-master", 
   "tags": [
     "lib", 
     "arm", 
     "armcl", 
     "arm-compute-library", 
-    "vopencl", 
+    "vcpu", 
     "vmaster", 
     "vdefault", 
     "vdev"
