@@ -193,6 +193,8 @@ def setup(i):
        neon=True
        nie['USE_NEON']='ON'
 
+    flags += ['-I../include']
+
     opencl=False
     if env.get('USE_OPENCL','').lower()=='on':
        opencl=True
@@ -202,7 +204,6 @@ def setup(i):
        ipath = openclenv.get('path_include')
        lpath = openclenv.get('path_lib')
 #       flags += ['-I'+ipath] ACL uses local CL/cl.h cl2.h
-       flags += ['-I../include']
 #       nie['CK_FLAG_PREFIX_INCLUDE'] = ''
        lflags +=['-L'+lpath+' -lOpenCL']
 #       lcore_flags += ['']
