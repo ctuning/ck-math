@@ -418,10 +418,6 @@ def post_setup(i):
         xfiles += glob.glob('src/runtime/NEON/*.cpp')
         xfiles += glob.glob('src/runtime/NEON/functions/*.cpp')
 
-
-
-
-
     # Generate string with build options library version to embed in the library:
     r=ck.run_and_get_stdout({'cmd':['git','rev-parse','HEAD']})
     if r['return']==0 and r['return_code']==0: 
@@ -449,6 +445,10 @@ def post_setup(i):
     sb=hosd.get('batch_prefix','')+'\n'
 
     sb+=deps.get('compiler',{}).get('bat','')+'\n'
+
+    x=env.get('CK_AUTOTUNE','').lower()
+    if x=='yes' or x=='on':
+       flags+=' -DCK_AUTOTUNE=ON'
 
     sb+=eset+' INSTALL_DIR='+_slash(pi)+'\n\n'
     sb+=eset+' BUILD_DIR='+_slash(build_dir)+'\n\n'
