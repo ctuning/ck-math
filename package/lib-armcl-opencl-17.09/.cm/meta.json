@@ -69,7 +69,8 @@
     "vopencl", 
     "vdefault", 
     "v17.09", 
-    "v17"
+    "v17",
+    "channel-stable"
   ], 
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "85f4594654f4becb"

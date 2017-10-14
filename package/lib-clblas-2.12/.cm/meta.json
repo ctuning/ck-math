@@ -53,6 +53,7 @@
     "opencl-blas", 
     "clblas", 
     "v2.12", 
-    "v2"
+    "v2",
+    "channel-stable"
   ]
 }

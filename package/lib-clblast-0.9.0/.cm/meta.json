@@ -54,7 +54,8 @@
     "clblast", 
     "v0.9.0", 
     "v0.9", 
-    "v0"
+    "v0",
+    "channel-stable"
   ], 
   "use_scripts_from_another_entry": {
     "data_uoa": "9426bb100e41d57c"

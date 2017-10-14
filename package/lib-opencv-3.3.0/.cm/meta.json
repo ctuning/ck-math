@@ -19,6 +19,7 @@
       "PACKAGE_SUB_DIR": "opencv-3.3.0",
       "PACKAGE_SUB_DIR1": "opencv-3.3.0",
       "PACKAGE_UNZIP": "YES",
+      "PACKAGE_UNZIP_SKIP_ERROR":"YES",
       "PACKAGE_URL": "https://github.com/opencv/opencv/archive",
       "PACKAGE_WGET": "YES",
       "PACKAGE_WGET_EXTRA": "--no-cookies"
@@ -43,7 +44,7 @@
   "end_full_path": {
     "android": "install$#sep#$sdk$#sep#$native$#sep#$libs$#sep#$$#abi#$$#sep#$libopencv_core.a",
     "linux": "install/lib/libopencv_core.a",
-    "win": "install\\lib\\opencv_core320.lib"
+    "win": "install\\lib\\opencv_core330.lib"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
@@ -63,7 +64,8 @@
     "opencv",
     "v3.3.0",
     "v3.3",
-    "v3"
+    "v3",
+    "channel-stable"
   ],
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "fd44428fbc77f77f",

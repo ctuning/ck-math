@@ -21,6 +21,7 @@
     "lib", 
     "toon", 
     "v2.2", 
-    "v2"
+    "v2",
+    "channel-stable"
   ]
 }
