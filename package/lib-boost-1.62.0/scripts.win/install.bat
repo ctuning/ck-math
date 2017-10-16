@@ -45,7 +45,7 @@ if NOT "%CK_COMPILER_TOOLCHAIN_NAME%" == "" (
 set BOOST_BUILD_PATH=%INSTALL_DIR%\install
 echo using %TOOLCHAIN% : : %CK_CXX% %CK_CXX_FLAGS_FOR_CMAKE% %EXTRA_FLAGS% -DNO_BZIP2 ; > %BOOST_BUILD_PATH%\user-config.jam
 
-b2 install -a toolset=%TOOLCHAIN% link=shared --layout=tagged runtime-link=shared threading=multi address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH%
+b2 install -a toolset=%TOOLCHAIN% link=shared --layout=tagged runtime-link=shared threading=multi address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% %BOOST_B2_FLAGS%
 
 if %errorlevel% neq 0 (
   echo.

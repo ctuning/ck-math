@@ -17,10 +17,11 @@
       "PACKAGE_UNTAR": "YES", 
       "PACKAGE_UNTAR_SKIP_ERROR_WIN": "YES", 
       "PACKAGE_URL": "https://sourceforge.net/projects/boost/files/boost/1.64.0", 
-      "PACKAGE_WGET": "YES",
-      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR":"$#path_to_cid=package:44094af948731a1c#$"
+      "PACKAGE_WGET": "YES", 
+      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:44094af948731a1c#$",
+      "BOOST_B2_FLAGS":"--with-date_time --with-system --with-filesystem --with-thread"
     }, 
-    "version": "1.64.0"
+    "version": "1.64.0-min-for-caffe"
   }, 
   "deps": {
     "cmake": {
@@ -82,13 +83,12 @@
   ], 
   "process_script": "install", 
   "soft_uoa": "23949f2a32490faf", 
-  "suggested_path": "lib-boost", 
+  "suggested_path": "lib-boost-min-for-caffe", 
   "tags": [
     "lib", 
-    "boost",
-    "v1.64.0", 
-    "v1.64", 
-    "v1",
+    "boost", 
+    "v1.64.0-min-for-caffe", 
+    "min-for-caffe",
     "channel-stable"
   ], 
   "use_preprocess_scripts_from_another_entry": {
