@@ -264,7 +264,7 @@ def setup(i):
     elif env.get('USE_ARM64_V82A','').lower()=='on':
         flags += ['-march=armv8.2-a+fp16+simd']
         flags += ['-DARM_COMPUTE_ENABLE_FP16']
-    elif 'arm64' in tabi or 'aarch64' in tabi:
+    elif 'arm64' in tabi: # or 'aarch64' in tabi:
         flags += ['-march=armv8-a']
     elif tabi=='x86':
         flags += ['-m32']
