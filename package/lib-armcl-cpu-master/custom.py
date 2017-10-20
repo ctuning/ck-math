@@ -288,6 +288,9 @@ def setup(i):
 
     flags += ['-O3','-ftree-vectorize']
 
+    if env.get('CK_ARMCL_EXTRA_CXX_FLAGS','')!='':
+       flags.append(i['CK_ARMCL_EXTRA_CXX_FLAGS'])
+
     nie['CXXFLAGS']=' '.join(flags)
     nie['LFLAGS']=' '.join(lflags)
     nie['LCORE_FLAGS']=' '.join(lcore_flags)
