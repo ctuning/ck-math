@@ -34,6 +34,8 @@ def resolve_includes(target, source, lpath):
     # Create dictionary of tupled list
     files_dict = dict(files)
 
+    print (files_dict)
+
     # Check for includes (can only be files in the same folder)
     final_files = []
     for file in files:
@@ -46,8 +48,9 @@ def resolve_includes(target, source, lpath):
                 found = pattern.search(line)
                 if found:
                     include_file = found.group(1)
-                    data = files_dict[include_file].file_contents
-                    updated_file.extend(data)
+                    if include_file in files_dict:
+                       data = files_dict[include_file].file_contents
+                       updated_file.extend(data)
                 else:
                     updated_file.append(line)
                     file_count += 1
