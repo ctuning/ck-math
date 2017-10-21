@@ -34,8 +34,6 @@ def resolve_includes(target, source, lpath):
     # Create dictionary of tupled list
     files_dict = dict(files)
 
-    print (files_dict)
-
     # Check for includes (can only be files in the same folder)
     final_files = []
     for file in files:
