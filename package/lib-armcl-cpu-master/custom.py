@@ -279,8 +279,12 @@ def setup(i):
         env['USE_ARM64']='ON'
         flags += ['-march=armv8.2-a+fp16+simd']
         flags += ['-DARM_COMPUTE_ENABLE_FP16']
+<<<<<<< HEAD
     elif 'arm64' in tabi or 'aarch64' in tabi:
         env['USE_ARM64']='ON'
+=======
+    elif 'arm64' in tabi: # or 'aarch64' in tabi:
+>>>>>>> 5c594fabb3cf712d440a762ffd028f6f0a0fcbb1
         flags += ['-march=armv8-a']
     elif tabi=='x86':
         flags += ['-m32']
