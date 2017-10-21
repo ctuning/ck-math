@@ -181,13 +181,15 @@ def setup(i):
     tneon=cpu_features.get('arm_fp_neon','')
     thardfp=cpu_features.get('arm_fp_hard','')
 
-    # ABI for Android
     tabi=tosd.get('abi','')
     if tabi=='': # Means host
        tabi=habi # Means ARM
        if tabi=='': # Means x86 (indirectly)
           tabi='x86'
           if str(tbits)=='64': tabi='x86_64'
+
+    if 'x86' in tabi:
+       flags+=['-fPIC']
 
     neon=False
     if env.get('USE_NEON','').lower()=='on' or tneon=='yes':
