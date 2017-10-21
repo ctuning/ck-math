@@ -193,6 +193,9 @@ def setup(i):
        neon=True
        nie['USE_NEON']='ON'
 
+    if env.get('WERROR','').lower()=='on':
+       flags+=['-Werror']
+
     flags += ['-I../include']
 
     opencl=False
@@ -227,6 +230,16 @@ def setup(i):
 
 
     compiler_env=deps['compiler'].get('dict',{}).get('env',{})
+    compiler_ver=deps['compiler'].get('ver','')
+    compiler_ver_list=deps['compiler'].get('dict',{}).get('customize',{}).get('version_split',[])
+
+    if len(compiler_ver_list)>0 and compiler_ver_list[0]>=6:
+       # there is a proper way in the CK to compare that version >= 6.1 now
+       flags+=['-Wno-ignored-attributes']
+
+    if compiler_ver == '4.8.3':
+       flags+=['-Wno-array-bounds']
+
     cxx=compiler_env['CK_CXX']
 
     if compiler_env.get('CK_ENV_LIB_STDCPP_INCLUDE','')!='':
@@ -255,6 +268,7 @@ def setup(i):
         lcore_flags += ['-fopenmp']
 
     if 'v7a' in tabi:
+        env['USE_ARM32']='ON'
         flags += ['-march=armv7-a','-mthumb','-mfpu=neon']
 
         if hardfp:
@@ -262,9 +276,11 @@ def setup(i):
         elif tname2=='android':
             flags += ['-mfloat-abi=softfp']
     elif env.get('USE_ARM64_V82A','').lower()=='on':
+        env['USE_ARM64']='ON'
         flags += ['-march=armv8.2-a+fp16+simd']
         flags += ['-DARM_COMPUTE_ENABLE_FP16']
     elif 'arm64' in tabi or 'aarch64' in tabi:
+        env['USE_ARM64']='ON'
         flags += ['-march=armv8-a']
     elif tabi=='x86':
         flags += ['-m32']
@@ -286,7 +302,14 @@ def setup(i):
     else:
         lflags += ['-lpthread']
 
-    flags += ['-O3','-ftree-vectorize']
+    if env.get('DEBUG','').lower()=='on':
+       env['ASSERTS']='ON'
+       flags+=['-O0','-g','-gdwarf-2', '-DARM_COMPUTE_DEBUG_ENABLED']
+    else:
+       flags += ['-O3','-ftree-vectorize']
+
+    if env.get('ASSERTS','').lower()=='on':
+       flags += ['-DARM_COMPUTE_ASSERTS_ENABLED','-fstack-protector-strong']
 
     if env.get('CK_ARMCL_EXTRA_CXX_FLAGS','')!='':
        flags.append(env['CK_ARMCL_EXTRA_CXX_FLAGS'])
@@ -419,6 +442,12 @@ def post_setup(i):
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
+
+        if env.get('USE_ARM32','').lower()=='on':
+           xcore_files += glob.glob('src/core/NEON/kernels/arm32/*.cpp')
+        elif env.get('USE_ARM64','').lower()=='on':
+           xcore_files += glob.glob('src/core/NEON/kernels/arm64/*.cpp')
+
         xfiles += glob.glob('src/runtime/NEON/*.cpp')
         xfiles += glob.glob('src/runtime/NEON/functions/*.cpp')
 
@@ -509,6 +538,7 @@ def post_setup(i):
     sb+=eset+' CK_SRC_FILES='+_slash(eifs+core_files+eifs)+'\n'
     sb+=eset+' CK_TARGET_LIB='+_slash(libprefix)+'arm_compute\n'
     sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
+    sb+=eset+' ARMCL_EXTRA_LIB=-larm_compute_core\n'
     sb+=eset+' ORIGINAL_PACKAGE_DIR='+_slash(pp)+'\n\n'
     sb+=eset+' CK_HOST_CPU_NUMBER_OF_PROCESSORS='+str(env.get('CK_HOST_CPU_NUMBER_OF_PROCESSORS', 1))+'\n\n'
 
