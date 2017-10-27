@@ -317,6 +317,10 @@ def setup(i):
     if env.get('CK_ARMCL_EXTRA_CXX_FLAGS','')!='':
        flags.append(env['CK_ARMCL_EXTRA_CXX_FLAGS'])
 
+    if env.get('CK_SKIP_FPIC','').lower()!='on':
+       if '-fPIC' not in flags:
+          flags.append('-fPIC')
+
     nie['CXXFLAGS']=' '.join(flags)
     nie['LFLAGS']=' '.join(lflags)
     nie['LCORE_FLAGS']=' '.join(lcore_flags)
@@ -519,6 +523,9 @@ def post_setup(i):
     # Run script
     rx=os.system(fn)
 
+    if rx>1:
+       return {'return':1, 'error':'ARMCL build failed'}
+
     # BUILDING CORE + RUNTIME LIB **************************************************************
     # Clean up files and prepare obj names
     files=''
@@ -566,5 +573,8 @@ def post_setup(i):
 
     # Run script
     rx=os.system(fn)
+
+    if rx>1:
+       return {'return':1, 'error':'ARMCL build failed'}
 
     return {'return':0}
