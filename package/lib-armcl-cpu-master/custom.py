@@ -523,6 +523,9 @@ def post_setup(i):
     # Run script
     rx=os.system(fn)
 
+    if rx>1:
+       return {'return':1, 'error':'ARMCL build failed'}
+
     # BUILDING CORE + RUNTIME LIB **************************************************************
     # Clean up files and prepare obj names
     files=''
@@ -570,5 +573,8 @@ def post_setup(i):
 
     # Run script
     rx=os.system(fn)
+
+    if rx>1:
+       return {'return':1, 'error':'ARMCL build failed'}
 
     return {'return':0}
