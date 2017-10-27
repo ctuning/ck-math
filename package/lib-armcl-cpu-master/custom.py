@@ -317,6 +317,10 @@ def setup(i):
     if env.get('CK_ARMCL_EXTRA_CXX_FLAGS','')!='':
        flags.append(env['CK_ARMCL_EXTRA_CXX_FLAGS'])
 
+    if env.get('CK_SKIP_FPIC','').lower()!='on':
+       if '-fPIC' not in flags:
+          flags.append('-fPIC')
+
     nie['CXXFLAGS']=' '.join(flags)
     nie['LFLAGS']=' '.join(lflags)
     nie['LCORE_FLAGS']=' '.join(lcore_flags)
