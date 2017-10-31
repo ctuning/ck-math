@@ -1,103 +1,106 @@
 {
-  "backup_data_uid": "d70d4973a7446684", 
-  "build_compiler_vars": {}, 
+  "backup_data_uid": "d70d4973a7446684",
+  "build_compiler_vars": {},
   "compile_cmds": {
     "default": {
       "cmd": "../ck-compile$#script_ext#$"
     }
-  }, 
+  },
   "compile_deps": {
     "compiler": {
-      "local": "yes", 
-      "name": "C++ compiler", 
-      "sort": 5, 
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 5,
       "tags": "compiler,lang-cpp"
-    }, 
+    },
     "lib-opencl": {
-      "local": "yes", 
-      "name": "OpenCL Library", 
+      "local": "yes",
+      "name": "OpenCL Library",
       "skip-installed": {
         "android": "yes"
-      }, 
-      "sort": 20, 
+      },
+      "sort": 20,
       "tags": "lib,opencl"
-    }, 
+    },
     "library": {
-      "local": "yes", 
-      "name": "ARM Compute Library (OpenCL)", 
-      "sort": -5, 
+      "local": "yes",
+      "name": "ARM Compute Library (OpenCL)",
+      "sort": -5,
       "tags": "lib,arm-compute-library,vopencl"
-    }, 
+    },
     "scons": {
-      "local": "yes", 
-      "name": "Scons", 
-      "sort": 0, 
+      "local": "yes",
+      "name": "Scons",
+      "sort": 0,
       "tags": "tool,scons"
     }
-  }, 
+  },
   "compile_vars": {
-    "ARCH": "", 
-    "BENCHMARK_TESTS": 1, 
-    "BUILD": "native", 
-    "CPPTHREADS": 1, 
-    "DEBUG": 1, 
-    "EMBED_KERNELS": 0, 
-    "EXAMPLES": 0, 
-    "EXTRA_CXX_FLAGS": "", 
-    "J": 2, 
-    "MALI": 0, 
-    "NEON": 0, 
-    "OPENCL": 1, 
-    "OPENMP": 0, 
-    "OS": "", 
-    "PMU": 0, 
-    "TIMERS": 0, 
-    "VALIDATION_TESTS": 1, 
+    "ARCH": "",
+    "BENCHMARK_TESTS": 1,
+    "BUILD": "native",
+    "CPPTHREADS": 1,
+    "DEBUG": 0,
+    "EMBED_KERNELS": 0,
+    "EXAMPLES": 0,
+    "EXTRA_CXX_FLAGS": "",
+    "J": 4,
+    "MALI": 0,
+    "NEON": 0,
+    "OPENCL": 1,
+    "OPENMP": 0,
+    "OS": "",
+    "PMU": 0,
+    "TIMERS": 0,
+    "VALIDATION_TESTS": 1,
     "WERROR": 0
-  }, 
-  "compiler_env": "CK_CXX", 
-  "data_name": "validation-armcl-opencl", 
-  "main_language": "cpp", 
+  },
+  "compiler_env": "CK_CXX",
+  "data_name": "validation-armcl-opencl",
+  "main_language": "cpp",
   "only_for_target_os_tags": [
-    "android", 
+    "android",
     "linux"
-  ], 
-  "process_in_tmp": "yes", 
-  "program": "yes", 
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
   "run_cmds": {
     "help": {
       "run_time": {
-        "run_cmd_main": "$#BIN_FILE#$ --help", 
-        "run_cmd_out1": "", 
-        "run_cmd_out2": "", 
+        "run_cmd_main": "$#BIN_FILE#$ --help",
+        "run_cmd_out1": "",
+        "run_cmd_out2": "",
         "run_input_files": []
       }
-    }, 
+    },
     "list-tests": {
       "run_time": {
-        "run_cmd_main": "../ck-run-validation$#script_ext#$ --list-tests", 
-        "run_cmd_out1": "", 
-        "run_cmd_out2": "", 
+        "run_cmd_main": "../ck-run-validation$#script_ext#$ --list-tests",
+        "run_cmd_out1": "",
+        "run_cmd_out2": "",
         "run_input_files": []
       }
-    }, 
+    },
     "run": {
       "run_time": {
-        "need_compute_device": "opencl", 
-        "run_cmd_main": "../ck-run-validation$#script_ext#$", 
-        "run_cmd_out1": "", 
-        "run_cmd_out2": "", 
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-validation$#script_ext#$",
+        "run_cmd_out1": "",
+        "run_cmd_out2": "",
         "run_input_files": []
       }
     }
-  }, 
-  "run_vars": {}, 
-  "skip_bin_ext": "yes", 
+  },
+  "run_vars": {
+    "FILTER": "",
+    "SEED": 42
+  },
+  "skip_bin_ext": "yes",
   "tags": [
-    "validation", 
-    "armcl", 
+    "validation",
+    "armcl",
     "vopencl"
-  ], 
-  "target_file": "arm_compute_validation", 
+  ],
+  "target_file": "arm_compute_validation",
   "use_compile_script": "yes"
 }
