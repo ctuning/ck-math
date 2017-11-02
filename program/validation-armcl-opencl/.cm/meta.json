@@ -65,28 +65,71 @@
   "process_in_tmp": "yes",
   "program": "yes",
   "run_cmds": {
-    "help": {
+    "help-benchmark": {
       "run_time": {
-        "run_cmd_main": "$#BIN_FILE#$ --help",
+        "run_cmd_main": "LD_LIBRARY_PATH=${CK_ENV_LIB_ARMCL_SRC}/build:${LD_LIBRARY_PATH} ${EXECUTABLE} --help",
         "run_cmd_out1": "",
         "run_cmd_out2": "",
+        "run_set_env2": {
+          "EXECUTABLE": "arm_compute_benchmark"
+        },
         "run_input_files": []
       }
     },
-    "list-tests": {
+    "help-validation": {
+      "run_time": {
+        "run_cmd_main": "LD_LIBRARY_PATH=${CK_ENV_LIB_ARMCL_SRC}/build:${LD_LIBRARY_PATH} ${EXECUTABLE} --help",
+        "run_cmd_out1": "",
+        "run_cmd_out2": "",
+        "run_set_env2": {
+          "EXECUTABLE": "arm_compute_validation"
+        },
+        "run_input_files": []
+      }
+    },
+    "list-tests-benchmark": {
       "run_time": {
         "run_cmd_main": "../ck-run-validation$#script_ext#$ --list-tests",
         "run_cmd_out1": "",
         "run_cmd_out2": "",
+        "run_set_env2": {
+          "EXECUTABLE": "arm_compute_benchmark"
+        },
         "run_input_files": []
       }
     },
-    "run": {
+    "list-tests-validation": {
+      "run_time": {
+        "run_cmd_main": "../ck-run-validation$#script_ext#$ --list-tests",
+        "run_cmd_out1": "",
+        "run_cmd_out2": "",
+        "run_set_env2": {
+          "EXECUTABLE": "arm_compute_validation"
+        },
+        "run_input_files": []
+      }
+    },
+    "run-benchmark": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run-validation$#script_ext#$",
         "run_cmd_out1": "",
         "run_cmd_out2": "",
+        "run_set_env2": {
+          "EXECUTABLE": "arm_compute_benchmark"
+        },
+        "run_input_files": []
+      }
+    },
+    "run-validation": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-validation$#script_ext#$",
+        "run_cmd_out1": "",
+        "run_cmd_out2": "",
+        "run_set_env2": {
+          "EXECUTABLE": "arm_compute_validation"
+        },
         "run_input_files": []
       }
     }
@@ -97,10 +140,12 @@
   },
   "skip_bin_ext": "yes",
   "tags": [
-    "validation",
     "armcl",
+    "arm-compute-library",
+    "benchmark",
+    "validation",
     "vopencl"
   ],
-  "target_file": "arm_compute_validation",
+  "target_file": "",
   "use_compile_script": "yes"
 }

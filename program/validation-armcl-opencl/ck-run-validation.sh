@@ -26,18 +26,28 @@ cp -r ${CK_ENV_LIB_ARMCL_CL_KERNELS} ${WORKING_DIR}
 
 #------------------------------------------------------------------------------
 echo ""
-echo "Running original ArmCL validation with --seed=${SEED} and --filter='${FILTER}' ..."
-
-echo ""
 
 export LD_LIBRARY_PATH=${CK_ENV_LIB_ARMCL_SRC}/build:${LD_LIBRARY_PATH}
 
-./arm_compute_validation $1 --error-on-missing-assets \
-  --seed=${SEED} --filter=${FILTER}
+# Example usage: ck run --env.FILTER='CL/SoftmaxLayer/Float/FP\\d\\d/RunSmall@Shape=633x11x3x5'
+# NB: arm_compute_benchmark cannot run with --filter='', hence two cases.
+# NB: $1 is used for --list-tests.
+if [ -z ${FILTER} ]; then
+  echo "Running: ${EXECUTABLE} --seed=${SEED} ..."
+  echo ""
+  
+  ${EXECUTABLE} $1 --error-on-missing-assets \
+    --seed=${SEED}
+
+else
+  echo "Running: ${EXECUTABLE} --seed=${SEED} --filter='${FILTER}' ..."
+  echo ""
+
+  ${EXECUTABLE} $1 --error-on-missing-assets \
+    --seed=${SEED} --filter=${FILTER}
+fi
 
 echo ""
-
-# --env.FILTER='CL/SoftmaxLayer/Float/FP\\d\\d/RunSmall@Shape=633x11x3x5'
 
 #------------------------------------------------------------------------------
 return 0
