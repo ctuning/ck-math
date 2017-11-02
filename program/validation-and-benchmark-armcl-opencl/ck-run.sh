@@ -36,14 +36,14 @@ if [ -z ${FILTER} ]; then
   echo "Running: ${EXECUTABLE} --seed=${SEED} ..."
   echo ""
   
-  ${EXECUTABLE} $1 --error-on-missing-assets \
+  ${EXECUTABLE} $1 --stop-on-error \
     --seed=${SEED}
 
 else
   echo "Running: ${EXECUTABLE} --seed=${SEED} --filter='${FILTER}' ..."
   echo ""
 
-  ${EXECUTABLE} $1 --error-on-missing-assets \
+  ${EXECUTABLE} $1 --stop-on-error \
     --seed=${SEED} --filter=${FILTER}
 fi
 
