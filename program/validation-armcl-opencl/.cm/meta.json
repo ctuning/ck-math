@@ -89,7 +89,7 @@
     },
     "list-tests-benchmark": {
       "run_time": {
-        "run_cmd_main": "../ck-run-validation$#script_ext#$ --list-tests",
+        "run_cmd_main": "../ck-run$#script_ext#$ --list-tests",
         "run_cmd_out1": "",
         "run_cmd_out2": "",
         "run_set_env2": {
@@ -100,7 +100,7 @@
     },
     "list-tests-validation": {
       "run_time": {
-        "run_cmd_main": "../ck-run-validation$#script_ext#$ --list-tests",
+        "run_cmd_main": "../ck-run$#script_ext#$ --list-tests",
         "run_cmd_out1": "",
         "run_cmd_out2": "",
         "run_set_env2": {
@@ -112,7 +112,7 @@
     "run-benchmark": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-validation$#script_ext#$",
+        "run_cmd_main": "../ck-run$#script_ext#$",
         "run_cmd_out1": "",
         "run_cmd_out2": "",
         "run_set_env2": {
@@ -124,7 +124,7 @@
     "run-validation": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-validation$#script_ext#$",
+        "run_cmd_main": "../ck-run$#script_ext#$",
         "run_cmd_out1": "",
         "run_cmd_out2": "",
         "run_set_env2": {
