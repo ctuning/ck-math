@@ -31,19 +31,20 @@ export LD_LIBRARY_PATH=${CK_ENV_LIB_ARMCL_SRC}/build:${LD_LIBRARY_PATH}
 
 # Example usage: ck run --env.FILTER='CL/SoftmaxLayer/Float/FP\\d\\d/RunSmall@Shape=633x11x3x5'
 # NB: arm_compute_benchmark cannot run with --filter='', hence two cases.
+# NB: sometimes it's handy to use --stop-on-error.
 # NB: $1 is used for --list-tests.
 if [ -z ${FILTER} ]; then
   echo "Running: ${EXECUTABLE} --seed=${SEED} ..."
   echo ""
   
-  ${EXECUTABLE} $1 --stop-on-error \
+  ${EXECUTABLE} $1 \
     --seed=${SEED}
 
 else
   echo "Running: ${EXECUTABLE} --seed=${SEED} --filter='${FILTER}' ..."
   echo ""
 
-  ${EXECUTABLE} $1 --stop-on-error \
+  ${EXECUTABLE} $1 \
     --seed=${SEED} --filter=${FILTER}
 fi
 
