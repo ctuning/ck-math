@@ -113,8 +113,8 @@
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run$#script_ext#$",
-        "run_cmd_out1": "",
-        "run_cmd_out2": "",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
         "run_set_env2": {
           "EXECUTABLE": "arm_compute_benchmark"
         },
@@ -125,8 +125,8 @@
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run$#script_ext#$",
-        "run_cmd_out1": "",
-        "run_cmd_out2": "",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
         "run_set_env2": {
           "EXECUTABLE": "arm_compute_validation"
         },
