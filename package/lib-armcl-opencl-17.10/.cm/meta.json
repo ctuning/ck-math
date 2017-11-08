@@ -5,10 +5,10 @@
     "install_env": {
       "PACKAGE_AUTOGEN": "NO", 
       "PACKAGE_GIT": "YES", 
+      "PACKAGE_GIT_CHECKOUT": "v17.10", 
       "PACKAGE_SKIP_LINUX_MAKE": "YES", 
       "PACKAGE_SUB_DIR": "src", 
       "PACKAGE_SUB_DIR1": "src", 
-      "PACKAGE_GIT_CHECKOUT": "v17.09",
       "PACKAGE_URL": "https://github.com/ARM-software/ComputeLibrary", 
       "USE_ARM64_V82A": "OFF", 
       "USE_BARE_METAL": "OFF", 
@@ -21,7 +21,7 @@
       "USE_VALIDATION_TEST": "OFF"
     }, 
     "use_git_revision": "yes", 
-    "version": "17.09"
+    "version": "17.10"
   }, 
   "deps": {
     "compiler": {
@@ -56,7 +56,7 @@
     "linux", 
     "android"
   ], 
-  "package_extra_name": " (opencl)",
+  "package_extra_name": " (opencl)", 
   "process_script": "install", 
   "soft_uoa": "fc544df6941a5491", 
   "suggested_path": "lib-armcl-opencl", 
@@ -65,11 +65,11 @@
     "arm", 
     "arm", 
     "armcl", 
-    "arm-compute-library",
+    "arm-compute-library", 
     "vopencl", 
     "vdefault", 
-    "v17.09", 
-    "v17",
+    "v17.10", 
+    "v17", 
     "channel-stable"
   ], 
   "use_preprocess_scripts_from_another_entry": {
