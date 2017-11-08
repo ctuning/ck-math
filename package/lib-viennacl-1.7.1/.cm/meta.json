@@ -1,13 +1,13 @@
 {
   "customize": {
     "extra_dir": "",
+    "git_src_dir": "src",
     "install_env": {
       "VIENNACL_TAG": "release-1.7.1",
       "VIENNACL_URL": "https://github.com/viennacl/viennacl-dev"
     },
-    "version": "1.7.1",
-    "use_git_revision":"yes",
-    "git_src_dir":"src"
+    "use_git_revision": "yes",
+    "version": "1.7.1"
   },
   "deps": {
     "boost": {
@@ -18,8 +18,8 @@
     },
     "cmake": {
       "local": "yes",
-      "sort": 5,
       "name": "CMake tool",
+      "sort": 5,
       "tags": "cmake"
     },
     "compiler": {
@@ -41,6 +41,9 @@
     "mingw": "lib\\libviennacl.so",
     "win": "lib\\libviennacl.so"
   },
+  "only_for_host_os_tags": [
+    "linux"
+  ],
   "process_script": "install",
   "soft_uoa": "b8319cc532802fe2",
   "suggested_path": "lib-viennacl",

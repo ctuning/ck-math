@@ -1,5 +1,5 @@
 {
-  "comment":"only sources without building",
+  "comment": "only sources without building",
   "customize": {
     "extra_dir": "",
     "install_env": {
@@ -8,14 +8,16 @@
     },
     "version": "1.7.1"
   },
-  "deps": {
-  },
+  "deps": {},
   "end_full_path": {
     "android": "src$#sep#$viennacl$#sep#$version.hpp",
     "linux": "src/viennacl/version.hpp",
     "mingw": "src\\viennacl\\version.hpp",
     "win": "src\\viennacl\\version.hpp"
   },
+  "only_for_host_os_tags": [
+    "linux"
+  ],
   "process_script": "install",
   "soft_uoa": "f41d49bd23afa84b",
   "suggested_path": "lib-viennacl",

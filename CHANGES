@@ -1,4 +1,5 @@
 * 2017.11.08 - added dvdt prof to dump OpenCL stats from ARMCL
+             - fixed viennalCL universal src package for Windows
 
 * 2017.10.28 - fixing '-fPIC' in ARMCL
 
