@@ -410,6 +410,7 @@ def post_setup(i):
 
     xcore_files = glob.glob('src/core/*.cpp')
     xcore_files += glob.glob('src/core/CPP/*.cpp')
+    xcore_files += glob.glob('src/core/utils/*/*.cpp')
 
     xfiles = glob.glob('src/runtime/*.cpp')
 
