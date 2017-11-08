@@ -1,4 +1,5 @@
 * 2017.11.08 - added dvdt prof to dump OpenCL stats from ARMCL
+             - added ARMCL 17.10 stable version
 
 * 2017.10.28 - fixing '-fPIC' in ARMCL
 
