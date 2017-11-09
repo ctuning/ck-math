@@ -391,6 +391,7 @@ def post_setup(i):
     use_neon=env.get('USE_NEON','').lower()
     use_opencl= env.get('USE_OPENCL','').lower()
     use_embed_kernel= env.get('USE_EMBEDDED_KERNELS','').lower()
+    use_graph=env.get('USE_GRAPH','').lower()
 
     pp=i.get('script_path','')
     if pp=='':
@@ -422,10 +423,6 @@ def post_setup(i):
     # CLHarrisCorners uses the Scheduler to run CPP kernels
     xfiles += glob.glob('src/runtime/CPP/SingleThreadScheduler.cpp')
 
-    xgraph_files = glob.glob('src/graph/*.cpp')
-    xgraph_files += glob.glob('src/graph/nodes/*.cpp')
-    xgraph_files += glob.glob('src/graph/operations/*.cpp')
-
     if bare_metal=='on':
        if env.get('USE_CPPTHREADS','').lower()=='on' or env.get('USE_OPENMP','').lower()=='on':
           return {'return':1, 'error':'OpenMP and C++11 threads not supported in bare_metal. use --env.USE_CPPTHREADS=OFF --env.USE_OPENMP=OFF'}
@@ -440,7 +437,6 @@ def post_setup(i):
        xcore_files += glob.glob('src/core/CL/kernels/*.cpp')
        xfiles += glob.glob('src/runtime/CL/*.cpp')
        xfiles += glob.glob('src/runtime/CL/functions/*.cpp')
-       xgraph_files += glob.glob('src/graph/CL/*.cpp')
        if use_embed_kernel == 'on':
           cl_files  = glob.glob('src/core/CL/cl_kernels/*.cl') + glob.glob('src/core/CL/cl_kernels/*.h')
           source_list = []
@@ -452,6 +448,7 @@ def post_setup(i):
           generate_embed = resolve_includes(embed_files, source_list,pi) 
           #Default(generate_embed)
           files_to_delete += embed_files
+
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
@@ -464,10 +461,15 @@ def post_setup(i):
         xfiles += glob.glob('src/runtime/NEON/*.cpp')
         xfiles += glob.glob('src/runtime/NEON/functions/*.cpp')
 
-        xgraph_files += glob.glob('src/graph/NEON/*.cpp')
+    if use_graph=='on':
+        if use_neon!='on' or use_opencl!='on':
+            return {'return':1, 'error':'USE_GRAPH requires both USE_OPENCL and USE_NEON'}
 
-    # for the sake of simplicity just include Graph into the main lib for now
-    xfiles += xgraph_files
+        xgraph_files = glob.glob('src/graph/*.cpp')
+        xgraph_files += glob.glob('src/graph/*/*.cpp')
+
+        # for the sake of simplicity just add Graph API into the main lib for now
+        xfiles += xgraph_files
 
     # Generate string with build options library version to embed in the library:
     r=ck.run_and_get_stdout({'cmd':['git','rev-parse','HEAD']})
