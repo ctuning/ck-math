@@ -11,6 +11,18 @@ import collections
 import errno
 
 ##############################################################################
+def pre_path(i):
+    tags=i['tags']
+    env=i.get('install_env',{})
+
+    # Add tags depending on env
+    if env.get('USE_OPENCL','').lower()=='on' and 'vopencl' not in tags: tags.append('vopencl')
+    if env.get('USE_NEON','').lower()=='on' and 'vneon' not in tags: tags.append('vneon')
+    if env.get('USE_GRAPH','').lower()=='on' and 'vgraph' not in tags: tags.append('vgraph')
+
+    return {'return':0}
+
+##############################################################################
 def file_get_contents(filename):
     return open(filename).read()
 
