@@ -17,6 +17,7 @@
       "USE_EMBEDDED_KERNELS": "OFF", 
       "USE_NEON": "OFF", 
       "USE_OPENCL": "ON", 
+      "USE_GRAPH": "OFF",
       "USE_OPENMP": "OFF", 
       "USE_VALIDATION_TEST": "OFF"
     }, 

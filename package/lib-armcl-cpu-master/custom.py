@@ -216,6 +216,10 @@ def setup(i):
        if env.get('USE_EMBEDDED_KERNELS','').lower()=='on': 
            flags += ['-DEMBEDDED_KERNELS']
 
+    use_graph=env.get('USE_GRAPH','').lower()
+    if use_graph=='on' and not (opencl and neon):
+       return {'return':1, 'error':'USE_GRAPH requires both USE_OPENCL and USE_NEON'}
+
     hardfp=False
     if env.get('USE_BARE_METAL','').lower()=='on' or thardfp=='yes':
        hardfp=True
@@ -391,6 +395,7 @@ def post_setup(i):
     use_neon=env.get('USE_NEON','').lower()
     use_opencl= env.get('USE_OPENCL','').lower()
     use_embed_kernel= env.get('USE_EMBEDDED_KERNELS','').lower()
+    use_graph=env.get('USE_GRAPH','').lower()
 
     pp=i.get('script_path','')
     if pp=='':
@@ -447,6 +452,7 @@ def post_setup(i):
           generate_embed = resolve_includes(embed_files, source_list,pi) 
           #Default(generate_embed)
           files_to_delete += embed_files
+
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
@@ -458,6 +464,16 @@ def post_setup(i):
 
         xfiles += glob.glob('src/runtime/NEON/*.cpp')
         xfiles += glob.glob('src/runtime/NEON/functions/*.cpp')
+
+    if use_graph=='on':
+        if use_neon!='on' or use_opencl!='on':
+            return {'return':1, 'error':'USE_GRAPH requires both USE_OPENCL and USE_NEON'}
+
+        xgraph_files = glob.glob('src/graph/*.cpp')
+        xgraph_files += glob.glob('src/graph/*/*.cpp')
+
+        # for the sake of simplicity just add Graph API into the main lib for now
+        xfiles += xgraph_files
 
     # Generate string with build options library version to embed in the library:
     r=ck.run_and_get_stdout({'cmd':['git','rev-parse','HEAD']})
