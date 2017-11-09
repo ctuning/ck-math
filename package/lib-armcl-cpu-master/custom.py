@@ -216,6 +216,10 @@ def setup(i):
        if env.get('USE_EMBEDDED_KERNELS','').lower()=='on': 
            flags += ['-DEMBEDDED_KERNELS']
 
+    use_graph=env.get('USE_GRAPH','').lower()
+    if use_graph=='on' and not (opencl and neon):
+       return {'return':1, 'error':'USE_GRAPH requires both USE_OPENCL and USE_NEON'}
+
     hardfp=False
     if env.get('USE_BARE_METAL','').lower()=='on' or thardfp=='yes':
        hardfp=True
