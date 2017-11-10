@@ -11,7 +11,7 @@
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "",
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
       "PACKAGE_GIT": "YES",
-      "PACKAGE_GIT_CHECKOUT": "1.1.0",
+      "PACKAGE_GIT_CHECKOUT": "1.2.0",
       "PACKAGE_PATCH": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "YES",
@@ -21,11 +21,11 @@
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
       "PACKAGE_URL": "https://github.com/CNugteren/CLBlast",
-      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR":"$#path_to_cid=package:d5a06834b7eb0341#$"
+      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:a0fe58384cc2828e#$"
     },
-    "sort":100,
+    "sort": 100,
     "use_git_revision": "no",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "deps": {
     "cmake": {
@@ -36,25 +36,12 @@
       "tags": "tool,cmake"
     },
     "compiler": {
-      "add_to_path": "no",
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
       "tags": "compiler,lang-cpp"
     },
-    "lib-openblas": {
-      "local": "yes",
-      "name": "OpenBLAS library",
-      "skip_default": "yes",
-      "sort": 25,
-      "tags": "lib,blas,openblas",
-      "update_tags_by_target_platform2": {
-        "android": "v0.2.19",
-        "win": "v0.2.20",
-        "linux": "v0.2.20"
-      }
-    },
-    "lib-opencl": {
+    "opencl": {
       "local": "yes",
       "name": "OpenCL library",
       "skip_installed": {
@@ -62,12 +49,6 @@
       },
       "sort": 20,
       "tags": "lib,opencl"
-    },
-    "tool-cltune": {
-      "local": "yes",
-      "name": "CLTune tool",
-      "sort": 40,
-      "tags": "tool,cltune,v2.7.0"
     }
   },
   "end_full_path": {
@@ -88,16 +69,15 @@
   ],
   "process_script": "install",
   "soft_uoa": "7b81c6ad862f4b38",
-  "suggested_path": "lib-clblast-tune",
+  "suggested_path": "lib-clblast",
   "tags": [
     "lib",
     "blas",
+    "no-tune",
     "opencl-blas",
     "clblast",
-    "tune",
-    "clblast-tune",
-    "v1.1.0",
-    "v1.1",
+    "v1.2.0",
+    "v1.2",
     "v1",
     "channel-stable"
   ],

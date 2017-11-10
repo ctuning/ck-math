@@ -11,7 +11,7 @@
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "",
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
       "PACKAGE_GIT": "YES",
-      "PACKAGE_GIT_CHECKOUT": "1.1.0",
+      "PACKAGE_GIT_CHECKOUT": "1.2.0",
       "PACKAGE_PATCH": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "YES",
@@ -21,11 +21,11 @@
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
       "PACKAGE_URL": "https://github.com/CNugteren/CLBlast",
-      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR":"$#path_to_cid=package:d5a06834b7eb0341#$"
+      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:d5a06834b7eb0341#$"
     },
-    "sort":100,
+    "sort": 100,
     "use_git_revision": "no",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "deps": {
     "cmake": {
@@ -50,8 +50,8 @@
       "tags": "lib,blas,openblas",
       "update_tags_by_target_platform2": {
         "android": "v0.2.19",
-        "win": "v0.2.20",
-        "linux": "v0.2.20"
+        "linux": "v0.2.20",
+        "win": "v0.2.20"
       }
     },
     "lib-opencl": {
@@ -96,8 +96,8 @@
     "clblast",
     "tune",
     "clblast-tune",
-    "v1.1.0",
-    "v1.1",
+    "v1.2.0",
+    "v1.2",
     "v1",
     "channel-stable"
   ],
