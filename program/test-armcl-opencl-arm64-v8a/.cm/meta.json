@@ -118,8 +118,6 @@
         ], 
         "post_process_via_ck": "yes", 
         "run_cmd_main": "../ck-run$#script_ext#$", 
-        "run_cmd_out1": "tmp-stdout.tmp", 
-        "run_cmd_out2": "tmp-stderr.tmp", 
         "run_input_files": [], 
         "run_set_env2": {
           "EXECUTABLE": "arm_compute_benchmark"
@@ -133,8 +131,6 @@
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run$#script_ext#$",
-        "run_cmd_out1": "tmp-stdout.tmp",
-        "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
           "EXECUTABLE": "arm_compute_validation"
@@ -155,6 +151,6 @@
     "validation",
     "vopencl"
   ],
-  "target_file": "",
+  "target_file": "arm_compute_validation",
   "use_compile_script": "yes"
 }
