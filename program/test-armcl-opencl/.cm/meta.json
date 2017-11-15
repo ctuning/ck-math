@@ -6,6 +6,10 @@
       "cmd": "../ck-compile$#script_ext#$"
     }
   },
+  "print_files_after_run": [
+     "tmp-stdout.tmp",
+     "tmp-stderr.tmp"
+  ], 
   "compile_deps": {
     "compiler": {
       "local": "yes",

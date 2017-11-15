@@ -37,11 +37,13 @@ def ck_postprocess(i):
     d={}
 
     # Call dvdt prof script
-    r=ck.access({'action':'run', 'module_uoa':'script', 'data_uoa':'ctuning.process.dvdt-prof', 
-                 'code':'dvdt_prof', 'func':'process', 
-                 'dict':{'file_in':rt['run_cmd_out1'], 'file_out':'tmp-dvdt-prof.json', 
-                         'data':d, 'env':env, 'deps':deps}})
-    if r['return']>0: return r
+    fout=rt.get('run_cmd_out1','')
+    if fout!='':
+       r=ck.access({'action':'run', 'module_uoa':'script', 'data_uoa':'ctuning.process.dvdt-prof', 
+                    'code':'dvdt_prof', 'func':'process', 
+                    'dict':{'file_in':fout, 'file_out':'tmp-dvdt-prof.json', 
+                            'data':d, 'env':env, 'deps':deps}})
+       if r['return']>0: return r
 
     r=ck.save_json_to_file({'json_file':rt['fine_grain_timer_file'], 'dict':d})
     if r['return']>0: return r
