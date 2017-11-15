@@ -111,26 +111,30 @@
     },
     "run-benchmark": {
       "run_time": {
-        "fine_grain_timer_file": "tmp-ck-timer.json", 
-        "need_compute_device": "opencl", 
+        "fine_grain_timer_file": "tmp-ck-timer.json",
+        "need_compute_device": "opencl",
         "post_process_cmds": [
           "python $#ck_take_from_{d70d4973a7446684}#$process.py"
-        ], 
-        "post_process_via_ck": "yes", 
-        "run_cmd_main": "../ck-run$#script_ext#$", 
-        "run_input_files": [], 
-        "run_set_env2": {
-          "EXECUTABLE": "arm_compute_benchmark"
-        },
+        ],
+        "post_process_via_ck": "yes",
+        "run_cmd_main": "../ck-run$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
         "run_output_files": [
           "tmp-ck-timer.json"
-        ]
+        ],
+        "run_set_env2": {
+          "EXECUTABLE": "arm_compute_benchmark"
+        }
       }
     },
     "run-validation": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
           "EXECUTABLE": "arm_compute_validation"
