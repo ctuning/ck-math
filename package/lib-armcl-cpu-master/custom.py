@@ -501,14 +501,11 @@ def post_setup(i):
     # BUILDING CORE LIB **************************************************************
     # Clean up files and prepare obj names
     core_files=''
-    obj_core_files=''
 
     for f in xcore_files:
         f=_slash(f) # fix windows names
         fo=os.path.splitext(f)[0]+obj_ext
-
         core_files+=' ../'+f
-        obj_core_files+=' ../'+fo
 
     # Compiler env
     sb=hosd.get('batch_prefix','')+'\n'
@@ -561,9 +558,7 @@ def post_setup(i):
     for f in xfiles:
         f=_slash(f) # fix windows names
         fo=os.path.splitext(f)[0]+obj_ext
-
-        core_files+=' ../'+f
-        obj_core_files+=' ../'+fo
+        files+=' ../'+f
 
     # Compiler env
     sb=hosd.get('batch_prefix','')+'\n'
@@ -574,7 +569,7 @@ def post_setup(i):
     sb+=eset+' BUILD_DIR='+_slash(build_dir)+'\n\n'
     sb+=eset+' CK_CXXFLAGS='+_slash(eifs+flags+eifs)+'\n'
     sb+=eset+' CK_LFLAGS='+_slash(eifs+lflags+eifs)+'\n'
-    sb+=eset+' CK_SRC_FILES='+_slash(eifs+core_files+eifs)+'\n'
+    sb+=eset+' CK_SRC_FILES='+_slash(eifs+files+eifs)+'\n'
     sb+=eset+' CK_TARGET_LIB='+_slash(libprefix)+'arm_compute\n'
     sb+=eset+' CK_BARE_METAL='+bare_metal+'\n'
     sb+=eset+' ARMCL_EXTRA_LIB=-larm_compute_core\n'
