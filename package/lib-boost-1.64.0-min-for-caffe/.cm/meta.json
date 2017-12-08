@@ -19,7 +19,7 @@
       "PACKAGE_URL": "https://sourceforge.net/projects/boost/files/boost/1.64.0", 
       "PACKAGE_WGET": "YES", 
       "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:44094af948731a1c#$",
-      "BOOST_B2_FLAGS":"--with-date_time --with-system --with-filesystem --with-thread"
+      "BOOST_B2_FLAGS":"--with-date_time --with-system --with-filesystem --with-thread --with-regex"
     }, 
     "version": "1.64.0-min-for-caffe"
   }, 
