@@ -83,7 +83,7 @@
   ], 
   "process_script": "install", 
   "soft_uoa": "23949f2a32490faf", 
-  "suggested_path": "lib-boost-min-for-caffe", 
+  "suggested_path": "lib-boost",
   "tags": [
     "lib", 
     "boost", 
