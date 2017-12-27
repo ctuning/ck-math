@@ -133,6 +133,18 @@
         }
       }
     },
+    "run-graph-alexnet": {
+      "run_time": {                                                        
+        "need_compute_device": "opencl",                                                     
+        "run_cmd_main": "../ck-run-graph$#script_ext#$",                                                                              
+        "run_cmd_out1": "tmp-stdout.tmp",                       
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],                                        
+        "run_set_env2": {                                            
+          "EXECUTABLE": "graph_alexnet"
+        }
+      }
+    },
     "run-validation": {
       "run_time": {
         "need_compute_device": "opencl",
