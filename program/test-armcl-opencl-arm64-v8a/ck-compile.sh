@@ -13,7 +13,6 @@ CUR_PATH=${PWD}
 
 cd ${CK_ENV_LIB_ARMCL_SRC}
 
-
 rm -rf tests/validation_old
 
 XOS=""
@@ -38,7 +37,8 @@ scons Werror=${WERROR} -j${J} debug=${DEBUG} timers=${TIMERS} embed_kernels=${EM
       ${XOS} ${XARCH} \
       build=${BUILD} extra_cxx_flags="${EXTRA_CXX_FLAGS}"
 
-cd build/tests
-cp -rf * ${CUR_PATH}
+cd build
+cp -rf tests/* ${CUR_PATH}
+cp -rf examples/graph_* ${CUR_PATH}
 
 return 0
