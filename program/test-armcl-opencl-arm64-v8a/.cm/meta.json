@@ -7,9 +7,8 @@
     }
   },
   "print_files_after_run": [
-     "tmp-stdout.tmp",
      "tmp-stderr.tmp"
-  ], 
+  ],
   "compile_deps": {
     "compiler": {
       "local": "yes",
@@ -46,7 +45,7 @@
     "CPPTHREADS": 1,
     "DEBUG": 0,
     "EMBED_KERNELS": 0,
-    "EXAMPLES": 0,
+    "EXAMPLES": 1,
     "EXTRA_CXX_FLAGS": "",
     "J": 4,
     "MALI": 0,
@@ -133,18 +132,6 @@
         }
       }
     },
-    "run-graph-alexnet": {
-      "run_time": {                                                        
-        "need_compute_device": "opencl",                                                     
-        "run_cmd_main": "../ck-run-graph$#script_ext#$",                                                                              
-        "run_cmd_out1": "tmp-stdout.tmp",                       
-        "run_cmd_out2": "tmp-stderr.tmp",
-        "run_input_files": [],                                        
-        "run_set_env2": {                                            
-          "EXECUTABLE": "graph_alexnet"
-        }
-      }
-    },
     "run-validation": {
       "run_time": {
         "need_compute_device": "opencl",
@@ -154,6 +141,78 @@
         "run_input_files": [],
         "run_set_env2": {
           "EXECUTABLE": "arm_compute_validation"
+        }
+      }
+    },
+    "run-graph-alexnet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_alexnet"
+        }
+      }
+    },
+    "run-graph-googlenet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_googlenet"
+        }
+      }
+    },
+    "run-graph-mobilenet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_mobilenet"
+        }
+      }
+    },
+    "run-graph-squeezenet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_squeezenet"
+        }
+      }
+    },
+    "run-graph-vgg16": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_vgg16"
+        }
+      }
+    },
+    "run-graph-vgg19": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_vgg19"
         }
       }
     }
