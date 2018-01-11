@@ -225,7 +225,7 @@ def setup(i):
 #       nie['CK_FLAG_PREFIX_INCLUDE'] = ''
        lflags +=['-L'+lpath+' -lOpenCL']
 #       lcore_flags += ['']
-       if env.get('USE_EMBEDDED_KERNELS','').lower()=='on': 
+       if env.get('USE_EMBEDDED_KERNELS','').lower()=='on':
            flags += ['-DEMBEDDED_KERNELS']
 
     use_graph=env.get('USE_GRAPH','').lower()
@@ -427,17 +427,18 @@ def post_setup(i):
 
     xcore_files = glob.glob('src/core/*.cpp')
     xcore_files += glob.glob('src/core/CPP/*.cpp')
+    xcore_files += glob.glob('src/core/CPP/kernels/*.cpp')
     xcore_files += glob.glob('src/core/utils/*/*.cpp')
 
     xfiles = glob.glob('src/runtime/*.cpp')
-
-    embed_files = []
-    files_to_delete = []
-
-    xcore_files += glob.glob('src/core/CPP/kernels/*.cpp')
+    xfiles += glob.glob('src/runtime/CPP/ICPPSimpleFunction.cpp')
+    xfiles += glob.glob('src/runtime/CPP/functions/*.cpp')
 
     # CLHarrisCorners uses the Scheduler to run CPP kernels
     xfiles += glob.glob('src/runtime/CPP/SingleThreadScheduler.cpp')
+
+    embed_files = []
+    files_to_delete = []
 
     if bare_metal=='on':
        if env.get('USE_CPPTHREADS','').lower()=='on' or env.get('USE_OPENMP','').lower()=='on':
@@ -461,7 +462,7 @@ def post_setup(i):
               source_list.append(source_name)
               embed_files.append(source_name + "embed")
 #          generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
-          generate_embed = resolve_includes(embed_files, source_list,pi) 
+          generate_embed = resolve_includes(embed_files, source_list,pi)
           #Default(generate_embed)
           files_to_delete += embed_files
 
@@ -489,7 +490,7 @@ def post_setup(i):
 
     # Generate string with build options library version to embed in the library:
     r=ck.run_and_get_stdout({'cmd':['git','rev-parse','HEAD']})
-    if r['return']==0 and r['return_code']==0: 
+    if r['return']==0 and r['return_code']==0:
        git_hash=r['stdout'].strip()
 
     version_filename = 'arm_compute_version.embed' #"%s/arm_compute_version.embed" % os.path.dirname(glob.glob("src/core/*")[0].rrstr())
