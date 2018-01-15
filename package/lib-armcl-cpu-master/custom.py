@@ -212,6 +212,7 @@ def setup(i):
        flags+=['-Werror']
 
     flags += ['-I../include']
+    flags += ['-I../include']
 
     opencl=False
     if env.get('USE_OPENCL','').lower()=='on':
@@ -300,7 +301,7 @@ def setup(i):
         flags += ['-DARM_COMPUTE_ENABLE_FP16']
     elif 'arm64' in tabi or 'aarch64' in tabi:
         env['USE_ARM64']='ON'
-        flags += ['-march=armv8-a']
+        flags += ['-march=armv8-a','-mfpu=neon']
     elif tabi=='x86':
         flags += ['-m32']
     elif tabi=='x86_64':
@@ -462,7 +463,7 @@ def post_setup(i):
               source_list.append(source_name)
               embed_files.append(source_name + "embed")
 #          generate_embed = env.Command(embed_files, source_list, action=resolve_includes)
-          generate_embed = resolve_includes(embed_files, source_list,pi)
+          generate_embed = resolve_includes(embed_files, source_list, pi)
           #Default(generate_embed)
           files_to_delete += embed_files
 
