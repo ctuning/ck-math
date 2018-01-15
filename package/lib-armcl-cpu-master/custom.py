@@ -286,7 +286,15 @@ def setup(i):
         lflags += ['-fopenmp']
         lcore_flags += ['-fopenmp']
 
-    if 'v7a' in tabi:
+    def use_arm_v7():
+        if 'v7a' in tabi:
+            return True
+        elif 'arm64' in tabi or 'aarch64' in tabi:
+            if tbits == '32':
+                return True
+        return False
+
+    if use_arm_v7():
         env['USE_ARM32']='ON'
         flags += ['-march=armv7-a','-mthumb','-mfpu=neon']
 
@@ -301,6 +309,8 @@ def setup(i):
     elif 'arm64' in tabi or 'aarch64' in tabi:
         env['USE_ARM64']='ON'
         flags += ['-march=armv8-a']
+        if env.get('USE_NEON', '').lower() == 'on':
+            flags += ['-mfpu=neon']
     elif tabi=='x86':
         flags += ['-m32']
     elif tabi=='x86_64':
