@@ -309,8 +309,8 @@ def setup(i):
     elif 'arm64' in tabi or 'aarch64' in tabi:
         env['USE_ARM64']='ON'
         flags += ['-march=armv8-a']
-#        if env.get('USE_NEON', '').lower() == 'on':
-#            flags += ['-mfpu=neon']
+        if env.get('USE_NEON', '').lower() == 'on':
+            flags += ['-mfpu=neon']
     elif tabi=='x86':
         flags += ['-m32']
     elif tabi=='x86_64':
