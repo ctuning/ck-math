@@ -207,11 +207,11 @@ def setup(i):
     if env.get('USE_NEON','').lower()=='on' or tneon=='yes':
        neon=True
        nie['USE_NEON']='ON'
+       flags += ['-I../arm_compute/core/NEON/kernels/winograd']
 
     if env.get('WERROR','').lower()=='on':
        flags+=['-Werror']
 
-    flags += ['-I../include']
     flags += ['-I../include']
 
     opencl=False
@@ -478,6 +478,8 @@ def post_setup(i):
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/winograd/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/winograd/transforms/*.cpp')
 
         if env.get('USE_ARM32','').lower()=='on':
            xcore_files += glob.glob('src/core/NEON/kernels/arm32/*.cpp')
