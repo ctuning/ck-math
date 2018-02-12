@@ -208,6 +208,7 @@ def setup(i):
        neon=True
        nie['USE_NEON']='ON'
        flags += ['-I../arm_compute/core/NEON/kernels/winograd']
+       flags += ['-I../arm_compute/core/NEON/kernels/assembly']
 
     if env.get('WERROR','').lower()=='on':
        flags+=['-Werror']
