@@ -485,6 +485,7 @@ def post_setup(i):
         # v18.0x
         xcore_files += glob.glob('src/core/NEON/kernels/convolution/winograd/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/convolution/winograd/transforms/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/convolution/depthwise/*.cpp')
 
         if env.get('USE_ARM32','').lower()=='on':
            xcore_files += glob.glob('src/core/NEON/kernels/arm32/*.cpp')
