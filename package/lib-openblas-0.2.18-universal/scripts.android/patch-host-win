@@ -1,0 +1,38 @@
+diff -ruN src\Makefile.prebuild src.new\Makefile.prebuild
+--- src\Makefile.prebuild	Sat Jan 07 17:58:20 2017
++++ src.new\Makefile.prebuild	Sat Jan 07 16:58:34 2017
+@@ -30,8 +30,8 @@
+ endif
+ 
+ all: getarch_2nd
+-	./getarch_2nd  0 >> $(TARGET_MAKE)
+-	./getarch_2nd  1 >> $(TARGET_CONF)
++	./getarch_2nd.exe  0 >> $(TARGET_MAKE)
++	./getarch_2nd.exe  1 >> $(TARGET_CONF)
+ 
+ config.h : c_check f_check getarch
+ 	perl ./c_check $(TARGET_MAKE) $(TARGET_CONF) $(CC) $(TARGET_FLAGS)
+@@ -39,15 +39,15 @@
+ 	perl ./f_check $(TARGET_MAKE) $(TARGET_CONF) $(FC) $(TARGET_FLAGS)
+ else
+ #When we only build CBLAS, we set NOFORTRAN=2
+-	echo "NOFORTRAN=2" >> $(TARGET_MAKE)
+-	echo "NO_FBLAS=1" >> $(TARGET_MAKE)
+-	echo "F_COMPILER=GFORTRAN"  >> $(TARGET_MAKE)
+-	echo "BU=_"  >> $(TARGET_MAKE)
+-	echo "#define BUNDERSCORE _" >> $(TARGET_CONF)
+-	echo "#define NEEDBUNDERSCORE 1" >> $(TARGET_CONF)
++	echo NOFORTRAN=2>> $(TARGET_MAKE)
++	echo NO_FBLAS=1>> $(TARGET_MAKE)
++	echo F_COMPILER=GFORTRAN>> $(TARGET_MAKE)
++	echo BU=_>> $(TARGET_MAKE)
++	echo #define BUNDERSCORE _>> $(TARGET_CONF)
++	echo #define NEEDBUNDERSCORE 1>> $(TARGET_CONF)
+ endif
+-	./getarch 0 >> $(TARGET_MAKE)
+-	./getarch 1 >> $(TARGET_CONF)
++	./getarch.exe 0 >> $(TARGET_MAKE)
++	./getarch.exe 1 >> $(TARGET_CONF)
+ 
+ 
+ getarch : getarch.c cpuid.S dummy $(CPUIDEMU)

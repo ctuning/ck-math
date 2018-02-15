@@ -1,0 +1,119 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "git_src_dir": "src", 
+    "install_env": {
+      "PACKAGE_AUTOGEN": "NO", 
+      "PACKAGE_BUILD_TYPE": "make", 
+      "PACKAGE_CONFIGURE_FLAGS_ANDROID": "", 
+      "PACKAGE_GIT": "YES", 
+      "PACKAGE_GIT_CHECKOUT": "v0.2.18", 
+      "PACKAGE_PATCH": "YES", 
+      "PACKAGE_SKIP_CLEAN_INSTALL": "NO", 
+      "PACKAGE_SKIP_CLEAN_OBJ": "NO", 
+      "PACKAGE_SKIP_CLEAN_PACKAGE": "NO", 
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO", 
+      "PACKAGE_SKIP_CMAKE_TARGET": "YES", 
+      "PACKAGE_SUB_DIR": "src", 
+      "PACKAGE_SUB_DIR1": "src", 
+      "PACKAGE_URL": "https://github.com/xianyi/OpenBLAS"
+    }, 
+    "use_git_revision": "yes", 
+    "version": "0.2.18"
+  }, 
+  "deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C compiler", 
+      "only_for_target_os_tags": [
+        "android", 
+        "linux"
+      ], 
+      "sort": 10, 
+      "tags": "compiler,lang-c"
+    }, 
+    "compiler-gfortran": {
+      "local": "yes", 
+      "name": "GNU Fortran compiler", 
+      "only_for_target_os_tags": [
+        "windows", 
+        "linux"
+      ], 
+      "skip_from_bat": "yes", 
+      "sort": 15, 
+      "tags": "compiler,gfortran"
+    }, 
+    "compiler-mingw": {
+      "add_to_path": "yes", 
+      "force_target_as_host": "yes", 
+      "local": "yes", 
+      "name": "C compiler", 
+      "only_for_host_os_tags": [
+        "windows"
+      ], 
+      "skip_from_bat": "yes", 
+      "skip_installed": {
+        "win": "yes"
+      }, 
+      "sort": 5, 
+      "tags": "compiler,lang-c,gcc"
+    }, 
+    "compiler-perl": {
+      "force_target_as_host": "yes", 
+      "local": "yes", 
+      "name": "Perl", 
+      "only_for_host_os_tags": [
+        "windows"
+      ], 
+      "skip_from_bat": "yes", 
+      "skip_installed": {
+        "win": "yes"
+      }, 
+      "sort": 3, 
+      "tags": "compiler,perl"
+    }, 
+    "utils-unix-win": {
+      "force_target_as_host": "yes", 
+      "local": "yes", 
+      "name": "Unix Utils for Windows", 
+      "only_for_host_os_tags": [
+        "windows"
+      ], 
+      "skip_from_bat": "yes", 
+      "sort": 1, 
+      "tags": "utils,unix-win"
+    }
+  }, 
+  "end_full_path": {
+    "android": "install/lib/libopenblas.a", 
+    "linux": "install/lib/libopenblas.a", 
+    "win": "install/lib/libopenblas.dll.a"
+  }, 
+  "need_cpu_info": "yes", 
+  "only_for_host_os_tags": [
+    "linux", 
+    "windows"
+  ], 
+  "only_for_target_os_tags": [
+    "linux", 
+    "windows", 
+    "android"
+  ], 
+  "process_script": "install", 
+  "soft_uoa": "252d8364ec25497b", 
+  "suggested_path": "lib-openblas", 
+  "tags": [
+    "lib", 
+    "blas", 
+    "cblas", 
+    "openblas", 
+    "v0.2.18", 
+    "v0.2", 
+    "v0", 
+    "channel-stable"
+  ], 
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18", 
+    "module_uoa": "script"
+  }
+}
