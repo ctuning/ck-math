@@ -53,7 +53,6 @@
     "linux"
   ], 
   "only_for_target_os_tags": [
-    "windows", 
     "linux", 
     "android"
   ], 
@@ -63,7 +62,6 @@
   "suggested_path": "lib-armcl-opencl", 
   "tags": [
     "lib", 
-    "arm", 
     "arm", 
     "armcl", 
     "arm-compute-library", 
