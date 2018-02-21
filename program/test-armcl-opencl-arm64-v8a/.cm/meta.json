@@ -144,10 +144,10 @@
         }
       }
     },
-    "run-graph-alexnet-opencl": {
+    "run-opencl-alexnet": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_main": "../ck-run-opencl$#script_ext#$",
         "run_cmd_out1": "tmp-stdout.tmp",
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
@@ -157,10 +157,10 @@
         }
       }
     },
-    "run-graph-googlenet-opencl": {
+    "run-opencl-googlenet": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_main": "../ck-run-opencl$#script_ext#$",
         "run_cmd_out1": "tmp-stdout.tmp",
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
@@ -170,10 +170,10 @@
         }
       }
     },
-    "run-graph-mobilenet-opencl": {
+    "run-opencl-mobilenet": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_main": "../ck-run-opencl$#script_ext#$",
         "run_cmd_out1": "tmp-stdout.tmp",
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
@@ -183,10 +183,10 @@
         }
       }
     },
-    "run-graph-squeezenet-opencl": {
+    "run-opencl-squeezenet": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_main": "../ck-run-opencl$#script_ext#$",
         "run_cmd_out1": "tmp-stdout.tmp",
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
@@ -196,10 +196,10 @@
         }
       }
     },
-    "run-graph-vgg16-opencl": {
+    "run-opencl-vgg16": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_main": "../ck-run-opencl$#script_ext#$",
         "run_cmd_out1": "tmp-stdout.tmp",
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
@@ -209,10 +209,10 @@
         }
       }
     },
-    "run-graph-vgg19-opencl": {
+    "run-opencl-vgg19": {
       "run_time": {
         "need_compute_device": "opencl",
-        "run_cmd_main": "../ck-run-graph$#script_ext#$",
+        "run_cmd_main": "../ck-run-opencl$#script_ext#$",
         "run_cmd_out1": "tmp-stdout.tmp",
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
