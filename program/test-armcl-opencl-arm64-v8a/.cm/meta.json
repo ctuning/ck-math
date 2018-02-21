@@ -144,6 +144,96 @@
         }
       }
     },
+    "benchmark-opencl-alexnet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "ARGS": "1",
+          "EXECUTABLE": "benchmark_graph_alexnet",
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS,OPENCL_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
+    "benchmark-opencl-googlenet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "ARGS": "1",
+          "EXECUTABLE": "benchmark_graph_googlenet",
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS,OPENCL_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
+    "benchmark-opencl-mobilenet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "ARGS": "1",
+          "EXECUTABLE": "benchmark_graph_mobilenet",
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS,OPENCL_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
+    "benchmark-opencl-squeezenet": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "ARGS": "1",
+          "EXECUTABLE": "benchmark_graph_squeezenet",
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS,OPENCL_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
+    "benchmark-opencl-vgg16": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "ARGS": "1",
+          "EXECUTABLE": "benchmark_graph_vgg16",
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS,OPENCL_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
+    "benchmark-opencl-vgg19": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "ARGS": "1",
+          "EXECUTABLE": "benchmark_graph_vgg19",
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS,OPENCL_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
     "run-opencl-alexnet": {
       "run_time": {
         "need_compute_device": "opencl",
@@ -218,7 +308,7 @@
         "run_input_files": [],
         "run_set_env2": {
           "EXECUTABLE": "graph_vgg19",
-	  "ARM_COMPUTE_TARGET": 1
+          "ARM_COMPUTE_TARGET": 1
         }
       }
     }
