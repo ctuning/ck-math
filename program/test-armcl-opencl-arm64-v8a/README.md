@@ -6,12 +6,13 @@ convenient interface to executables built along the Arm Compute Library
 native (SCons-based) build system. This is useful when the CK build system lags
 behind the native one, as well as for testing.
 
-In what follows, we assume that commands get executed from the programs folder. Please either change to this directory:
+In what follows, we assume that commands get executed from the program's folder.
+Please either change to this directory:
 ```
 $ cd `ck find program:test-armcl-opencl[-arm64-v8a]`
 $ ck compile
 ```
-or specify the entry explcitly e.g.
+or specify the entry explicitly e.g.:
 ```
 $ ck compile program:test-armcl-opencl[-arm64-v8a]
 ```
@@ -68,7 +69,7 @@ $ ck benchmark --repetitions=1
 This group of commands is to execute the `benchmark_graph_*` executables at the
 highest CPU and GPU frequencies.  The selected executable is run with
 `--instruments=${INSTRUMENTS}`, `--iterations=${ITERATIONS}`, and
-`--example_args=${ARGS}, where the variables are currently hardcoded for each
+`--example_args=${ARGS}`, where the variables are currently hardcoded for each
 command to:
 - `INSTRUMENTS=WALL_CLOCK_TIMER_MS,OPENCL_TIMER_MS` (collect wall clock and kernel execution time in milliseconds);
 - `ITERATIONS=10` (repeat 10 times);
