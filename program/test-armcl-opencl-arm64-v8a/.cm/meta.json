@@ -49,7 +49,7 @@
     "EXTRA_CXX_FLAGS": "",
     "J": 4,
     "MALI": 0,
-    "NEON": 0,
+    "NEON": 1,
     "OPENCL": 1,
     "OPENMP": 0,
     "OS": "",
