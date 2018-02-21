@@ -1,6 +1,7 @@
 #!/bin/sh
 
-# Collective Knowledge (program)
+#
+# Collective Knowledge (CK).
 #
 # See CK LICENSE.txt for licensing details.
 # See CK COPYRIGHT.txt for copyright details.
@@ -9,6 +10,7 @@
 # - Grigori Fursin, Grigori.Fursin@cTuning.org
 # - Flavio Vella, flavio@dividiti.com
 # - Anton Lokhmotov, anton@dividiti.com
+#
 
 export WORKING_DIR=`pwd`
 
@@ -26,11 +28,9 @@ cp -r ${CK_ENV_LIB_ARMCL_CL_KERNELS} ${WORKING_DIR}
 
 #------------------------------------------------------------------------------
 echo ""
+echo "Running '${EXECUTABLE}' with target '${ARM_COMPUTE_TARGET}' (0 - Neon, 1 - OpenCL) ..."
 
 export LD_LIBRARY_PATH=${CK_ENV_LIB_ARMCL_SRC}/build:${LD_LIBRARY_PATH}
-
-# Target: 0 - Neon; 1 - OpenCL.
-export ARM_COMPUTE_TARGET=1
 
 ${EXECUTABLE} ${ARM_COMPUTE_TARGET}
 

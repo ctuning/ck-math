@@ -144,7 +144,7 @@
         }
       }
     },
-    "run-graph-alexnet": {
+    "run-graph-alexnet-opencl": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run-graph$#script_ext#$",
@@ -152,11 +152,12 @@
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
-          "EXECUTABLE": "graph_alexnet"
+          "EXECUTABLE": "graph_alexnet",
+          "ARM_COMPUTE_TARGET": 1
         }
       }
     },
-    "run-graph-googlenet": {
+    "run-graph-googlenet-opencl": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run-graph$#script_ext#$",
@@ -164,11 +165,12 @@
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
-          "EXECUTABLE": "graph_googlenet"
+          "EXECUTABLE": "graph_googlenet",
+          "ARM_COMPUTE_TARGET": 1
         }
       }
     },
-    "run-graph-mobilenet": {
+    "run-graph-mobilenet-opencl": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run-graph$#script_ext#$",
@@ -176,11 +178,12 @@
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
-          "EXECUTABLE": "graph_mobilenet"
+          "EXECUTABLE": "graph_mobilenet",
+          "ARM_COMPUTE_TARGET": 1
         }
       }
     },
-    "run-graph-squeezenet": {
+    "run-graph-squeezenet-opencl": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run-graph$#script_ext#$",
@@ -188,11 +191,12 @@
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
-          "EXECUTABLE": "graph_squeezenet"
+          "EXECUTABLE": "graph_squeezenet",
+          "ARM_COMPUTE_TARGET": 1
         }
       }
     },
-    "run-graph-vgg16": {
+    "run-graph-vgg16-opencl": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run-graph$#script_ext#$",
@@ -200,11 +204,12 @@
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
-          "EXECUTABLE": "graph_vgg16"
+          "EXECUTABLE": "graph_vgg16",
+          "ARM_COMPUTE_TARGET": 1
         }
       }
     },
-    "run-graph-vgg19": {
+    "run-graph-vgg19-opencl": {
       "run_time": {
         "need_compute_device": "opencl",
         "run_cmd_main": "../ck-run-graph$#script_ext#$",
@@ -212,7 +217,8 @@
         "run_cmd_out2": "tmp-stderr.tmp",
         "run_input_files": [],
         "run_set_env2": {
-          "EXECUTABLE": "graph_vgg19"
+          "EXECUTABLE": "graph_vgg19",
+	  "ARM_COMPUTE_TARGET": 1
         }
       }
     }
