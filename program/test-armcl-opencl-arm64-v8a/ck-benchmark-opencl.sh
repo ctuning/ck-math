@@ -28,7 +28,7 @@ cp -r ${CK_ENV_LIB_ARMCL_CL_KERNELS} ${WORKING_DIR}
 
 #------------------------------------------------------------------------------
 echo ""
-echo "Benchmarking '${EXECUTABLE}' with args '${ARGS}' (0 - Neon, 1 - OpenCL) ..."
+echo "Benchmarking '${EXECUTABLE}' with args '${ARGS}' (0 - Neon, 1 - OpenCL, 2 - OpenCL tuner) ..."
 
 export LD_LIBRARY_PATH=${CK_ENV_LIB_ARMCL_SRC}/build:${LD_LIBRARY_PATH}
 
