@@ -358,6 +358,9 @@
       }
     }
   },
+  "print_files_after_run": [
+    "tmp-stdout.tmp"
+  ],
   "run_vars": {
     "FILTER": "",
     "SEED": 42
