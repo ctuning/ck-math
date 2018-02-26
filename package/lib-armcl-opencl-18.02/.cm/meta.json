@@ -1,0 +1,81 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "git_src_dir": "src",
+    "install_env": {
+      "PACKAGE_AUTOGEN": "NO",
+      "PACKAGE_GIT": "YES",
+      "PACKAGE_GIT_CHECKOUT": "v18.02",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
+      "PACKAGE_SUB_DIR": "src",
+      "PACKAGE_SUB_DIR1": "src",
+      "PACKAGE_URL": "https://github.com/ARM-software/ComputeLibrary",
+      "USE_ARM64_V82A": "OFF",
+      "USE_BARE_METAL": "OFF",
+      "USE_BENCHMARK_TEST": "OFF",
+      "USE_CPPTHREADS": "ON",
+      "USE_EMBEDDED_KERNELS": "OFF",
+      "USE_GRAPH": "OFF",
+      "USE_NEON": "OFF",
+      "USE_OPENCL": "ON",
+      "USE_OPENMP": "OFF",
+      "USE_VALIDATION_TEST": "OFF"
+    },
+    "use_git_revision": "yes",
+    "version": "18.02"
+  },
+  "deps": {
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    },
+    "opencl": {
+      "local": "yes",
+      "name": "OpenCL library",
+      "skip_installed": {
+        "android": "yes"
+      },
+      "sort": 20,
+      "tags": "lib,opencl"
+    }
+  },
+  "end_full_path": {
+    "android": "install$#sep#$lib$#sep#$libarm_compute.a",
+    "linux": "install/lib/libarm_compute.a",
+    "mingw": "install\\lib\\arm_compute.a",
+    "win": "install\\lib\\arm_compute.lib"
+  },
+  "need_cpu_info": "yes",
+  "only_for_host_os_tags": [
+    "windows",
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "linux",
+    "android"
+  ],
+  "package_extra_name": " (opencl)",
+  "process_script": "install",
+  "soft_uoa": "fc544df6941a5491",
+  "suggested_path": "lib-armcl-opencl",
+  "tags": [
+    "lib",
+    "arm",
+    "armcl",
+    "arm-compute-library",
+    "vopencl",
+    "vdefault",
+    "v18.02",
+    "v18",
+    "channel-stable"
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "data_uoa": "85f4594654f4becb"
+  },
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  }
+}
