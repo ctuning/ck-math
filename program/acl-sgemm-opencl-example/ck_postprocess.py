@@ -23,25 +23,25 @@ def ck_postprocess(i):
     r=ck.load_text_file({'text_file':rf1,'split_to_list':'yes'})
     if r['return']>0: return r
 
-    r['return'] = 1
-    check = 1
+    r['return']=1
     for line in r['lst']:
         line = re.sub(r'\s+', '',line)
         ld = line.split("=")
         if len(ld) > 1:
            d[ld[0]] = ld[1]
 
-
     d["post_processed"] = 'yes'
-    d["processed_gflops"]=d['GFLOPS']
-    if 'GFLOPS' in d:
-       check = 0
+    d["max_gflops"]=d['MAX_GFLOPS']
+
+    check=1
+    if 'MAX_GFLOPS' in d: check=0
     r['return'] = check or d['STATUS']
     if r['return'] > 0:
-          r['error'] = 'failed to find the time in ACL SGEMM output'
+      r['error'] = 'failed to find the time in ArmCL SGEMM output'
+
     r=ck.save_json_to_file({'json_file':'tmp-ck-acl-sgemm-client.json', 'dict':d})
     if r['return'] > 0:
-          r['error'] = 'failed to find the time in ACL SGEMM output'
+      r['error'] = 'failed to find the time in ArmCL SGEMM output'
 
     return r
 

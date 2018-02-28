@@ -74,7 +74,7 @@
     }
   }, 
   "run_vars": {
-    "CK_CLBLAST_ITERATIONS":5,
+    "CK_CLBLAST_ITERATIONS": 5,
     "CK_CLBLAST_MSIZE": 1024,
     "CK_CLBLAST_NSIZE": 1024,
     "CK_CLBLAST_KSIZE": 1024

@@ -31,14 +31,12 @@ using namespace arm_compute;
 
 # define MYTIMER2 struct timeval
 static MYTIMER2 before, after;
-static double secs;
+static double total_time;
 
 int main( int argc, char *argv[] )
 {
-
-  long r=0;
-  long runs_max=10;
-  int ct_return=0;
+  long repetitions = 10;
+  long r = 0;
 
   // (MM, MN, MK) come from compiler options (see .cm/meta)
   unsigned int m=MM;
@@ -47,7 +45,7 @@ int main( int argc, char *argv[] )
   if (getenv("CK_CLBLAST_MSIZE")!=NULL) m=atol(getenv("CK_CLBLAST_MSIZE"));
   if (getenv("CK_CLBLAST_NSIZE")!=NULL) n=atol(getenv("CK_CLBLAST_NSIZE"));
   if (getenv("CK_CLBLAST_KSIZE")!=NULL) k=atol(getenv("CK_CLBLAST_KSIZE"));
-  if (getenv("CK_CLBLAST_ITERATIONS")!=NULL) runs_max=atol(getenv("CK_CLBLAST_ITERATIONS"));
+  if (getenv("CK_CLBLAST_ITERATIONS")!=NULL) repetitions=atol(getenv("CK_CLBLAST_ITERATIONS"));
 
   const TensorShape AShape(k,m);
   const TensorShape BShape(n,k);
@@ -74,27 +72,34 @@ int main( int argc, char *argv[] )
   BTensor.allocator()->allocate();
   OTensor.allocator()->allocate();
 
-//  if (getenv("RUNS")!=NULL) runs_max=atol(getenv("RUNS"));
-  for (r=0; r< runs_max; r++) {
+  double min_time = 1e12;
+  for(r = 0; r < repetitions; ++r) {
     gettimeofday(&before, NULL);
     gemm.run();
     CLScheduler::get().sync();
     gettimeofday(&after, NULL);
-    printf("ROUND %d = %lf\n",r, ((after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0));
-    secs += (after.tv_sec - before.tv_sec) + (after.tv_usec - before.tv_usec)/1000000.0;
+    double delta = (after.tv_sec - before.tv_sec) + 1e-6*(after.tv_usec - before.tv_usec);
+    if(delta < min_time) min_time = delta;
+    printf("ROUND %d = %lf\n", r, delta);
+    total_time += delta;
   }
-  double avg_time = secs / runs_max;
-  double ops=m*n*k*2/avg_time;
-  double gops= ops/(1000000000);
+  double flops = 2*m*n*k;
+  double gflops = 1e-9 * flops;
+  double avg_time = total_time / repetitions;
+  double avg_gflops_per_sec = gflops / avg_time;
+  double min_gflops_per_sec = gflops / min_time;
+  printf("REPETITIONS = %lu\n", repetitions);
   printf("M = %u\nN = %u\nK = %u\n", m, n, k);
-  printf("AVG = %lf\nREPETITIONS = %lu\n", avg_time, runs_max);
-  printf("GFLOPS = %lf\n", gops);
+  printf("AVG_TIME = %lf\n", avg_time);
+  printf("MIN_TIME = %lf\n", min_time);
+  printf("AVG_GFLOPS = %lf\n", avg_gflops_per_sec);
+  printf("MAX_GFLOPS = %lf\n", min_gflops_per_sec);
   printf("STATUS = %d\n", 0);
 
   printf("------------- CLBLAST-STYLE_OUTPUT\n");
   printf("m = %u\nn = %u\nk = %u\n", m, n, k);
   printf("ms_1 = %lf\n", avg_time*1000);
-  printf("GFLOPS_1 = %lf\n", gops);
+  printf("GFLOPS_1 = %lf\n", avg_gflops_per_sec);
 
   return 0;
 }
