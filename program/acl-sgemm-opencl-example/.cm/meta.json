@@ -13,6 +13,7 @@
       "tags": "compiler,lang-c"
     }, 
     "arm-compute-opencl": {
+      "extra_ld_vars": "$<<CK_ENV_LIB_ARMCL_LFLAG_CORE>>$",
       "local": "yes", 
       "name": "ARM Compute Library (OpenCL)",
       "sort": 30, 
