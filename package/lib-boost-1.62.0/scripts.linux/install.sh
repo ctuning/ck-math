@@ -30,11 +30,11 @@ echo ""
 echo "Building Boost (can take a long time) ..."
 
 export BOOST_BUILD_PATH=$INSTALL_DIR/install
-mkdir -p $BOOST_BUILD_PATH
 
-echo "using ${TOOLSET} : : ${CK_CXX} -fPIC ${CK_CXX_FLAGS_FOR_CMAKE} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $BOOST_BUILD_PATH/user-config.jam
+USER_CONFIG_FILE=${INSTALL_DIR}/${PACKAGE_SUB_DIR1}/user-config.jam
+echo "using ${TOOLSET} : : ${CK_CXX} -fPIC ${CK_CXX_FLAGS_FOR_CMAKE} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $USER_CONFIG_FILE
 
-./b2 install -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} address-model=${CK_TARGET_CPU_BITS} --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_FLAGS}
+./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} address-model=${CK_TARGET_CPU_BITS} --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_FLAGS}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: b2 make failed!"
