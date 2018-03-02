@@ -31,10 +31,8 @@ def ck_postprocess(i):
            d[ld[0]] = ld[1]
 
     d["post_processed"] = 'yes'
-    d["max_gflops"]=d['MAX_GFLOPS']
-
-    check=1
-    if 'MAX_GFLOPS' in d: check=0
+    d["GFLOPS"]=d['GFLOPS_MAX']
+    check = 0 if 'GFLOPS' in d else 1
     r['return'] = check or d['STATUS']
     if r['return'] > 0:
       r['error'] = 'failed to find the time in ArmCL SGEMM output'
