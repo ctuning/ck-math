@@ -56,7 +56,7 @@ int main( int argc, char *argv[] )
   CLTensor OTensor;
   CLScheduler::get().default_init();
 
-  const char* kernel_path = getenv("CK_ENV_LIB_ACL_CL_KERNELS");
+  const char* kernel_path = getenv("CK_ENV_LIB_ARMCL_CL_KERNELS");
   if (NULL != kernel_path) {
     CLKernelLibrary::get().set_kernel_path(kernel_path);
   }
