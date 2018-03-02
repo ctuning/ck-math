@@ -30,6 +30,8 @@ echo ""
 echo "Building Boost (can take a long time) ..."
 
 export BOOST_BUILD_PATH=$INSTALL_DIR/install
+mkdir -p $BOOST_BUILD_PATH
+
 echo "using ${TOOLSET} : : ${CK_CXX} -fPIC ${CK_CXX_FLAGS_FOR_CMAKE} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $BOOST_BUILD_PATH/user-config.jam
 
 ./b2 install -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} address-model=${CK_TARGET_CPU_BITS} --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_FLAGS}
