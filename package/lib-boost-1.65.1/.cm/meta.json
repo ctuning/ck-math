@@ -2,23 +2,20 @@
   "customize": {
     "extra_dir": "", 
     "install_env": {
-      "PACKAGE_BUILD_TYPE": "", 
-      "PACKAGE_NAME": "boost_1_65_1.tar.bz2", 
-      "PACKAGE_NAME1": "boost_1_65_1.tar", 
-      "PACKAGE_NAME2": "boost_1_65_0", 
-      "PACKAGE_RENAME": "NO", 
-      "PACKAGE_SKIP_CLEAN_INSTALL": "YES", 
-      "PACKAGE_SKIP_CLEAN_PACKAGE": "NO", 
-      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO", 
-      "PACKAGE_SKIP_LINUX_MAKE": "YES", 
-      "PACKAGE_SUB_DIR": "boost_1_65_1", 
-      "PACKAGE_SUB_DIR1": "boost_1_65_1", 
-      "PACKAGE_UNBZIP": "YES", 
-      "PACKAGE_UNTAR": "YES", 
-      "PACKAGE_UNTAR_SKIP_ERROR_WIN": "YES", 
-      "PACKAGE_URL": "https://sourceforge.net/projects/boost/files/boost/1.65.1", 
-      "PACKAGE_WGET": "YES", 
-      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:44094af948731a1c#$"
+        "PACKAGE_WGET":                 "YES",
+        "PACKAGE_URL":                  "https://dl.bintray.com/boostorg/release/1.65.1/source",
+
+        "PACKAGE_NAME":                 "boost_1_65_1.zip",
+        "PACKAGE_UNZIP":                "YES",
+        "PACKAGE_SUB_DIR":              "boost_1_65_1",
+        "PACKAGE_SUB_DIR1":             "boost_1_65_1",
+
+        "PACKAGE_BUILD_TYPE":           "",
+        "PACKAGE_SKIP_CLEAN_SRC_DIR":   "NO",
+        "PACKAGE_SKIP_CLEAN_INSTALL":   "YES",
+        "PACKAGE_SKIP_LINUX_MAKE":      "YES",
+        "PACKAGE_SKIP_CLEAN_PACKAGE":   "NO",
+        "SUBSTITUTE_ORIGINAL_PACKAGE_DIR":"$#path_to_cid=package:44094af948731a1c#$"
     }, 
     "version": "1.65.1"
   }, 
