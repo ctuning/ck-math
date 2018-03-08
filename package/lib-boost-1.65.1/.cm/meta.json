@@ -48,7 +48,7 @@
     "python": {
       "force_target_as_host": "yes",
       "local": "yes",
-      "name": "Unix Utils for Windows",
+      "name": "Python for interfacing",
       "only_for_target_os_tags": [
         "windows"
       ],
