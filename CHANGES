@@ -1,3 +1,5 @@
+* 2018.03.08 - fixing boost build for windows (also to support Caffe python installation)
+
 * 2017.11.21 - added openmpi package
 
 * 2017.11.17 - improved ArmCL compilation

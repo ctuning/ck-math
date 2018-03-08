@@ -7,10 +7,10 @@
       "PACKAGE_NAME1": "boost_1_62_0.tar",
       "PACKAGE_NAME2": "boost_1_62_0",
       "PACKAGE_RENAME": "NO",
-      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO",
       "PACKAGE_SKIP_CLEAN_INSTALL": "YES",
-      "PACKAGE_SKIP_LINUX_MAKE": "YES",
       "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "NO",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
       "PACKAGE_SUB_DIR": "boost_1_62_0",
       "PACKAGE_SUB_DIR1": "boost_1_62_0",
       "PACKAGE_UNBZIP": "YES",
@@ -23,51 +23,62 @@
   },
   "deps": {
     "cmake": {
-      "local": "yes",
       "force_target_as_host": "yes",
+      "local": "yes",
       "name": "cmake",
       "sort": 5,
       "tags": "tool,cmake"
-    },
-    "utils-unix-win": {
-      "local": "yes",
-      "force_target_as_host": "yes", 
-      "name": "Unix Utils for Windows",
-      "skip_from_bat":"yes",
-      "only_for_target_os_tags": [
-        "android"
-      ], 
-      "only_for_host_os_tags": [
-        "windows"
-      ],
-      "sort": 6,
-      "tags": "utils,unix-win"
-    },
-    "host-compiler": {
-      "local": "yes",
-      "force_target_as_host": "yes", 
-      "skip_from_bat":"yes",
-      "only_for_target_os_tags": [
-        "android"
-      ], 
-      "only_for_host_os_tags": [
-        "windows"
-      ],
-      "name": "HOST MingW C compiler (to bootstrap)",
-      "sort": 7,
-      "tags": "compiler,lang-c,gcc"
     },
     "compiler": {
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
       "tags": "compiler,lang-cpp"
+    },
+    "host-compiler": {
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "HOST MingW C compiler (to bootstrap)",
+      "only_for_host_os_tags": [
+        "windows"
+      ],
+      "only_for_target_os_tags": [
+        "android"
+      ],
+      "skip_from_bat": "yes",
+      "sort": 7,
+      "tags": "compiler,lang-c,gcc"
+    },
+    "python": {
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "Unix Utils for Windows",
+      "only_for_target_os_tags": [
+        "windows"
+      ],
+      "skip_from_bat": "yes",
+      "sort": 0,
+      "tags": "compiler,python"
+    },
+    "utils-unix-win": {
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "Unix Utils for Windows",
+      "only_for_host_os_tags": [
+        "windows"
+      ],
+      "only_for_target_os_tags": [
+        "android"
+      ],
+      "skip_from_bat": "yes",
+      "sort": 6,
+      "tags": "utils,unix-win"
     }
   },
   "end_full_path": {
-    "win": "install\\lib\\boost_system-mt.lib",
+    "android": "install$#sep#$lib$#sep#$libboost_system.a",
     "linux": "install/lib/libboost_system.a",
-    "android": "install$#sep#$lib$#sep#$libboost_system.a"
+    "win": "install\\lib\\boost_system-mt.lib"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
