@@ -11,6 +11,17 @@
 # - Anton Lokhmotov, 2017
 #
 
+    ## TODO: Could the following be done during compiler configuration phase?
+    ##       Say, by setting CK_LD_FLAGS_EXTRA variable or similar?
+    #
+    # on a Mac and compiling with LLVM:
+if [ -n "$CK_ENV_COMPILER_LLVM_SET" ] && [ "$CK_DLL_EXT" = ".dylib" ]
+then
+    FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY='cxxflags="-stdlib=libstdc++" linkflags="-stdlib=libstdc++"'
+else
+    FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY=''
+fi
+
 if [ "${CK_COMPILER_TOOLCHAIN_NAME}" != "" ] ; then
   TOOLSET=$CK_COMPILER_TOOLCHAIN_NAME
 else
@@ -34,7 +45,7 @@ export BOOST_BUILD_PATH=$INSTALL_DIR/install
 USER_CONFIG_FILE=${INSTALL_DIR}/${PACKAGE_SUB_DIR1}/user-config.jam
 echo "using ${TOOLSET} : : ${CK_CXX} -fPIC ${CK_CXX_FLAGS_FOR_CMAKE} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $USER_CONFIG_FILE
 
-./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} address-model=${CK_TARGET_CPU_BITS} --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_FLAGS}
+./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} address-model=${CK_TARGET_CPU_BITS} $FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_FLAGS}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: b2 make failed!"
