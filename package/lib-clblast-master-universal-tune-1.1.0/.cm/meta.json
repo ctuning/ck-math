@@ -4,6 +4,10 @@
     "git_src_dir": "src",
     "install_env": {
       "CMAKE_CONFIG": "Release",
+      "CLBLAST_SAMPLES":"ON",
+      "CLBLAST_TUNERS":"ON",
+      "CLBLAST_CLIENTS":"ON",
+      "CLBLAST_VERBOSE":"OFF",
       "PACKAGE_AUTOGEN": "NO",
       "PACKAGE_BUILD_TYPE": "cmake",
       "PACKAGE_CONFIGURE_FLAGS": "",
