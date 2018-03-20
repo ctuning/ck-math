@@ -1,3 +1,5 @@
+* 2018.03.20 - added more parameters for building CLBlast
+
 * 2018.03.13 - make sure Boost is linked with the right library when compiled by LLLVM on Mac
 
 * 2018.03.08 - fixing boost build for windows (also to support Caffe python installation)
