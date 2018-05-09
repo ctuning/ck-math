@@ -30,7 +30,7 @@ fi
 
 ############################################################
 cd ${INSTALL_DIR}/${PACKAGE_SUB_DIR1}
-./bootstrap.sh --with-toolset=${TOOLSET}
+./bootstrap.sh --with-toolset=${TOOLSET} ${CK_ENV_COMPILER_PYTHON_FILE:+"--with-python=${CK_ENV_COMPILER_PYTHON_FILE}"}
 if [ "${?}" != "0" ] ; then
   echo "Error: cmake failed!"
   exit 1
