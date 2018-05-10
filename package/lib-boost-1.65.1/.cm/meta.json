@@ -54,7 +54,6 @@
         "windows"
       ],
       "add_to_path": "yes",
-      "skip_from_bat": "yes",
       "sort": 0,
       "tags": "compiler,python"
     },
