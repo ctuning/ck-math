@@ -14,7 +14,7 @@
       "USE_BARE_METAL": "OFF", 
       "USE_BENCHMARK_TEST": "OFF", 
       "USE_CPPTHREADS": "ON", 
-      "USE_EMBEDDED_KERNELS": "OFF", 
+      "USE_EMBEDDED_KERNELS": "ON", 
       "USE_GRAPH": "OFF", 
       "USE_NEON": "OFF", 
       "USE_OPENCL": "ON", 
