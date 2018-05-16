@@ -6,7 +6,7 @@ To install the package from a separate branch (other than master), use the follo
 
  $ ck install package:lib-armcl-opencl-master
 
-You can also install a specific sub-branch as following:
+You can also install a specific sub-branch as follows:
  $ ck install package:lib-armcl-opencl-master (--env.PACKAGE_GIT_CHECKOUT=your_branch --extra_version=-your_branch)
 
 This will create a new env entry without conflicting with the already installed master entry.
