@@ -1,0 +1,15 @@
+diff --git a/Makefile.arm64 b/Makefile.arm64
+index d19e796..9f9f22f 100644
+--- a/Makefile.arm64
++++ b/Makefile.arm64
+@@ -1,9 +1,4 @@
+ 
+-ifeq ($(CORE), ARMV8)
+-CCOMMON_OPT += -march=armv8-a
+-FCOMMON_OPT += -march=armv8-a
+-endif
+-
+ ifeq ($(CORE), CORTEXA57)
+ CCOMMON_OPT += -march=armv8-a+crc+crypto+fp+simd -mtune=cortex-a57
+ FCOMMON_OPT += -march=armv8-a+crc+crypto+fp+simd -mtune=cortex-a57
+
