@@ -515,6 +515,11 @@ def post_setup(i):
 
         xgraph_files = glob.glob('src/graph/*.cpp')
         xgraph_files += glob.glob('src/graph/*/*.cpp')
+        # v18.05
+        xgraph_files += glob.glob('src/graph/backends/CL/*.cpp')
+        xgraph_files += glob.glob('src/graph/backends/NEON/*.cpp')
+        
+
 
         # for the sake of simplicity just add Graph API into the main lib for now
         xfiles += xgraph_files
