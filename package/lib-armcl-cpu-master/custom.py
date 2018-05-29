@@ -479,6 +479,20 @@ def post_setup(i):
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
+        # v18.05
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_gemm_s16_12x8/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_gemm_s8_12x8/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_gemm_s8_4x4/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_gemm_u16_12x8/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_gemm_u8_12x8/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_gemm_u8_4x4/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_hgemm_24x8/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_sgemm_12x8/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_sgemm_native_16x4/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_sgemv_pretransposed/*.cpp')
+        xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a64_sgemv_trans/*.cpp')
         # v18.01
         xcore_files += glob.glob('src/core/NEON/kernels/winograd/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/winograd/transforms/*.cpp')
