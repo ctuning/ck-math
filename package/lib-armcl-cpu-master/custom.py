@@ -464,6 +464,10 @@ def post_setup(i):
        xcore_files += glob.glob('src/core/CL/kernels/*.cpp')
        xfiles += glob.glob('src/runtime/CL/*.cpp')
        xfiles += glob.glob('src/runtime/CL/functions/*.cpp')
+
+       # v18.05
+       xfiles += glob.glob('src/runtime/CL/tuners/*.cpp')
+
        if use_embed_kernel == 'on':
           cl_files  = glob.glob('src/core/CL/cl_kernels/*.cl') + glob.glob('src/core/CL/cl_kernels/*.h')
           source_list = []
