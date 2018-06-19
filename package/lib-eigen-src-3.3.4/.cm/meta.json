@@ -1,0 +1,36 @@
+{
+  "customize": {
+    "extra_dir": "",
+    "install_env": {
+      "PACKAGE_NAME": "3.3.4.zip",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
+      "PACKAGE_UNZIP": "YES",
+      "PACKAGE_URL": "http://bitbucket.org/eigen/eigen/get",
+      "PACKAGE_WGET": "YES"
+    },
+    "version": "3.3.4"
+  },
+  "end_full_path": {
+    "android": "eigen-eigen-5a0156e40feb$#sep#$Eigen$#sep#$Core",
+    "linux": "eigen-eigen-5a0156e40feb/Eigen/Core",
+    "mingw": "eigen-eigen-5a0156e40feb\\Eigen\\Core",
+    "win": "eigen-eigen-5a0156e40feb\\Eigen\\Core"
+  },
+  "process_script": "install",
+  "soft_uoa": "f1b7a94af4a15473",
+  "suggested_path": "lib-eigen-src",
+  "tags": [
+    "lib",
+    "eigen",
+    "lang-cpp",
+    "vsrc",
+    "v3.3.4",
+    "v3.3",
+    "v3",
+    "channel-stable"
+  ],
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  }
+}

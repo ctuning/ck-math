@@ -1,0 +1,24 @@
+{
+  "auto_detect": "yes",
+  "customize": {
+    "add_include_path": "yes",
+    "env_prefix": "CK_ENV_LIB_EIGEN",
+    "limit_recursion_dir_search": {
+      "linux": 4,
+      "win": 4
+    },
+    "skip_add_to_bin": "yes",
+    "skip_add_to_path": "yes",
+    "soft_file": {
+      "linux": "Eigen/Core",
+      "win": "Eigen\\Core"
+    }
+  },
+  "soft_name": "Eigen library",
+  "tags": [
+    "lib",
+    "eigen",
+    "lang-cpp",
+    "vsrc"
+  ]
+}
