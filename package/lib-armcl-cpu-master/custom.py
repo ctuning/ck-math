@@ -308,9 +308,11 @@ def setup(i):
         env['USE_ARM64']='ON'
         flags += ['-march=armv8.2-a+fp16+simd']
         flags += ['-DARM_COMPUTE_ENABLE_FP16']
+        flags += ['-DARM_COMPUTE_AARCH64_V8_2', '-DNO_DOT_IN_TOOLCHAIN']
     elif 'arm64' in tabi or 'aarch64' in tabi:
         env['USE_ARM64']='ON'
         flags += ['-march=armv8-a']
+        flags += ['-DARM_COMPUTE_AARCH64_V8A', '-DNO_DOT_IN_TOOLCHAIN']
     elif tabi=='x86':
         flags += ['-m32']
     elif tabi=='x86_64':
