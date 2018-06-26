@@ -1,8 +1,8 @@
 {
   "backup_data_uid": "848509ef849f2f39",
   "build_compiler_vars": {
-    "ARM_COMPUTE_CL": 1,
-    "EXCLUDE_MOBILENET": 0
+    "XOPENME": "",
+    "ARM_COMPUTE_CL": 1
   },
   "compile_deps": {
     "compiler": {
@@ -11,21 +11,18 @@
       "sort": 10,
       "tags": "compiler,lang-cpp"
     },
+    "libjpeg": {
+      "local": "yes", 
+      "name": "Jpeg library", 
+      "sort": 20, 
+      "tags": "lib,libjpeg"
+    },
     "library": {
       "extra_ld_vars": "$<<CK_ENV_LIB_ARMCL_LFLAG_CORE>>$",
       "local": "yes",
       "name": "Arm Compute Library (OpenCL & Graph APIs)",
-      "sort": 5,
+      "sort": 30,
       "tags": "lib,arm-compute-library,vopencl,vgraph"
-    },
-    "opencl": {
-      "local": "yes",
-      "name": "OpenCL Library",
-      "skip-installed": {
-        "android": "yes"
-      },
-      "sort": 20,
-      "tags": "lib,opencl"
     },
     "xopenme": {
       "local": "yes",
@@ -52,61 +49,62 @@
     "linux"
   ],
   "print_files_after_run": [
-    "tmp-stderr.tmp"
+    "tmp-output1.tmp", 
+    "tmp-output2.tmp"
   ],
   "process_in_tmp": "yes",
   "program": "yes",
   "run_cmds": {
     "default": {
-      "ignore_return_code": "yes",
+      "dataset_tags": [
+        "image", 
+        "jpeg", 
+        "dataset"
+      ],
       "run_time": {
         "fine_grain_timer_file": "tmp-ck-timer.json",
+        "pre_process_via_ck": {
+          "script_name": "preprocess"
+        },
         "need_compute_device": "opencl",
-        "output_invariant_of_repeat": "yes",
-        "run_cmd_main": "$#BIN_FILE#$",
-        "run_cmd_out1": "tmp-stdout.tmp",
-        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_cmd_main": "$#BIN_FILE#$ --weights=$<<CK_ENV_WEIGHTS_DIR>>$ --image=$#dataset_path#$$#dataset_filename#$ --labels=$<<CK_ENV_LABELS_FILE>>$ --resolution=$<<CK_ENV_MOBILENET_RESOLUTION>>$ --multiplier=$<<CK_ENV_MOBILENET_MULTIPLIER>>$",
+        "run_cmd_out1": "tmp-output1.tmp", 
+        "run_cmd_out2": "tmp-output2.tmp", 
         "run_output_files": [
-          "tmp-ck-timer.json",
-          "tmp-ck-output.bin",
-          "tmp-ck-output.json"
+          "tmp-output1.tmp", 
+          "tmp-output2.tmp", 
+          "tmp-ck-timer.json"
         ]
       }
     }
   },
-  "run_vars": {
-    "CK_BATCH_SIZE": 1,
-    "CK_LOWER_BOUND": 0.0,
-    "CK_NETWORK": "AlexNet",
-    "CK_SEED": 42,
-    "CK_UPPER_BOUND": 1.0
+  "run_deps": {
+    "weights": {
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "MobileNet weights (as NumPy arrays)",
+      "sort": 10,
+      "tags": "mobilenet,weights,npy",
+      "no_tags": "mobilenet-all"
+    }
   },
   "skip_bin_ext": "yes",
   "source_files": [
-    "benchmark.cpp",
-    "alexnet.cpp",
-    "googlenet.cpp",
-    "lenet.cpp",
+    "classify.cpp",
     "mobilenet.cpp",
-    "squeezenet.cpp",
-    "squeezenet11.cpp",
-    "vgg16.cpp",
-    "vgg19.cpp",
     "$<<CK_ENV_LIB_ARMCL_UTILS>>$/GraphUtils.cpp",
     "$<<CK_ENV_LIB_ARMCL_UTILS>>$/Utils.cpp"
   ],
   "tags": [
-    "armcl",
-    "benchmark",
-    "armcl-benchmark",
-    "float32",
-    "vopencl"
+    "armcl-classification", 
+    "demo"
   ],
-  "target_file": "benchmark",
+  "target_file": "classification",
   "use_preprocess_compilation_scripts": {
-    "data_uoa": "benchmark-armcl-opencl",
+    "data_uoa": "3144372763a44cd2",
+    "module_uoa": "84e27ad9dd12e734",
     "script_func": "ck_preprocess",
-    "script_name": "compile_preprocess"
+    "script_name": "compile-preprocess"
   },
   "version": "1.0.0"
 }

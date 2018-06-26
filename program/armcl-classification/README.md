@@ -1,24 +1,36 @@
 
-# System-level network classification and benchmarking
+# Classification program for ArmCL
 
+## Requirements
+
+
+### ArmCL library
 To build this program, you need ArmCL compiled with Graph API:
 
 ```
-$ ck pull all
-$ ck install package:lib-armcl-opencl-18.05 --env.USE_GRAPH=ON --env.USE_NEON=ON --extra_version=-graph
+$ ck install package:lib-armcl-opencl-18.05 --env.USE_GRAPH=ON --env.USE_NEON=ON --extra_version=-graph [--target_os=android23-arm64]
 ```
 
-When this is done, compile and run the program as usual:
+**NB:** Use `--target_os=android23-arm64` to build for Android API 23 (v6.0 "Marshmallow") or [similar](https://source.android.com/setup/start/build-numbers).
+
+
+### Weights package
+
+Install a package providing weights as NumPy array files:
 
 ```
-$ ck compile program:benchmark-armcl-opencl
-$ ck run program:benchmark-armcl-opencl
+$ ck install package:weights-mobilenet-v1-1.0-224-npy
+$ ck install package --tags=mobilenet,weights,npy
 ```
 
-You can run on different networks:
+## Compile
 
-* `ck run --env.CK_NETWORK=alexnet` (this is the default)
+```
+$ ck compile program:armcl-classification [--target_os=android23-arm64]
+```
 
-* `ck run --env.CK_NETWORK=googlenet`
+## Run
 
-* `ck run --env.CK_NETWORK=squeezenet`
+```
+$ ck run program:armcl-classification [--target_os=android23-arm64]
+```

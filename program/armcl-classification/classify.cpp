@@ -1,171 +1,157 @@
 /*
- * Copyright (c) 2017 ARM Limited.
+ * Copyright (c) 2018 cTuning foundation.
+ * See CK COPYRIGHT.txt for copyright details.
  *
- * SPDX-License-Identifier: MIT
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
+ * SPDX-License-Identifier: BSD-3-Clause.
+ * See CK LICENSE.txt for licensing details.
+ */  
 
-#include "benchmark-common.h"
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <vector>
 
-#if defined(ARMCL_18_05_PLUS)
-#include <arm_compute/graph/backends/BackendRegistry.h>
-#include <arm_compute/graph/backends/CL/CLDeviceBackend.h>
+#include <stdlib.h>
+
+#ifdef XOPENME
+#include <xopenme.h>
 #endif
 
-// Forward declarations
-void run_alexnet();
-void run_googlenet();
-void run_lenet();
-void run_mobilenet();
-void run_squeezenet();
-void run_squeezenet11();
-void run_vgg16();
-void run_vgg19();
+#include "image_helper.h"
 
+enum X_TIMERS {
+  X_TIMER_SETUP,
+  X_TIMER_LOAD_IMAGE,
+  X_TIMER_CLASSIFY,
 
-const char *GLOBAL_VAR[GLOBAL_TIMER_COUNT] = {
-  [X_TIMER_SETUP] = "setup",
-  [X_TIMER_TEST] = "test"
-};
+  X_TIMER_COUNT
+}; 
 
-static int VAR_COUNT;
-static const char **VAR;
+using namespace std;
 
-void printf_callback(const char *buffer, unsigned int len, size_t complete, void *user_data) {
-  printf("%.*s", len, buffer);
+bool get_arg(const char* arg, const char* key, string& target) {
+  if (strncmp(arg, key, strlen(key)) == 0) {
+    target = &arg[strlen(key)];
+    return true;
+  }
+  return false;
 }
 
-void set_kernel_path() {
-  const char *kernel_path = getenv("CK_ENV_LIB_ARMCL_CL_KERNELS");
-  if (kernel_path) {
-    printf("Kernel path: %s\n", kernel_path);
-    arm_compute::CLKernelLibrary::get().set_kernel_path(kernel_path);
-  }
+void check_file(const string& path, const string& id) {
+  if (path.empty())
+    throw id + " file path is not specified";
+  if (!ifstream(path).good())
+    throw id + " file can't be opened, check if it exists";
+  cout << id << " file: " << path << endl;
 }
 
-void init_armcl(arm_compute::ICLTuner *cl_tuner = nullptr) {
-  cl_context_properties properties[] = {
-    CL_PRINTF_CALLBACK_ARM, reinterpret_cast<cl_context_properties>(printf_callback),
-    CL_PRINTF_BUFFERSIZE_ARM, static_cast<cl_context_properties>(0x100000),
-    CL_CONTEXT_PLATFORM, reinterpret_cast<cl_context_properties>(cl::Platform::get()()),
-    0
-  };
-  cl::Context::setDefault(cl::Context(CL_DEVICE_TYPE_DEFAULT, properties));
-  arm_compute::CLScheduler::get().default_init(cl_tuner);
-
-  // Should be called after initialization
-  set_kernel_path();
-
-#if defined(ARMCL_18_05_PLUS)
-  arm_compute::graph::backends::BackendRegistry::get().add_backend<arm_compute::graph::backends::CLDeviceBackend>(arm_compute::graph::Target::CL);
-#endif
-}
-
-void finish_test() {
-  for (int i = 0; i < VAR_COUNT; ++i) {
-    float v = xopenme_get_timer(i);
-    printf("%s time: %f\n", VAR[i], v);
-    store_value_f(i, VAR[i], v);
-  }
-  xopenme_dump_state();
-  xopenme_finish();
-}
-
-int main(int argc, const char **argv) {
-  std::string network = getenv("CK_NETWORK") ? getenv("CK_NETWORK") : "alexnet";
-  std::transform(network.begin(), network.end(), network.begin(), ::tolower);
-
-  auto func = run_alexnet;
-  if ("googlenet" == network) {
-    std::cout << "Using GoogLeNet" << std::endl;
-    func = run_googlenet;
-  }
-  else if ("squeezenet" == network) {
-    std::cout << "Using SqueezeNet 1.0" << std::endl;
-    func = run_squeezenet;
-  }
-  else if ("squeezenet11" == network) {
-    std::cout << "Using SqueezeNet 1.1" << std::endl;
-    func = run_squeezenet11;
-  }
-  else if ("lenet" == network) {
-    std::cout << "Using LeNet" << std::endl;
-    func = run_lenet;
-  }
-  else if ("mobilenet" == network) {
-#if EXCLUDE_MOBILENET == 0
-    std::cout << "Using MobileNet" << std::endl;
-    func = run_mobilenet;
-#else
-    std::cout << "Excluding MobileNet" << std::endl;
-    func = nullptr;
-#endif
-  }
-  else if ("vgg16" == network) {
-    std::cout << "Using VGG16" << std::endl;
-    func = run_vgg16;
-  }
-  else if ("vgg19" == network) {
-    std::cout << "Using VGG19" << std::endl;
-    func = run_vgg19;
-  }
-  else {
-    std::cout << "Using AlexNet" << std::endl;
-    func = run_alexnet;
-  }
-  VAR = GLOBAL_VAR;
-  VAR_COUNT = GLOBAL_TIMER_COUNT;
-
-  xopenme_init(VAR_COUNT, VAR_COUNT);
-  init_armcl();
-
-  std::cout << "\n" << argv[0] << "\n\n";
-
-  int status = EXIT_SUCCESS;
+int main(int argc, char *argv[]) {
   try {
-    func();
+#ifdef XOPENME
+    xopenme_init(X_TIMER_COUNT, 0);
+#endif
 
-    std::cout << "\nTest PASSED\n";
-  }
-  catch(cl::Error &err) {
-    std::cerr << "!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-    std::cerr << std::endl
-              << "ERROR " << err.what() << "(" << err.err() << ")" << std::endl;
-    std::cerr << "!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-    status = EXIT_FAILURE;
-  }
-  catch(std::runtime_error &err) {
-    std::cerr << "!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-    std::cerr << std::endl
-              << "ERROR " << err.what() << " " << (errno ? strerror(errno) : "") << std::endl;
-    std::cerr << "!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-    status = EXIT_FAILURE;
-  }
+    // Parse command line arguments
+    string image_file;
+    string weights_dir;
+    string labels_file;
+    string resolution_str;
+    string multiplier_str;
+    for (int i = 1; i < argc; i++) {
+      get_arg(argv[i], "--image=", image_file) ||
+      get_arg(argv[i], "--weights=", weights_dir) ||
+      get_arg(argv[i], "--labels=", labels_file) ||
+      get_arg(argv[i], "--resolution=", resolution_str) ||
+      get_arg(argv[i], "--multiplier=", multiplier_str);
+    }
+    int resolution = atoi(resolution_str.c_str());
+    int multiplier = atoi(multiplier_str.c_str());
+    check_file(image_file, "Image");
+    check_file(labels_file, "Labels");
+    cout << "Weighs dir: " << weights_dir << endl;
+    cout << "Mobilenet resolution: " << resolution << endl;
+    cout << "Mobilenet multiplier: " << multiplier << endl;
 
-  if(EXIT_SUCCESS != status) {
-    std::cout << "\nTest FAILED\n";
+    // Load network from ftlite file
+#ifdef XOPENME
+    xopenme_clock_start(X_TIMER_SETUP);
+#endif
+    // TODO
+    cout << "SETUP HERE" << endl;
+#ifdef XOPENME
+    xopenme_clock_end(X_TIMER_SETUP);
+#endif
+
+    // Read input image
+#ifdef XOPENME
+    xopenme_clock_start(X_TIMER_LOAD_IMAGE);
+#endif
+    ImageData img_data = load_jpeg_file(image_file);
+    cout << "OK: Input image loaded: " << img_data.height << "x"
+                                       << img_data.width << "x"
+                                       << img_data.channels << endl;
+    if (img_data.channels != 3)
+      throw string("Only RGB images are supported");
+
+    // Prepare input image
+    int wanted_height = 224;
+    int wanted_width = 224;
+    int wanted_channels = 3;
+    if (wanted_channels != img_data.channels)
+      throw string("Unsupported channels number in model");
+    vector<float> resized_img_data(wanted_height * wanted_width * wanted_channels);
+    resize_image(resized_img_data.data(), img_data, wanted_height, wanted_width);
+#ifdef XOPENME
+    xopenme_clock_end(X_TIMER_LOAD_IMAGE);
+#endif
+
+    // Classify image
+    long ct_repeat_max = getenv("CT_REPEAT_MAIN") ? atol(getenv("CT_REPEAT_MAIN")) : 1;
+#ifdef XOPENME
+    xopenme_clock_start(X_TIMER_CLASSIFY);
+#endif
+    for (int i = 0; i < ct_repeat_max; i++) {
+      // TODO
+      cout << "CLASSIFICATION HERE" << endl;
+    }
+#ifdef XOPENME
+    xopenme_clock_end(X_TIMER_CLASSIFY);
+#endif
+    cout << "OK: Image classified" << endl;
+
+    // Process results
+    const int output_size = 1000;
+    const size_t num_results = 5;
+    const float threshold = 0.0001f;
+    vector<pair<float, int>> top_results;
+    // TODO
+    cout << "GET TOP RESULTS HERE" << endl;
+
+    // Read labels
+    vector<string> labels;
+    ifstream file(labels_file);
+    string line;
+    while (getline(file, line))
+      labels.push_back(line);
+
+    // Print predictions
+    cout << "---------- Prediction for " << image_file << " ----------" << endl;
+    for (const auto& result : top_results) {
+      const float confidence = result.first;
+      const int index = result.second;
+      cout << fixed << setprecision(4) << confidence 
+        << " - \"" << labels[index] << " (" << index << ")\"" << endl;
+    }
+
+#ifdef XOPENME
+    xopenme_dump_state();
+    xopenme_finish();
+#endif    
   }
-
-  finish_test();
-  fflush(stdout);
-  fflush(stderr);
-
-  return status;
+  catch (const string& error_message) {
+    cout << "ERROR: " << error_message << endl;
+    return -1;
+  }
+  return 0;
 }
