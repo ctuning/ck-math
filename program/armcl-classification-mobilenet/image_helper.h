@@ -1,9 +1,13 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
+#include <math.h>
 #include <stdio.h>
+#include <string.h>
 #include <setjmp.h>
 #include <jpeglib.h>
-#include <math.h>
 
 struct ImageData {
   std::vector<uint8_t> data;

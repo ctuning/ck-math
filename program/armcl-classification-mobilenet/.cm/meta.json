@@ -22,7 +22,7 @@
       "local": "yes",
       "name": "Arm Compute Library (OpenCL & Graph APIs)",
       "sort": 30,
-      "tags": "lib,arm-compute-library,vopencl,vgraph"
+      "tags": "lib,arm-compute-library,vopencl"
     },
     "xopenme": {
       "local": "yes",
