@@ -3,6 +3,11 @@
 
 ## Requirements
 
+Extra CK repositories:
+```
+$ ck pull repo:ck-tensorflow
+$ ck pull repo --url=https://github.com/dividiti/ck-request-asplos18-mobilenets-armcl-opencl
+```
 
 ### ArmCL library
 To build this program, you need ArmCL compiled with Graph API:
@@ -12,7 +17,6 @@ $ ck install package:lib-armcl-opencl-18.05 --env.USE_GRAPH=ON --env.USE_NEON=ON
 ```
 
 **NB:** Use `--target_os=android23-arm64` to build for Android API 23 (v6.0 "Marshmallow") or [similar](https://source.android.com/setup/start/build-numbers).
-
 
 ### Weights package
 
