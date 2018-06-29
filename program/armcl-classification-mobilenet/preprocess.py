@@ -43,5 +43,8 @@ def ck_preprocess(i):
     new_env['CK_ENV_WEIGHTS_DIR'] = WEIGHTS_DIR
     new_env['CK_ENV_LABELS_FILE'] = os.path.join('..', LABELS_FILE)
 
+  new_env['CK_ENV_RESOLUTION'] = dep_env('weights', 'CK_ENV_MOBILENET_RESOLUTION')
+  new_env['CK_ENV_MULTIPLIER'] = dep_env('weights', 'CK_ENV_MOBILENET_MULTIPLIER')
+
   return {'return': 0, 'new_env': new_env, 'run_input_files': files_to_push}
 
