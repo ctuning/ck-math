@@ -1,0 +1,110 @@
+{
+  "backup_data_uid": "848509ef849f2f39",
+  "build_compiler_vars": {
+    "XOPENME": "",
+    "ARM_COMPUTE_CL": 1
+  },
+  "compile_deps": {
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    },
+    "libjpeg": {
+      "local": "yes", 
+      "name": "Jpeg library", 
+      "sort": 20, 
+      "tags": "lib,libjpeg"
+    },
+    "library": {
+      "extra_ld_vars": "$<<CK_ENV_LIB_ARMCL_LFLAG_CORE>>$",
+      "local": "yes",
+      "name": "Arm Compute Library (OpenCL & Graph APIs)",
+      "sort": 30,
+      "tags": "lib,arm-compute-library,vopencl,vgraph"
+    },
+    "xopenme": {
+      "local": "yes",
+      "name": "xOpenME library",
+      "sort": 100,
+      "tags": "lib,xopenme"
+    }
+  },
+  "compiler_add_include_as_env_from_deps": [
+    "CK_ENV_LIB_STDCPP_INCLUDE",
+    "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA",
+    "CK_ENV_LIB_ARMCL_UTILS"
+  ],
+  "compiler_env": "CK_CXX",
+  "compiler_flags_as_env": "$<<CK_COMPILER_FLAG_CPP11>>$ $<<CK_FLAG_PREFIX_INCLUDE>>$$<<CK_ENV_LIB_ARMCL_INCLUDE>>$ -Wno-ignored-attributes",
+  "data_name": "armcl-classification",
+  "linker_add_lib_as_env": [
+    "CK_CXX_EXTRA",
+    "CK_ENV_LIB_STDCPP_STATIC"
+  ],
+  "main_language": "cpp",
+  "only_for_target_os_tags": [
+    "android",
+    "linux"
+  ],
+  "print_files_after_run": [
+    "tmp-output1.tmp", 
+    "tmp-output2.tmp"
+  ],
+  "process_in_tmp": "yes",
+  "program": "yes",
+  "run_cmds": {
+    "default": {
+      "dataset_tags": [
+        "image", 
+        "jpeg", 
+        "dataset"
+      ],
+      "run_time": {
+        "fine_grain_timer_file": "tmp-ck-timer.json",
+        "pre_process_via_ck": {
+          "script_name": "preprocess"
+        },
+        "need_compute_device": "opencl",
+        "run_cmd_main": "$#BIN_FILE#$ --weights=$<<CK_ENV_WEIGHTS_DIR>>$ --image=$#dataset_path#$$#dataset_filename#$ --labels=$<<CK_ENV_LABELS_FILE>>$ --resolution=$<<CK_ENV_MOBILENET_RESOLUTION>>$ --multiplier=$<<CK_ENV_MOBILENET_MULTIPLIER>>$",
+        "run_cmd_out1": "tmp-output1.tmp", 
+        "run_cmd_out2": "tmp-output2.tmp", 
+        "run_output_files": [
+          "tmp-output1.tmp", 
+          "tmp-output2.tmp", 
+          "tmp-ck-timer.json"
+        ]
+      }
+    }
+  },
+  "run_deps": {
+    "weights": {
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "MobileNet weights (as NumPy arrays)",
+      "sort": 10,
+      "tags": "mobilenet,weights,npy",
+      "no_tags": "mobilenet-all"
+    }
+  },
+  "skip_bin_ext": "yes",
+  "source_files": [
+    "classify.cpp",
+    "mobilenet.cpp",
+    "$<<CK_ENV_LIB_ARMCL_UTILS>>$/GraphUtils.cpp",
+    "$<<CK_ENV_LIB_ARMCL_UTILS>>$/Utils.cpp"
+  ],
+  "tags": [
+    "armcl-classification", 
+    "demo"
+  ],
+  "target_file": "classification",
+  "use_preprocess_compilation_scripts": {
+    "data_uoa": "3144372763a44cd2",
+    "module_uoa": "84e27ad9dd12e734",
+    "script_func": "ck_preprocess",
+    "script_name": "compile-preprocess"
+  },
+  "version": "1.0.0"
+}
