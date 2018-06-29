@@ -26,11 +26,11 @@ $ ck install package --tags=mobilenet,weights,npy
 ## Compile
 
 ```
-$ ck compile program:armcl-classification [--target_os=android23-arm64]
+$ ck compile program:armcl-classification-mobilenet [--target_os=android23-arm64]
 ```
 
 ## Run
 
 ```
-$ ck run program:armcl-classification [--target_os=android23-arm64]
+$ ck run program:armcl-classification-mobilenet [--target_os=android23-arm64]
 ```
