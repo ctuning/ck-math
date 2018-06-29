@@ -13,6 +13,8 @@ def ck_preprocess(i):
 
   LABELS_FILE = 'labels.txt'
   WEIGHTS_DIR = dep_env('weights', 'CK_ENV_MOBILENET')
+  LIB_DIR = dep_env('library', 'CK_ENV_LIB_ARMCL')
+  LIB_NAME = dep_env('library', 'CK_ENV_LIB_ARMCL_DYNAMIC_CORE_NAME')
 
   new_env = {}
   files_to_push = []
@@ -26,7 +28,9 @@ def ck_preprocess(i):
     # We have to set these files via env variables with full paths 
     # in order to they will be copied into remote program dir without sub-paths.
     new_env['CK_ENV_LABELS_FILE_PATH'] = os.path.join(os.getcwd(), '..', LABELS_FILE)
+    new_env['CK_ENV_ARMCL_CORE_LIB_PATH'] = os.path.join(LIB_DIR, 'lib', LIB_NAME)
     files_to_push.append("$<<CK_ENV_LABELS_FILE_PATH>>$")
+    files_to_push.append("$<<CK_ENV_ARMCL_CORE_LIB_PATH>>$")
 
     file_index = 0
     for file_name in os.listdir(WEIGHTS_DIR):
