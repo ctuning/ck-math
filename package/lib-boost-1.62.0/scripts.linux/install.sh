@@ -9,24 +9,30 @@
 # Developer(s):
 # - Grigori Fursin, 2016-2017
 # - Anton Lokhmotov, 2017
-#
+# - Leo Gordon, 2018
 
-    ## TODO: Could the following be done during compiler configuration phase?
-    ##       Say, by setting CK_LD_FLAGS_EXTRA variable or similar?
-    #
-    # on a Mac and compiling with LLVM:
-if [ -n "$CK_ENV_COMPILER_LLVM_SET" ] && [ "$CK_DLL_EXT" = ".dylib" ]
-then
-    FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY='cxxflags="-stdlib=libstdc++" linkflags="-stdlib=libstdc++"'
-else
-    FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY=''
-fi
 
 if [ "${CK_COMPILER_TOOLCHAIN_NAME}" != "" ] ; then
   TOOLSET=$CK_COMPILER_TOOLCHAIN_NAME
 else
   TOOLSET=gcc
 fi
+
+FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY=''
+
+    # on a Mac:
+if [ "$CK_DLL_EXT" = ".dylib" ]
+then
+    TOOLSET=darwin
+    if [ -n "$CK_ENV_COMPILER_LLVM_SET" ]
+    then
+        FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY='cxxflags="-stdlib=libstdc++" linkflags="-stdlib=libstdc++"'
+    elif [ -n "$CK_ENV_COMPILER_GCC_SET" ]
+    then
+        FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY='cxxflags="-std=gnu++0x"'
+    fi
+fi
+
 
 ############################################################
 cd ${INSTALL_DIR}/${PACKAGE_SUB_DIR1}
