@@ -14,10 +14,25 @@
 
 
 #include <iostream>
+#include <iomanip>
+#include <boost/version.hpp>
 #include <boost/filesystem.hpp>
+
 
 int main()
 {
+    // Report the current Boost version
+    std::cout
+        << std::endl
+        << "Currently using Boost version: "
+        << BOOST_VERSION / 100000
+        << "."
+        << BOOST_VERSION / 100 % 1000
+        << "."
+        << BOOST_VERSION % 100
+        << std::endl
+        << std::endl;
+
     // Get the current directory
     auto path = boost::filesystem::current_path();
     std::cout << path << std::endl;
