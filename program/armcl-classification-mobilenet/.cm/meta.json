@@ -38,7 +38,7 @@
     "CK_ENV_LIB_ARMCL_INCLUDE"
   ],
   "compiler_env": "CK_CXX",
-  "compiler_flags_as_env": " $<<CK_COMPILER_FLAG_CPP11>>$ -Wno-ignored-attributes",
+  "compiler_flags_as_env": "-std=gnu++11 -Wno-ignored-attributes",
   "data_name": "armcl-classification",
   "extra_ld_vars": "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$", 
   "main_language": "cpp",
