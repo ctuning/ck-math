@@ -1,0 +1,40 @@
+{
+  "backup_data_uid": "4898d6fa94d039aa",
+  "compile_deps": {
+    "compiler": {
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 10,
+      "tags": "compiler,lang-cpp"
+    },
+    "lib-boost": {
+       "local": "yes",
+       "name": "Boost library",
+       "sort": 20,
+       "tags": "lib,boost"
+    }
+  },
+  "compiler_env": "CK_CXX_FULL_PATH",
+  "compiler_flags_as_env": "$<<CK_CXX_COMPILER_STDLIB>>$",
+  "extra_ld_vars": "$<<CK_CXX_COMPILER_STDLIB>>$ -L$<<CK_ENV_LIB_BOOST_LIB>>$ $<<CK_ENV_LIB_BOOST_LFLAG_SYSTEM>>$ $<<CK_ENV_LIB_BOOST_LFLAG_FILESYSTEM>>$",
+  "main_language": "cpp",
+  "only_for_target_os_tags": [
+    "linux"
+  ],
+  "process_in_tmp": "yes",
+  "run_cmds": {
+    "minimal": {
+      "run_time": {
+        "run_cmd_main": "$#BIN_FILE#$"
+      }
+    }
+  },
+  "source_files": [
+    "test_boost.cpp"
+  ],
+  "tags": [
+    "test-soft",
+    "test-boost"
+  ],
+  "target_file": "test_boost"
+}
