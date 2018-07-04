@@ -34,15 +34,13 @@
   "compiler_add_include_as_env_from_deps": [
     "CK_ENV_LIB_STDCPP_INCLUDE",
     "CK_ENV_LIB_STDCPP_INCLUDE_EXTRA",
-    "CK_ENV_LIB_ARMCL_UTILS"
+    "CK_ENV_LIB_ARMCL_UTILS",
+    "CK_ENV_LIB_ARMCL_INCLUDE"
   ],
   "compiler_env": "CK_CXX",
-  "compiler_flags_as_env": "-std=gnu++11 $<<CK_FLAG_PREFIX_INCLUDE>>$$<<CK_ENV_LIB_ARMCL_INCLUDE>>$ -Wno-ignored-attributes",
+  "compiler_flags_as_env": " $<<CK_COMPILER_FLAG_CPP11>>$ -Wno-ignored-attributes",
   "data_name": "armcl-classification",
-  "extra_ld_vars": "$<<CK_FLAG_PREFIX_LIB_DIR>>$$<<CK_ENV_LIB_STDCPP>>$ -lgnustl_shared",
-  "linker_add_lib_as_env": [
-    "CK_CXX_EXTRA"
-  ],
+  "extra_ld_vars": "$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$", 
   "main_language": "cpp",
   "only_for_target_os_tags": [
     "android",
