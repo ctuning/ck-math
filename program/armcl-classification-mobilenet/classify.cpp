@@ -50,12 +50,14 @@ int main(int argc, char *argv[]) {
     vector<float> probes(1001);
 
     // Prepare graph
+    cout << "Preparing ArmCL graph from " << weights_dir << " ... " << endl;
     GRAPH(graph, "MobileNetV1");
     measure_setup([&](){
       setup_mobilenet(graph, resolution, multiplier, weights_dir, input.data(), probes.data());
     });
 
     // Read input image
+    cout << "Reading input image from " << image_file << " ..." << endl;
     measure_load_image([&](){
       ImageData img_data = load_jpeg_file(image_file);
       cout << "OK: Input image loaded: " << img_data.height << "x"
@@ -68,6 +70,7 @@ int main(int argc, char *argv[]) {
     });
 
     // Classify image
+    cout << "Classification ..." << endl;
     measure_classify([&](){
       graph.run();
     });

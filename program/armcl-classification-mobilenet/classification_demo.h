@@ -117,7 +117,7 @@ inline Probes get_top_n(std::vector<float> predictions, size_t top_n, bool skip_
     // Remove smallest value when required count is achieved
     if (top_result.size() > top_n) top_result.pop();
   }
-  Probes probes(top_n);
+  Probes probes;
   while (!top_result.empty()) {
     probes.insert(probes.begin(), top_result.top());
     top_result.pop();
