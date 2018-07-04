@@ -21,7 +21,7 @@ fi
 FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY=''
 
     # on a Mac:
-if [ "$CK_DLL_EXT" = ".dylib" ]
+if [ "$CK_DLL_EXT" == ".dylib" ]
 then
     TOOLSET=darwin
     if [ -n "$CK_ENV_COMPILER_LLVM_SET" ]
@@ -48,8 +48,11 @@ echo "Building Boost (can take a long time) ..."
 
 export BOOST_BUILD_PATH=$INSTALL_DIR/install
 
-USER_CONFIG_FILE=${INSTALL_DIR}/${PACKAGE_SUB_DIR1}/tools/build/src/user-config.jam
-echo "using ${TOOLSET} : : ${CK_CXX_FULL_PATH} : -fPIC ${CK_CXX_FLAGS_FOR_CMAKE} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $USER_CONFIG_FILE
+if [ "$TOOLSET" != "intel-linux" ]
+then
+    USER_CONFIG_FILE=${INSTALL_DIR}/${PACKAGE_SUB_DIR1}/tools/build/src/user-config.jam
+    echo "using ${TOOLSET} : ${CK_COMPILER_VERSION} : ${CK_CXX_FULL_PATH} : -fPIC ${CK_CXX_FLAGS_FOR_CMAKE} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $USER_CONFIG_FILE
+fi
 
 ./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} address-model=${CK_TARGET_CPU_BITS} $FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_FLAGS}
 
