@@ -31,6 +31,7 @@ def ck_preprocess(i):
     new_env['CK_ENV_ARMCL_CORE_LIB_PATH'] = os.path.join(LIB_DIR, 'lib', LIB_NAME)
     files_to_push.append("$<<CK_ENV_LABELS_FILE_PATH>>$")
     files_to_push.append("$<<CK_ENV_ARMCL_CORE_LIB_PATH>>$")
+    files_to_push.append("$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$")
 
     file_index = 0
     for file_name in os.listdir(WEIGHTS_DIR):
