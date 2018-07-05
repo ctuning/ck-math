@@ -8,7 +8,7 @@
 To build this program, you need ArmCL compiled with Graph API:
 
 ```
-$ ck install package:lib-armcl-opencl-18.05 --env.USE_GRAPH=ON --env.USE_NEON=ON --extra_version=-graph [--env.USE_EMBEDDED_KERNELS=ON --env.DEBUG=ON --target_os=android23-arm64]
+$ ck install package:lib-armcl-opencl-18.05 --env.USE_GRAPH=ON --env.USE_NEON=ON --extra_version=-graph
 ```
 
 To build this program for Android you need to embedd kernels and select target API as follows:
