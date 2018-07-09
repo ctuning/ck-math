@@ -41,12 +41,17 @@ public:
   CKInputAccessor(CKInputAccessor &&) = default;
 
   bool access_tensor(ITensor &tensor) override {
-    const size_t num_pixels = tensor.info()->dimension(0) *
-                              tensor.info()->dimension(1) *
-                              tensor.info()->dimension(2) *
-                              tensor.info()->dimension(3);
-    float* target = reinterpret_cast<float*>(tensor.buffer() + tensor.info()->offset_first_element_in_bytes());
-    std::copy(_buffer, _buffer + num_pixels, target);
+    //const size_t H = tensor.info()->dimension(0);
+    const size_t W = tensor.info()->dimension(1);
+    const size_t C = tensor.info()->dimension(2);
+    Window window;
+    const TensorShape tensor_shape = tensor.info()->tensor_shape();
+    window.use_tensor_dimensions(tensor_shape);
+    execute_window_loop(window, [&](const Coordinates & id) {
+      const size_t source_offset = (id[1] * W + id[0]) * C + id[2];
+      auto target_ptr = reinterpret_cast<float*>(tensor.ptr_to_element(id));
+      *target_ptr = _buffer[source_offset];
+    });
     return true;
   }
 

@@ -320,12 +320,6 @@ def setup(i):
 
     if tname2=='android':
         flags += ['-DANDROID']
-        if compiler_env.get('CK_ENV_LIB_STDCPP_STATIC','')!='':
-           lflags+=[compiler_env['CK_ENV_LIB_STDCPP_STATIC']]
-           lcore_flags+=[compiler_env['CK_ENV_LIB_STDCPP_STATIC']]
-# Done via CK
-#        lflags+=['-static-libstdc++']
-#        lcore_flags+=['-static-libstdc++']
     elif env.get('USE_BARE_METAL','').lower()=='on':
         flags += ['-fPIC','-DNO_MULTI_THREADING']
         lflags+=['-static']

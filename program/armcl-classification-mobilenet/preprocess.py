@@ -18,6 +18,8 @@ def ck_preprocess(i):
 
   new_env = {}
   files_to_push = []
+  push_weights_to_remote = True
+  push_libs_to_remote = True
 
   if i['target_os_dict'].get('remote','') == 'yes':
     # For Android weights and labels will be located near the executable
@@ -27,18 +29,21 @@ def ck_preprocess(i):
     # Set list of additional files to be copied to Android device.
     # We have to set these files via env variables with full paths 
     # in order to they will be copied into remote program dir without sub-paths.
-    new_env['CK_ENV_LABELS_FILE_PATH'] = os.path.join(os.getcwd(), '..', LABELS_FILE)
-    new_env['CK_ENV_ARMCL_CORE_LIB_PATH'] = os.path.join(LIB_DIR, 'lib', LIB_NAME)
-    files_to_push.append("$<<CK_ENV_LABELS_FILE_PATH>>$")
-    files_to_push.append("$<<CK_ENV_ARMCL_CORE_LIB_PATH>>$")
+    if push_libs_to_remote:
+      new_env['CK_ENV_LABELS_FILE_PATH'] = os.path.join(os.getcwd(), '..', LABELS_FILE)
+      new_env['CK_ENV_ARMCL_CORE_LIB_PATH'] = os.path.join(LIB_DIR, 'lib', LIB_NAME)
+      files_to_push.append("$<<CK_ENV_LABELS_FILE_PATH>>$")
+      files_to_push.append("$<<CK_ENV_ARMCL_CORE_LIB_PATH>>$")
+      files_to_push.append("$<<CK_ENV_LIB_STDCPP_DYNAMIC>>$")
 
-    file_index = 0
-    for file_name in os.listdir(WEIGHTS_DIR):
-      if file_name.endswith('.npy'):
-        var_name = 'CK_ENV_WEIGHTS_' + str(file_index)
-        new_env[var_name] = os.path.join(WEIGHTS_DIR, file_name)
-        files_to_push.append('$<<' + var_name + '>>$')
-        file_index += 1
+    if push_weights_to_remote:
+      file_index = 0
+      for file_name in os.listdir(WEIGHTS_DIR):
+        if file_name.endswith('.npy'):
+          var_name = 'CK_ENV_WEIGHTS_' + str(file_index)
+          new_env[var_name] = os.path.join(WEIGHTS_DIR, file_name)
+          files_to_push.append('$<<' + var_name + '>>$')
+          file_index += 1
   else:
     new_env['CK_ENV_WEIGHTS_DIR'] = WEIGHTS_DIR
     new_env['CK_ENV_LABELS_FILE'] = os.path.join('..', LABELS_FILE)

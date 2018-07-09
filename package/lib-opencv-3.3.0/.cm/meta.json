@@ -12,6 +12,7 @@
       "PACKAGE_GIT": "NO",
       "PACKAGE_NAME": "3.3.0.zip",
       "PACKAGE_NAME2": "3.3.0",
+      "PACKAGE_PATCH": "YES",
       "PACKAGE_RENAME": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "NO",

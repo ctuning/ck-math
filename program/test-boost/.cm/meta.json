@@ -10,14 +10,13 @@
     "lib-boost": {
        "local": "yes",
        "name": "Boost library",
-       "skip_default": "yes",
        "sort": 20,
        "tags": "lib,boost"
     }
   },
   "compiler_env": "CK_CXX_FULL_PATH",
   "compiler_flags_as_env": "$<<CK_CXX_COMPILER_STDLIB>>$",
-  "extra_ld_vars": "$<<CK_CXX_COMPILER_STDLIB>>$ -L$<<CK_ENV_LIB_BOOST_LIB>>$ $<<CK_ENV_LIB_BOOST_LFLAG_FILESYSTEM>>$",
+  "extra_ld_vars": "$<<CK_CXX_COMPILER_STDLIB>>$ -L$<<CK_ENV_LIB_BOOST_LIB>>$ $<<CK_ENV_LIB_BOOST_LFLAG_SYSTEM>>$ $<<CK_ENV_LIB_BOOST_LFLAG_FILESYSTEM>>$",
   "main_language": "cpp",
   "only_for_target_os_tags": [
     "linux"
