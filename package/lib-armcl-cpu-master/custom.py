@@ -289,7 +289,7 @@ def setup(i):
         lcore_flags += ['-fopenmp']
 
     def use_arm_v7():
-        if 'v7a' in tabi:
+        if ('v7a' in tabi) or ('v7l' in tabi):
             return True
         elif 'arm64' in tabi or 'aarch64' in tabi:
             if tbits == '32':
