@@ -1,0 +1,12 @@
+diff --git a/mace/public/mace.h b/mace/public/mace.h
+index 9a35da5..0fa9223 100644
+--- a/mace/public/mace.h
++++ b/mace/public/mace.h
+@@ -23,6 +23,7 @@
+ #include <memory>
+ #include <string>
+ #include <vector>
++#include <cmath>
+ 
+ namespace mace {
+ 
