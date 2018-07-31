@@ -1,0 +1,59 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "git_src_dir": "src", 
+    "install_env": {
+      "PACKAGE_GIT": "YES", 
+      "PACKAGE_GIT_CHECKOUT": "0d94aeaec5ea7a03009eeb8cb68c44c423e7dbd9", 
+      "PACKAGE_PATCH": "YES", 
+      "PACKAGE_SUB_DIR": "src", 
+      "PACKAGE_URL": "https://github.com/XiaoMi/mace"
+    }, 
+    "version": "0.8.1"
+  }, 
+  "deps": {
+    "bazel": {
+      "add_to_path": "no", 
+      "local": "no", 
+      "name": "Bazel tool", 
+      "sort": 40, 
+      "tags": "tool,bazel", 
+      "version_from": [
+        0, 
+        13,
+        1
+      ], 
+      "version_to": [
+        0, 
+        15, 
+        99
+      ]
+    }
+  }, 
+  "end_full_path": {
+    "linux": "install/lib/libmace.so"
+  }, 
+  "need_cpu_info": "yes", 
+  "only_for_host_os_tags": [
+    "linux"
+  ], 
+  "only_for_target_os_tags": [
+    "linux"
+  ], 
+  "process_script": "install", 
+  "soft_uoa": "448d195670f907f4", 
+  "suggested_path": "lib-mace", 
+  "tags": [
+    "lib", 
+    "mace", 
+    "vsrc", 
+    "v0.8.1", 
+    "v0.8", 
+    "v0", 
+    "channel-stable"
+  ], 
+  "use_scripts_from_another_entry": {
+    "data_uoa": "18850c4158b7022f", 
+    "module_uoa": "script"
+  }
+}

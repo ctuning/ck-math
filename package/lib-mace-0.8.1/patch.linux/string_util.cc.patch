@@ -1,0 +1,12 @@
+diff --git a/mace/utils/string_util.cc b/mace/utils/string_util.cc
+index e41ba52..8da6a75 100644
+--- a/mace/utils/string_util.cc
++++ b/mace/utils/string_util.cc
+@@ -21,6 +21,7 @@
+ #include <string>
+ #include <sstream>
+ #include <vector>
++#include <numeric>
+ 
+ namespace mace {
+ namespace string_util {
