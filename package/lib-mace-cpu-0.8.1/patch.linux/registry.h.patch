@@ -1,0 +1,12 @@
+diff --git a/mace/core/registry.h b/mace/core/registry.h
+index 277cabb..2c7c587 100644
+--- a/mace/core/registry.h
++++ b/mace/core/registry.h
+@@ -20,6 +20,7 @@
+ #include <mutex>  // NOLINT(build/c++11)
+ #include <string>
+ #include <vector>
++#include <functional>
+ 
+ #include "mace/public/mace.h"
+ #include "mace/utils/logging.h"
