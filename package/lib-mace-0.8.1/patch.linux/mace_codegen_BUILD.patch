@@ -1,0 +1,36 @@
+diff --git a/mace/codegen/BUILD b/mace/codegen/BUILD
+index e42a1b1..716391b 100644
+--- a/mace/codegen/BUILD
++++ b/mace/codegen/BUILD
+@@ -5,7 +5,10 @@ package(
+     default_visibility = ["//visibility:public"],
+ )
+ 
+-load("//mace:mace.bzl", "mace_version_genrule", "encrypt_opencl_kernel_genrule")
++load("//mace:mace.bzl",
++ "mace_version_genrule", 
++ #"encrypt_opencl_kernel_genrule"
++ )
+ 
+ cc_library(
+     name = "generated_models",
+@@ -19,13 +22,13 @@ cc_library(
+ 
+ mace_version_genrule()
+ 
+-encrypt_opencl_kernel_genrule()
++#encrypt_opencl_kernel_genrule()
+ 
+-cc_library(
+-    name = "generated_opencl",
+-    srcs = ["opencl/encrypt_opencl_kernel.cc"],
+-    copts = ["-Werror", "-Wextra", "-Wno-missing-field-initializers"],
+-)
++#cc_library(
++#    name = "generated_opencl",
++#    srcs = ["opencl/encrypt_opencl_kernel.cc"],
++#    copts = ["-Werror", "-Wextra", "-Wno-missing-field-initializers"],
++#)
+ 
+ cc_library(
+     name = "generated_version",

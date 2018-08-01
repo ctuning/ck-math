@@ -1,0 +1,22 @@
+diff --git a/mace/libmace/BUILD b/mace/libmace/BUILD
+index f96cce0..ce62606 100644
+--- a/mace/libmace/BUILD
++++ b/mace/libmace/BUILD
+@@ -67,7 +67,7 @@ cc_library(
+ genrule(
+     name = "libmace_static",
+     srcs = [
+-        "//mace/codegen:generated_opencl",
++        #"//mace/codegen:generated_opencl",
+         "//mace/codegen:generated_version",
+         "//mace/core",
+         "//mace/kernels",
+@@ -80,7 +80,7 @@ genrule(
+     outs = ["libmace.a"],
+     cmd = "tmp_mri_file=$$(mktemp mace-static-lib-mri.XXXXXXXXXX);" +
+           "mri_stream=$$(python $(location //mace/python/tools:archive_static_lib) " +
+-          "$(locations //mace/codegen:generated_opencl) " +
++          #"$(locations //mace/codegen:generated_opencl) " +
+           "$(locations //mace/codegen:generated_version) " +
+           "$(locations //mace/core:core) " +
+           "$(locations //mace/kernels:kernels) " +
