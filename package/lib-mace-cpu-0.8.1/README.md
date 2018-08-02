@@ -1,13 +1,14 @@
 # Package for Mobile AI Compute Engine (MACE) library
 
-## Prerequiseties
+## Install dependencies
 ```
-sudo pip install jinja2
-```
-
-## Install
-```
-ck install package:lib-mace-0.8.1 --target_os=android23-arm64
+$ sudo -H python -m pip install jinja2
 ```
 
-**NB:** Use `--target_os=android23-arm64` to build for Android API 23 (v6.0 "Marshmallow") or [similar](https://source.android.com/setup/start/build-numbers). 
+## Install MACE
+
+```
+$ ck install package:lib-mace-0.8.1 --target_os=android23-arm64
+```
+
+**NB:** Use `--target_os=android23-arm64` to build for Android API 23 (v6.0 "Marshmallow") or [similar](https://source.android.com/setup/start/build-numbers).
