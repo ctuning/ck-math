@@ -204,6 +204,39 @@
         }
       }
     },
+    "benchmark-opencl-mobilenet-0.75_160-v18.05+": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl-v18.05+$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_mobilenet",
+          "TARGET" : 1,
+          "MODEL" : 1,
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
+    "benchmark-opencl-mobilenet-1.0_224-v18.05+": {
+      "run_time": {
+        "need_compute_device": "opencl",
+        "run_cmd_main": "../ck-benchmark-opencl-v18.05+$#script_ext#$",
+        "run_cmd_out1": "tmp-stdout.tmp",
+        "run_cmd_out2": "tmp-stderr.tmp",
+        "run_input_files": [],
+        "run_set_env2": {
+          "EXECUTABLE": "graph_mobilenet",
+          "TARGET" : 1,
+          "MODEL" : 0,
+          "INSTRUMENTS": "WALL_CLOCK_TIMER_MS",
+          "ITERATIONS": 10
+        }
+      }
+    },
+
     "benchmark-opencl-squeezenet": {
       "run_time": {
         "need_compute_device": "opencl",
