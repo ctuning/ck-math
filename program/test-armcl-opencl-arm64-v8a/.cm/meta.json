@@ -7,7 +7,7 @@
     }
   },
   "print_files_after_run": [
-     "tmp-stderr.tmp"
+    "tmp-stderr.tmp"
   ],
   "compile_deps": {
     "compiler": {
@@ -236,7 +236,6 @@
         }
       }
     },
-
     "benchmark-opencl-squeezenet": {
       "run_time": {
         "need_compute_device": "opencl",
