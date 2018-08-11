@@ -1,4 +1,4 @@
-# `test-armcl-opencl`
+# `test-armcl-opencl-arm32`
 
 The `test-armcl-opencl` and `test-armcl-opencl-arm32` programs provide a
 convenient interface to executables built along the Arm Compute Library
@@ -9,12 +9,12 @@ behind the native one, as well as for testing.
 In what follows, we assume that commands get executed from the program's folder.
 Please either change to this directory:
 ```
-$ cd `ck find program:test-armcl-opencl`
+$ cd `ck find program:test-armcl-opencl-arm32`
 $ ck compile
 ```
 or specify the entry explicitly e.g.:
 ```
-$ ck compile program:test-armcl-opencl
+$ ck compile program:test-armcl-opencl-arm32
 ```
 
 ## (Re-)Build
