@@ -13,6 +13,7 @@
 #include <arm_compute/graph/nodes/Nodes.h>
 #include <arm_compute/graph/backends/BackendRegistry.h>
 #include <arm_compute/graph/backends/CL/CLDeviceBackend.h>
+#include <arm_compute/runtime/CL/tuners/BifrostTuner.h>
 #else
 #include <arm_compute/graph/Graph.h>
 #include <arm_compute/graph/Nodes.h>
@@ -54,6 +55,68 @@ inline void init_armcl(arm_compute::ICLTuner *cl_tuner = nullptr) {
     .add_backend<arm_compute::graph::backends::CLDeviceBackend>(
       arm_compute::graph::Target::CL);
 #endif
+}
+
+enum TunerType {
+  CL_TUNER_NONE,
+  CL_TUNER_CUSTOM,
+  CL_TUNER_DEFAULT,
+  CL_TUNER_BIFROST,
+};
+
+inline TunerType get_lws_tuner_type() {
+  auto tuner_type = getenv("CK_LWS_TUNER_TYPE");
+
+  if (!tuner_type || strcmp(tuner_type, "NONE") == 0)
+    return CL_TUNER_NONE;
+
+  if (strcmp(tuner_type, "CUSTOM") == 0)
+    return CL_TUNER_CUSTOM;
+
+  if (strcmp(tuner_type, "DEFAULT") == 0)
+    return CL_TUNER_DEFAULT;
+
+  if (strcmp(tuner_type, "BIFROST") == 0)
+    return CL_TUNER_BIFROST;
+
+  printf("WARNING: Unknown tuner type: %s\n", tuner_type);
+  return CL_TUNER_NONE;
+}
+
+using TunerPtr = std::unique_ptr<arm_compute::ICLTuner>;
+
+template <typename TCustomTuner>
+TunerPtr get_lws_tuner(TunerType tuner_type) {
+  switch (tuner_type) {
+    case CL_TUNER_NONE:
+      return TunerPtr();
+
+    case CL_TUNER_CUSTOM:
+      printf("INFO: Custom tuner selected\n");
+      return TunerPtr(new TCustomTuner());
+
+    case CL_TUNER_DEFAULT:
+      printf("INFO: Tuner selected: CLTuner\n");
+      return TunerPtr(new arm_compute::CLTuner());
+
+    case CL_TUNER_BIFROST:
+#if defined(ARMCL_18_05_PLUS)
+      printf("INFO: Tuner selected: BifrostTuner\n");
+      auto device = cl::Device::getDefault();
+      auto gpu_target = arm_compute::get_target_from_device(device);
+      auto gpu_arch = arm_compute::get_arch_from_target(gpu_target);
+      if (gpu_arch != arm_compute::GPUTarget::BIFROST) {
+        printf("WARNING: BifrostTuner selected for non-Bifrost architecture.\n");
+      }
+      return TunerPtr(new arm_compute::tuners::BifrostTuner());
+#else
+      printf("WARNING: BifrostTuner is only available for ArmCL v18.05 and later. "
+             "Default CLTuner will be used instead.\n");
+      printf("INFO: Tuner selected: CLTuner\n");
+      return TunerPtr(new arm_compute::CLTuner());
+#endif
+  }
+  return TunerPtr();
 }
 
 #if defined(ARMCL_18_05_PLUS)
