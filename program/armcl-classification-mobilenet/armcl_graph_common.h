@@ -59,7 +59,6 @@ inline void init_armcl(arm_compute::ICLTuner *cl_tuner = nullptr) {
 
 enum TunerType {
   CL_TUNER_NONE,
-  CL_TUNER_CUSTOM,
   CL_TUNER_DEFAULT,
   CL_TUNER_BIFROST,
 };
@@ -69,9 +68,6 @@ inline TunerType get_lws_tuner_type() {
 
   if (!tuner_type || strcmp(tuner_type, "NONE") == 0)
     return CL_TUNER_NONE;
-
-  if (strcmp(tuner_type, "CUSTOM") == 0)
-    return CL_TUNER_CUSTOM;
 
   if (strcmp(tuner_type, "DEFAULT") == 0)
     return CL_TUNER_DEFAULT;
@@ -85,15 +81,10 @@ inline TunerType get_lws_tuner_type() {
 
 using TunerPtr = std::unique_ptr<arm_compute::ICLTuner>;
 
-template <typename TCustomTuner>
-TunerPtr get_lws_tuner(TunerType tuner_type) {
+inline TunerPtr get_lws_tuner(TunerType tuner_type) {
   switch (tuner_type) {
     case CL_TUNER_NONE:
       return TunerPtr();
-
-    case CL_TUNER_CUSTOM:
-      printf("INFO: Custom tuner selected\n");
-      return TunerPtr(new TCustomTuner());
 
     case CL_TUNER_DEFAULT:
       printf("INFO: Tuner selected: CLTuner\n");
