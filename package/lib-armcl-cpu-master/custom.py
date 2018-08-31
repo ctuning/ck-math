@@ -479,6 +479,9 @@ def post_setup(i):
     if use_neon=='on':
         xcore_files += glob.glob('src/core/NEON/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/*.cpp')
+        # v18.08
+        xcore_files += glob.glob('src/core/NEON/kernels/assembly/*.cpp')
+        xfiles += glob.glob('src/runtime/NEON/functions/assembly/*.cpp')
         # v18.05
         xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/*.cpp')
         xcore_files += glob.glob('src/core/NEON/kernels/arm_gemm/kernels/a32_sgemm_8x6/*.cpp')
