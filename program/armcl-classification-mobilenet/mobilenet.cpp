@@ -52,7 +52,7 @@ public:
       auto target_ptr = reinterpret_cast<float*>(tensor.ptr_to_element(id));
       *target_ptr = _buffer[source_offset];
     });
-    return true;
+    return false;
   }
 
 private:
