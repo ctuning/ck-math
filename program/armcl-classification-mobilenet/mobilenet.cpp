@@ -52,7 +52,7 @@ public:
       auto target_ptr = reinterpret_cast<float*>(tensor.ptr_to_element(id));
       *target_ptr = _buffer[source_offset];
     });
-    return true;
+    return false;
   }
 
 private:
@@ -134,7 +134,7 @@ void setup_mobilenet(GraphObject& graph,
     graph << target_hint
           << get_convolution_method()
 #if defined(ARMCL_18_05_PLUS)
-          << DepthwiseConvolutionMethod::OPTIMIZED_3x3
+          << DepthwiseConvolutionMethod_OPTIMIZED_3x3
           << InputLayer(TensorDescriptor(input_shape, DATATYPE),
                 arm_compute::support::cpp14::make_unique<CKInputAccessor>(input_data_buffer))
 #else

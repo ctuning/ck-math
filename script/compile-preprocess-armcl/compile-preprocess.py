@@ -45,10 +45,16 @@ def ck_preprocess(i):
     return {'return': 0}
 
   ck.out('ArmCL version: {}.{}'.format(ver_major, ver_minor))
-  
-  if ver_major > 18 or (ver_major == 18 and ver_minor >= 5):
-    install_env['CK_COMPILER_FLAGS_OBLIGATORY'] = \
-      '$<<CK_COMPILER_FLAGS_OBLIGATORY>>$ -DARMCL_18_05_PLUS'
+
+  if ver_major >= 18:
+    ver_defs = ''
+    if ver_minor >= 8:
+      ver_defs += ' -DARMCL_18_08_PLUS'
+    if ver_minor >= 5:
+      ver_defs += ' -DARMCL_18_05_PLUS'
+    if ver_defs:
+      install_env['CK_COMPILER_FLAGS_OBLIGATORY'] = \
+        '$<<CK_COMPILER_FLAGS_OBLIGATORY>>$ ' + ver_defs
 
   ck.out('')
   return {'return': 0, 'install_env': install_env}

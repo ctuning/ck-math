@@ -110,26 +110,42 @@ inline TunerPtr get_lws_tuner(TunerType tuner_type) {
   return TunerPtr();
 }
 
+
 #if defined(ARMCL_18_05_PLUS)
+
+#define ConvolutionMethod_GEMM arm_compute::graph::ConvolutionMethod::GEMM
+#if defined(ARMCL_18_08_PLUS)
+  #define ConvolutionMethod_DEFAULT arm_compute::graph::ConvolutionMethod::Default
+  #define ConvolutionMethod_DIRECT arm_compute::graph::ConvolutionMethod::Direct
+  #define ConvolutionMethod_WINOGRAD arm_compute::graph::ConvolutionMethod::Winograd
+
+  #define DepthwiseConvolutionMethod_OPTIMIZED_3x3 arm_compute::graph::DepthwiseConvolutionMethod::Optimized3x3
+#else
+  #define ConvolutionMethod_DEFAULT arm_compute::graph::ConvolutionMethod::DEFAULT
+  #define ConvolutionMethod_DIRECT arm_compute::graph::ConvolutionMethod::DIRECT
+  #define ConvolutionMethod_WINOGRAD arm_compute::graph::ConvolutionMethod::WINOGRAD
+
+  #define DepthwiseConvolutionMethod_OPTIMIZED_3x3 arm_compute::graph::DepthwiseConvolutionMethod::OPTIMIZED_3x3
+#endif
 
 inline arm_compute::graph::ConvolutionMethod str_to_convolution_method(const char *method_name) {
   if (!method_name || strlen(method_name) == 0)
-    return arm_compute::graph::ConvolutionMethod::DEFAULT;
-    
+    return ConvolutionMethod_DEFAULT;
+
   // Try to get convolution method by its name
-  if (strcmp(method_name, "DEFAULT") == 0) return arm_compute::graph::ConvolutionMethod::DEFAULT;
-  if (strcmp(method_name, "GEMM") == 0) return arm_compute::graph::ConvolutionMethod::GEMM;
-  if (strcmp(method_name, "DIRECT") == 0) return arm_compute::graph::ConvolutionMethod::DIRECT;
-  if (strcmp(method_name, "WINOGRAD") == 0) return arm_compute::graph::ConvolutionMethod::WINOGRAD;
-  
+  if (strcmp(method_name, "DEFAULT") == 0) return ConvolutionMethod_DEFAULT;
+  if (strcmp(method_name, "GEMM") == 0) return ConvolutionMethod_GEMM;
+  if (strcmp(method_name, "DIRECT") == 0) return ConvolutionMethod_DIRECT;
+  if (strcmp(method_name, "WINOGRAD") == 0) return ConvolutionMethod_WINOGRAD;
+
   // Try to get convolution method as integer value.
   switch (atoi(method_name)) {
-    case 0: return arm_compute::graph::ConvolutionMethod::GEMM;
-    case 1: return arm_compute::graph::ConvolutionMethod::DIRECT;
-    case 2: return arm_compute::graph::ConvolutionMethod::WINOGRAD;
+    case 0: return ConvolutionMethod_GEMM;
+    case 1: return ConvolutionMethod_DIRECT;
+    case 2: return ConvolutionMethod_WINOGRAD;
   }
-  
-  return arm_compute::graph::ConvolutionMethod::DEFAULT;
+
+  return ConvolutionMethod_DEFAULT;
 }
 
 inline arm_compute::graph::Target get_target_hint() {
@@ -177,7 +193,11 @@ inline auto get_convolution_method() -> decltype(str_to_convolution_method("")) 
     return str_to_convolution_method(method_name);
 
   if (arm_compute::CLScheduler::get().target() == arm_compute::GPUTarget::BIFROST)
+#if defined(ARMCL_18_08_PLUS)
+    return decltype(str_to_convolution_method(""))::Direct;
+#else
     return decltype(str_to_convolution_method(""))::DIRECT;
+#endif
         
   return decltype(str_to_convolution_method(""))::GEMM;
 }
