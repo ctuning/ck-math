@@ -1,10 +1,13 @@
 {
   "customize": {
     "extra_dir": "", 
-    "version": "3.4.2",
     "install_env": {
-      "BUILD_SHARED_LIBS": "OFF"
-    }
+      "BUILD_SHARED_LIBS": "ON"
+    }, 
+    "version": "3.4.2"
+  }, 
+  "end_full_path": {
+    "linux": "lib/liblapack.so"
   }, 
   "only_for_host_os_tags": [
     "linux"
@@ -12,9 +15,6 @@
   "only_for_target_os_tags": [
     "linux"
   ], 
-  "end_full_path": {
-    "linux": "lib/liblapack.a" 
-  }, 
   "process_script": "process", 
   "soft_uoa": "4069972dfce0f22d", 
   "suggested_path": "lapack", 
@@ -23,7 +23,11 @@
     "lapack", 
     "v3.4.2", 
     "v3.4", 
-    "v3",
+    "v3", 
+    "vshared",
     "channel-stable"
-  ]
+  ],
+  "use_scripts_from_another_entry": {
+    "data_uoa": "94466aa4e7191c56"
+  }
 }

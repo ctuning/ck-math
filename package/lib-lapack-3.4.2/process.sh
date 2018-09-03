@@ -26,7 +26,7 @@ mkdir $INSTALL_OBJ_DIR
 
  echo ""
  cd ${INSTALL_OBJ_DIR}
- cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} ${INSTALL_DIR}/${PACKAGE_NAME}
+ cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=${INSTALL_DIR} ${INSTALL_DIR}/${PACKAGE_NAME} -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
  if [ "${?}" != "0" ] ; then
    echo "Error: Configuration failed in $PWD!"
    exit 1
