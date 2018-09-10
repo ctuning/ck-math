@@ -201,3 +201,8 @@ inline auto get_convolution_method() -> decltype(str_to_convolution_method("")) 
         
   return decltype(str_to_convolution_method(""))::GEMM;
 }
+
+enum CKDataLayout {
+  LAYOUT_NCHW,
+  LAYOUT_NHWC,
+};

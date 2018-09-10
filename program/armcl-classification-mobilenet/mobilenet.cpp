@@ -37,26 +37,37 @@ using namespace arm_compute::graph::frontend;
 
 class CKInputAccessor : public ITensorAccessor {
 public:
-  CKInputAccessor(const float *buffer): _buffer(buffer) {}
+  CKInputAccessor(const float *buffer, CKDataLayout data_layout): _buffer(buffer), _data_layout(data_layout) {}
   CKInputAccessor(CKInputAccessor &&) = default;
 
   bool access_tensor(ITensor &tensor) override {
-    //const size_t H = tensor.info()->dimension(0);
-    const size_t W = tensor.info()->dimension(1);
-    const size_t C = tensor.info()->dimension(2);
+    //const size_t H = tensor.info()->dimension(_data_layout == LAYOUT_NCHW ? 1 : 2);
+    const size_t W = tensor.info()->dimension(_data_layout == LAYOUT_NCHW ? 0 : 1);
+    const size_t C = tensor.info()->dimension(_data_layout == LAYOUT_NCHW ? 2 : 0);
     Window window;
     const TensorShape tensor_shape = tensor.info()->tensor_shape();
     window.use_tensor_dimensions(tensor_shape);
-    execute_window_loop(window, [&](const Coordinates & id) {
-      const size_t source_offset = (id[1] * W + id[0]) * C + id[2];
-      auto target_ptr = reinterpret_cast<float*>(tensor.ptr_to_element(id));
-      *target_ptr = _buffer[source_offset];
-    });
+    if (_data_layout == LAYOUT_NCHW) {
+      execute_window_loop(window, [&](const Coordinates & id) {
+        const size_t source_offset = (id[1] * W + id[0]) * C + id[2];
+        auto target_ptr = reinterpret_cast<float*>(tensor.ptr_to_element(id));
+        *target_ptr = _buffer[source_offset];
+      });
+    }
+    else { // LAYOUT_NHWC
+      execute_window_loop(window, [&](const Coordinates & id) {
+        // Source data layout is always NCHW
+        const size_t source_offset = (id[2] * W + id[1]) * C + id[0];
+        auto target_ptr = reinterpret_cast<float*>(tensor.ptr_to_element(id));
+        *target_ptr = _buffer[source_offset];
+      });
+    }
     return false;
   }
 
 private:
   const float *_buffer;
+  CKDataLayout _data_layout;
 };
 
 
@@ -85,9 +96,12 @@ void setup_mobilenet(GraphObject& graph,
                      float multiplier,
                      const std::string& weights_dir,
                      const float *input_data_buffer,
-                     float *output_data_buffer)
+                     float *output_data_buffer,
+                     CKDataLayout data_layout)
 {
-    TensorShape input_shape(image_size, image_size, 3U, 1U);
+    TensorShape input_shape = (data_layout == LAYOUT_NCHW) ?
+        TensorShape(image_size, image_size, 3U, 1U) :
+        TensorShape(3U, image_size, image_size, 1U);
 
     auto weights_accessor = [&](const std::string &file) -> std::unique_ptr<ITensorAccessor> {
         return arm_compute::support::cpp14::make_unique<NumPyBinLoader>(weights_dir + '/' + file);
@@ -131,15 +145,22 @@ void setup_mobilenet(GraphObject& graph,
 
     auto target_hint = get_target_hint();
 
+#if defined(ARMCL_18_08_PLUS)
+    TensorDescriptor tensor_descr(input_shape, DATATYPE, arm_compute::QuantizationInfo(), 
+        (data_layout == LAYOUT_NCHW) ? arm_compute::DataLayout::NCHW : arm_compute::DataLayout::NHWC);
+#elif defined(ARMCL_18_05_PLUS)
+    TensorDescriptor tensor_descr(input_shape, DATATYPE);
+#endif
+
     graph << target_hint
           << get_convolution_method()
 #if defined(ARMCL_18_05_PLUS)
           << DepthwiseConvolutionMethod_OPTIMIZED_3x3
-          << InputLayer(TensorDescriptor(input_shape, DATATYPE),
-                arm_compute::support::cpp14::make_unique<CKInputAccessor>(input_data_buffer))
+          << InputLayer(tensor_descr,
+                arm_compute::support::cpp14::make_unique<CKInputAccessor>(input_data_buffer, data_layout))
 #else
           << arm_compute::graph::Tensor(TensorInfo(input_shape, 1, DATATYPE),
-                arm_compute::support::cpp14::make_unique<CKInputAccessor>(input_data_buffer))
+                arm_compute::support::cpp14::make_unique<CKInputAccessor>(input_data_buffer, data_layout))
 #endif
           << ConvolutionLayer(
               3U, 3U, static_cast<unsigned int>(32 * multiplier),

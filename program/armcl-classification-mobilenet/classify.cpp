@@ -18,7 +18,8 @@ void setup_mobilenet(GraphObject& graph,
                      float multiplier,
                      const std::string& weights_dir,
                      const float *input_data_buffer,
-                     float *output_data_buffer);
+                     float *output_data_buffer,
+                     CKDataLayout data_layout);
 
 int main(int argc, char *argv[]) {
   try {
@@ -31,20 +32,24 @@ int main(int argc, char *argv[]) {
     string labels_file;
     string resolution_str;
     string multiplier_str;
+    string data_layout_str;
     for (int i = 1; i < argc; i++) {
       get_arg(argv[i], "--image=", image_file) ||
       get_arg(argv[i], "--weights=", weights_dir) ||
       get_arg(argv[i], "--labels=", labels_file) ||
       get_arg(argv[i], "--resolution=", resolution_str) ||
-      get_arg(argv[i], "--multiplier=", multiplier_str);
+      get_arg(argv[i], "--multiplier=", multiplier_str) ||
+      get_arg(argv[i], "--data_layout=", data_layout_str);
     }
     int resolution = atoi(resolution_str.c_str());
     float multiplier = atof(multiplier_str.c_str());
+    CKDataLayout data_layout = data_layout_str == "NHWC" ? LAYOUT_NHWC : LAYOUT_NCHW;
     check_file(image_file, "Image");
     check_file(labels_file, "Labels");
     cout << "Weighs dir: " << weights_dir << endl;
     cout << "Mobilenet resolution: " << resolution << endl;
     cout << "Mobilenet multiplier: " << multiplier << endl;
+    cout << "Data layout: " << (data_layout == LAYOUT_NCHW ? "NCHW" : "NHWC") << endl;
 
     vector<float> input(resolution * resolution * 3);
     vector<float> probes(1001);
@@ -53,7 +58,7 @@ int main(int argc, char *argv[]) {
     cout << "Preparing ArmCL graph from " << weights_dir << " ... " << endl;
     GRAPH(graph, "MobileNetV1");
     measure_setup([&](){
-      setup_mobilenet(graph, resolution, multiplier, weights_dir, input.data(), probes.data());
+      setup_mobilenet(graph, resolution, multiplier, weights_dir, input.data(), probes.data(), data_layout);
     });
 
     // Read input image
