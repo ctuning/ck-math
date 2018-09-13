@@ -41,12 +41,12 @@ public:
   CKInputAccessor(CKInputAccessor &&) = default;
 
   bool access_tensor(ITensor &tensor) override {
-    //const size_t H = tensor.info()->dimension(_data_layout == LAYOUT_NCHW ? 1 : 2);
     const size_t W = tensor.info()->dimension(_data_layout == LAYOUT_NCHW ? 0 : 1);
     const size_t C = tensor.info()->dimension(_data_layout == LAYOUT_NCHW ? 2 : 0);
     Window window;
     const TensorShape tensor_shape = tensor.info()->tensor_shape();
     window.use_tensor_dimensions(tensor_shape);
+    // Source data layout is always NHWC
     if (_data_layout == LAYOUT_NCHW) {
       execute_window_loop(window, [&](const Coordinates & id) {
         const size_t source_offset = (id[1] * W + id[0]) * C + id[2];
@@ -56,7 +56,6 @@ public:
     }
     else { // LAYOUT_NHWC
       execute_window_loop(window, [&](const Coordinates & id) {
-        // Source data layout is always NCHW
         const size_t source_offset = (id[2] * W + id[1]) * C + id[0];
         auto target_ptr = reinterpret_cast<float*>(tensor.ptr_to_element(id));
         *target_ptr = _buffer[source_offset];
