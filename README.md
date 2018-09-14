@@ -54,8 +54,8 @@ Install the above package for an Android target (if the Android SDK and NDK are 
 Please check the [CK-Caffe](https://github.com/dividiti/ck-caffe) repository to see how the above packages are used for customizable
 and universal DNN crowd-benchmarking and crowd-tuning.
 
-Example to build and use Arm Compute Library
-============================================
+Example: how to build and use the Arm Compute Library
+=====================================================
 
 You can build library for Android/aarch64 (NEON) and run a simple SGEMM benchmark as follows:
 ```
