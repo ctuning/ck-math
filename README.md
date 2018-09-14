@@ -4,16 +4,20 @@
 
 This Collective Knowledge repository contains various mathematical libraries 
 in the [portable and customizable CK format](http://github.com/ctuning/ck) 
-with JSON API and JSON meta information to be used 
+with Js SON API and JSON meta information to be used 
 in portable, customizable and reproducible [CK research workflows](https://github.com/ctuning/ck/wiki/Portable-workflows).
 
-Feel free to provide extra packages to [enable open and reproducible R&D](https://github.com/ctuning/ck/wiki/Enabling-open-science).
+Please feel free to provide extra packages to [enable open and reproducible R&D](https://github.com/ctuning/ck/wiki/Enabling-open-science)!
 
-Authors
-=======
+Contributors
+============
 
 * [Grigori Fursin](http://fursin.net/research.html), dividiti/cTuning
-* [Anton Lokhmotov](https://www.hipeac.net/~anton), dividiti
+* [Anton Lokhmotov](https://www.linkedin.com/in/lokhmotov/), dividiti
+* [Leo Gordon](https://www.linkedin.com/in/leo-gordon-cambridge/), dividiti
+* [Flavio Vella](https://www.linkedin.com/in/flaviovella/), Free University of Bozen-Bolzano
+* [Marco Cianfriglia](https://www.linkedin.com/in/marco-cianfriglia-phd-68432687/), The National Research Council of Italy
+* [Nikolay Chunosov](https://www.linkedin.com/in/nikolay-chunosov-94366b136/), Xored Software
 
 License
 =======
@@ -37,25 +41,25 @@ See available packages in this repository:
  $ ck list ck-math:package: | sort
 ```
 
-Install any package on the host machine (Linux, MacOS or Windows):
+Install any package on the host machine (Linux, MacOS or Windows) e.g.:
 ```
- $ ck install package:lib-openblas-0.2.19-universal
-```
-
-Install above package for Android target (if Android SDK and NDK are installed):
-```
- $ ck install package:lib-openblas-0.2.19-universal --target_os=android21-arm64
+ $ ck install package:lib-openblas-0.3.3-universal
 ```
 
-Please check [this repository](https://github.com/dividiti/ck-caffe) to see how above packages are used for customizable
+Install the above package for an Android target (if the Android SDK and NDK are installed):
+```
+ $ ck install package:lib-openblas-0.3.3-universal --target_os=android21-arm64
+```
+
+Please check the [CK-Caffe](https://github.com/dividiti/ck-caffe) repository to see how the above packages are used for customizable
 and universal DNN crowd-benchmarking and crowd-tuning.
 
-Example to build and use ARM Compute Lib
-========================================
+Example to build and use Arm Compute Library
+============================================
 
-You can build library for Android/ARM64 (NEON) and run simple SGEMM benchmark as follows:
+You can build library for Android/aarch64 (NEON) and run a simple SGEMM benchmark as follows:
 ```
-$ ck install package:lib-acl-master-universal --target_os=android21-arm64 --env.USE_NEON=ON
+$ ck install package:lib-armcl-cpu-master --target_os=android21-arm64 --env.USE_NEON=ON
 $ ck compile program:acl-sgemm-neon-example --target_os=android21-arm64
 $ ck run program:acl-sgemm-neon-example --target_os=android21-arm64
 ```
@@ -102,7 +106,7 @@ Publications
 Feedback
 ========
 
-If you have problems, questions or suggestions, do not hesitate to get in touch
+If you have any problems, questions or suggestions, please do not hesitate to get in touch
 via the following mailing lists:
 * https://groups.google.com/forum/#!forum/collective-knowledge
 * https://groups.google.com/forum/#!forum/ctuning-discussions
