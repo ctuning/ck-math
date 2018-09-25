@@ -19,7 +19,8 @@
   "extra_ld_vars": "$<<CK_CXX_COMPILER_STDLIB>>$ -L$<<CK_ENV_LIB_BOOST_LIB>>$ $<<CK_ENV_LIB_BOOST_LFLAG_SYSTEM>>$ $<<CK_ENV_LIB_BOOST_LFLAG_FILESYSTEM>>$",
   "main_language": "cpp",
   "only_for_target_os_tags": [
-    "linux"
+    "linux",
+    "windows"
   ],
   "process_in_tmp": "yes",
   "run_cmds": {
