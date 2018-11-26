@@ -15,6 +15,7 @@
   "only_for_target_os_tags": [
     "linux"
   ], 
+  "package_extra_name": " (shared)",
   "process_script": "process", 
   "soft_uoa": "4069972dfce0f22d", 
   "suggested_path": "lapack", 

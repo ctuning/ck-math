@@ -1,0 +1,19 @@
+{
+  "auto_detect": "yes", 
+  "customize": {
+    "check_that_exists": "yes", 
+    "ck_version": 10, 
+    "env_prefix": "CK_ENV_BENCH_FAI_PEP", 
+    "limit_recursion_dir_search": {
+      "linux": 4, 
+      "win": 4
+    }, 
+    "soft_file_universal": "benchmarking/run_bench.py"
+  }, 
+  "soft_name": "AI benchmark from Facebook (FEI-PEP)", 
+  "tags": [
+    "bench", 
+    "facebook", 
+    "fai-pep"
+  ]
+}
