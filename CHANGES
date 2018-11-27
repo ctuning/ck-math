@@ -1,3 +1,5 @@
+* 2018.11.27 - [FGG] moved FAI-PEP to ck-mlperf repo
+
 * 2018.11.26 - [FGG] added soft,package and program for FAI-PEP
 
 * 2018.09.25 - [FGG] added package:lib-opencv-3.4.3
