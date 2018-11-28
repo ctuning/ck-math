@@ -12,7 +12,7 @@
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "",
       "PACKAGE_GIT": "YES",
       "PACKAGE_GIT_CHECKOUT": "1.2.0",
-      "PACKAGE_PATCH": "NO",
+      "PACKAGE_PATCH": "YES",
       "PACKAGE_SKIP_CLEAN_INSTALL": "NO",
       "PACKAGE_SKIP_CLEAN_OBJ": "YES",
       "PACKAGE_SKIP_CLEAN_PACKAGE": "NO",
@@ -20,8 +20,7 @@
       "PACKAGE_SKIP_CMAKE_TARGET": "NO",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
-      "PACKAGE_URL": "https://github.com/CNugteren/CLBlast",
-      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:a0fe58384cc2828e#$"
+      "PACKAGE_URL": "https://github.com/CNugteren/CLBlast"
     },
     "sort": 100,
     "use_git_revision": "no",

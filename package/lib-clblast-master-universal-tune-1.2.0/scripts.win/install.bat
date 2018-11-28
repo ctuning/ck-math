@@ -1,0 +1,26 @@
+@echo off
+
+rem
+rem Installation script for CK packages.
+rem
+rem See CK LICENSE.txt for licensing details.
+rem See CK Copyright.txt for copyright details.
+rem
+rem Developer(s): Grigori Fursin, 2016-2017
+rem
+
+if not "%CK_HAS_OPENMP%" == "0" (
+  set CK_REF_LIBRARIES=%CK_LINKER_FLAG_OPENMP%
+)
+
+set CK_CMAKE_EXTRA=%CK_CMAKE_EXTRA% ^
+ -DOPENCL_ROOT="%CK_ENV_LIB_OPENCL%" ^
+ -DTUNERS=%CLBLAST_TUNERS% ^
+ -DCLTUNE_ROOT:PATH="%CK_ENV_TOOL_CLTUNE%" ^
+ -DCLIENTS=%CLBLAST_CLIENTS% ^
+ -DCBLAS_INCLUDE_DIRS:PATH="%CK_ENV_LIB_OPENBLAS_INCLUDE%" ^
+ -DCBLAS_LIBRARIES:FILEPATH="%CK_ENV_LIB_OPENBLAS_LIB%\%CK_ENV_LIB_OPENBLAS_STATIC_NAME%" ^
+ -DSAMPLES=%CLBLAST_SAMPLES% ^
+ -DCK_REF_LIBRARIES=%CK_REF_LIBRARIES%
+
+exit /b 0

@@ -10,12 +10,3 @@ diff -ruN src/CMakeLists.txt src-new/CMakeLists.txt
    set(API_INCLUDE_DIRS ${OPENCL_INCLUDE_DIRS})
  elseif(CUDA)
    # For CUDA, the "FindCUDA.cmake" is part of CMake
-@@ -173,7 +173,7 @@
-   # "FindCBLAS.cmake", "FindMKL.cmake", and "FindcuBLAS.cmake" are included.
-   if(CLIENTS OR TESTS)
-     find_package(CBLAS)
--    find_package(MKL)
-+#    find_package(MKL)
-     if(OPENCL)
-       find_package(clBLAS)
-     endif()

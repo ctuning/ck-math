@@ -11,7 +11,6 @@
 # - Anton Lokhmotov, anton@dividiti.com, 2017
 #
 
-
 if [ "${CK_HAS_OPENMP}" != "0"  ]; then
   export CK_REF_LIBRARIES="${CK_LINKER_FLAG_OPENMP}"
 fi

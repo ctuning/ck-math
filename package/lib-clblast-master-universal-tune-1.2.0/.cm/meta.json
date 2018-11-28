@@ -24,8 +24,7 @@
       "PACKAGE_SKIP_CMAKE_TARGET": "NO",
       "PACKAGE_SUB_DIR": "src",
       "PACKAGE_SUB_DIR1": "src",
-      "PACKAGE_URL": "https://github.com/CNugteren/CLBlast",
-      "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:d5a06834b7eb0341#$"
+      "PACKAGE_URL": "https://github.com/CNugteren/CLBlast"
     },
     "sort": 100,
     "use_git_revision": "no",

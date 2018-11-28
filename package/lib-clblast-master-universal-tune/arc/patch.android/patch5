@@ -1,0 +1,89 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b26de79..e94fda6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -23,6 +23,7 @@ set(clblast_VERSION_PATCH 0)
+ 
+ # Options and their default values
+ option(BUILD_SHARED_LIBS "Build a shared (ON) or static library (OFF)" ON)
++option(ANDROID "Build for Android" OFF)
+ option(SAMPLES "Enable compilation of the examples" OFF)
+ option(TUNERS "Enable compilation of the tuners" OFF)
+ option(CLIENTS "Enable compilation of the clients to test and compare performance" OFF)
+@@ -205,6 +206,10 @@ else(BUILD_SHARED_LIBS)
+ endif()
+ 
+ target_link_libraries(clblast ${OPENCL_LIBRARIES})
++# When building for Android, also link against libgnustl.
++if(ANDROID)
++  target_link_libraries(clblast libgnustl_static.so)
++endif()
+ 
+ # Includes directories: CLBlast and OpenCL
+ target_include_directories(clblast PUBLIC
+@@ -334,6 +339,11 @@ if(CLIENTS OR TESTS)
+     endif()
+   endif()
+ 
++  # When building for Android, add extra libs.
++  if(ANDROID)
++    set(REF_LIBRARIES ${REF_LIBRARIES} ${CK_REF_LIBRARIES})
++  endif()
++
+ endif()
+ 
+ # ==================================================================================================
+diff --git a/src/android_patch.h b/src/android_patch.h
+new file mode 100644
+index 0000000..11b92d4
+--- /dev/null
++++ b/src/android_patch.h
+@@ -0,0 +1,35 @@
++//
++// Created by daniil on 1/11/17.
++//
++
++#ifndef CLBLAST_ANDROID_PATCH_H
++#define CLBLAST_ANDROID_PATCH_H
++
++#include <string>
++#include <sstream>
++#include <cstdio>
++#include <cstdlib>
++
++namespace std {
++    template<typename T>
++    std::string to_string(T value) {
++        //create an output string stream
++        std::ostringstream os;
++
++        //throw the value onto the string stream
++        os << value;
++
++        //convert the string stream into a string and return
++        return os.str();
++    }
++
++    inline double stod(string value) {
++        return strtod (value.c_str(), NULL);
++    }
++
++    inline int stoi(string value) {
++        return strtol (value.c_str(), NULL, 0);
++    }
++}
++
++#endif // CLBLAST_ANDROID_PATCH_H
+diff --git a/src/cxpp11_common.hpp b/src/cxpp11_common.hpp
+index 6ac008b..9a7d5f3 100644
+--- a/src/cxpp11_common.hpp
++++ b/src/cxpp11_common.hpp
+@@ -18,6 +18,8 @@
+ #include <string>    // std::string
+ #include <stdexcept> // std::runtime_error
+ 
++#include "android_patch.h" // std::string
++
+ namespace clblast {
+ // =================================================================================================
+ 
