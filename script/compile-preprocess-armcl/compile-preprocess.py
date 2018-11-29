@@ -48,6 +48,8 @@ def ck_preprocess(i):
 
   if ver_major >= 18:
     ver_defs = ''
+    if ver_minor >= 11:
+      ver_defs += ' -DARMCL_18_11_PLUS'
     if ver_minor >= 8:
       ver_defs += ' -DARMCL_18_08_PLUS'
     if ver_minor >= 5:
