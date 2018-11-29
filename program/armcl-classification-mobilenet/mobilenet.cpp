@@ -139,8 +139,11 @@ void setup_mobilenet(GraphObject& graph,
              weights_accessor(param_path + "_pointwise_BatchNorm_beta.npy"),
              0.001f)
          << ActivationLayer(ActivationLayerInfo(ActivationLayerInfo::ActivationFunction::BOUNDED_RELU, 6.f));
-
-      return BranchLayer(std::move(sg));
+#if defined(ARMCL_18_11_PLUS)
+         return ConcatLayer(std::move(sg));
+#else
+         return BranchLayer(std::move(sg));
+#endif
     };
 
     auto target_hint = get_target_hint();
