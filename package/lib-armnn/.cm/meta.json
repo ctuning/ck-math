@@ -8,7 +8,8 @@
       "PACKAGE_SUB_DIR": "src", 
       "PACKAGE_BUILD_TYPE": "skip",
       "PACKAGE_SKIP_CLEAN_OBJ": "YES",
-      "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES"
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
+      "USE_OPENCL": "OFF"
     },
     "version": "default",
     "use_git_revision": "yes"
@@ -35,6 +36,15 @@
       "name": "Tensorflow source",
       "sort": 30,
       "tags": "tensorflow,source"
+    },
+    "lib-armcl-opencl": {
+      "enable_if_env": {
+        "USE_OPENCL": "ON"
+      },
+      "local": "yes",
+      "name": "ARM Compute Library",
+      "sort": 40,
+      "tags": "lib,armcl"
     }
   }, 
   "end_full_path_universal":    "install$#sep#$lib$#sep#$libarmnn$#file_ext_dll#$",
