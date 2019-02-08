@@ -14,7 +14,7 @@
   }, 
   "deps": {
   }, 
-  "end_full_path_universal": "build$#sep#$libarm_compute$#file_ext_dll#$", 
+  "end_full_path_universal": "src$#sep#$build$#sep#$libarm_compute$#file_ext_dll#$",
   "only_for_host_os_tags": [
     "linux"
   ], 
