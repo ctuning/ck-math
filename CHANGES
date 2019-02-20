@@ -1,3 +1,5 @@
+* 2019.02.20 - [FGG] added OpenCV 3.4.5 shared package
+
 * 2018.11.29 - [FGG] renaming different packages
 
 * 2018.11.28 - [FGG] fixed CLBlast packages and added 1.3 and 1.4 versions
