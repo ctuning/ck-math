@@ -11,6 +11,10 @@ in portable, customizable and reproducible [CK research workflows](https://githu
 
 Please feel free to provide extra packages to [enable open and reproducible R&D](https://github.com/ctuning/ck/wiki/Enabling-open-science)!
 
+Maintainers
+===========
+* [dividiti](http://dividiti.com)
+
 Contributors
 ============
 
