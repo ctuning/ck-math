@@ -26,7 +26,7 @@ then
     TOOLSET=darwin
     if [ -n "$CK_ENV_COMPILER_LLVM_SET" ]
     then
-        FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY='cxxflags="-stdlib=libstdc++" linkflags="-stdlib=libstdc++"'
+        FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY="cxxflags=\"${CK_CXX_COMPILER_STDLIB}\" linkflags=\"${CK_CXX_COMPILER_STDLIB}\""
     elif [ -n "$CK_ENV_COMPILER_GCC_SET" ]
     then
         FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY='cxxflags="-std=gnu++0x"'
