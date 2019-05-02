@@ -2,6 +2,7 @@
   "customize": {
     "extra_dir": "",
     "install_env": {
+      "BOOST_FOR_ARMNN": "no",
       "PACKAGE_BUILD_TYPE": "",
       "PACKAGE_NAME": "boost_1_66_0.zip",
       "PACKAGE_SKIP_CLEAN_INSTALL": "YES",
@@ -46,6 +47,9 @@
       "tags": "compiler,lang-c,gcc"
     },
     "python": {
+      "disable_if_env": [
+        {  "BOOST_FOR_ARMNN": [ "on", "ON", "yes", "YES", "true", "TRUE", "1" ] }
+      ],
       "force_target_as_host": "yes",
       "local": "yes",
       "name": "Unix Utils for Windows",
@@ -98,6 +102,7 @@
     "v1",
     "channel-stable"
   ],
+  "template":"yes",
   "use_preprocess_scripts_from_another_entry": {
     "data_uoa": "fd44428fbc77f77f",
     "module_uoa": "84e27ad9dd12e734"
@@ -106,5 +111,15 @@
     "data_uoa": "cd9ccc74060b3d18",
     "module_uoa": "script"
   },
-  "template":"yes"
+  "variations": {
+    "for-armnn": {
+      "extra_env": {
+        "BOOST_FOR_ARMNN": "yes",
+        "BOOST_B2_FLAGS": "link=static cxxflags=-fPIC --with-filesystem --with-test --with-log --with-program_options"
+      },
+      "extra_customize": {
+        "package_extra_name": " (for ArmNN)"
+      }
+    }
+  }
 }
