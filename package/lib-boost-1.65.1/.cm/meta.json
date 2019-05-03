@@ -119,6 +119,27 @@
       "extra_customize": {
         "package_extra_name": " (for ArmNN)"
       }
+    },
+    "from-sourceforge": {
+      "extra_env": {
+        "PACKAGE_UNZIP": "NO",
+        "PACKAGE_UNBZIP": "YES",
+        "PACKAGE_UNTAR": "YES",
+        "PACKAGE_NAME": "boost_1_65_1.tar.bz2",
+        "PACKAGE_NAME1": "boost_1_65_1.tar",
+        "PACKAGE_NAME2": "boost_1_65_1",
+        "PACKAGE_UNTAR_SKIP_ERROR_WIN": "YES",
+        "PACKAGE_URL": "https://sourceforge.net/projects/boost/files/boost/1.65.1"
+      }
+    },
+    "from-bintray": {
+      "extra_env": {
+        "PACKAGE_UNBZIP": "NO",
+        "PACKAGE_UNTAR": "NO",
+        "PACKAGE_UNZIP": "YES",
+        "PACKAGE_NAME": "boost_1_65_1.zip",
+        "PACKAGE_URL": "https://dl.bintray.com/boostorg/release/1.65.1/source"
+      }
     }
   }
 }

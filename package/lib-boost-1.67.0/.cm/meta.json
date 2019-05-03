@@ -104,5 +104,28 @@
   "use_scripts_from_another_entry": {
     "data_uoa": "cd9ccc74060b3d18", 
     "module_uoa": "script"
+  },
+  "variations": {
+    "from-sourceforge": {
+      "extra_env": {
+        "PACKAGE_UNZIP": "NO",
+        "PACKAGE_UNBZIP": "YES",
+        "PACKAGE_UNTAR": "YES",
+        "PACKAGE_NAME": "boost_1_67_0.tar.bz2",
+        "PACKAGE_NAME1": "boost_1_67_0.tar",
+        "PACKAGE_NAME2": "boost_1_67_0",
+        "PACKAGE_UNTAR_SKIP_ERROR_WIN": "YES",
+        "PACKAGE_URL": "https://sourceforge.net/projects/boost/files/boost/1.67.0"
+      }
+    },
+    "from-bintray": {
+      "extra_env": {
+        "PACKAGE_UNBZIP": "NO",
+        "PACKAGE_UNTAR": "NO",
+        "PACKAGE_UNZIP": "YES",
+        "PACKAGE_NAME": "boost_1_67_0.zip",
+        "PACKAGE_URL": "https://dl.bintray.com/boostorg/release/1.67.0/source"
+      }
+    }
   }
 }
