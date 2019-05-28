@@ -77,9 +77,15 @@
     }
   },
   "end_full_path": {
-    "android": "install$#sep#$lib$#sep#$libboost_system.a",
-    "linux": "install/lib/libboost_system.a",
-    "win": "install\\lib\\boost_system-mt.lib"
+        "android": [
+            "install$#sep#$lib$#sep#$libboost_system$#file_ext_lib#$",
+            "install$#sep#$lib$#sep#$libboost_system$#file_ext_dll#$"
+        ],
+        "linux": [
+            "install$#sep#$lib$#sep#$libboost_system$#file_ext_lib#$",
+            "install$#sep#$lib$#sep#$libboost_system$#file_ext_dll#$"
+        ],
+        "win": "install#sep#lib#sep#boost_system-mt.lib"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
