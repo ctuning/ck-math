@@ -56,7 +56,7 @@ echo.
 echo Preparing customized config via CK ...
 
 set BOOST_BUILD_PATH=%INSTALL_DIR%\install
-call python %ORIGINAL_PACKAGE_DIR%/scripts.android/convert_to_cygwin_path.py "using %TOOLCHAIN% : arm : %CK_CXX_PATH_FOR_CMAKE% %CK_CXX_FLAGS_FOR_CMAKE% %CK_CXX_FLAGS_ANDROID_TYPICAL% %EXTRA_FLAGS% -DNO_BZIP2 : <flavor>mingw <archiver>%CK_ENV_COMPILER_GCC_BIN%\%CK_AR% <ranlib>%CK_ENV_COMPILER_GCC_BIN%\%CK_RANLIB% ;" > %BOOST_BUILD_PATH%\user-config.jam
+call python %ORIGINAL_PACKAGE_DIR%/scripts.android/convert_to_cygwin_path.py "using %TOOLCHAIN% : %CK_ANDROID_NDK_ARCH% : %CK_CXX_PATH_FOR_CMAKE% %CK_CXX_FLAGS_FOR_CMAKE% %CK_CXX_FLAGS_ANDROID_TYPICAL% %EXTRA_FLAGS% -DNO_BZIP2 : <flavor>mingw <archiver>%CK_ENV_COMPILER_GCC_BIN%\%CK_AR% <ranlib>%CK_ENV_COMPILER_GCC_BIN%\%CK_RANLIB% ;" > %BOOST_BUILD_PATH%\user-config.jam
 
 if %errorlevel% neq 0 (
   echo.
@@ -68,7 +68,7 @@ if "%BOOST_B2_FLAGS%" == "" (
  set BOOST_B2_FLAGS=--without-mpi --without-context --without-math --without-python
 )
 
-b2 install toolset=%TOOLCHAIN%-arm target-os=android threadapi=pthread --layout=system link=static address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --debug-configuration %BOOST_B2_FLAGS%
+b2 install toolset=%TOOLCHAIN%-%CK_ANDROID_NDK_ARCH% target-os=android threadapi=pthread --layout=system link=static address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --debug-configuration %BOOST_B2_FLAGS%
 rem b2 install toolset=%TOOLCHAIN%-arm target-os=android --layout=system link=static --without-mpi --without-context --without-math address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --without-python --debug-configuration
 
 rem if %errorlevel% neq 0 (
