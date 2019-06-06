@@ -68,7 +68,7 @@
     "CT_REPEAT_MAIN": "1"
   }, 
   "source_files": [
-    "sgemm.c"
+    "sgemm.cpp"
   ], 
   "tags": [
     "demo", 
