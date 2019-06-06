@@ -114,7 +114,7 @@
     "for-armnn": {
       "extra_env": {
         "BOOST_FOR_ARMNN": "yes",
-        "BOOST_B2_FLAGS": "link=static cxxflags=-fPIC --with-filesystem --with-test --with-log --with-program_options"
+        "BOOST_B2_FLAGS": "cxxflags=-fPIC --with-filesystem --with-test --with-log --with-program_options"
       },
       "extra_customize": {
         "package_extra_name": " (for ArmNN)"

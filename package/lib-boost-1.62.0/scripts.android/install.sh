@@ -45,6 +45,15 @@ if [ "${CK_COMPILER_TOOLCHAIN_NAME}" != "" ] ; then
   TOOLCHAIN=$CK_COMPILER_TOOLCHAIN_NAME
 fi
 
+BOOST_B2_LINK=""
+if [ "${BOOST_STATIC}" == "yes" ] && [ "${BOOST_SHARED}" == "yes" ]; then
+	BOOST_B2_LINK="link=static,shared"
+elif [ "${BOOST_STATIC}" == "yes" ]; then
+	BOOST_B2_LINK="link=static"
+elif [ "${BOOST_SHARED}" == "yes" ]; then
+	BOOST_B2_LINK="link=shared"
+fi
+
 export BOOST_BUILD_PATH=${INSTALL_DIR}/install
 echo "using ${TOOLCHAIN} : ${CK_ANDROID_NDK_ARCH} : ${CK_CXX} ${CK_CXX_FLAGS_FOR_CMAKE} ${CK_CXX_FLAGS_ANDROID_TYPICAL} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $BOOST_BUILD_PATH/user-config.jam
 
@@ -52,7 +61,7 @@ if [ "${BOOST_B2_FLAGS}" == "" ] ; then
   BOOST_B2_FLAGS=--without-mpi
 fi
 
-./b2 install toolset=${TOOLCHAIN}-${CK_ANDROID_NDK_ARCH} target-os=android -j ${CK_HOST_CPU_NUMBER_OF_PROCESSORS} link=static address-model=${CK_TARGET_CPU_BITS} --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_FLAGS}
+./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLCHAIN}-${CK_ANDROID_NDK_ARCH} target-os=android address-model=${CK_TARGET_CPU_BITS} --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_LINK} ${BOOST_B2_FLAGS}
 # Ignore exit since some libs are not supported for Android ...
 #if [ "${?}" != "0" ] ; then
 #  echo "Error: b2 make failed!"
