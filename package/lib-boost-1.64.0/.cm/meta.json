@@ -16,6 +16,7 @@
       "PACKAGE_UNZIP": "YES",
       "PACKAGE_URL": "https://dl.bintray.com/boostorg/release/1.64.0/source",
       "PACKAGE_WGET": "YES",
+      "PACKAGE_PATCH": "YES",
       "SUBSTITUTE_ORIGINAL_PACKAGE_DIR": "$#path_to_cid=package:44094af948731a1c#$"
     },
     "version": "1.64.0"
@@ -29,10 +30,25 @@
       "tags": "tool,cmake"
     },
     "compiler": {
+      "disable_if_env": [
+        {  "BOOST_FOR_ARMNN": [ "on", "ON", "yes", "YES", "true", "TRUE", "1" ] }
+      ],
       "local": "yes",
       "name": "C++ compiler",
       "sort": 10,
       "tags": "compiler,lang-cpp"
+    },
+    "standalone-toolchain": {
+      "enable_if_env": [
+        {  "BOOST_FOR_ARMNN": [ "on", "ON", "yes", "YES", "true", "TRUE", "1" ] }
+      ],
+      "local": "yes",
+      "name": "NDK standalone toolchain",
+      "sort": 10,
+      "tags": "ndk,standalone-toolchain,libc++",
+      "only_for_target_os_tags": [
+        "android"
+      ]
     },
     "host-compiler": {
       "force_target_as_host": "yes",
@@ -110,7 +126,7 @@
     "v1",
     "channel-stable"
   ],
-  "use_preprocess_scripts_from_another_entry": {
+  "_use_preprocess_scripts_from_another_entry": {
     "data_uoa": "fd44428fbc77f77f",
     "module_uoa": "84e27ad9dd12e734"
   },
@@ -132,7 +148,7 @@
     "for-armnn": {
       "extra_env": {
         "BOOST_FOR_ARMNN": "yes",
-        "BOOST_B2_FLAGS": "cxxflags=-fPIC --with-filesystem --with-test --with-log --with-program_options"
+        "BOOST_B2_FLAGS": "cxxflags=-fPIC cxxflags=-std=c++11 linkflags=-shared linkflags=-fPIC --with-filesystem --with-test --with-log --with-program_options"
       },
       "extra_customize": {
         "package_extra_name": " (for ArmNN)"
