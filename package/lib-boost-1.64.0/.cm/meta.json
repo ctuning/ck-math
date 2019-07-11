@@ -31,7 +31,9 @@
     },
     "compiler": {
       "disable_if_env": [
-        {  "BOOST_FOR_ARMNN": [ "on", "ON", "yes", "YES", "true", "TRUE", "1" ] }
+        {  "BOOST_FOR_ARMNN": [ "on", "ON", "yes", "YES", "true", "TRUE", "1" ],
+           "CK_TARGET_OS_ID": ["android"]
+        }
       ],
       "local": "yes",
       "name": "C++ compiler",
@@ -40,15 +42,14 @@
     },
     "standalone-toolchain": {
       "enable_if_env": [
-        {  "BOOST_FOR_ARMNN": [ "on", "ON", "yes", "YES", "true", "TRUE", "1" ] }
+        {  "BOOST_FOR_ARMNN": [ "on", "ON", "yes", "YES", "true", "TRUE", "1" ],
+           "CK_TARGET_OS_ID": ["android"]
+        }
       ],
       "local": "yes",
       "name": "NDK standalone toolchain",
       "sort": 10,
-      "tags": "ndk,standalone-toolchain,libc++",
-      "only_for_target_os_tags": [
-        "android"
-      ]
+      "tags": "ndk,standalone-toolchain,libc++"
     },
     "host-compiler": {
       "force_target_as_host": "yes",
