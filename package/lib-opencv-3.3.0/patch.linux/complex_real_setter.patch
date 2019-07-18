@@ -6,7 +6,7 @@ index 6aa771d..f7b27a5 100644
      else
          w = sqrt(static_cast<complex<double> >(q3 * q3 - p3 * p3 * p3)) - q3;
      if (w.imag() == 0.0) {
-+#if __cplusplus >= 201103L
++#if (__cplusplus >= 201103L) || ( defined(__APPLE__) && defined(__clang__) )
          w.real(cbrt(w.real()));
 +#else
 +        w.real() = cbrt(w.real());
