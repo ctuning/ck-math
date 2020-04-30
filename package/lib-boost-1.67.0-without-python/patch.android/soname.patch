@@ -1,0 +1,13 @@
+diff --git a/tools/build/src/tools/clang-darwin.jam b/tools/build/src/tools/clang-darwin.jam
+index 8ab5109b..08247266 100644
+--- a/tools/build/src/tools/clang-darwin.jam
++++ b/tools/build/src/tools/clang-darwin.jam
+@@ -185,5 +185,7 @@ actions link bind LIBRARIES
+ 
+ actions link.dll bind LIBRARIES
+ {
+-    "$(CONFIG_COMMAND)" $(USER_OPTIONS) -L"$(LINKPATH)" -o "$(<)" -single_module -dynamiclib -install_name "@rpath/$(<[1]:D=)" "$(>)"  "$(LIBRARIES)" $(START-GROUP) $(FINDLIBS-ST-PFX) -l$(FINDLIBS-ST) $(FINDLIBS-SA-PFX) -l$(FINDLIBS-SA) $(END-GROUP) $(OPTIONS)
++    # "$(CONFIG_COMMAND)" $(USER_OPTIONS) -L"$(LINKPATH)" -o "$(<)" -single_module -dynamiclib -install_name "@rpath/$(<[1]:D=)" "$(>)"  "$(LIBRARIES)" $(START-GROUP) $(FINDLIBS-ST-PFX) -l$(FINDLIBS-ST) $(FINDLIBS-SA-PFX) -l$(FINDLIBS-SA) $(END-GROUP) $(OPTIONS)
++    "$(CONFIG_COMMAND)" $(USER_OPTIONS) -L"$(LINKPATH)" -o "$(<)" -Wl,-h$(SPACE)-Wl,$(<[-1]:D=) -shared "$(>)"  "$(LIBRARIES)" $(START-GROUP) $(FINDLIBS-ST-PFX) -l$(FINDLIBS-ST) $(FINDLIBS-SA-PFX) -l$(FINDLIBS-SA) $(END-GROUP) $(OPTIONS)
+ }
++

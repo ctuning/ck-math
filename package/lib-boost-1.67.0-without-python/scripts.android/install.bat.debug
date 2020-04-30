@@ -1,0 +1,66 @@
+@echo off
+
+rem
+rem Extra installation script
+rem
+rem See CK LICENSE.txt for licensing details.
+rem See CK Copyright.txt for copyright details.
+rem
+rem Developer(s): Grigori Fursin, 2016-2017
+rem
+
+rem  Check extra stuff
+
+set EXTRA_FLAGS=
+if "%CK_ARMEABI_V7A%" == "ON" (
+  set EXTRA_FLAGS=%EXTRA_FLAGS% -DARMEABI_V7A=ON
+)
+
+if "%CK_ARMEABI_V7A_HARD%" == "ON" (
+  set EXTRA_FLAGS=%EXTRA_FLAGS% -DARMEABI_V7A_HARD=ON
+)
+
+set TOOLCHAIN=gcc
+if NOT "%CK_COMPILER_TOOLCHAIN_NAME%" == "" (
+  set TOOLCHAIN=%CK_COMPILER_TOOLCHAIN_NAME%
+)
+
+rem ############################################################
+cd /D %INSTALL_DIR%\%PACKAGE_SUB_DIR1%
+
+rem call bootstrap.bat
+
+if %errorlevel% neq 0 (
+  echo.
+  echo Error: bootstrap failed!
+  exit /b 1
+)
+
+rem ############################################################
+echo.
+echo Building (can be very long) ...
+
+if EXIST %INSTALL_DIR%\install (
+rem   rmdir /s /q %INSTALL_DIR%\install
+)
+if EXIST %INSTALL_DIR%\install (
+rem  rmdir %INSTALL_DIR%\install
+)
+
+mkdir %INSTALL_DIR%\install
+
+set BOOST_BUILD_PATH=%INSTALL_DIR%\install
+call ck convert_to_cygwin_path os --path="using %TOOLCHAIN% : arm : %CK_CXX_PATH_FOR_CMAKE_MINGW% %CK_CXX_FLAGS_FOR_CMAKE_MINGW% %CK_CXX_FLAGS_ANDROID_TYPICAL_MINGW% %EXTRA_FLAGS% -DNO_BZIP2 : <flavor>mingw ;" > %BOOST_BUILD_PATH%\user-config.jam
+
+rem b2 -a -n --without-python variant=release threading=multi stage -d+2 --debug-configuration --debug-building --debug-generator toolset=mingwgcc-arm 
+b2 install toolset=%TOOLCHAIN%-arm target-os=android threadapi=pthread --layout=system link=static --without-mpi --prefix=../install --without-python -q --debug-configuration
+rem -d+2 link=static --without-mpi --debug-configuration --debug-building --debug-generator --prefix=%BOOST_BUILD_PATH%
+rem b2.exe install toolset=%TOOLCHAIN%-arm target-os=android -d+2 link=static --without-mpi --prefix=%BOOST_BUILD_PATH%
+
+if %errorlevel% neq 0 (
+  echo.
+  echo Error: b2 failed!
+  exit /b 1
+)
+
+exit /b 0
