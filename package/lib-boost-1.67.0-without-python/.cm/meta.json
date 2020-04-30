@@ -90,6 +90,7 @@
   "tags": [
     "lib",
     "boost",
+    "without-python",
     "v1.67.0",
     "v1.67",
     "v1",
