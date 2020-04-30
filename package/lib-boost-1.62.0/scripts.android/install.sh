@@ -72,7 +72,7 @@ fi
 
 set
 
-./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} target-os=android threading=multi address-model=${CK_TARGET_CPU_BITS} --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_LINK} ${BOOST_B2_FLAGS}
+./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLSET} target-os=android threading=multi address-model=${CK_TARGET_CPU_BITS} --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_LINK} ${BOOST_B2_FLAGS} ${BOOST_B2_EXTRA_FLAGS}
 # Ignore exit since some libs are not supported for Android ...
 #if [ "${?}" != "0" ] ; then
 #  echo "Error: b2 make failed!"

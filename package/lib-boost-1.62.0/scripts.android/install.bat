@@ -68,7 +68,7 @@ if "%BOOST_B2_FLAGS%" == "" (
  set BOOST_B2_FLAGS=--without-mpi --without-context --without-math --without-python
 )
 
-b2 install toolset=%TOOLCHAIN%-%CK_ANDROID_NDK_ARCH% target-os=android threadapi=pthread --layout=system link=static address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --debug-configuration %BOOST_B2_FLAGS%
+b2 install toolset=%TOOLCHAIN%-%CK_ANDROID_NDK_ARCH% target-os=android threadapi=pthread --layout=system link=static address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --debug-configuration %BOOST_B2_FLAGS% %BOOST_B2_EXTRA_FLAGS%
 rem b2 install toolset=%TOOLCHAIN%-arm target-os=android --layout=system link=static --without-mpi --without-context --without-math address-model=%CK_TARGET_CPU_BITS% --prefix=%BOOST_BUILD_PATH% --without-python --debug-configuration
 
 rem if %errorlevel% neq 0 (

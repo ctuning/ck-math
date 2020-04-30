@@ -1,15 +1,16 @@
 {
   "data_alias": "ck-math",
-  "data_uoa": "ck-math",
-  "data_uid": "d94a45b5be3072ba",
   "data_name": "ck-math",
+  "data_uid": "d94a45b5be3072ba",
+  "data_uoa": "ck-math",
   "dict": {
-    "url": "https://github.com/ctuning/ck-math",
-    "shared": "git",
+    "desc": "Collective of CK packages to unify detection, installation and rebuilding of popular mathematical packages such as OpenBLAS, clBLAST and Boost across different OS (see <a href=\"http://cKnowledge.org/shared-packages.html\">shared packages</a> and <a href=\"http://cKnowledge.org/shared-soft-detection-plugins.html\">software detection plugins</a>).",
     "repo_deps": [
       {
         "repo_uoa": "ck-autotuning"
       }
-    ] 
+    ],
+    "shared": "git",
+    "url": "https://github.com/ctuning/ck-math"
   }
 }

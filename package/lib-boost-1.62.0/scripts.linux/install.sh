@@ -62,7 +62,7 @@ then
     echo "using ${TOOLCHAIN} : ${CK_COMPILER_VERSION} : ${CK_CXX_FULL_PATH} : -fPIC ${CK_CXX_FLAGS_FOR_CMAKE} ${EXTRA_FLAGS} -DNO_BZIP2 ;" > $USER_CONFIG_FILE
 fi
 
-./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLCHAIN} address-model=${CK_TARGET_CPU_BITS} $FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_LINK} ${BOOST_B2_FLAGS}
+./b2 install -j${CK_HOST_CPU_NUMBER_OF_PROCESSORS} toolset=${TOOLCHAIN} address-model=${CK_TARGET_CPU_BITS} $FLAGS_FOR_B2_FOR_LIB_COMPATIBILITY --debug-configuration --prefix=${BOOST_BUILD_PATH} ${BOOST_B2_LINK} ${BOOST_B2_FLAGS} ${BOOST_B2_EXTRA_FLAGS}
 
 if [ "${?}" != "0" ] ; then
   echo "Error: b2 make failed!"

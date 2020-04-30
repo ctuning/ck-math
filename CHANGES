@@ -1,3 +1,5 @@
+* 2020.05.01 - [FGG] added ${BOOST_B2_EXTRA_FLAGS} to Boost packages (to specify --with / --without flags)
+
 * 2019.02.20 - [FGG] added OpenCV 3.4.5 shared package
 
 * 2018.11.29 - [FGG] renaming different packages
