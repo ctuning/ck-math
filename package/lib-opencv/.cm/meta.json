@@ -76,6 +76,8 @@
 	"PACKAGE_SUB_DIR": "src",
 	"PACKAGE_SUB_DIR1": "src",
 	"PACKAGE_URL": "https://github.com/opencv/opencv",
+	"PACKAGE_UNZIP": "NO",
+	"PACKAGE_UNZIP_SKIP_ERROR": "YES",
 	"PACKAGE_WGET": "NO",
 	"PACKAGE_WGET_EXTRA": ""
       },
