@@ -21,7 +21,7 @@
       "PACKAGE_WGET": "YES",
       "PACKAGE_WGET_EXTRA": "--no-cookies"
     },
-    "version": "latest"
+    "version": "with-variations"
   },
   "deps": {
     "cmake": {
@@ -67,10 +67,10 @@
   "tags": [
     "lib",
     "opencv",
-    "latest"
+    "with-variations"
   ],
   "variations": {
-    "trunk": {
+    "master": {
       "extra_env": {
 	"PACKAGE_GIT": "YES",
 	"PACKAGE_SUB_DIR": "src",
@@ -82,13 +82,14 @@
 	"PACKAGE_WGET_EXTRA": ""
       },
       "extra_customize": {
-        "version": "trunk"
+        "version": "master"
       },
+      "on_by_default": "yes",
       "extra_tags": [
-        "trunk"
+        "vmaster"
       ]
     },
-    "rel4.3.0": {
+    "v4.3.0": {
       "extra_env": {
 	"PACKAGE_NAME": "4.3.0.zip",
 	"PACKAGE_NAME2": "4.3.0",
@@ -98,12 +99,11 @@
       "extra_customize": {
         "version": "4.3.0"
       },
-      "on_by_default": "yes",
       "extra_tags": [
-        "rel4.3.0"
+        "v4.3.0"
       ]
     },
-    "rel3.4.10": {
+    "v3.4.10": {
       "extra_env": {
         "PACKAGE_NAME": "3.4.10.zip",
         "PACKAGE_NAME2": "3.4.10",
@@ -114,10 +114,10 @@
         "version": "3.4.10"
       },
       "extra_tags": [
-        "rel3.4.10"
+        "v3.4.10"
       ]
     },
-    "rel3.4.5": {
+    "v3.4.5": {
       "extra_env": {
         "PACKAGE_NAME": "3.4.5.zip",
         "PACKAGE_NAME2": "3.4.5",
@@ -128,10 +128,10 @@
         "version": "3.4.5"
       },
       "extra_tags": [
-        "rel3.4.5"
+        "v3.4.5"
       ]
     },
-    "rel3.4.3": {
+    "v3.4.3": {
       "extra_env": {
         "PACKAGE_NAME": "3.4.3.zip",
         "PACKAGE_NAME2": "3.4.3",
@@ -142,10 +142,10 @@
         "version": "3.4.3"
       },
       "extra_tags": [
-        "rel3.4.3"
+        "v3.4.3"
       ]
     },
-    "rel3.3.0": {
+    "v3.3.0": {
       "extra_env": {
         "PACKAGE_NAME": "3.3.0.zip",
         "PACKAGE_NAME2": "3.3.0",
@@ -156,10 +156,10 @@
         "version": "3.3.0"
       },
       "extra_tags": [
-        "rel3.3.0"
+        "v3.3.0"
       ]
     },
-    "rel3.2.0": {
+    "v3.2.0": {
       "extra_env": {
         "PACKAGE_NAME": "3.2.0.zip",
         "PACKAGE_NAME2": "3.2.0",
@@ -170,10 +170,10 @@
         "version": "3.2.0"
       },
       "extra_tags": [
-        "rel3.2.0"
+        "v3.2.0"
       ]
     },
-    "rel2.4.13.2": {
+    "v2.4.13.2": {
       "extra_env": {
         "PACKAGE_NAME": "2.4.13.2.zip",
         "PACKAGE_NAME2": "2.4.13.2",
@@ -184,7 +184,7 @@
         "version": "2.4.13.2"
       },
       "extra_tags": [
-        "rel2.4.13.2"
+        "v2.4.13.2"
       ]
     }
   }
