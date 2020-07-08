@@ -72,7 +72,12 @@
   "variations": {
     "trunk": {
       "extra_env": {
-	"PACKAGE_GIT": "YES"
+	"PACKAGE_GIT": "YES",
+	"PACKAGE_SUB_DIR": "src",
+	"PACKAGE_SUB_DIR1": "src",
+	"PACKAGE_URL": "https://github.com/opencv/opencv",
+	"PACKAGE_WGET": "NO",
+	"PACKAGE_WGET_EXTRA": ""
       },
       "extra_customize": {
         "version": "trunk"
