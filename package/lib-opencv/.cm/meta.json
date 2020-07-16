@@ -4,7 +4,12 @@
     "install_env": {
       "CMAKE_CONFIG": "Release",
       "PACKAGE_BUILD_TYPE": "cmake",
-      "PACKAGE_CONFIGURE_FLAGS": "-DUSE_IPPICV=OFF -DBUILD_ZLIB=ON -DWITH_JPEG=ON -DWITH_1394=OFF -DBUILD_JPEG=ON -DBUILD_PNG=ON -DBUILD_TIFF=ON -DWITH_CUDA=OFF -DWITH_MATLAB=OFF -DWITH_LAPACK=OFF -DWITH_MKL=OFF -DBUILD_ANDROID_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_DOCS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DWITH_CAROTENE=OFF",
+      "BUILD_SHARED_LIBS" : "OFF",
+      "FILE_EXT_ANDROID" : ".a",
+      "FILE_EXT_LINUX": ".a",
+      "FILE_EXT_WIN": ".lib",
+      "FILE_EXT_VER": "430" ,
+      "*PACKAGE_CONFIGURE_FLAGS": "-DUSE_IPPICV=OFF -DBUILD_ZLIB=ON -DWITH_JPEG=ON -DWITH_1394=OFF -DBUILD_JPEG=ON -DBUILD_PNG=ON -DBUILD_TIFF=ON -DWITH_CUDA=OFF -DWITH_MATLAB=OFF -DWITH_LAPACK=OFF -DWITH_MKL=OFF -DBUILD_ANDROID_EXAMPLES=OFF -DBUILD_SHARED_LIBS=$<<BUILD_SHARED_LIBS>>$ -DBUILD_DOCS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DWITH_CAROTENE=OFF",
       "PACKAGE_CONFIGURE_FLAGS_ANDROID": "",
       "PACKAGE_CONFIGURE_FLAGS_LINUX": "",
       "PACKAGE_CONFIGURE_FLAGS_WINDOWS": "-DBUILD_PERF_TESTS=OFF -DBUILD_WITH_STATIC_CRT=OFF -DBUILD_PACKAGE=OFF -DWITH_PTHREADS_PF=OFF -DBUILD_SHARED_LIBS=ON -DOpenCV_INSTALL_BINARIES_PREFIX=\"\" -DOPENCV_DLLVERSION=\"\"",
@@ -39,9 +44,9 @@
     }
   },
   "end_full_path": {
-    "android": "install$#sep#$sdk$#sep#$native$#sep#$libs$#sep#$$#abi#$$#sep#$libopencv_core.a",
-    "linux": "install/lib/libopencv_core.a",
-    "win": "install\\lib\\opencv_core430.lib"
+    "android": "install$#sep#$sdk$#sep#$native$#sep#$libs$#sep#$$#abi#$$#sep#$libopencv_core$<<FILE_EXT_ANDROID>>$",
+    "linux": "install/lib/libopencv_core$<<FILE_EXT_LINUX>>$",
+    "win": "install\\lib\\opencv_core$<<FILE_EXT_VER>>$$<<FILE_EXT_WIN>>$"
   },
   "need_cpu_info": "yes",
   "only_for_host_os_tags": [
@@ -79,10 +84,14 @@
 	"PACKAGE_UNZIP": "NO",
 	"PACKAGE_UNZIP_SKIP_ERROR": "YES",
 	"PACKAGE_WGET": "NO",
-	"PACKAGE_WGET_EXTRA": ""
+	"PACKAGE_WGET_EXTRA": "",
+        "FILE_EXT_VER" : ""
       },
       "extra_customize": {
-        "version": "master"
+        "version": "master",
+        "file_extensions": {
+          "ver": ""
+        }
       },
       "on_by_default": "yes",
       "extra_tags": [
@@ -90,11 +99,15 @@
       ]
     },
     "v4.3.0": {
+      "file_extensions": {
+        "ver": "430"
+      },
       "extra_env": {
 	"PACKAGE_NAME": "4.3.0.zip",
 	"PACKAGE_NAME2": "4.3.0",
 	"PACKAGE_SUB_DIR": "opencv-4.3.0",
-	"PACKAGE_SUB_DIR1": "opencv-4.3.0"
+	"PACKAGE_SUB_DIR1": "opencv-4.3.0",
+        "FILE_EXT_VER" : "430"
       },
       "extra_customize": {
         "version": "4.3.0"
@@ -104,11 +117,15 @@
       ]
     },
     "v3.4.10": {
+      "file_extensions": {
+        "ver": "3410"
+      },
       "extra_env": {
         "PACKAGE_NAME": "3.4.10.zip",
         "PACKAGE_NAME2": "3.4.10",
         "PACKAGE_SUB_DIR": "opencv-3.4.10",
-        "PACKAGE_SUB_DIR1": "opencv-3.4.10"
+        "PACKAGE_SUB_DIR1": "opencv-3.4.10",
+        "FILE_EXT_VER" : "3410"
       },
       "extra_customize": {
         "version": "3.4.10"
@@ -118,11 +135,15 @@
       ]
     },
     "v3.4.5": {
+      "file_extensions": {
+        "ver": "345"
+      },
       "extra_env": {
         "PACKAGE_NAME": "3.4.5.zip",
         "PACKAGE_NAME2": "3.4.5",
         "PACKAGE_SUB_DIR": "opencv-3.4.5",
-        "PACKAGE_SUB_DIR1": "opencv-3.4.5"
+        "PACKAGE_SUB_DIR1": "opencv-3.4.5",
+        "FILE_EXT_VER" : "345"
       },
       "extra_customize": {
         "version": "3.4.5"
@@ -132,11 +153,15 @@
       ]
     },
     "v3.4.3": {
+      "file_extensions": {
+        "ver": "343"
+      },
       "extra_env": {
         "PACKAGE_NAME": "3.4.3.zip",
         "PACKAGE_NAME2": "3.4.3",
         "PACKAGE_SUB_DIR": "opencv-3.4.3",
-        "PACKAGE_SUB_DIR1": "opencv-3.4.3"
+        "PACKAGE_SUB_DIR1": "opencv-3.4.3",
+        "FILE_EXT_VER" : "343"
       },
       "extra_customize": {
         "version": "3.4.3"
@@ -146,11 +171,15 @@
       ]
     },
     "v3.3.0": {
+      "file_extensions": {
+        "ver": "330"
+      },
       "extra_env": {
         "PACKAGE_NAME": "3.3.0.zip",
         "PACKAGE_NAME2": "3.3.0",
         "PACKAGE_SUB_DIR": "opencv-3.3.0",
-        "PACKAGE_SUB_DIR1": "opencv-3.3.0"
+        "PACKAGE_SUB_DIR1": "opencv-3.3.0",
+        "FILE_EXT_VER" : "330"
       },
       "extra_customize": {
         "version": "3.3.0"
@@ -160,11 +189,15 @@
       ]
     },
     "v3.2.0": {
+      "file_extensions": {
+        "ver": "320"
+      },
       "extra_env": {
         "PACKAGE_NAME": "3.2.0.zip",
         "PACKAGE_NAME2": "3.2.0",
         "PACKAGE_SUB_DIR": "opencv-3.2.0",
-        "PACKAGE_SUB_DIR1": "opencv-3.2.0"
+        "PACKAGE_SUB_DIR1": "opencv-3.2.0",
+        "FILE_EXT_VER" : "320"
       },
       "extra_customize": {
         "version": "3.2.0"
@@ -174,11 +207,15 @@
       ]
     },
     "v2.4.13.2": {
+      "file_extensions": {
+        "ver": "24132"
+      },
       "extra_env": {
         "PACKAGE_NAME": "2.4.13.2.zip",
         "PACKAGE_NAME2": "2.4.13.2",
         "PACKAGE_SUB_DIR": "opencv-2.4.13.2",
-        "PACKAGE_SUB_DIR1": "opencv-2.4.13.2"
+        "PACKAGE_SUB_DIR1": "opencv-2.4.13.2",
+        "FILE_EXT_VER" : "24132"
       },
       "extra_customize": {
         "version": "2.4.13.2"
@@ -186,6 +223,18 @@
       "extra_tags": [
         "v2.4.13.2"
       ]
+    },
+    "shared": {
+      "extra_env": {
+        "BUILD_SHARED_LIBS" : "ON",
+        "FILE_EXT_ANDROID" : ".so",
+        "FILE_EXT_LINUX": ".so",
+        "FILE_EXT_WIN": ".dll"
+      },
+      "extra_tags": [
+        "shared"
+      ]
     }
+
   }
 }
