@@ -8,8 +8,9 @@
 #
 # Developer(s):
 # - Grigori Fursin, 2016-2017
-# - Anton Lokhmotov, 2017
+# - Anton Lokhmotov, 2017, 2020
 # - Leo Gordon, 2018
+#
 
 
 if [ "${CK_COMPILER_TOOLCHAIN_NAME}" != "" ] ; then
@@ -44,7 +45,7 @@ fi
 
 ############################################################
 cd ${INSTALL_DIR}/${PACKAGE_SUB_DIR1}
-./bootstrap.sh --with-toolset=${TOOLCHAIN} ${CK_ENV_COMPILER_PYTHON_FILE:+"--with-python=${CK_ENV_COMPILER_PYTHON_FILE}"}
+./bootstrap.sh --with-toolset=${TOOLCHAIN} ${CK_ENV_COMPILER_PYTHON_FILE:+"--with-python=${CK_ENV_COMPILER_PYTHON_FILE}"} ${BOOST_WITHOUT_PYTHON:+"--without-libraries=python"}
 if [ "${?}" != "0" ] ; then
   echo "Error: bootstrap failed!"
   exit 1
