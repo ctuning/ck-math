@@ -113,6 +113,14 @@
     "module_uoa": "script"
   },
   "variations": {
+    "without-python": {
+      "extra_env": {
+        "BOOST_WITHOUT_PYTHON": "yes"
+      },
+      "extra_customize": {
+        "package_extra_name": " (without Python)"
+      }
+    },
     "for-armnn": {
       "extra_env": {
         "BOOST_FOR_ARMNN": "yes",
