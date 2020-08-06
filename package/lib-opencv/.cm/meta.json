@@ -103,6 +103,20 @@
         "v4.3.0"
       ]
     },
+    "v4.1.2": {
+      "extra_env": {
+	"PACKAGE_NAME": "4.1.2.zip",
+	"PACKAGE_NAME2": "4.1.2",
+	"PACKAGE_SUB_DIR": "opencv-4.1.2",
+	"PACKAGE_SUB_DIR1": "opencv-4.1.2"
+      },
+      "extra_customize": {
+        "version": "4.1.2"
+      },
+      "extra_tags": [
+        "v4.1.2"
+      ]
+    },
     "v3.4.10": {
       "extra_env": {
         "PACKAGE_NAME": "3.4.10.zip",
