@@ -88,10 +88,7 @@
         "FILE_EXT_VER" : ""
       },
       "extra_customize": {
-        "version": "master",
-        "file_extensions": {
-          "ver": ""
-        }
+        "version": "master"
       },
       "on_by_default": "yes",
       "extra_tags": [
@@ -99,9 +96,6 @@
       ]
     },
     "v4.3.0": {
-      "file_extensions": {
-        "ver": "430"
-      },
       "extra_env": {
 	"PACKAGE_NAME": "4.3.0.zip",
 	"PACKAGE_NAME2": "4.3.0",
@@ -117,9 +111,6 @@
       ]
     },
     "v3.4.10": {
-      "file_extensions": {
-        "ver": "3410"
-      },
       "extra_env": {
         "PACKAGE_NAME": "3.4.10.zip",
         "PACKAGE_NAME2": "3.4.10",
@@ -135,9 +126,6 @@
       ]
     },
     "v3.4.5": {
-      "file_extensions": {
-        "ver": "345"
-      },
       "extra_env": {
         "PACKAGE_NAME": "3.4.5.zip",
         "PACKAGE_NAME2": "3.4.5",
@@ -153,9 +141,6 @@
       ]
     },
     "v3.4.3": {
-      "file_extensions": {
-        "ver": "343"
-      },
       "extra_env": {
         "PACKAGE_NAME": "3.4.3.zip",
         "PACKAGE_NAME2": "3.4.3",
@@ -171,9 +156,6 @@
       ]
     },
     "v3.3.0": {
-      "file_extensions": {
-        "ver": "330"
-      },
       "extra_env": {
         "PACKAGE_NAME": "3.3.0.zip",
         "PACKAGE_NAME2": "3.3.0",
@@ -189,9 +171,6 @@
       ]
     },
     "v3.2.0": {
-      "file_extensions": {
-        "ver": "320"
-      },
       "extra_env": {
         "PACKAGE_NAME": "3.2.0.zip",
         "PACKAGE_NAME2": "3.2.0",
@@ -207,9 +186,6 @@
       ]
     },
     "v2.4.13.2": {
-      "file_extensions": {
-        "ver": "24132"
-      },
       "extra_env": {
         "PACKAGE_NAME": "2.4.13.2.zip",
         "PACKAGE_NAME2": "2.4.13.2",
