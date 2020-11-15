@@ -4,6 +4,8 @@
 [![DOI](https://zenodo.org/badge/61487596.svg)](https://zenodo.org/badge/latestdoi/61487596)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
+**All CK components for AI and ML are now collected in [one repository](https://github.com/ctuning/ai)!**
+
 This Collective Knowledge repository contains various mathematical libraries 
 in the [portable and customizable CK format](http://github.com/ctuning/ck) 
 with Js SON API and JSON meta information to be used 
