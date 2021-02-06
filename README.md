@@ -4,7 +4,9 @@
 [![DOI](https://zenodo.org/badge/61487596.svg)](https://zenodo.org/badge/latestdoi/61487596)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
-**All CK components for AI and ML are now collected in [one repository](https://github.com/ctuning/ai)!**
+**All CK components can be found at [cKnowledge.io](https://cKnowledge.io) and in [one GitHub repository](https://github.com/ctuning/ai)!**
+
+*This project is hosted by the [cTuning foundation](https://cTuning.org).*
 
 This Collective Knowledge repository contains various mathematical libraries 
 in the [portable and customizable CK format](http://github.com/ctuning/ck) 
@@ -13,14 +15,10 @@ in portable, customizable and reproducible [CK research workflows](https://githu
 
 Please feel free to provide extra packages to [enable open and reproducible R&D](https://github.com/ctuning/ck/wiki/Enabling-open-science)!
 
-Maintainers
-===========
-* [dividiti](http://dividiti.com)
-
 Contributors
 ============
 
-* [Grigori Fursin](http://fursin.net/research.html), dividiti/cTuning
+* [Grigori Fursin](https://fursin.net), cTuning foundation
 * [Anton Lokhmotov](https://www.linkedin.com/in/lokhmotov/), dividiti
 * [Leo Gordon](https://www.linkedin.com/in/leo-gordon-cambridge/), dividiti
 * [Flavio Vella](https://www.linkedin.com/in/flaviovella/), Free University of Bozen-Bolzano
@@ -58,9 +56,6 @@ Install the above package for an Android target (if the Android SDK and NDK are 
 ```
  $ ck install package:lib-openblas-0.3.3-universal --target_os=android21-arm64
 ```
-
-Please check the [CK-Caffe](https://github.com/dividiti/ck-caffe) repository to see how the above packages are used for customizable
-and universal DNN crowd-benchmarking and crowd-tuning.
 
 Example: how to build and use the Arm Compute Library
 =====================================================
